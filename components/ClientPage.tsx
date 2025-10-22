@@ -41,6 +41,7 @@ type TracksData = {
 export default function ClientPage(){
   const [selectedTrack, setSelectedTrack] = useState<string>('')
   const [trackData, setTrackData] = useState<TracksData | null>(null)
+  const [selectedDrivers, setSelectedDrivers] = useState<string[]>(['VER','NOR'])
 
   useEffect(() => {
     fetch('/data/tracks.json').then(r => r.json()).then(setTrackData)
@@ -75,6 +76,8 @@ export default function ClientPage(){
         tracks={trackList}
         selectedTrack={selectedTrack}
         onTrackChangeAction={setSelectedTrack}
+        selectedDrivers={selectedDrivers}
+        onDriversChangeAction={setSelectedDrivers}
       />
 
       {currentTrack && currentCalendarTrack && (
@@ -92,6 +95,24 @@ export default function ClientPage(){
               </div>
               <div className="text-gray-600">
                 {currentCalendarTrack.date}
+              </div>
+              <div className="mt-4 text-sm text-gray-300">
+                <div className="font-semibold uppercase tracking-wide text-xs text-gray-400">
+                  Selected Drivers
+                </div>
+                <div className="mt-1 flex flex-wrap gap-2">
+                  {selectedDrivers.length
+                    ? selectedDrivers.map(code => (
+                        <span
+                          key={code}
+                          className="inline-flex items-center justify-center rounded-full border border-gray-700 bg-gray-800/70 px-2 py-0.5 text-xs font-medium text-gray-200"
+                        >
+                          {code}
+                        </span>
+                      ))
+                    : <span className="text-gray-500">No drivers selected</span>
+                  }
+                </div>
               </div>
               {/* ChartPanel will be updated once we have session data */}
             </div>
