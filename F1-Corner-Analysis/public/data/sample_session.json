@@ -1,0 +1,66 @@
+{
+  "tracks": [
+    {
+      "id": "bahrain",
+      "name": "Bahrain International Circuit",
+      "polyline": [[0.1,0.5],[0.2,0.5],[0.3,0.45],[0.35,0.3],[0.45,0.25],[0.55,0.3],[0.6,0.45],[0.7,0.5],[0.75,0.6],[0.8,0.7],[0.85,0.75],[0.9,0.7],[0.95,0.6]],
+      "corners": [
+        {"number": 1, "type": "medium", "entry": [0.3,0.45], "apex": [0.35,0.3], "exit": [0.45,0.25]},
+        {"number": 4, "type": "slow", "entry": [0.55,0.3], "apex": [0.6,0.45], "exit": [0.7,0.5]},
+        {"number": 8, "type": "fast", "entry": [0.85,0.75], "apex": [0.9,0.7], "exit": [0.95,0.6]}
+      ]
+    },
+    {
+      "id": "jeddah",
+      "name": "Jeddah Corniche Circuit",
+      "polyline": [[0.1,0.4],[0.2,0.4],[0.3,0.35],[0.4,0.25],[0.5,0.2],[0.6,0.25],[0.7,0.4],[0.8,0.6],[0.9,0.7],[0.95,0.65]],
+      "corners": [
+        {"number": 1, "type": "fast", "entry": [0.2,0.4], "apex": [0.3,0.35], "exit": [0.4,0.25]},
+        {"number": 13, "type": "medium", "entry": [0.7,0.4], "apex": [0.8,0.6], "exit": [0.9,0.7]}
+      ]
+    },
+    {
+      "id": "melbourne",
+      "name": "Albert Park Circuit",
+      "polyline": [[0.1,0.5],[0.2,0.45],[0.3,0.35],[0.4,0.3],[0.5,0.35],[0.6,0.45],[0.7,0.55],[0.8,0.6],[0.9,0.55],[0.95,0.5]],
+      "corners": [
+        {"number": 3, "type": "medium", "entry": [0.3,0.35], "apex": [0.4,0.3], "exit": [0.5,0.35]},
+        {"number": 11, "type": "slow", "entry": [0.8,0.6], "apex": [0.9,0.55], "exit": [0.95,0.5]}
+      ]
+    },
+    {
+      "id": "suzuka",
+      "name": "Suzuka International Racing Course",
+      "polyline": [[0.1,0.5],[0.2,0.45],[0.25,0.35],[0.3,0.25],[0.4,0.2],[0.5,0.25],[0.6,0.4],[0.7,0.6],[0.8,0.7],[0.85,0.65],[0.9,0.55],[0.95,0.5]],
+      "corners": [
+        {"number": 1, "type": "fast", "entry": [0.2,0.45], "apex": [0.25,0.35], "exit": [0.3,0.25]},
+        {"number": 7, "type": "medium", "entry": [0.6,0.4], "apex": [0.7,0.6], "exit": [0.8,0.7]},
+        {"number": 15, "type": "slow", "entry": [0.85,0.65], "apex": [0.9,0.55], "exit": [0.95,0.5]}
+      ]
+    },
+    {
+      "id": "monaco",
+      "name": "Circuit de Monaco",
+      "polyline": [[0.1,0.4],[0.2,0.35],[0.3,0.3],[0.35,0.25],[0.4,0.3],[0.45,0.4],[0.5,0.5],[0.6,0.6],[0.7,0.65],[0.8,0.6],[0.9,0.5],[0.95,0.45]],
+      "corners": [
+        {"number": 1, "type": "slow", "entry": [0.3,0.3], "apex": [0.35,0.25], "exit": [0.4,0.3]},
+        {"number": 6, "type": "medium", "entry": [0.5,0.5], "apex": [0.6,0.6], "exit": [0.7,0.65]},
+        {"number": 19, "type": "slow", "entry": [0.8,0.6], "apex": [0.9,0.5], "exit": [0.95,0.45]}
+      ]
+    }
+  ],
+  "sessions": [
+    {
+      "trackId": "bahrain",
+      "year": 2024,
+      "session": "Q",
+      "driverA": "VER",
+      "driverB": "NOR",
+      "corners": [
+        {"cornerNumber":1,"driverA":{"cornerTime":2.153},"driverB":{"cornerTime":2.096},"winner":"NOR","delta_s":0.057},
+        {"cornerNumber":4,"driverA":{"cornerTime":1.987},"driverB":{"cornerTime":1.999},"winner":"VER","delta_s":-0.012},
+        {"cornerNumber":8,"driverA":{"cornerTime":2.234},"driverB":{"cornerTime":2.289},"winner":"VER","delta_s":-0.055}
+      ]
+    }
+  ]
+}

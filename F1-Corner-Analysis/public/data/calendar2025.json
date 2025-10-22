@@ -1,0 +1,197 @@
+{
+  "year": 2025,
+  "rounds": [
+    {
+      "round": 1,
+      "id": "australia",
+      "name": "Australian Grand Prix",
+      "location": "Melbourne",
+      "date": "14 - 16 Mar",
+      "officialName": "FORMULA 1 LOUIS VUITTON AUSTRALIAN GRAND PRIX 2025"
+    },
+    {
+      "round": 2,
+      "id": "china",
+      "name": "Chinese Grand Prix",
+      "location": "Shanghai",
+      "date": "21 - 23 Mar",
+      "officialName": "FORMULA 1 HEINEKEN CHINESE GRAND PRIX 2025"
+    },
+    {
+      "round": 3,
+      "id": "japan",
+      "name": "Japanese Grand Prix",
+      "location": "Suzuka",
+      "date": "04 - 06 Apr",
+      "officialName": "FORMULA 1 LENOVO JAPANESE GRAND PRIX 2025"
+    },
+    {
+      "round": 4,
+      "id": "bahrain",
+      "name": "Bahrain Grand Prix",
+      "location": "Sakhir",
+      "date": "11 - 13 Apr",
+      "officialName": "FORMULA 1 GULF AIR BAHRAIN GRAND PRIX 2025"
+    },
+    {
+      "round": 5,
+      "id": "saudi-arabia",
+      "name": "Saudi Arabian Grand Prix",
+      "location": "Jeddah",
+      "date": "18 - 20 Apr",
+      "officialName": "FORMULA 1 STC SAUDI ARABIAN GRAND PRIX 2025"
+    },
+    {
+      "round": 6,
+      "id": "miami",
+      "name": "Miami Grand Prix",
+      "location": "Miami",
+      "date": "02 - 04 May",
+      "officialName": "FORMULA 1 CRYPTO.COM MIAMI GRAND PRIX 2025"
+    },
+    {
+      "round": 7,
+      "id": "emilia-romagna",
+      "name": "Emilia Romagna Grand Prix",
+      "location": "Imola",
+      "date": "16 - 18 May",
+      "officialName": "FORMULA 1 AWS GRAN PREMIO DEL MADE IN ITALY E DELL'EMILIA-ROMAGNA 2025"
+    },
+    {
+      "round": 8,
+      "id": "monaco",
+      "name": "Monaco Grand Prix",
+      "location": "Monte Carlo",
+      "date": "23 - 25 May",
+      "officialName": "FORMULA 1 TAG HEUER GRAND PRIX DE MONACO 2025"
+    },
+    {
+      "round": 9,
+      "id": "spain",
+      "name": "Spanish Grand Prix",
+      "location": "Barcelona",
+      "date": "30 May - 01 Jun",
+      "officialName": "FORMULA 1 ARAMCO GRAN PREMIO DE ESPAÑA 2025"
+    },
+    {
+      "round": 10,
+      "id": "canada",
+      "name": "Canadian Grand Prix",
+      "location": "Montreal",
+      "date": "13 - 15 Jun",
+      "officialName": "FORMULA 1 PIRELLI GRAND PRIX DU CANADA 2025"
+    },
+    {
+      "round": 11,
+      "id": "austria",
+      "name": "Austrian Grand Prix",
+      "location": "Spielberg",
+      "date": "27 - 29 Jun",
+      "officialName": "FORMULA 1 MSC CRUISES AUSTRIAN GRAND PRIX 2025"
+    },
+    {
+      "round": 12,
+      "id": "great-britain",
+      "name": "British Grand Prix",
+      "location": "Silverstone",
+      "date": "04 - 06 Jul",
+      "officialName": "FORMULA 1 QATAR AIRWAYS BRITISH GRAND PRIX 2025"
+    },
+    {
+      "round": 13,
+      "id": "belgium",
+      "name": "Belgian Grand Prix",
+      "location": "Spa-Francorchamps",
+      "date": "25 - 27 Jul",
+      "officialName": "FORMULA 1 MOËT & CHANDON BELGIAN GRAND PRIX 2025"
+    },
+    {
+      "round": 14,
+      "id": "hungary",
+      "name": "Hungarian Grand Prix",
+      "location": "Budapest",
+      "date": "01 - 03 Aug",
+      "officialName": "FORMULA 1 LENOVO HUNGARIAN GRAND PRIX 2025"
+    },
+    {
+      "round": 15,
+      "id": "netherlands",
+      "name": "Dutch Grand Prix",
+      "location": "Zandvoort",
+      "date": "29 - 31 Aug",
+      "officialName": "FORMULA 1 HEINEKEN DUTCH GRAND PRIX 2025"
+    },
+    {
+      "round": 16,
+      "id": "italy",
+      "name": "Italian Grand Prix",
+      "location": "Monza",
+      "date": "05 - 07 Sep",
+      "officialName": "FORMULA 1 PIRELLI GRAN PREMIO D'ITALIA 2025"
+    },
+    {
+      "round": 17,
+      "id": "azerbaijan",
+      "name": "Azerbaijan Grand Prix",
+      "location": "Baku",
+      "date": "19 - 21 Sep",
+      "officialName": "FORMULA 1 QATAR AIRWAYS AZERBAIJAN GRAND PRIX 2025"
+    },
+    {
+      "round": 18,
+      "id": "singapore",
+      "name": "Singapore Grand Prix",
+      "location": "Marina Bay",
+      "date": "03 - 05 Oct",
+      "officialName": "FORMULA 1 SINGAPORE AIRLINES SINGAPORE GRAND PRIX 2025"
+    },
+    {
+      "round": 19,
+      "id": "united-states",
+      "name": "United States Grand Prix",
+      "location": "Austin",
+      "date": "17 - 19 Oct",
+      "officialName": "FORMULA 1 MSC CRUISES UNITED STATES GRAND PRIX 2025"
+    },
+    {
+      "round": 20,
+      "id": "mexico",
+      "name": "Mexico City Grand Prix",
+      "location": "Mexico City",
+      "date": "24 - 26 Oct",
+      "officialName": "FORMULA 1 GRAN PREMIO DE LA CIUDAD DE MÉXICO 2025"
+    },
+    {
+      "round": 21,
+      "id": "brazil",
+      "name": "São Paulo Grand Prix",
+      "location": "São Paulo",
+      "date": "07 - 09 Nov",
+      "officialName": "FORMULA 1 MSC CRUISES GRANDE PRÊMIO DE SÃO PAULO 2025"
+    },
+    {
+      "round": 22,
+      "id": "las-vegas",
+      "name": "Las Vegas Grand Prix",
+      "location": "Las Vegas",
+      "date": "20 - 22 Nov",
+      "officialName": "FORMULA 1 HEINEKEN LAS VEGAS GRAND PRIX 2025"
+    },
+    {
+      "round": 23,
+      "id": "qatar",
+      "name": "Qatar Grand Prix",
+      "location": "Lusail",
+      "date": "28 - 30 Nov",
+      "officialName": "FORMULA 1 QATAR AIRWAYS QATAR GRAND PRIX 2025"
+    },
+    {
+      "round": 24,
+      "id": "abu-dhabi",
+      "name": "Abu Dhabi Grand Prix",
+      "location": "Yas Marina",
+      "date": "05 - 07 Dec",
+      "officialName": "FORMULA 1 ETIHAD AIRWAYS ABU DHABI GRAND PRIX 2025"
+    }
+  ]
+}

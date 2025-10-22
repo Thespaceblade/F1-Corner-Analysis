@@ -1,0 +1,66 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root{
+  --page-bg: #0d0f13;
+  --panel-bg: #12151b;
+  --surface-bg: #171b22;
+  --border-clr: #2a313a;
+  --text-clr: #e7eaee;
+  --subtext-clr: #9aa4b2;
+  --accent-clr: #7cc7ff;
+  --track-stroke: #bcd9ff;
+}
+
+html,body,#root{
+  height:100%;
+}
+
+body{
+  @apply bg-[var(--page-bg)] text-[var(--text-clr)] font-sans;
+}
+
+.panel{
+  background: var(--panel-bg);
+  border: 1px solid var(--border-clr);
+  border-radius: 14px;
+  box-shadow: 0 6px 18px rgba(0,0,0,0.6), inset 0 1px 0 rgba(255,255,255,0.02);
+}
+
+.subpanel{
+  background: var(--surface-bg);
+  border: 1px solid var(--border-clr);
+  border-radius: 10px;
+}
+
+.input-slim{
+  height: 40px; /* h-10 */
+  padding-left: 12px;
+  padding-right: 12px;
+  background: transparent;
+  border-radius: 10px;
+  border: 1px solid var(--border-clr);
+  color: var(--text-clr);
+}
+
+.track-path{
+  fill: none;
+  stroke: var(--track-stroke);
+  stroke-width: 8;
+  filter: drop-shadow(0 6px 10px rgba(123, 180, 255, 0.12));
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.chart-grid{
+  stroke: rgba(255,255,255,0.18);
+  stroke-dasharray: 3 6;
+}
+
+.chip{
+  @apply inline-flex items-center px-3 py-1 rounded-full text-sm;
+  background: rgba(124,199,255,0.08);
+  border: 1px solid rgba(124,199,255,0.18);
+  color: var(--text-clr);
+}
