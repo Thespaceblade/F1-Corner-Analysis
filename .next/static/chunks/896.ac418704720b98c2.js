@@ -1,0 +1,1 @@
+"use strict";(self.webpackChunk_N_E=self.webpackChunk_N_E||[]).push([[896],{896:function(t,e,a){a.r(e),e.default={src:"/_next/static/media/japan.07642a70.svg",height:350,width:700,blurWidth:0,blurHeight:0}}}]);

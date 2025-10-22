@@ -1,0 +1,1 @@
+"use strict";(self.webpackChunk_N_E=self.webpackChunk_N_E||[]).push([[566],{8566:function(e,t,i){i.r(t),t.default={src:"/_next/static/media/mexico.91e41477.svg",height:500,width:700,blurWidth:0,blurHeight:0}}}]);

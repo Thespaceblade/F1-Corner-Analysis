@@ -1,7 +1,7 @@
 1:HL["/_next/static/css/0f7bfe5d7c2a490b.css",{"as":"style"}]
-0:["Sz69NCMvTLTTfeEwf58UD",[[["",{"children":["__PAGE__",{}]},"$undefined","$undefined",true],"$L2",[[["$","link","0",{"rel":"stylesheet","href":"/_next/static/css/0f7bfe5d7c2a490b.css","precedence":"next"}]],"$L3"]]]]
-4:I{"id":3466,"chunks":["272:static/chunks/webpack-b14bbdff039a56ed.js","253:static/chunks/bce60fc1-e3e319bc2263bcb6.js","961:static/chunks/961-98951ddbb7130e56.js"],"name":"default","async":false}
-5:I{"id":372,"chunks":["272:static/chunks/webpack-b14bbdff039a56ed.js","253:static/chunks/bce60fc1-e3e319bc2263bcb6.js","961:static/chunks/961-98951ddbb7130e56.js"],"name":"default","async":false}
-6:I{"id":1286,"chunks":["931:static/chunks/app/page-17a1e2c7997fc75a.js"],"name":"","async":false}
+0:["6hUC-A2Le_9_Xv7zKOiKz",[[["",{"children":["__PAGE__",{}]},"$undefined","$undefined",true],"$L2",[[["$","link","0",{"rel":"stylesheet","href":"/_next/static/css/0f7bfe5d7c2a490b.css","precedence":"next"}]],"$L3"]]]]
+4:I{"id":3466,"chunks":["272:static/chunks/webpack-7a6d18b3afa11216.js","253:static/chunks/bce60fc1-e3e319bc2263bcb6.js","961:static/chunks/961-98951ddbb7130e56.js"],"name":"default","async":false}
+5:I{"id":372,"chunks":["272:static/chunks/webpack-7a6d18b3afa11216.js","253:static/chunks/bce60fc1-e3e319bc2263bcb6.js","961:static/chunks/961-98951ddbb7130e56.js"],"name":"default","async":false}
+6:I{"id":1244,"chunks":["931:static/chunks/app/page-c98ab8f7d973319b.js"],"name":"","async":false}
 2:[["$","html",null,{"lang":"en","children":["$","body",null,{"children":["$","div",null,{"className":"min-h-screen py-8","children":["$","$L4",null,{"parallelRouterKey":"children","segmentPath":["children"],"error":"$undefined","errorStyles":"$undefined","loading":"$undefined","loadingStyles":"$undefined","hasLoading":false,"template":["$","$L5",null,{}],"templateStyles":"$undefined","notFound":"$undefined","notFoundStyles":"$undefined","childProp":{"current":[["$","$L6",null,{}],null],"segment":"__PAGE__"},"styles":[]}]}]}]}],null]
 3:[["$","meta","0",{"charSet":"utf-8"}],["$","title","1",{"children":"F1 Corner Analysis"}],["$","meta","2",{"name":"description","content":"inspired by F1Tempo"}],["$","meta","3",{"name":"viewport","content":"width=device-width, initial-scale=1"}]]

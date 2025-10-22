@@ -215,7 +215,7 @@ __webpack_require__.r(__webpack_exports__);
 /***/ 963:
 /***/ ((__unused_webpack_module, __unused_webpack_exports, __webpack_require__) => {
 
-Promise.resolve(/* import() eager */).then(__webpack_require__.bind(__webpack_require__, 2851))
+Promise.resolve(/* import() eager */).then(__webpack_require__.bind(__webpack_require__, 1868))
 
 /***/ }),
 
@@ -230,7 +230,7 @@ Promise.resolve(/* import() eager */).then(__webpack_require__.t.bind(__webpack_
 
 /***/ }),
 
-/***/ 2851:
+/***/ 1868:
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
@@ -327,37 +327,66 @@ function Toolbar({ tracks, selectedTrack, onTrackChangeAction }) {
     });
 }
 
+;// CONCATENATED MODULE: ./lib/trackSvgLoader.ts
+// Utility to load inline SVG content for track maps.
+// Uses webpack's ?raw suffix to import the file contents as a string at build time.
+const svgLoaders = {
+    "abudhabi.svg": async ()=>(await __webpack_require__.e(/* import() */ 752).then(__webpack_require__.bind(__webpack_require__, 5752))).default,
+    "australia.svg": async ()=>(await __webpack_require__.e(/* import() */ 770).then(__webpack_require__.bind(__webpack_require__, 6770))).default,
+    "austria.svg": async ()=>(await __webpack_require__.e(/* import() */ 919).then(__webpack_require__.bind(__webpack_require__, 1919))).default,
+    "azerbaijan.svg": async ()=>(await __webpack_require__.e(/* import() */ 188).then(__webpack_require__.bind(__webpack_require__, 2188))).default,
+    "bahrain.svg": async ()=>(await __webpack_require__.e(/* import() */ 33).then(__webpack_require__.bind(__webpack_require__, 5033))).default,
+    "brazil.svg": async ()=>(await __webpack_require__.e(/* import() */ 114).then(__webpack_require__.bind(__webpack_require__, 6114))).default,
+    "canada.svg": async ()=>(await __webpack_require__.e(/* import() */ 541).then(__webpack_require__.bind(__webpack_require__, 5541))).default,
+    "china.svg": async ()=>(await __webpack_require__.e(/* import() */ 502).then(__webpack_require__.bind(__webpack_require__, 4502))).default,
+    "hungary.svg": async ()=>(await __webpack_require__.e(/* import() */ 437).then(__webpack_require__.bind(__webpack_require__, 9437))).default,
+    "imola.svg": async ()=>(await __webpack_require__.e(/* import() */ 735).then(__webpack_require__.bind(__webpack_require__, 3735))).default,
+    "japan.svg": async ()=>(await __webpack_require__.e(/* import() */ 597).then(__webpack_require__.bind(__webpack_require__, 1597))).default,
+    "las_vegas.svg": async ()=>(await __webpack_require__.e(/* import() */ 753).then(__webpack_require__.bind(__webpack_require__, 5753))).default,
+    "mexico.svg": async ()=>(await __webpack_require__.e(/* import() */ 639).then(__webpack_require__.bind(__webpack_require__, 7563))).default,
+    "miami.svg": async ()=>(await __webpack_require__.e(/* import() */ 781).then(__webpack_require__.bind(__webpack_require__, 8781))).default,
+    "monaco.svg": async ()=>(await __webpack_require__.e(/* import() */ 814).then(__webpack_require__.bind(__webpack_require__, 3814))).default,
+    "monza.svg": async ()=>(await __webpack_require__.e(/* import() */ 832).then(__webpack_require__.bind(__webpack_require__, 5832))).default,
+    "netherlands.svg": async ()=>(await __webpack_require__.e(/* import() */ 48).then(__webpack_require__.bind(__webpack_require__, 5048))).default,
+    "portugal.svg": async ()=>(await __webpack_require__.e(/* import() */ 873).then(__webpack_require__.bind(__webpack_require__, 873))).default,
+    "qatar.svg": async ()=>(await __webpack_require__.e(/* import() */ 408).then(__webpack_require__.bind(__webpack_require__, 408))).default,
+    "saudi_arabia.svg": async ()=>(await __webpack_require__.e(/* import() */ 340).then(__webpack_require__.bind(__webpack_require__, 4919))).default,
+    "silverstone.svg": async ()=>(await __webpack_require__.e(/* import() */ 689).then(__webpack_require__.bind(__webpack_require__, 9391))).default,
+    "singapore.svg": async ()=>(await __webpack_require__.e(/* import() */ 22).then(__webpack_require__.bind(__webpack_require__, 5022))).default,
+    "spa.svg": async ()=>(await __webpack_require__.e(/* import() */ 586).then(__webpack_require__.bind(__webpack_require__, 7586))).default,
+    "spain.svg": async ()=>(await __webpack_require__.e(/* import() */ 452).then(__webpack_require__.bind(__webpack_require__, 1452))).default,
+    "usa.svg": async ()=>(await __webpack_require__.e(/* import() */ 227).then(__webpack_require__.bind(__webpack_require__, 227))).default
+};
+async function loadTrackSvg(svgFile) {
+    const loader = svgLoaders[svgFile];
+    if (!loader) {
+        throw new Error(`Unsupported track SVG: ${svgFile}`);
+    }
+    return loader();
+}
+
 ;// CONCATENATED MODULE: ./components/TrackPanel.tsx
 /* __next_internal_client_entry_do_not_use__ default auto */ 
+
 
 function TrackPanel({ svgFile, corners }) {
     const [svgContent, setSvgContent] = (0,react_.useState)(null);
     const [viewBox, setViewBox] = (0,react_.useState)(null);
     const [error, setError] = (0,react_.useState)(null);
-    const [status, setStatus] = (0,react_.useState)(null);
     const [isReady, setIsReady] = (0,react_.useState)(false);
     const reqIdRef = react_default().useRef(0);
     (0,react_.useEffect)(()=>{
         if (!svgFile) return;
-        const url = `/Tracks/${encodeURIComponent(svgFile)}`;
         // clear previous content immediately to avoid flashing the wrong track
         setSvgContent(null);
         setViewBox(null);
-        setStatus(null);
         setError(null);
         setIsReady(false);
-        const controller = new AbortController();
-        const signal = controller.signal;
-        const localReqId = ++reqIdRef.current;
-        fetch(url, {
-            signal
-        }).then(async (res)=>{
-            if (!res.ok) throw new Error(`HTTP ${res.status}`);
-            const text = await res.text();
-            if (signal.aborted) return;
+        const localReqId = reqIdRef.current + 1;
+        reqIdRef.current = localReqId;
+        loadTrackSvg(svgFile).then((text)=>{
             // ignore if this is not the latest request
             if (localReqId !== reqIdRef.current) return;
-            setStatus(res.status);
             // try extract viewBox
             const vbMatch = text.match(/viewBox\s*=\s*"([^"]+)"/) || text.match(/viewBox\s*=\s*'([^']+)'/);
             if (vbMatch && vbMatch[1]) {
@@ -397,17 +426,13 @@ function TrackPanel({ svgFile, corners }) {
                 setSvgContent(prepared);
             }
         }).catch((err)=>{
-            if (signal.aborted) return;
             // ignore if superseded
             if (localReqId !== reqIdRef.current) return;
-            console.error("Failed to load SVG", url, err);
+            console.error("Failed to load SVG", svgFile, err);
             setError(`Failed to load ${svgFile}: ${err.message}`);
             setSvgContent(null);
             setIsReady(true);
         });
-        return ()=>{
-            controller.abort();
-        };
     }, [
         svgFile
     ]);
@@ -432,15 +457,13 @@ function TrackPanel({ svgFile, corners }) {
                             className: "p-3 mb-2 text-sm text-red-400 bg-red-900/20 rounded",
                             children: error
                         }),
-                        status !== null && /*#__PURE__*/ (0,jsx_runtime_.jsxs)("div", {
+                        svgContent && /*#__PURE__*/ (0,jsx_runtime_.jsxs)("div", {
                             className: "p-2 mb-2 text-xs text-gray-300",
                             children: [
-                                "Requested: ",
+                                "Loaded track: ",
                                 /*#__PURE__*/ jsx_runtime_.jsx("code", {
-                                    children: `/Tracks/${svgFile}`
-                                }),
-                                " — status: ",
-                                status
+                                    children: svgFile
+                                })
                             ]
                         }),
                         /*#__PURE__*/ (0,jsx_runtime_.jsxs)("div", {

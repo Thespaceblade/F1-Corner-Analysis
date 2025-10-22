@@ -1,0 +1,1 @@
+"use strict";(self.webpackChunk_N_E=self.webpackChunk_N_E||[]).push([[670],{1670:function(e,t,a){a.r(t),t.default={src:"/_next/static/media/azerbaijan.9a91d1db.svg",height:502,width:700,blurWidth:0,blurHeight:0}}}]);

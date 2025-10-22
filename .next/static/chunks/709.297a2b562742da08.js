@@ -1,0 +1,1 @@
+"use strict";(self.webpackChunk_N_E=self.webpackChunk_N_E||[]).push([[709],{7709:function(t,e,i){i.r(e),e.default={src:"/_next/static/media/brazil.6cb5a9c4.svg",height:700,width:449,blurWidth:0,blurHeight:0}}}]);

@@ -1,6 +1,7 @@
 'use client'
 
 import React, { useEffect, useState } from 'react'
+import { loadTrackSvg } from '../lib/trackSvgLoader'
 
 type Corner = {
   number: number
@@ -18,32 +19,24 @@ export default function TrackPanel({ svgFile, corners }: TrackPanelProps) {
   const [svgContent, setSvgContent] = useState<string | null>(null)
   const [viewBox, setViewBox] = useState<{minX:number,minY:number,w:number,h:number} | null>(null)
   const [error, setError] = useState<string | null>(null)
-  const [status, setStatus] = useState<number | null>(null)
   const [isReady, setIsReady] = useState<boolean>(false)
   const reqIdRef = React.useRef(0)
 
   useEffect(() => {
     if(!svgFile) return
-    const url = `/Tracks/${encodeURIComponent(svgFile)}`
     // clear previous content immediately to avoid flashing the wrong track
     setSvgContent(null)
     setViewBox(null)
-    setStatus(null)
     setError(null)
     setIsReady(false)
 
-    const controller = new AbortController()
-    const signal = controller.signal
-    const localReqId = ++reqIdRef.current
+    const localReqId = reqIdRef.current + 1
+    reqIdRef.current = localReqId
 
-    fetch(url, { signal })
-      .then(async res => {
-        if(!res.ok) throw new Error(`HTTP ${res.status}`)
-        const text = await res.text()
-        if (signal.aborted) return
+    loadTrackSvg(svgFile)
+      .then(text => {
         // ignore if this is not the latest request
         if (localReqId !== reqIdRef.current) return
-        setStatus(res.status)
 
         // try extract viewBox
         const vbMatch = text.match(/viewBox\s*=\s*"([^"]+)"/) || text.match(/viewBox\s*=\s*'([^']+)'/)
@@ -84,17 +77,13 @@ export default function TrackPanel({ svgFile, corners }: TrackPanelProps) {
         }
       })
       .catch(err => {
-        if (signal.aborted) return
         // ignore if superseded
         if (localReqId !== reqIdRef.current) return
-        console.error('Failed to load SVG', url, err)
+        console.error('Failed to load SVG', svgFile, err)
         setError(`Failed to load ${svgFile}: ${err.message}`)
         setSvgContent(null)
         setIsReady(true)
       })
-    return () => {
-      controller.abort()
-    }
   }, [svgFile])
 
   // Once the raw SVG is loaded we can flip the ready flag
@@ -111,9 +100,8 @@ export default function TrackPanel({ svgFile, corners }: TrackPanelProps) {
             <div className="p-3 mb-2 text-sm text-red-400 bg-red-900/20 rounded">{error}</div>
           )}
 
-          {/* debug status */}
-          {status !== null && (
-            <div className="p-2 mb-2 text-xs text-gray-300">Requested: <code>{`/Tracks/${svgFile}`}</code> — status: {status}</div>
+          {svgContent && (
+            <div className="p-2 mb-2 text-xs text-gray-300">Loaded track: <code>{svgFile}</code></div>
           )}
 
           {/* Inline SVG when available so it renders reliably. Also show a fallback placeholder while fetching. */}

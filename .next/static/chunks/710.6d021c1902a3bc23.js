@@ -1,0 +1,1 @@
+"use strict";(self.webpackChunk_N_E=self.webpackChunk_N_E||[]).push([[710],{9710:function(t,e,h){h.r(e),e.default={src:"/_next/static/media/china.433f933f.svg",height:614,width:700,blurWidth:0,blurHeight:0}}}]);

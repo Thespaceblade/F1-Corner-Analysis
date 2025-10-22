@@ -1,0 +1,1 @@
+"use strict";(self.webpackChunk_N_E=self.webpackChunk_N_E||[]).push([[8],{2008:function(t,e,s){s.r(e),e.default={src:"/_next/static/media/spa.2b652ac7.svg",height:700,width:437,blurWidth:0,blurHeight:0}}}]);

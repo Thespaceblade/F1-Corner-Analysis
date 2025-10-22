@@ -1,0 +1,1 @@
+"use strict";(self.webpackChunk_N_E=self.webpackChunk_N_E||[]).push([[607],{5607:function(t,e,h){h.r(e),e.default={src:"/_next/static/media/bahrain.ff7f5dbb.svg",height:700,width:474,blurWidth:0,blurHeight:0}}}]);
