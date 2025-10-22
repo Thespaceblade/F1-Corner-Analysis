@@ -115,4 +115,11 @@ export const f1Teams: Team[] = [
       { code: 'BEA', name: 'Oliver Bearman', number: 87 }
     ]
   }
-];
+]
+
+export const driverColorMap: Record<string, string> = f1Teams.reduce((acc, team) => {
+  team.drivers.forEach(driver => {
+    acc[driver.code.toUpperCase()] = team.color
+  })
+  return acc
+}, {} as Record<string, string>)

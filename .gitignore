@@ -1,35 +1,24 @@
-# macOS
+# macOS cruft
 .DS_Store
-# Python / Node / VS Code
+.Trash/
+
+# Python / Node / IDE artifacts
 __pycache__/
 *.pyc
 node_modules/
 .vscode/
 .env
-# OS junk
-.Trash/
-# macOS
-.DS_Store
+.env.*
 
-# VS Code
-.vscode/
+# Next.js build outputs
+.next/
+.out/
+dist/
+.vercel/
+out/
 
-# Top-level Next.js app
-F1-Corner-Analysis/.next/
-F1-Corner-Analysis/node_modules/
-F1-Corner-Analysis/.vercel/
-F1-Corner-Analysis/dist/
-F1-Corner-Analysis/out/
-F1-Corner-Analysis/.env
-F1-Corner-Analysis/.env.*
-# VS Code
-.vscode/
+# Generated telemetry datasets
+public/data/sessions/
 
-# Top-level Next.js app
-F1-Corner-Analysis/.next/
-F1-Corner-Analysis/node_modules/
-F1-Corner-Analysis/.vercel/
-F1-Corner-Analysis/dist/
-F1-Corner-Analysis/out/
-F1-Corner-Analysis/.env
-F1-Corner-Analysis/.env.*
+# Cache directories
+cache/

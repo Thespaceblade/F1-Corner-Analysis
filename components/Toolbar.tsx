@@ -28,9 +28,26 @@ type ToolbarProps = {
   onTrackChangeAction: (trackId: string) => void
   selectedDrivers: string[]
   onDriversChangeAction: (drivers: string[]) => void
+  selectedSession: string
+  onSessionChangeAction: (sessionCode: string) => void
 }
 
-export default function Toolbar({ tracks, selectedTrack, onTrackChangeAction, selectedDrivers, onDriversChangeAction }: ToolbarProps) {
+export const sessionOptions = [
+  { label: 'Qualifying', value: 'Q' },
+  { label: 'Race', value: 'R' },
+  { label: 'Sprint Qualifying', value: 'SQ' },
+  { label: 'Sprint', value: 'S' },
+]
+
+export default function Toolbar({
+  tracks,
+  selectedTrack,
+  onTrackChangeAction,
+  selectedDrivers,
+  onDriversChangeAction,
+  selectedSession,
+  onSessionChangeAction,
+}: ToolbarProps) {
   const [openTeamId, setOpenTeamId] = useState<string | null>(null)
   const closeTimer = useRef<ReturnType<typeof setTimeout> | null>(null)
 
@@ -104,9 +121,16 @@ export default function Toolbar({ tracks, selectedTrack, onTrackChangeAction, se
           ))}
         </select>
 
-        <select className="input-slim min-w-[120px]">
-          <option value="Q">Qualifying</option>
-          <option value="R">Race</option>
+        <select
+          className="input-slim min-w-[180px]"
+          value={selectedSession}
+          onChange={e => onSessionChangeAction(e.target.value)}
+        >
+          {sessionOptions.map(option => (
+            <option key={option.value} value={option.value}>
+              {option.label}
+            </option>
+          ))}
         </select>
       </div>
 
@@ -153,7 +177,7 @@ export default function Toolbar({ tracks, selectedTrack, onTrackChangeAction, se
                     <img 
                       src={`/team-logos/${team.id}.png`} 
                       alt={`${team.shortName} logo`}
-                      className="h-[400%] w-[400%] object-contain"
+                      className="h-[70%] w-[70%] object-contain"
                     />
                   ) : (
                     <span className="text-sm font-semibold">{team.shortName.substring(0, 2)}</span>

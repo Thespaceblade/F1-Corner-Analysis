@@ -1,10 +1,11 @@
 'use client'
 
-import React, { useEffect, useState } from 'react'
-import Toolbar from './Toolbar'
+import React, { useEffect, useMemo, useState } from 'react'
+import Toolbar, { sessionOptions } from './Toolbar'
 import TrackPanel from './TrackPanel'
 import ChartPanel from './ChartPanel'
 import CornerTable from './CornerTable'
+import { loadSessionData, SessionPayload } from '../lib/sessionDataClient'
 
 type CalendarTrack = {
   id: string
@@ -42,6 +43,11 @@ export default function ClientPage(){
   const [selectedTrack, setSelectedTrack] = useState<string>('')
   const [trackData, setTrackData] = useState<TracksData | null>(null)
   const [selectedDrivers, setSelectedDrivers] = useState<string[]>(['VER','NOR'])
+  const [selectedSession, setSelectedSession] = useState<string>('Q')
+  const [sessionData, setSessionData] = useState<SessionPayload | null>(null)
+  const [sessionLoading, setSessionLoading] = useState<boolean>(false)
+  const [sessionError, setSessionError] = useState<string | null>(null)
+  const [showOutliers, setShowOutliers] = useState<boolean>(false)
 
   useEffect(() => {
     fetch('/data/tracks.json').then(r => r.json()).then(setTrackData)
@@ -55,8 +61,48 @@ export default function ClientPage(){
     fetch('/data/calendar2025.json').then(r => r.json()).then(setCalendarData)
   }, [])
 
+  useEffect(() => {
+    if (!selectedTrack) {
+      setSessionData(null)
+      setSessionError(null)
+      setSessionLoading(false)
+      return
+    }
+
+    const controller = new AbortController()
+    setSessionLoading(true)
+    setSessionError(null)
+
+    loadSessionData(
+      {
+        year: selectedYear,
+        round: selectedTrack,
+        session: selectedSession,
+        drivers: selectedDrivers
+      },
+      { signal: controller.signal }
+    )
+      .then(data => {
+        if (controller.signal.aborted) return
+        setSessionData(data)
+        setSessionLoading(false)
+      })
+      .catch(error => {
+        if (controller.signal.aborted) return
+        setSessionData(null)
+        setSessionError(error instanceof Error ? error.message : String(error))
+        setSessionLoading(false)
+      })
+
+    return () => controller.abort()
+  }, [selectedTrack, selectedSession, selectedDrivers, selectedYear])
+
   const currentTrack = trackData?.tracks[selectedTrack]
   const currentCalendarTrack = calendarData?.rounds.find(t => t.id === selectedTrack)
+  const sessionLabel = useMemo(() => {
+    const found = sessionOptions.find(option => option.value === selectedSession)
+    return found?.label ?? selectedSession
+  }, [selectedSession])
 
   if(!trackData || !calendarData) return <div>Loading...</div>
 
@@ -78,6 +124,8 @@ export default function ClientPage(){
         onTrackChangeAction={setSelectedTrack}
         selectedDrivers={selectedDrivers}
         onDriversChangeAction={setSelectedDrivers}
+        selectedSession={selectedSession}
+        onSessionChangeAction={setSelectedSession}
       />
 
       {currentTrack && currentCalendarTrack && (
@@ -95,6 +143,9 @@ export default function ClientPage(){
               </div>
               <div className="text-gray-600">
                 {currentCalendarTrack.date}
+              </div>
+              <div className="mt-2 text-sm text-gray-400">
+                Session: {sessionLabel}
               </div>
               <div className="mt-4 text-sm text-gray-300">
                 <div className="font-semibold uppercase tracking-wide text-xs text-gray-400">
@@ -114,16 +165,64 @@ export default function ClientPage(){
                   }
                 </div>
               </div>
-              {/* ChartPanel will be updated once we have session data */}
+              {sessionData?.meta && (
+                <div className="mt-3 flex flex-wrap items-center gap-3 text-xs text-gray-500">
+                  <span>
+                    {sessionData.meta.validLapCount ?? sessionData.meta.totalLapCount ?? 0} valid laps
+                    {typeof sessionData.meta.totalLapCount === 'number' && typeof sessionData.meta.validLapCount === 'number'
+                      ? ` / ${sessionData.meta.totalLapCount}`
+                      : ''}
+                  </span>
+                  {typeof sessionData.meta.outlierLapCount === 'number' && sessionData.meta.outlierLapCount > 0 && (
+                    <span className="text-[11px] text-gray-400">
+                      {sessionData.meta.outlierLapCount} flagged as outliers
+                    </span>
+                  )}
+                </div>
+              )}
+              <div className="mt-3 flex items-center gap-2 text-xs text-gray-300">
+                <button
+                  type="button"
+                  onClick={() => setShowOutliers(prev => !prev)}
+                  className={`rounded border px-2 py-1 transition ${
+                    showOutliers
+                      ? 'border-accent text-accent'
+                      : 'border-gray-600 text-gray-400 hover:border-accent/40 hover:text-accent'
+                  }`}
+                >
+                  {showOutliers ? 'Hide outlier laps' : 'Show outlier laps'}
+                </button>
+                <span className="text-[11px] text-gray-500">
+                  Outliers include out/in laps, safety car laps, yellow flag laps, etc.
+                </span>
+              </div>
+              {sessionError && (
+                <div className="mt-4 rounded border border-red-500/40 bg-red-500/10 px-3 py-2 text-sm text-red-300">
+                  {sessionError}
+                </div>
+              )}
+              {sessionData?.notes?.length ? (
+                <div className="mt-4 text-xs text-gray-500 space-y-1">
+                  {sessionData.notes.map((note, idx) => (
+                    <div key={idx}>• {note}</div>
+                  ))}
+                </div>
+              ) : null}
             </div>
           </div>
 
-          <div className="mt-6 panel p-4">
-            <CornerTable 
-              corners={[]} 
-              cornerInfo={currentTrack.corners}
-            />
-          </div>
+          <ChartPanel 
+            sessionData={sessionData}
+            selectedDrivers={selectedDrivers}
+            loading={sessionLoading}
+            showOutliers={showOutliers}
+          />
+
+          <CornerTable 
+            corners={sessionData?.corners ?? {}} 
+            cornerInfo={currentTrack.corners}
+            selectedDrivers={selectedDrivers}
+          />
         </>
       )}
     </main>
