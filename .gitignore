@@ -1,0 +1,10 @@
+# macOS
+.DS_Store
+# Python / Node / VS Code
+__pycache__/
+*.pyc
+node_modules/
+.vscode/
+.env
+# OS junk
+.Trash/
