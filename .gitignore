@@ -22,3 +22,14 @@ F1-Corner-Analysis/dist/
 F1-Corner-Analysis/out/
 F1-Corner-Analysis/.env
 F1-Corner-Analysis/.env.*
+# VS Code
+.vscode/
+
+# Top-level Next.js app
+F1-Corner-Analysis/.next/
+F1-Corner-Analysis/node_modules/
+F1-Corner-Analysis/.vercel/
+F1-Corner-Analysis/dist/
+F1-Corner-Analysis/out/
+F1-Corner-Analysis/.env
+F1-Corner-Analysis/.env.*
