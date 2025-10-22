@@ -153,7 +153,7 @@ export default function Toolbar({ tracks, selectedTrack, onTrackChangeAction, se
                     <img 
                       src={`/team-logos/${team.id}.png`} 
                       alt={`${team.shortName} logo`}
-                      className="h-[70%] w-[70%] object-contain"
+                      className="h-[400%] w-[400%] object-contain"
                     />
                   ) : (
                     <span className="text-sm font-semibold">{team.shortName.substring(0, 2)}</span>
