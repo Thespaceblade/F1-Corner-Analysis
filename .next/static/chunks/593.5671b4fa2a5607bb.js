@@ -1,1 +1,0 @@
-"use strict";(self.webpackChunk_N_E=self.webpackChunk_N_E||[]).push([[593],{5593:function(t,e,h){h.r(e),e.default={src:"/_next/static/media/monza.b4a58c84.svg",height:700,width:407,blurWidth:0,blurHeight:0}}}]);

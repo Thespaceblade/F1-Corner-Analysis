@@ -1,1 +1,0 @@
-"use strict";(self.webpackChunk_N_E=self.webpackChunk_N_E||[]).push([[775],{4775:function(t,e,i){i.r(e),e.default={src:"/_next/static/media/saudi_arabia.03fcd69f.svg",height:700,width:153,blurWidth:0,blurHeight:0}}}]);

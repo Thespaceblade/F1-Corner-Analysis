@@ -1,1 +1,0 @@
-"use strict";(self.webpackChunk_N_E=self.webpackChunk_N_E||[]).push([[647],{6647:function(t,e,h){h.r(e),e.default={src:"/_next/static/media/hungary.f305b45c.svg",height:700,width:620,blurWidth:0,blurHeight:0}}}]);

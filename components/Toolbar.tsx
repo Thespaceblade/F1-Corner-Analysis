@@ -1,9 +1,9 @@
 'use client'
 
 import React, { useState, useEffect } from 'react'
+import { f1Teams, Team, Driver } from '../lib/teamData'
 
 const years = [2025]
-const drivers = ['VER','LEC','NOR','HAM']
 
 type Track = {
   id: string
@@ -30,9 +30,10 @@ type ToolbarProps = {
 
 export default function Toolbar({ tracks, selectedTrack, onTrackChangeAction }: ToolbarProps) {
   const [selected, setSelected] = useState<string[]>(['VER','NOR'])
+  const [hoveredTeam, setHoveredTeam] = useState<string | null>(null)
 
-  const toggle = (d:string) => {
-    setSelected(s => s.includes(d) ? s.filter(x=>x!==d) : [...s,d])
+  const toggle = (driverCode: string) => {
+    setSelected(s => s.includes(driverCode) ? s.filter(x => x !== driverCode) : [...s, driverCode])
   }
 
   return (
@@ -68,10 +69,40 @@ export default function Toolbar({ tracks, selectedTrack, onTrackChangeAction }: 
       </div>
 
       <div className="flex-1 flex items-center justify-end gap-2">
-        {drivers.map(d=> (
-          <button key={d} onClick={()=>toggle(d)} className={`chip ${selected.includes(d)?'ring-1 ring-accent':''}`}>
-            {d}
-          </button>
+        {f1Teams.map(team => (
+          <div
+            key={team.id}
+            className="relative"
+            onMouseEnter={() => setHoveredTeam(team.id)}
+            onMouseLeave={() => setHoveredTeam(null)}
+          >
+            <button
+              className="chip h-8 w-8 flex items-center justify-center"
+              style={{ backgroundColor: team.color }}
+              title={team.name}
+            >
+              {team.shortName.substring(0, 2)}
+            </button>
+            
+            {hoveredTeam === team.id && (
+              <div className="absolute top-full mt-1 bg-gray-800 rounded-lg shadow-lg p-2 z-50 min-w-[120px]">
+                {team.drivers.map(driver => (
+                  <button
+                    key={driver.code}
+                    onClick={() => toggle(driver.code)}
+                    className={`w-full text-left px-2 py-1 rounded hover:bg-gray-700 ${
+                      selected.includes(driver.code) ? 'bg-gray-700' : ''
+                    }`}
+                  >
+                    <span className={`inline-block w-12 ${selected.includes(driver.code) ? 'text-accent' : ''}`}>
+                      {driver.code}
+                    </span>
+                    <span className="text-sm text-gray-300">{driver.number}</span>
+                  </button>
+                ))}
+              </div>
+            )}
+          </div>
         ))}
       </div>
     </div>

@@ -1,1 +1,0 @@
-"use strict";(self.webpackChunk_N_E=self.webpackChunk_N_E||[]).push([[122],{1122:function(t,e,h){h.r(e),e.default={src:"/_next/static/media/qatar.64569d5f.svg",height:700,width:599,blurWidth:0,blurHeight:0}}}]);

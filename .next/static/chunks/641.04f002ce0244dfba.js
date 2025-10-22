@@ -1,1 +1,0 @@
-"use strict";(self.webpackChunk_N_E=self.webpackChunk_N_E||[]).push([[641],{8641:function(t,e,h){h.r(e),e.default={src:"/_next/static/media/abudhabi.4fa33568.svg",height:445,width:700,blurWidth:0,blurHeight:0}}}]);

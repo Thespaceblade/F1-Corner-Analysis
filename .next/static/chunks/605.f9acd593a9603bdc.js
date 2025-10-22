@@ -1,1 +1,0 @@
-"use strict";(self.webpackChunk_N_E=self.webpackChunk_N_E||[]).push([[605],{5605:function(t,e,a){a.r(e),e.default={src:"/_next/static/media/canada.cba67581.svg",height:700,width:230,blurWidth:0,blurHeight:0}}}]);

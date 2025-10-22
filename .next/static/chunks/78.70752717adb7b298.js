@@ -1,1 +1,0 @@
-"use strict";(self.webpackChunk_N_E=self.webpackChunk_N_E||[]).push([[78],{3078:function(t,e,i){i.r(e),e.default={src:"/_next/static/media/australia.69892b0e.svg",height:700,width:593,blurWidth:0,blurHeight:0}}}]);
