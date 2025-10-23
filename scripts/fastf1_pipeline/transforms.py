@@ -6,11 +6,6 @@ from typing import Any, Dict, Iterable, List, Sequence, Set
 from .fetch import FetchResult
 
 try:
-    from fastf1.core import DataNotLoadedError  # type: ignore
-except Exception:  # pragma: no cover - keep optional dependency soft
-    DataNotLoadedError = Exception  # type: ignore
-
-try:
     import pandas as pd  # type: ignore
 except ImportError:  # pragma: no cover - allows running without pandas when FastF1 absent
     pd = None  # type: ignore
@@ -106,17 +101,7 @@ def build_session_payload(
         }
 
     session = fetch_result.session
-    try:
-        laps_df = getattr(session, "laps", None)
-    except DataNotLoadedError as exc:
-        meta["status"] = "unavailable"
-        return {
-            "meta": meta,
-            "drivers": {},
-            "laps": [],
-            "corners": {},
-            "notes": [f"Lap data unavailable: {exc}"],
-        }
+    laps_df = getattr(session, "laps", None)
 
     if laps_df is None or laps_df.empty:
         return {
