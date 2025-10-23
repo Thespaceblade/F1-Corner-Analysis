@@ -1,6 +1,7 @@
 'use client'
 
 import React, { useEffect, useMemo, useState } from 'react'
+import Image from 'next/image'
 import Toolbar, { sessionOptions } from './Toolbar'
 import TrackPanel from './TrackPanel'
 import ChartPanel from './ChartPanel'
@@ -113,9 +114,23 @@ export default function ClientPage(){
 
   return (
     <main className="max-w-6xl mx-auto px-4">
-      <header className="mb-6">
-        <h1 className="text-3xl font-semibold">F1 Corner Analysis</h1>
-        <p className="text-sm text-subtext-clr">inspired by F1Tempo</p>
+      <header className="mb-10 flex flex-col items-center gap-4 text-center">
+        <div className="flex h-16 w-16 items-center justify-center overflow-hidden rounded-full border border-accent/40 bg-gray-900/40">
+          <Image
+            src="/logos/logo-transparent.png"
+            alt="F1 Corner Analysis logo"
+            width={64}
+            height={64}
+            className="object-contain"
+            priority
+          />
+        </div>
+        <div>
+          <h1 className="text-4xl font-semibold tracking-tight text-white md:text-5xl">
+            F1 Corner Analysis
+          </h1>
+          <p className="mt-2 text-sm text-subtext-clr md:text-base">with data from FastF1</p>
+        </div>
       </header>
 
       <Toolbar 
