@@ -17,8 +17,9 @@ dist/
 .vercel/
 out/
 
-# Generated telemetry datasets
-public/data/sessions/
+# Generated telemetry datasets (keep tracked once generated)
+#!public/data/sessions/
+public/data/sessions/__generated_cache__/
 
 # Cache directories
 cache/
