@@ -150,7 +150,7 @@ export default function Toolbar({
             >
               <button
                 type="button"
-                className="chip relative flex h-10 w-10 items-center justify-center p-[4px]"
+                className="chip relative flex h-[2.75rem] w-[2.75rem] items-center justify-center p-0"
                 style={{ backgroundColor: team.color }}
                 title={team.name}
                 aria-pressed={allSelected}
@@ -177,7 +177,7 @@ export default function Toolbar({
                     <img 
                       src={`/team-logos/${team.id}.png`} 
                       alt={`${team.shortName} logo`}
-                      className="h-[70%] w-[70%] object-contain"
+                      className={`h-full w-full object-contain ${['aston-martin','visa-rb','stake'].includes(team.id) ? 'scale-110' : ''}`}
                     />
                   ) : (
                     <span className="text-sm font-semibold">{team.shortName.substring(0, 2)}</span>
