@@ -6,6 +6,7 @@ import Toolbar, { sessionOptions } from './Toolbar'
 import TrackPanel from './TrackPanel'
 import ChartPanel from './ChartPanel'
 import CornerTable from './CornerTable'
+import CornerDeltaChart from './CornerDeltaChart'
 import { loadSessionData, SessionPayload } from '../lib/sessionDataClient'
 
 type CalendarTrack = {
@@ -346,6 +347,14 @@ export default function ClientPage(){
             cornerInfo={currentTrack.corners}
             selectedDrivers={selectedDrivers}
           />
+
+          {selectedDrivers.length >= 2 && (
+            <CornerDeltaChart
+              corners={sessionData?.corners ?? {}}
+              cornerInfo={currentTrack.corners}
+              selectedDrivers={selectedDrivers}
+            />
+          )}
         </>
       )}
     </main>

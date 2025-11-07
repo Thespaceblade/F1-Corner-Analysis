@@ -56,11 +56,28 @@ export type QualifyingBoundaries = {
   q3End: number | null
 }
 
+export type CornerMetrics = {
+  cornerNumber: number
+  detectedCornerIndex?: number
+  lapNumber: number
+  entrySpeed: number
+  apexSpeed: number
+  exitSpeed: number
+  cornerTime: number | null
+  brakingDistance: number
+  accelerationDistance: number
+  entryDistance: number
+  apexDistance: number
+  exitDistance: number
+  minSpeed: number
+  cornerType?: 'slow' | 'medium' | 'fast' | 'unknown'
+}
+
 export type SessionPayload = {
   meta: SessionMeta
   drivers: Record<string, SessionDriver>
   laps: SessionLap[]
-  corners: Record<string, unknown[]>
+  corners: Record<string, CornerMetrics[]>
   notes?: string[]
   qualifyingBoundaries?: QualifyingBoundaries
 }

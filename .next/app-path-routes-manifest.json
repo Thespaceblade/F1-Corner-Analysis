@@ -1,0 +1,5 @@
+{
+  "/page": "/",
+  "/api/sessions/index/route": "/api/sessions/index",
+  "/api/sessions/[year]/[round]/[session]/route": "/api/sessions/[year]/[round]/[session]"
+}
