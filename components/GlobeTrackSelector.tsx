@@ -4,6 +4,7 @@ import React, { useEffect, useRef, useState, useMemo, useCallback } from 'react'
 import dynamic from 'next/dynamic'
 
 // Dynamically import Globe to avoid SSR issues
+// Updated to fix build error - removed invalid pointLabelSize prop
 const Globe = dynamic(() => import('react-globe.gl'), { 
   ssr: false,
   loading: () => (
