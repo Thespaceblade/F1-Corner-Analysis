@@ -9,5 +9,11 @@ incrementally without changing the public contract.
 """
 
 from .config import PipelineConfig  # noqa: F401
+from .corners import (  # noqa: F401
+    calculate_corner_metrics,
+    detect_corners,
+    match_corners_to_track,
+    resample_to_common_distance,
+)
 from .fetch import FetchResult, SessionIdentifier, fetch_session  # noqa: F401
 from .transforms import build_session_payload  # noqa: F401

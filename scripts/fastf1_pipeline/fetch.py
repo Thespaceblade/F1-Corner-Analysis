@@ -47,7 +47,8 @@ def fetch_session(identifier: SessionIdentifier, cache_dir: Path) -> FetchResult
     try:
         fastf1.Cache.enable_cache(str(cache_dir))
         session = fastf1.get_session(identifier.year, identifier.round_slug, identifier.session_code)
-        session.load(laps=True, telemetry=False, weather=False)
+        # Enable telemetry for corner analysis
+        session.load(laps=True, telemetry=True, weather=False)
         return FetchResult(
             status="ok",
             identifier=identifier,

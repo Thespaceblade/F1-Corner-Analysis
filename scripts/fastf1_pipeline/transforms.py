@@ -1,8 +1,16 @@
 from __future__ import annotations
 
+import json
 from datetime import datetime, timezone
 from typing import Any, Dict, Iterable, List, Sequence, Set
 
+from .config import PipelineConfig
+from .corners import (
+    calculate_corner_metrics,
+    detect_corners,
+    match_corners_to_track,
+    resample_to_common_distance,
+)
 from .fetch import FetchResult
 
 try:
@@ -66,6 +74,139 @@ OUTLIER_FLAGS = {
     "inaccurate",
     "missing-laptime",
 }
+
+
+def process_session_corners(
+    session: Any,
+    laps_df: pd.DataFrame,
+    round_slug: str,
+    selected_drivers: Sequence[str] | None = None,
+    process_fastest_only: bool = False,
+) -> Dict[str, List[Dict[str, Any]]]:
+    """
+    Process corner telemetry for all valid laps in session.
+
+    Args:
+        session: FastF1 session object
+        laps_df: DataFrame of laps
+        round_slug: Round slug for loading track corner definitions
+        selected_drivers: Filter to specific drivers (optional)
+        process_fastest_only: If True, only process fastest lap per driver (faster)
+
+    Returns:
+        Dictionary mapping driver codes to lists of corner metrics
+    """
+    corners_by_driver: Dict[str, List[Dict[str, Any]]] = {}
+
+    if pd is None:
+        return corners_by_driver
+
+    # Load track corner definitions (if available)
+    track_corners = None
+    try:
+        config = PipelineConfig()
+        tracks_path = config.root / "public" / "data" / "tracks.json"
+        if tracks_path.exists():
+            tracks_data = json.loads(tracks_path.read_text())
+            if round_slug in tracks_data.get("tracks", {}):
+                track_corners = tracks_data["tracks"][round_slug].get("corners", [])
+    except Exception:
+        # If we can't load track corners, continue without matching
+        track_corners = None
+
+    # Filter to valid laps only
+    valid_laps = laps_df[laps_df["IsAccurate"] == True].copy()
+
+    if selected_drivers:
+        valid_laps = valid_laps[valid_laps["Driver"].isin(selected_drivers)]
+
+    if valid_laps.empty:
+        return corners_by_driver
+
+    # If processing fastest only, get fastest lap per driver
+    if process_fastest_only:
+        fastest_laps = []
+        for driver in valid_laps["Driver"].unique():
+            driver_laps = valid_laps[valid_laps["Driver"] == driver]
+            if not driver_laps.empty:
+                # Get fastest lap by LapTime
+                fastest = driver_laps.nsmallest(1, "LapTime")
+                fastest_laps.append(fastest)
+        if fastest_laps:
+            valid_laps = pd.concat(fastest_laps, ignore_index=True)
+
+    # Process each valid lap
+    for _, lap_row in valid_laps.iterrows():
+        driver_code = lap_row["Driver"]
+        lap_number = _safe_int(lap_row["LapNumber"])
+
+        if lap_number is None:
+            continue
+
+        try:
+            # Get lap object from session
+            lap_filter = (session.laps["Driver"] == driver_code) & (
+                session.laps["LapNumber"] == lap_number
+            )
+            matching_laps = session.laps[lap_filter]
+
+            if matching_laps.empty:
+                continue
+
+            lap = matching_laps.iloc[0]
+
+            # Get telemetry with distance
+            telemetry = lap.get_car_data().add_distance()
+
+            if telemetry is None or telemetry.empty:
+                continue
+
+            # Resample to uniform grid
+            telemetry_resampled = resample_to_common_distance(telemetry, step=2.0)
+
+            if telemetry_resampled.empty or "Speed" not in telemetry_resampled.columns:
+                continue
+
+            # Detect corners
+            detected = detect_corners(
+                telemetry_resampled["Speed"],
+                telemetry_resampled["Distance"],
+            )
+
+            if not detected:
+                continue
+
+            # Calculate metrics
+            corner_metrics = calculate_corner_metrics(
+                telemetry_resampled,
+                detected,
+                lap_number,
+            )
+
+            if not corner_metrics:
+                continue
+
+            # Match to track corners if available
+            if track_corners:
+                corner_metrics = match_corners_to_track(
+                    corner_metrics,
+                    track_corners,
+                    tolerance_meters=50.0,
+                )
+
+            # Store in dictionary
+            if driver_code not in corners_by_driver:
+                corners_by_driver[driver_code] = []
+
+            corners_by_driver[driver_code].extend(corner_metrics)
+
+        except Exception as e:
+            # Log error but continue processing
+            # In production, you might want to log this properly
+            print(f"Error processing corner for {driver_code} lap {lap_number}: {e}")
+            continue
+
+    return corners_by_driver
 
 
 def build_session_payload(
@@ -254,8 +395,13 @@ def build_session_payload(
             }
         )
 
-    # Corner-level telemetry not yet implemented; include empty arrays with a note.
-    corners_payload = {code: [] for code in drivers_payload.keys()}
+    # Process corner telemetry for valid laps
+    corners_payload = process_session_corners(
+        session,
+        laps_df,
+        identifier.round_slug,
+        selected_drivers=selected_drivers,
+    )
 
     # Extract Q1/Q2/Q3 boundaries from session_status for qualifying sessions
     qualifyingBoundaries = None
@@ -321,7 +467,8 @@ def build_session_payload(
         notes.append(
             f"Flagged {outlier_laps} of {total_laps} laps as outliers (out laps, safety car periods, yellow flags, etc.)."
         )
-    notes.append("Corner-level telemetry aggregation not yet implemented; arrays are placeholders.")
+    if not any(corners_payload.values()):
+        notes.append("No corner telemetry data available for this session.")
 
     event = getattr(session, "event", None)
     event_name = getattr(event, "EventName", None) if event is not None else None
