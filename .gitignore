@@ -23,3 +23,9 @@ public/data/sessions/__generated_cache__/
 
 # Cache directories
 cache/
+
+# Temporary documentation files (generated during development)
+ACTIONABLE_COMMIT_SUMMARY.md
+CHANGES_SUMMARY.md
+COMMIT_MESSAGE.md
+PRE_COMMIT_CHECKLIST.md
