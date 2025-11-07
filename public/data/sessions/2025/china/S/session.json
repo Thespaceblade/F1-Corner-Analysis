@@ -1,0 +1,7493 @@
+{
+  "meta": {
+    "year": 2025,
+    "round": "china",
+    "session": "S",
+    "generatedAt": "2025-11-06T22:46:01.456599+00:00",
+    "requestedDrivers": null,
+    "status": "ok",
+    "totalLapCount": 380,
+    "validLapCount": 354,
+    "outlierLapCount": 26,
+    "event": {
+      "name": "Chinese Grand Prix",
+      "country": null,
+      "officialName": "FORMULA 1 HEINEKEN CHINESE GRAND PRIX 2025"
+    },
+    "availableDrivers": [
+      "HAM",
+      "PIA",
+      "VER",
+      "RUS",
+      "LEC",
+      "TSU",
+      "ANT",
+      "NOR",
+      "STR",
+      "ALO",
+      "ALB",
+      "GAS",
+      "HAD",
+      "LAW",
+      "BEA",
+      "OCO",
+      "SAI",
+      "BOR",
+      "HUL",
+      "DOO"
+    ]
+  },
+  "drivers": {
+    "HAM": {
+      "code": "HAM",
+      "team": "Ferrari",
+      "number": 44,
+      "defaultCompound": "MEDIUM"
+    },
+    "PIA": {
+      "code": "PIA",
+      "team": "McLaren",
+      "number": 81,
+      "defaultCompound": "MEDIUM"
+    },
+    "VER": {
+      "code": "VER",
+      "team": "Red Bull Racing",
+      "number": 1,
+      "defaultCompound": "MEDIUM"
+    },
+    "RUS": {
+      "code": "RUS",
+      "team": "Mercedes",
+      "number": 63,
+      "defaultCompound": "MEDIUM"
+    },
+    "LEC": {
+      "code": "LEC",
+      "team": "Ferrari",
+      "number": 16,
+      "defaultCompound": "MEDIUM"
+    },
+    "TSU": {
+      "code": "TSU",
+      "team": "Racing Bulls",
+      "number": 22,
+      "defaultCompound": "MEDIUM"
+    },
+    "ANT": {
+      "code": "ANT",
+      "team": "Mercedes",
+      "number": 12,
+      "defaultCompound": "MEDIUM"
+    },
+    "NOR": {
+      "code": "NOR",
+      "team": "McLaren",
+      "number": 4,
+      "defaultCompound": "MEDIUM"
+    },
+    "STR": {
+      "code": "STR",
+      "team": "Aston Martin",
+      "number": 18,
+      "defaultCompound": "MEDIUM"
+    },
+    "ALO": {
+      "code": "ALO",
+      "team": "Aston Martin",
+      "number": 14,
+      "defaultCompound": "MEDIUM"
+    },
+    "ALB": {
+      "code": "ALB",
+      "team": "Williams",
+      "number": 23,
+      "defaultCompound": "MEDIUM"
+    },
+    "GAS": {
+      "code": "GAS",
+      "team": "Alpine",
+      "number": 10,
+      "defaultCompound": "MEDIUM"
+    },
+    "HAD": {
+      "code": "HAD",
+      "team": "Racing Bulls",
+      "number": 6,
+      "defaultCompound": "MEDIUM"
+    },
+    "LAW": {
+      "code": "LAW",
+      "team": "Red Bull Racing",
+      "number": 30,
+      "defaultCompound": "MEDIUM"
+    },
+    "BEA": {
+      "code": "BEA",
+      "team": "Haas F1 Team",
+      "number": 87,
+      "defaultCompound": "MEDIUM"
+    },
+    "OCO": {
+      "code": "OCO",
+      "team": "Haas F1 Team",
+      "number": 31,
+      "defaultCompound": "MEDIUM"
+    },
+    "SAI": {
+      "code": "SAI",
+      "team": "Williams",
+      "number": 55,
+      "defaultCompound": "MEDIUM"
+    },
+    "BOR": {
+      "code": "BOR",
+      "team": "Kick Sauber",
+      "number": 5,
+      "defaultCompound": "MEDIUM"
+    },
+    "HUL": {
+      "code": "HUL",
+      "team": "Kick Sauber",
+      "number": 27,
+      "defaultCompound": "MEDIUM"
+    },
+    "DOO": {
+      "code": "DOO",
+      "team": "Alpine",
+      "number": 7,
+      "defaultCompound": "MEDIUM"
+    }
+  },
+  "laps": [
+    {
+      "driver": "HAM",
+      "lapNumber": 1,
+      "stint": 1,
+      "compound": "MEDIUM",
+      "tyreLife": 7,
+      "lapTimeSeconds": null,
+      "sessionTimeSeconds": 96.89,
+      "sectorTimesSeconds": [
+        null,
+        28.492,
+        41.109
+      ],
+      "isPersonalBest": false,
+      "trackStatus": "1",
+      "hasData": false,
+      "flags": [
+        "missing-laptime",
+        "inaccurate"
+      ],
+      "isValid": false
+    },
+    {
+      "driver": "HAM",
+      "lapNumber": 2,
+      "stint": 1,
+      "compound": "MEDIUM",
+      "tyreLife": 8,
+      "lapTimeSeconds": 95.399,
+      "sessionTimeSeconds": 192.289,
+      "sectorTimesSeconds": [
+        25.591,
+        28.731,
+        41.077
+      ],
+      "isPersonalBest": true,
+      "trackStatus": "1",
+      "hasData": true,
+      "flags": [],
+      "isValid": true
+    },
+    {
+      "driver": "HAM",
+      "lapNumber": 3,
+      "stint": 1,
+      "compound": "MEDIUM",
+      "tyreLife": 9,
+      "lapTimeSeconds": 96.151,
+      "sessionTimeSeconds": 288.44,
+      "sectorTimesSeconds": [
+        25.832,
+        29.044,
+        41.275
+      ],
+      "isPersonalBest": false,
+      "trackStatus": "1",
+      "hasData": true,
+      "flags": [],
+      "isValid": true
+    },
+    {
+      "driver": "HAM",
+      "lapNumber": 4,
+      "stint": 1,
+      "compound": "MEDIUM",
+      "tyreLife": 10,
+      "lapTimeSeconds": 96.064,
+      "sessionTimeSeconds": 384.504,
+      "sectorTimesSeconds": [
+        25.776,
+        29.077,
+        41.211
+      ],
+      "isPersonalBest": false,
+      "trackStatus": "1",
+      "hasData": true,
+      "flags": [],
+      "isValid": true
+    },
+    {
+      "driver": "HAM",
+      "lapNumber": 5,
+      "stint": 1,
+      "compound": "MEDIUM",
+      "tyreLife": 11,
+      "lapTimeSeconds": 96.684,
+      "sessionTimeSeconds": 481.188,
+      "sectorTimesSeconds": [
+        25.951999999999998,
+        29.259,
+        41.473
+      ],
+      "isPersonalBest": false,
+      "trackStatus": "1",
+      "hasData": true,
+      "flags": [],
+      "isValid": true
+    },
+    {
+      "driver": "HAM",
+      "lapNumber": 6,
+      "stint": 1,
+      "compound": "MEDIUM",
+      "tyreLife": 12,
+      "lapTimeSeconds": 96.349,
+      "sessionTimeSeconds": 577.537,
+      "sectorTimesSeconds": [
+        25.9,
+        28.936,
+        41.513
+      ],
+      "isPersonalBest": false,
+      "trackStatus": "1",
+      "hasData": true,
+      "flags": [],
+      "isValid": true
+    },
+    {
+      "driver": "HAM",
+      "lapNumber": 7,
+      "stint": 1,
+      "compound": "MEDIUM",
+      "tyreLife": 13,
+      "lapTimeSeconds": 96.617,
+      "sessionTimeSeconds": 674.154,
+      "sectorTimesSeconds": [
+        25.957,
+        29.346,
+        41.314
+      ],
+      "isPersonalBest": false,
+      "trackStatus": "1",
+      "hasData": true,
+      "flags": [],
+      "isValid": true
+    },
+    {
+      "driver": "HAM",
+      "lapNumber": 8,
+      "stint": 1,
+      "compound": "MEDIUM",
+      "tyreLife": 14,
+      "lapTimeSeconds": 96.003,
+      "sessionTimeSeconds": 770.157,
+      "sectorTimesSeconds": [
+        25.656,
+        29.046,
+        41.301
+      ],
+      "isPersonalBest": false,
+      "trackStatus": "1",
+      "hasData": true,
+      "flags": [],
+      "isValid": true
+    },
+    {
+      "driver": "HAM",
+      "lapNumber": 9,
+      "stint": 1,
+      "compound": "MEDIUM",
+      "tyreLife": 15,
+      "lapTimeSeconds": 96.941,
+      "sessionTimeSeconds": 867.098,
+      "sectorTimesSeconds": [
+        26.129,
+        29.158,
+        41.654
+      ],
+      "isPersonalBest": false,
+      "trackStatus": "1",
+      "hasData": true,
+      "flags": [],
+      "isValid": true
+    },
+    {
+      "driver": "HAM",
+      "lapNumber": 10,
+      "stint": 1,
+      "compound": "MEDIUM",
+      "tyreLife": 16,
+      "lapTimeSeconds": 96.872,
+      "sessionTimeSeconds": 963.97,
+      "sectorTimesSeconds": [
+        25.914,
+        29.19,
+        41.768
+      ],
+      "isPersonalBest": false,
+      "trackStatus": "1",
+      "hasData": true,
+      "flags": [],
+      "isValid": true
+    },
+    {
+      "driver": "HAM",
+      "lapNumber": 11,
+      "stint": 1,
+      "compound": "MEDIUM",
+      "tyreLife": 17,
+      "lapTimeSeconds": 96.702,
+      "sessionTimeSeconds": 1060.672,
+      "sectorTimesSeconds": [
+        25.995,
+        29.07,
+        41.637
+      ],
+      "isPersonalBest": false,
+      "trackStatus": "1",
+      "hasData": true,
+      "flags": [],
+      "isValid": true
+    },
+    {
+      "driver": "HAM",
+      "lapNumber": 12,
+      "stint": 1,
+      "compound": "MEDIUM",
+      "tyreLife": 18,
+      "lapTimeSeconds": 96.926,
+      "sessionTimeSeconds": 1157.598,
+      "sectorTimesSeconds": [
+        26.0,
+        29.191,
+        41.735
+      ],
+      "isPersonalBest": false,
+      "trackStatus": "1",
+      "hasData": true,
+      "flags": [],
+      "isValid": true
+    },
+    {
+      "driver": "HAM",
+      "lapNumber": 13,
+      "stint": 1,
+      "compound": "MEDIUM",
+      "tyreLife": 19,
+      "lapTimeSeconds": 97.366,
+      "sessionTimeSeconds": 1254.964,
+      "sectorTimesSeconds": [
+        26.121,
+        29.446,
+        41.799
+      ],
+      "isPersonalBest": false,
+      "trackStatus": "1",
+      "hasData": true,
+      "flags": [],
+      "isValid": true
+    },
+    {
+      "driver": "HAM",
+      "lapNumber": 14,
+      "stint": 1,
+      "compound": "MEDIUM",
+      "tyreLife": 20,
+      "lapTimeSeconds": 97.507,
+      "sessionTimeSeconds": 1352.471,
+      "sectorTimesSeconds": [
+        26.107,
+        29.521,
+        41.879
+      ],
+      "isPersonalBest": false,
+      "trackStatus": "1",
+      "hasData": true,
+      "flags": [],
+      "isValid": true
+    },
+    {
+      "driver": "HAM",
+      "lapNumber": 15,
+      "stint": 1,
+      "compound": "MEDIUM",
+      "tyreLife": 21,
+      "lapTimeSeconds": 98.03,
+      "sessionTimeSeconds": 1450.501,
+      "sectorTimesSeconds": [
+        26.25,
+        29.575,
+        42.205
+      ],
+      "isPersonalBest": false,
+      "trackStatus": "1",
+      "hasData": true,
+      "flags": [],
+      "isValid": true
+    },
+    {
+      "driver": "HAM",
+      "lapNumber": 16,
+      "stint": 1,
+      "compound": "MEDIUM",
+      "tyreLife": 22,
+      "lapTimeSeconds": 97.629,
+      "sessionTimeSeconds": 1548.13,
+      "sectorTimesSeconds": [
+        26.344,
+        29.52,
+        41.765
+      ],
+      "isPersonalBest": false,
+      "trackStatus": "1",
+      "hasData": true,
+      "flags": [],
+      "isValid": true
+    },
+    {
+      "driver": "HAM",
+      "lapNumber": 17,
+      "stint": 1,
+      "compound": "MEDIUM",
+      "tyreLife": 23,
+      "lapTimeSeconds": 97.611,
+      "sessionTimeSeconds": 1645.741,
+      "sectorTimesSeconds": [
+        26.094,
+        29.497,
+        42.02
+      ],
+      "isPersonalBest": false,
+      "trackStatus": "1",
+      "hasData": true,
+      "flags": [],
+      "isValid": true
+    },
+    {
+      "driver": "HAM",
+      "lapNumber": 18,
+      "stint": 1,
+      "compound": "MEDIUM",
+      "tyreLife": 24,
+      "lapTimeSeconds": 97.349,
+      "sessionTimeSeconds": 1743.09,
+      "sectorTimesSeconds": [
+        26.103,
+        29.396,
+        41.85
+      ],
+      "isPersonalBest": false,
+      "trackStatus": "1",
+      "hasData": true,
+      "flags": [],
+      "isValid": true
+    },
+    {
+      "driver": "HAM",
+      "lapNumber": 19,
+      "stint": 1,
+      "compound": "MEDIUM",
+      "tyreLife": 25,
+      "lapTimeSeconds": 97.132,
+      "sessionTimeSeconds": 1840.222,
+      "sectorTimesSeconds": [
+        26.285,
+        29.162,
+        41.685
+      ],
+      "isPersonalBest": false,
+      "trackStatus": "1",
+      "hasData": true,
+      "flags": [],
+      "isValid": true
+    },
+    {
+      "driver": "PIA",
+      "lapNumber": 1,
+      "stint": 1,
+      "compound": "MEDIUM",
+      "tyreLife": 5,
+      "lapTimeSeconds": null,
+      "sessionTimeSeconds": 98.98,
+      "sectorTimesSeconds": [
+        null,
+        29.176,
+        41.245
+      ],
+      "isPersonalBest": false,
+      "trackStatus": "1",
+      "hasData": false,
+      "flags": [
+        "missing-laptime",
+        "inaccurate"
+      ],
+      "isValid": false
+    },
+    {
+      "driver": "PIA",
+      "lapNumber": 2,
+      "stint": 1,
+      "compound": "MEDIUM",
+      "tyreLife": 6,
+      "lapTimeSeconds": 96.086,
+      "sessionTimeSeconds": 195.066,
+      "sectorTimesSeconds": [
+        25.51,
+        29.217,
+        41.359
+      ],
+      "isPersonalBest": true,
+      "trackStatus": "1",
+      "hasData": true,
+      "flags": [],
+      "isValid": true
+    },
+    {
+      "driver": "PIA",
+      "lapNumber": 3,
+      "stint": 1,
+      "compound": "MEDIUM",
+      "tyreLife": 7,
+      "lapTimeSeconds": 96.116,
+      "sessionTimeSeconds": 291.182,
+      "sectorTimesSeconds": [
+        25.692,
+        29.207,
+        41.217
+      ],
+      "isPersonalBest": false,
+      "trackStatus": "1",
+      "hasData": true,
+      "flags": [],
+      "isValid": true
+    },
+    {
+      "driver": "PIA",
+      "lapNumber": 4,
+      "stint": 1,
+      "compound": "MEDIUM",
+      "tyreLife": 8,
+      "lapTimeSeconds": 95.893,
+      "sessionTimeSeconds": 387.075,
+      "sectorTimesSeconds": [
+        25.54,
+        29.178,
+        41.175
+      ],
+      "isPersonalBest": true,
+      "trackStatus": "1",
+      "hasData": true,
+      "flags": [],
+      "isValid": true
+    },
+    {
+      "driver": "PIA",
+      "lapNumber": 5,
+      "stint": 1,
+      "compound": "MEDIUM",
+      "tyreLife": 9,
+      "lapTimeSeconds": 96.349,
+      "sessionTimeSeconds": 483.424,
+      "sectorTimesSeconds": [
+        25.68,
+        29.397,
+        41.272
+      ],
+      "isPersonalBest": false,
+      "trackStatus": "1",
+      "hasData": true,
+      "flags": [],
+      "isValid": true
+    },
+    {
+      "driver": "PIA",
+      "lapNumber": 6,
+      "stint": 1,
+      "compound": "MEDIUM",
+      "tyreLife": 10,
+      "lapTimeSeconds": 96.316,
+      "sessionTimeSeconds": 579.74,
+      "sectorTimesSeconds": [
+        25.935,
+        29.218,
+        41.163
+      ],
+      "isPersonalBest": false,
+      "trackStatus": "1",
+      "hasData": true,
+      "flags": [],
+      "isValid": true
+    },
+    {
+      "driver": "PIA",
+      "lapNumber": 7,
+      "stint": 1,
+      "compound": "MEDIUM",
+      "tyreLife": 11,
+      "lapTimeSeconds": 95.854,
+      "sessionTimeSeconds": 675.594,
+      "sectorTimesSeconds": [
+        25.772,
+        29.186,
+        40.896
+      ],
+      "isPersonalBest": true,
+      "trackStatus": "1",
+      "hasData": true,
+      "flags": [],
+      "isValid": true
+    },
+    {
+      "driver": "PIA",
+      "lapNumber": 8,
+      "stint": 1,
+      "compound": "MEDIUM",
+      "tyreLife": 12,
+      "lapTimeSeconds": 96.666,
+      "sessionTimeSeconds": 772.26,
+      "sectorTimesSeconds": [
+        25.668,
+        29.562,
+        41.436
+      ],
+      "isPersonalBest": false,
+      "trackStatus": "1",
+      "hasData": true,
+      "flags": [],
+      "isValid": true
+    },
+    {
+      "driver": "PIA",
+      "lapNumber": 9,
+      "stint": 1,
+      "compound": "MEDIUM",
+      "tyreLife": 13,
+      "lapTimeSeconds": 97.157,
+      "sessionTimeSeconds": 869.417,
+      "sectorTimesSeconds": [
+        25.99,
+        29.655,
+        41.512
+      ],
+      "isPersonalBest": false,
+      "trackStatus": "1",
+      "hasData": true,
+      "flags": [],
+      "isValid": true
+    },
+    {
+      "driver": "PIA",
+      "lapNumber": 10,
+      "stint": 1,
+      "compound": "MEDIUM",
+      "tyreLife": 14,
+      "lapTimeSeconds": 96.399,
+      "sessionTimeSeconds": 965.816,
+      "sectorTimesSeconds": [
+        25.994,
+        29.16,
+        41.245
+      ],
+      "isPersonalBest": false,
+      "trackStatus": "1",
+      "hasData": true,
+      "flags": [],
+      "isValid": true
+    },
+    {
+      "driver": "PIA",
+      "lapNumber": 11,
+      "stint": 1,
+      "compound": "MEDIUM",
+      "tyreLife": 15,
+      "lapTimeSeconds": 96.851,
+      "sessionTimeSeconds": 1062.667,
+      "sectorTimesSeconds": [
+        26.002,
+        29.427,
+        41.422
+      ],
+      "isPersonalBest": false,
+      "trackStatus": "1",
+      "hasData": true,
+      "flags": [],
+      "isValid": true
+    },
+    {
+      "driver": "PIA",
+      "lapNumber": 12,
+      "stint": 1,
+      "compound": "MEDIUM",
+      "tyreLife": 16,
+      "lapTimeSeconds": 97.326,
+      "sessionTimeSeconds": 1159.993,
+      "sectorTimesSeconds": [
+        26.169,
+        29.605,
+        41.552
+      ],
+      "isPersonalBest": false,
+      "trackStatus": "1",
+      "hasData": true,
+      "flags": [],
+      "isValid": true
+    },
+    {
+      "driver": "PIA",
+      "lapNumber": 13,
+      "stint": 1,
+      "compound": "MEDIUM",
+      "tyreLife": 17,
+      "lapTimeSeconds": 97.212,
+      "sessionTimeSeconds": 1257.205,
+      "sectorTimesSeconds": [
+        26.171,
+        29.742,
+        41.299
+      ],
+      "isPersonalBest": false,
+      "trackStatus": "1",
+      "hasData": true,
+      "flags": [],
+      "isValid": true
+    },
+    {
+      "driver": "PIA",
+      "lapNumber": 14,
+      "stint": 1,
+      "compound": "MEDIUM",
+      "tyreLife": 18,
+      "lapTimeSeconds": 97.852,
+      "sessionTimeSeconds": 1355.057,
+      "sectorTimesSeconds": [
+        26.411,
+        29.642,
+        41.799
+      ],
+      "isPersonalBest": false,
+      "trackStatus": "1",
+      "hasData": true,
+      "flags": [],
+      "isValid": true
+    },
+    {
+      "driver": "PIA",
+      "lapNumber": 15,
+      "stint": 1,
+      "compound": "MEDIUM",
+      "tyreLife": 19,
+      "lapTimeSeconds": 98.117,
+      "sessionTimeSeconds": 1453.174,
+      "sectorTimesSeconds": [
+        26.419,
+        29.981,
+        41.717
+      ],
+      "isPersonalBest": false,
+      "trackStatus": "1",
+      "hasData": true,
+      "flags": [],
+      "isValid": true
+    },
+    {
+      "driver": "PIA",
+      "lapNumber": 16,
+      "stint": 1,
+      "compound": "MEDIUM",
+      "tyreLife": 20,
+      "lapTimeSeconds": 98.741,
+      "sessionTimeSeconds": 1551.915,
+      "sectorTimesSeconds": [
+        26.414,
+        30.169,
+        42.158
+      ],
+      "isPersonalBest": false,
+      "trackStatus": "1",
+      "hasData": true,
+      "flags": [],
+      "isValid": true
+    },
+    {
+      "driver": "PIA",
+      "lapNumber": 17,
+      "stint": 1,
+      "compound": "MEDIUM",
+      "tyreLife": 21,
+      "lapTimeSeconds": 98.748,
+      "sessionTimeSeconds": 1650.663,
+      "sectorTimesSeconds": [
+        26.582,
+        30.125,
+        42.041
+      ],
+      "isPersonalBest": false,
+      "trackStatus": "1",
+      "hasData": true,
+      "flags": [],
+      "isValid": true
+    },
+    {
+      "driver": "PIA",
+      "lapNumber": 18,
+      "stint": 1,
+      "compound": "MEDIUM",
+      "tyreLife": 22,
+      "lapTimeSeconds": 98.612,
+      "sessionTimeSeconds": 1749.275,
+      "sectorTimesSeconds": [
+        26.528,
+        30.006,
+        42.078
+      ],
+      "isPersonalBest": false,
+      "trackStatus": "1",
+      "hasData": true,
+      "flags": [],
+      "isValid": true
+    },
+    {
+      "driver": "PIA",
+      "lapNumber": 19,
+      "stint": 1,
+      "compound": "MEDIUM",
+      "tyreLife": 23,
+      "lapTimeSeconds": 97.836,
+      "sessionTimeSeconds": 1847.111,
+      "sectorTimesSeconds": [
+        26.499,
+        29.713,
+        41.624
+      ],
+      "isPersonalBest": false,
+      "trackStatus": "1",
+      "hasData": true,
+      "flags": [],
+      "isValid": true
+    },
+    {
+      "driver": "VER",
+      "lapNumber": 1,
+      "stint": 1,
+      "compound": "MEDIUM",
+      "tyreLife": 4,
+      "lapTimeSeconds": null,
+      "sessionTimeSeconds": 97.661,
+      "sectorTimesSeconds": [
+        null,
+        28.705,
+        41.114
+      ],
+      "isPersonalBest": false,
+      "trackStatus": "1",
+      "hasData": false,
+      "flags": [
+        "missing-laptime",
+        "inaccurate"
+      ],
+      "isValid": false
+    },
+    {
+      "driver": "VER",
+      "lapNumber": 2,
+      "stint": 1,
+      "compound": "MEDIUM",
+      "tyreLife": 5,
+      "lapTimeSeconds": 95.745,
+      "sessionTimeSeconds": 193.406,
+      "sectorTimesSeconds": [
+        25.654,
+        28.886,
+        41.205
+      ],
+      "isPersonalBest": true,
+      "trackStatus": "1",
+      "hasData": true,
+      "flags": [],
+      "isValid": true
+    },
+    {
+      "driver": "VER",
+      "lapNumber": 3,
+      "stint": 1,
+      "compound": "MEDIUM",
+      "tyreLife": 6,
+      "lapTimeSeconds": 95.997,
+      "sessionTimeSeconds": 289.403,
+      "sectorTimesSeconds": [
+        25.819,
+        28.967,
+        41.211
+      ],
+      "isPersonalBest": false,
+      "trackStatus": "1",
+      "hasData": true,
+      "flags": [],
+      "isValid": true
+    },
+    {
+      "driver": "VER",
+      "lapNumber": 4,
+      "stint": 1,
+      "compound": "MEDIUM",
+      "tyreLife": 7,
+      "lapTimeSeconds": 96.083,
+      "sessionTimeSeconds": 385.486,
+      "sectorTimesSeconds": [
+        25.853,
+        29.087,
+        41.143
+      ],
+      "isPersonalBest": false,
+      "trackStatus": "1",
+      "hasData": true,
+      "flags": [],
+      "isValid": true
+    },
+    {
+      "driver": "VER",
+      "lapNumber": 5,
+      "stint": 1,
+      "compound": "MEDIUM",
+      "tyreLife": 8,
+      "lapTimeSeconds": 96.728,
+      "sessionTimeSeconds": 482.214,
+      "sectorTimesSeconds": [
+        25.97,
+        29.374,
+        41.384
+      ],
+      "isPersonalBest": false,
+      "trackStatus": "1",
+      "hasData": true,
+      "flags": [],
+      "isValid": true
+    },
+    {
+      "driver": "VER",
+      "lapNumber": 6,
+      "stint": 1,
+      "compound": "MEDIUM",
+      "tyreLife": 9,
+      "lapTimeSeconds": 96.663,
+      "sessionTimeSeconds": 578.877,
+      "sectorTimesSeconds": [
+        26.162,
+        29.143,
+        41.358
+      ],
+      "isPersonalBest": false,
+      "trackStatus": "1",
+      "hasData": true,
+      "flags": [],
+      "isValid": true
+    },
+    {
+      "driver": "VER",
+      "lapNumber": 7,
+      "stint": 1,
+      "compound": "MEDIUM",
+      "tyreLife": 10,
+      "lapTimeSeconds": 95.943,
+      "sessionTimeSeconds": 674.82,
+      "sectorTimesSeconds": [
+        25.955,
+        29.076,
+        40.912
+      ],
+      "isPersonalBest": false,
+      "trackStatus": "1",
+      "hasData": true,
+      "flags": [],
+      "isValid": true
+    },
+    {
+      "driver": "VER",
+      "lapNumber": 8,
+      "stint": 1,
+      "compound": "MEDIUM",
+      "tyreLife": 11,
+      "lapTimeSeconds": 95.955,
+      "sessionTimeSeconds": 770.775,
+      "sectorTimesSeconds": [
+        25.639,
+        29.125,
+        41.191
+      ],
+      "isPersonalBest": false,
+      "trackStatus": "1",
+      "hasData": true,
+      "flags": [],
+      "isValid": true
+    },
+    {
+      "driver": "VER",
+      "lapNumber": 9,
+      "stint": 1,
+      "compound": "MEDIUM",
+      "tyreLife": 12,
+      "lapTimeSeconds": 97.444,
+      "sessionTimeSeconds": 868.219,
+      "sectorTimesSeconds": [
+        26.18,
+        29.469,
+        41.795
+      ],
+      "isPersonalBest": false,
+      "trackStatus": "1",
+      "hasData": true,
+      "flags": [],
+      "isValid": true
+    },
+    {
+      "driver": "VER",
+      "lapNumber": 10,
+      "stint": 1,
+      "compound": "MEDIUM",
+      "tyreLife": 13,
+      "lapTimeSeconds": 97.05,
+      "sessionTimeSeconds": 965.269,
+      "sectorTimesSeconds": [
+        26.147,
+        29.417,
+        41.486
+      ],
+      "isPersonalBest": false,
+      "trackStatus": "1",
+      "hasData": true,
+      "flags": [],
+      "isValid": true
+    },
+    {
+      "driver": "VER",
+      "lapNumber": 11,
+      "stint": 1,
+      "compound": "MEDIUM",
+      "tyreLife": 14,
+      "lapTimeSeconds": 96.859,
+      "sessionTimeSeconds": 1062.128,
+      "sectorTimesSeconds": [
+        25.895,
+        29.388,
+        41.576
+      ],
+      "isPersonalBest": false,
+      "trackStatus": "1",
+      "hasData": true,
+      "flags": [],
+      "isValid": true
+    },
+    {
+      "driver": "VER",
+      "lapNumber": 12,
+      "stint": 1,
+      "compound": "MEDIUM",
+      "tyreLife": 15,
+      "lapTimeSeconds": 97.239,
+      "sessionTimeSeconds": 1159.367,
+      "sectorTimesSeconds": [
+        25.958,
+        29.47,
+        41.811
+      ],
+      "isPersonalBest": false,
+      "trackStatus": "1",
+      "hasData": true,
+      "flags": [],
+      "isValid": true
+    },
+    {
+      "driver": "VER",
+      "lapNumber": 13,
+      "stint": 1,
+      "compound": "MEDIUM",
+      "tyreLife": 16,
+      "lapTimeSeconds": 97.481,
+      "sessionTimeSeconds": 1256.848,
+      "sectorTimesSeconds": [
+        26.141,
+        29.59,
+        41.75
+      ],
+      "isPersonalBest": false,
+      "trackStatus": "1",
+      "hasData": true,
+      "flags": [],
+      "isValid": true
+    },
+    {
+      "driver": "VER",
+      "lapNumber": 14,
+      "stint": 1,
+      "compound": "MEDIUM",
+      "tyreLife": 17,
+      "lapTimeSeconds": 97.723,
+      "sessionTimeSeconds": 1354.571,
+      "sectorTimesSeconds": [
+        26.114,
+        29.739,
+        41.87
+      ],
+      "isPersonalBest": false,
+      "trackStatus": "1",
+      "hasData": true,
+      "flags": [],
+      "isValid": true
+    },
+    {
+      "driver": "VER",
+      "lapNumber": 15,
+      "stint": 1,
+      "compound": "MEDIUM",
+      "tyreLife": 18,
+      "lapTimeSeconds": 99.172,
+      "sessionTimeSeconds": 1453.743,
+      "sectorTimesSeconds": [
+        26.361,
+        29.849,
+        42.962
+      ],
+      "isPersonalBest": false,
+      "trackStatus": "1",
+      "hasData": true,
+      "flags": [],
+      "isValid": true
+    },
+    {
+      "driver": "VER",
+      "lapNumber": 16,
+      "stint": 1,
+      "compound": "MEDIUM",
+      "tyreLife": 19,
+      "lapTimeSeconds": 99.625,
+      "sessionTimeSeconds": 1553.368,
+      "sectorTimesSeconds": [
+        26.543,
+        30.58,
+        42.502
+      ],
+      "isPersonalBest": false,
+      "trackStatus": "1",
+      "hasData": true,
+      "flags": [],
+      "isValid": true
+    },
+    {
+      "driver": "VER",
+      "lapNumber": 17,
+      "stint": 1,
+      "compound": "MEDIUM",
+      "tyreLife": 20,
+      "lapTimeSeconds": 99.163,
+      "sessionTimeSeconds": 1652.531,
+      "sectorTimesSeconds": [
+        26.483,
+        30.296,
+        42.384
+      ],
+      "isPersonalBest": false,
+      "trackStatus": "1",
+      "hasData": true,
+      "flags": [],
+      "isValid": true
+    },
+    {
+      "driver": "VER",
+      "lapNumber": 18,
+      "stint": 1,
+      "compound": "MEDIUM",
+      "tyreLife": 21,
+      "lapTimeSeconds": 99.102,
+      "sessionTimeSeconds": 1751.633,
+      "sectorTimesSeconds": [
+        26.526,
+        30.136,
+        42.44
+      ],
+      "isPersonalBest": false,
+      "trackStatus": "1",
+      "hasData": true,
+      "flags": [],
+      "isValid": true
+    },
+    {
+      "driver": "VER",
+      "lapNumber": 19,
+      "stint": 1,
+      "compound": "MEDIUM",
+      "tyreLife": 22,
+      "lapTimeSeconds": 98.393,
+      "sessionTimeSeconds": 1850.026,
+      "sectorTimesSeconds": [
+        26.42,
+        29.816,
+        42.157
+      ],
+      "isPersonalBest": false,
+      "trackStatus": "1",
+      "hasData": true,
+      "flags": [],
+      "isValid": true
+    },
+    {
+      "driver": "RUS",
+      "lapNumber": 1,
+      "stint": 1,
+      "compound": "MEDIUM",
+      "tyreLife": 9,
+      "lapTimeSeconds": null,
+      "sessionTimeSeconds": 100.203,
+      "sectorTimesSeconds": [
+        null,
+        29.662,
+        41.344
+      ],
+      "isPersonalBest": false,
+      "trackStatus": "1",
+      "hasData": false,
+      "flags": [
+        "missing-laptime",
+        "inaccurate"
+      ],
+      "isValid": false
+    },
+    {
+      "driver": "RUS",
+      "lapNumber": 2,
+      "stint": 1,
+      "compound": "MEDIUM",
+      "tyreLife": 10,
+      "lapTimeSeconds": 96.432,
+      "sessionTimeSeconds": 196.635,
+      "sectorTimesSeconds": [
+        26.032,
+        29.221,
+        41.179
+      ],
+      "isPersonalBest": true,
+      "trackStatus": "1",
+      "hasData": true,
+      "flags": [],
+      "isValid": true
+    },
+    {
+      "driver": "RUS",
+      "lapNumber": 3,
+      "stint": 1,
+      "compound": "MEDIUM",
+      "tyreLife": 11,
+      "lapTimeSeconds": 96.045,
+      "sessionTimeSeconds": 292.68,
+      "sectorTimesSeconds": [
+        25.98,
+        28.756,
+        41.309
+      ],
+      "isPersonalBest": true,
+      "trackStatus": "1",
+      "hasData": true,
+      "flags": [],
+      "isValid": true
+    },
+    {
+      "driver": "RUS",
+      "lapNumber": 4,
+      "stint": 1,
+      "compound": "MEDIUM",
+      "tyreLife": 12,
+      "lapTimeSeconds": 95.891,
+      "sessionTimeSeconds": 388.571,
+      "sectorTimesSeconds": [
+        25.807,
+        28.981,
+        41.103
+      ],
+      "isPersonalBest": true,
+      "trackStatus": "1",
+      "hasData": true,
+      "flags": [],
+      "isValid": true
+    },
+    {
+      "driver": "RUS",
+      "lapNumber": 5,
+      "stint": 1,
+      "compound": "MEDIUM",
+      "tyreLife": 13,
+      "lapTimeSeconds": 96.394,
+      "sessionTimeSeconds": 484.965,
+      "sectorTimesSeconds": [
+        25.857,
+        29.251,
+        41.286
+      ],
+      "isPersonalBest": false,
+      "trackStatus": "1",
+      "hasData": true,
+      "flags": [],
+      "isValid": true
+    },
+    {
+      "driver": "RUS",
+      "lapNumber": 6,
+      "stint": 1,
+      "compound": "MEDIUM",
+      "tyreLife": 14,
+      "lapTimeSeconds": 96.361,
+      "sessionTimeSeconds": 581.326,
+      "sectorTimesSeconds": [
+        26.026,
+        29.227,
+        41.108
+      ],
+      "isPersonalBest": false,
+      "trackStatus": "1",
+      "hasData": true,
+      "flags": [],
+      "isValid": true
+    },
+    {
+      "driver": "RUS",
+      "lapNumber": 7,
+      "stint": 1,
+      "compound": "MEDIUM",
+      "tyreLife": 15,
+      "lapTimeSeconds": 96.653,
+      "sessionTimeSeconds": 677.979,
+      "sectorTimesSeconds": [
+        26.216,
+        29.187,
+        41.25
+      ],
+      "isPersonalBest": false,
+      "trackStatus": "1",
+      "hasData": true,
+      "flags": [],
+      "isValid": true
+    },
+    {
+      "driver": "RUS",
+      "lapNumber": 8,
+      "stint": 1,
+      "compound": "MEDIUM",
+      "tyreLife": 16,
+      "lapTimeSeconds": 96.719,
+      "sessionTimeSeconds": 774.698,
+      "sectorTimesSeconds": [
+        25.933,
+        29.318,
+        41.468
+      ],
+      "isPersonalBest": false,
+      "trackStatus": "1",
+      "hasData": true,
+      "flags": [],
+      "isValid": true
+    },
+    {
+      "driver": "RUS",
+      "lapNumber": 9,
+      "stint": 1,
+      "compound": "MEDIUM",
+      "tyreLife": 17,
+      "lapTimeSeconds": 96.949,
+      "sessionTimeSeconds": 871.647,
+      "sectorTimesSeconds": [
+        26.09,
+        29.321,
+        41.538
+      ],
+      "isPersonalBest": false,
+      "trackStatus": "1",
+      "hasData": true,
+      "flags": [],
+      "isValid": true
+    },
+    {
+      "driver": "RUS",
+      "lapNumber": 10,
+      "stint": 1,
+      "compound": "MEDIUM",
+      "tyreLife": 18,
+      "lapTimeSeconds": 97.323,
+      "sessionTimeSeconds": 968.97,
+      "sectorTimesSeconds": [
+        26.317,
+        29.309,
+        41.697
+      ],
+      "isPersonalBest": false,
+      "trackStatus": "1",
+      "hasData": true,
+      "flags": [],
+      "isValid": true
+    },
+    {
+      "driver": "RUS",
+      "lapNumber": 11,
+      "stint": 1,
+      "compound": "MEDIUM",
+      "tyreLife": 19,
+      "lapTimeSeconds": 97.753,
+      "sessionTimeSeconds": 1066.723,
+      "sectorTimesSeconds": [
+        26.297,
+        29.582,
+        41.874
+      ],
+      "isPersonalBest": false,
+      "trackStatus": "1",
+      "hasData": true,
+      "flags": [],
+      "isValid": true
+    },
+    {
+      "driver": "RUS",
+      "lapNumber": 12,
+      "stint": 1,
+      "compound": "MEDIUM",
+      "tyreLife": 20,
+      "lapTimeSeconds": 97.688,
+      "sessionTimeSeconds": 1164.411,
+      "sectorTimesSeconds": [
+        26.391,
+        29.502,
+        41.795
+      ],
+      "isPersonalBest": false,
+      "trackStatus": "1",
+      "hasData": true,
+      "flags": [],
+      "isValid": true
+    },
+    {
+      "driver": "RUS",
+      "lapNumber": 13,
+      "stint": 1,
+      "compound": "MEDIUM",
+      "tyreLife": 21,
+      "lapTimeSeconds": 97.442,
+      "sessionTimeSeconds": 1261.853,
+      "sectorTimesSeconds": [
+        26.257,
+        29.559,
+        41.626
+      ],
+      "isPersonalBest": false,
+      "trackStatus": "1",
+      "hasData": true,
+      "flags": [],
+      "isValid": true
+    },
+    {
+      "driver": "RUS",
+      "lapNumber": 14,
+      "stint": 1,
+      "compound": "MEDIUM",
+      "tyreLife": 22,
+      "lapTimeSeconds": 98.041,
+      "sessionTimeSeconds": 1359.894,
+      "sectorTimesSeconds": [
+        26.508,
+        29.684,
+        41.849
+      ],
+      "isPersonalBest": false,
+      "trackStatus": "1",
+      "hasData": true,
+      "flags": [],
+      "isValid": true
+    },
+    {
+      "driver": "RUS",
+      "lapNumber": 15,
+      "stint": 1,
+      "compound": "MEDIUM",
+      "tyreLife": 23,
+      "lapTimeSeconds": 98.304,
+      "sessionTimeSeconds": 1458.198,
+      "sectorTimesSeconds": [
+        26.533,
+        29.77,
+        42.001
+      ],
+      "isPersonalBest": false,
+      "trackStatus": "1",
+      "hasData": true,
+      "flags": [],
+      "isValid": true
+    },
+    {
+      "driver": "RUS",
+      "lapNumber": 16,
+      "stint": 1,
+      "compound": "MEDIUM",
+      "tyreLife": 24,
+      "lapTimeSeconds": 98.083,
+      "sessionTimeSeconds": 1556.281,
+      "sectorTimesSeconds": [
+        26.419,
+        29.882,
+        41.782
+      ],
+      "isPersonalBest": false,
+      "trackStatus": "1",
+      "hasData": true,
+      "flags": [],
+      "isValid": true
+    },
+    {
+      "driver": "RUS",
+      "lapNumber": 17,
+      "stint": 1,
+      "compound": "MEDIUM",
+      "tyreLife": 25,
+      "lapTimeSeconds": 98.186,
+      "sessionTimeSeconds": 1654.467,
+      "sectorTimesSeconds": [
+        26.472,
+        29.73,
+        41.984
+      ],
+      "isPersonalBest": false,
+      "trackStatus": "1",
+      "hasData": true,
+      "flags": [],
+      "isValid": true
+    },
+    {
+      "driver": "RUS",
+      "lapNumber": 18,
+      "stint": 1,
+      "compound": "MEDIUM",
+      "tyreLife": 26,
+      "lapTimeSeconds": 98.313,
+      "sessionTimeSeconds": 1752.78,
+      "sectorTimesSeconds": [
+        26.485,
+        29.719,
+        42.109
+      ],
+      "isPersonalBest": false,
+      "trackStatus": "1",
+      "hasData": true,
+      "flags": [],
+      "isValid": true
+    },
+    {
+      "driver": "RUS",
+      "lapNumber": 19,
+      "stint": 1,
+      "compound": "MEDIUM",
+      "tyreLife": 27,
+      "lapTimeSeconds": 99.034,
+      "sessionTimeSeconds": 1851.814,
+      "sectorTimesSeconds": [
+        26.684,
+        30.174,
+        42.176
+      ],
+      "isPersonalBest": false,
+      "trackStatus": "1",
+      "hasData": true,
+      "flags": [],
+      "isValid": true
+    },
+    {
+      "driver": "LEC",
+      "lapNumber": 1,
+      "stint": 1,
+      "compound": "MEDIUM",
+      "tyreLife": 7,
+      "lapTimeSeconds": null,
+      "sessionTimeSeconds": 100.55,
+      "sectorTimesSeconds": [
+        null,
+        29.671,
+        42.242
+      ],
+      "isPersonalBest": false,
+      "trackStatus": "1",
+      "hasData": false,
+      "flags": [
+        "missing-laptime",
+        "inaccurate"
+      ],
+      "isValid": false
+    },
+    {
+      "driver": "LEC",
+      "lapNumber": 2,
+      "stint": 1,
+      "compound": "MEDIUM",
+      "tyreLife": 8,
+      "lapTimeSeconds": 96.895,
+      "sessionTimeSeconds": 197.445,
+      "sectorTimesSeconds": [
+        26.226,
+        29.41,
+        41.259
+      ],
+      "isPersonalBest": true,
+      "trackStatus": "1",
+      "hasData": true,
+      "flags": [],
+      "isValid": true
+    },
+    {
+      "driver": "LEC",
+      "lapNumber": 3,
+      "stint": 1,
+      "compound": "MEDIUM",
+      "tyreLife": 9,
+      "lapTimeSeconds": 96.292,
+      "sessionTimeSeconds": 293.737,
+      "sectorTimesSeconds": [
+        26.05,
+        29.09,
+        41.152
+      ],
+      "isPersonalBest": true,
+      "trackStatus": "1",
+      "hasData": true,
+      "flags": [],
+      "isValid": true
+    },
+    {
+      "driver": "LEC",
+      "lapNumber": 4,
+      "stint": 1,
+      "compound": "MEDIUM",
+      "tyreLife": 10,
+      "lapTimeSeconds": 96.255,
+      "sessionTimeSeconds": 389.992,
+      "sectorTimesSeconds": [
+        25.893,
+        29.026,
+        41.336
+      ],
+      "isPersonalBest": true,
+      "trackStatus": "1",
+      "hasData": true,
+      "flags": [],
+      "isValid": true
+    },
+    {
+      "driver": "LEC",
+      "lapNumber": 5,
+      "stint": 1,
+      "compound": "MEDIUM",
+      "tyreLife": 11,
+      "lapTimeSeconds": 96.524,
+      "sessionTimeSeconds": 486.516,
+      "sectorTimesSeconds": [
+        26.08,
+        29.141,
+        41.303
+      ],
+      "isPersonalBest": false,
+      "trackStatus": "1",
+      "hasData": true,
+      "flags": [],
+      "isValid": true
+    },
+    {
+      "driver": "LEC",
+      "lapNumber": 6,
+      "stint": 1,
+      "compound": "MEDIUM",
+      "tyreLife": 12,
+      "lapTimeSeconds": 96.344,
+      "sessionTimeSeconds": 582.86,
+      "sectorTimesSeconds": [
+        25.97,
+        29.079,
+        41.295
+      ],
+      "isPersonalBest": false,
+      "trackStatus": "1",
+      "hasData": true,
+      "flags": [],
+      "isValid": true
+    },
+    {
+      "driver": "LEC",
+      "lapNumber": 7,
+      "stint": 1,
+      "compound": "MEDIUM",
+      "tyreLife": 13,
+      "lapTimeSeconds": 96.643,
+      "sessionTimeSeconds": 679.503,
+      "sectorTimesSeconds": [
+        25.982,
+        29.268,
+        41.393
+      ],
+      "isPersonalBest": false,
+      "trackStatus": "1",
+      "hasData": true,
+      "flags": [],
+      "isValid": true
+    },
+    {
+      "driver": "LEC",
+      "lapNumber": 8,
+      "stint": 1,
+      "compound": "MEDIUM",
+      "tyreLife": 14,
+      "lapTimeSeconds": 97.014,
+      "sessionTimeSeconds": 776.517,
+      "sectorTimesSeconds": [
+        26.018,
+        29.339,
+        41.657
+      ],
+      "isPersonalBest": false,
+      "trackStatus": "1",
+      "hasData": true,
+      "flags": [],
+      "isValid": true
+    },
+    {
+      "driver": "LEC",
+      "lapNumber": 9,
+      "stint": 1,
+      "compound": "MEDIUM",
+      "tyreLife": 15,
+      "lapTimeSeconds": 97.288,
+      "sessionTimeSeconds": 873.805,
+      "sectorTimesSeconds": [
+        25.94,
+        29.517,
+        41.831
+      ],
+      "isPersonalBest": false,
+      "trackStatus": "1",
+      "hasData": true,
+      "flags": [],
+      "isValid": true
+    },
+    {
+      "driver": "LEC",
+      "lapNumber": 10,
+      "stint": 1,
+      "compound": "MEDIUM",
+      "tyreLife": 16,
+      "lapTimeSeconds": 97.63,
+      "sessionTimeSeconds": 971.435,
+      "sectorTimesSeconds": [
+        25.974,
+        29.599,
+        42.057
+      ],
+      "isPersonalBest": false,
+      "trackStatus": "1",
+      "hasData": true,
+      "flags": [],
+      "isValid": true
+    },
+    {
+      "driver": "LEC",
+      "lapNumber": 11,
+      "stint": 1,
+      "compound": "MEDIUM",
+      "tyreLife": 17,
+      "lapTimeSeconds": 98.021,
+      "sessionTimeSeconds": 1069.456,
+      "sectorTimesSeconds": [
+        26.1,
+        29.814,
+        42.107
+      ],
+      "isPersonalBest": false,
+      "trackStatus": "1",
+      "hasData": true,
+      "flags": [],
+      "isValid": true
+    },
+    {
+      "driver": "LEC",
+      "lapNumber": 12,
+      "stint": 1,
+      "compound": "MEDIUM",
+      "tyreLife": 18,
+      "lapTimeSeconds": 98.226,
+      "sessionTimeSeconds": 1167.682,
+      "sectorTimesSeconds": [
+        26.226,
+        29.825,
+        42.175
+      ],
+      "isPersonalBest": false,
+      "trackStatus": "1",
+      "hasData": true,
+      "flags": [],
+      "isValid": true
+    },
+    {
+      "driver": "LEC",
+      "lapNumber": 13,
+      "stint": 1,
+      "compound": "MEDIUM",
+      "tyreLife": 19,
+      "lapTimeSeconds": 97.825,
+      "sessionTimeSeconds": 1265.507,
+      "sectorTimesSeconds": [
+        26.252,
+        29.515,
+        42.058
+      ],
+      "isPersonalBest": false,
+      "trackStatus": "1",
+      "hasData": true,
+      "flags": [],
+      "isValid": true
+    },
+    {
+      "driver": "LEC",
+      "lapNumber": 14,
+      "stint": 1,
+      "compound": "MEDIUM",
+      "tyreLife": 20,
+      "lapTimeSeconds": 97.267,
+      "sessionTimeSeconds": 1362.774,
+      "sectorTimesSeconds": [
+        25.996,
+        29.406,
+        41.865
+      ],
+      "isPersonalBest": false,
+      "trackStatus": "1",
+      "hasData": true,
+      "flags": [],
+      "isValid": true
+    },
+    {
+      "driver": "LEC",
+      "lapNumber": 15,
+      "stint": 1,
+      "compound": "MEDIUM",
+      "tyreLife": 21,
+      "lapTimeSeconds": 97.295,
+      "sessionTimeSeconds": 1460.069,
+      "sectorTimesSeconds": [
+        25.895,
+        29.441,
+        41.959
+      ],
+      "isPersonalBest": false,
+      "trackStatus": "1",
+      "hasData": true,
+      "flags": [],
+      "isValid": true
+    },
+    {
+      "driver": "LEC",
+      "lapNumber": 16,
+      "stint": 1,
+      "compound": "MEDIUM",
+      "tyreLife": 22,
+      "lapTimeSeconds": 97.633,
+      "sessionTimeSeconds": 1557.702,
+      "sectorTimesSeconds": [
+        26.085,
+        29.54,
+        42.008
+      ],
+      "isPersonalBest": false,
+      "trackStatus": "1",
+      "hasData": true,
+      "flags": [],
+      "isValid": true
+    },
+    {
+      "driver": "LEC",
+      "lapNumber": 17,
+      "stint": 1,
+      "compound": "MEDIUM",
+      "tyreLife": 23,
+      "lapTimeSeconds": 97.34,
+      "sessionTimeSeconds": 1655.042,
+      "sectorTimesSeconds": [
+        26.049,
+        29.506,
+        41.785
+      ],
+      "isPersonalBest": false,
+      "trackStatus": "1",
+      "hasData": true,
+      "flags": [],
+      "isValid": true
+    },
+    {
+      "driver": "LEC",
+      "lapNumber": 18,
+      "stint": 1,
+      "compound": "MEDIUM",
+      "tyreLife": 24,
+      "lapTimeSeconds": 98.284,
+      "sessionTimeSeconds": 1753.326,
+      "sectorTimesSeconds": [
+        26.252,
+        29.886,
+        42.146
+      ],
+      "isPersonalBest": false,
+      "trackStatus": "1",
+      "hasData": true,
+      "flags": [],
+      "isValid": true
+    },
+    {
+      "driver": "LEC",
+      "lapNumber": 19,
+      "stint": 1,
+      "compound": "MEDIUM",
+      "tyreLife": 25,
+      "lapTimeSeconds": 99.086,
+      "sessionTimeSeconds": 1852.412,
+      "sectorTimesSeconds": [
+        26.231,
+        30.608,
+        42.247
+      ],
+      "isPersonalBest": false,
+      "trackStatus": "1",
+      "hasData": true,
+      "flags": [],
+      "isValid": true
+    },
+    {
+      "driver": "TSU",
+      "lapNumber": 1,
+      "stint": 1,
+      "compound": "MEDIUM",
+      "tyreLife": 4,
+      "lapTimeSeconds": null,
+      "sessionTimeSeconds": 101.404,
+      "sectorTimesSeconds": [
+        null,
+        29.663,
+        42.076
+      ],
+      "isPersonalBest": false,
+      "trackStatus": "1",
+      "hasData": false,
+      "flags": [
+        "missing-laptime",
+        "inaccurate"
+      ],
+      "isValid": false
+    },
+    {
+      "driver": "TSU",
+      "lapNumber": 2,
+      "stint": 1,
+      "compound": "MEDIUM",
+      "tyreLife": 5,
+      "lapTimeSeconds": 96.79,
+      "sessionTimeSeconds": 198.194,
+      "sectorTimesSeconds": [
+        25.976,
+        29.403,
+        41.411
+      ],
+      "isPersonalBest": true,
+      "trackStatus": "1",
+      "hasData": true,
+      "flags": [],
+      "isValid": true
+    },
+    {
+      "driver": "TSU",
+      "lapNumber": 3,
+      "stint": 1,
+      "compound": "MEDIUM",
+      "tyreLife": 6,
+      "lapTimeSeconds": 96.488,
+      "sessionTimeSeconds": 294.682,
+      "sectorTimesSeconds": [
+        25.777,
+        29.348,
+        41.363
+      ],
+      "isPersonalBest": true,
+      "trackStatus": "1",
+      "hasData": true,
+      "flags": [],
+      "isValid": true
+    },
+    {
+      "driver": "TSU",
+      "lapNumber": 4,
+      "stint": 1,
+      "compound": "MEDIUM",
+      "tyreLife": 7,
+      "lapTimeSeconds": 96.388,
+      "sessionTimeSeconds": 391.07,
+      "sectorTimesSeconds": [
+        25.634,
+        29.183,
+        41.571
+      ],
+      "isPersonalBest": true,
+      "trackStatus": "1",
+      "hasData": true,
+      "flags": [],
+      "isValid": true
+    },
+    {
+      "driver": "TSU",
+      "lapNumber": 5,
+      "stint": 1,
+      "compound": "MEDIUM",
+      "tyreLife": 8,
+      "lapTimeSeconds": 96.527,
+      "sessionTimeSeconds": 487.597,
+      "sectorTimesSeconds": [
+        25.798000000000002,
+        29.272,
+        41.457
+      ],
+      "isPersonalBest": false,
+      "trackStatus": "1",
+      "hasData": true,
+      "flags": [],
+      "isValid": true
+    },
+    {
+      "driver": "TSU",
+      "lapNumber": 6,
+      "stint": 1,
+      "compound": "MEDIUM",
+      "tyreLife": 9,
+      "lapTimeSeconds": 96.85,
+      "sessionTimeSeconds": 584.447,
+      "sectorTimesSeconds": [
+        25.806,
+        29.359,
+        41.685
+      ],
+      "isPersonalBest": false,
+      "trackStatus": "1",
+      "hasData": true,
+      "flags": [],
+      "isValid": true
+    },
+    {
+      "driver": "TSU",
+      "lapNumber": 7,
+      "stint": 1,
+      "compound": "MEDIUM",
+      "tyreLife": 10,
+      "lapTimeSeconds": 96.8,
+      "sessionTimeSeconds": 681.247,
+      "sectorTimesSeconds": [
+        25.911,
+        29.279,
+        41.61
+      ],
+      "isPersonalBest": false,
+      "trackStatus": "1",
+      "hasData": true,
+      "flags": [],
+      "isValid": true
+    },
+    {
+      "driver": "TSU",
+      "lapNumber": 8,
+      "stint": 1,
+      "compound": "MEDIUM",
+      "tyreLife": 11,
+      "lapTimeSeconds": 97.176,
+      "sessionTimeSeconds": 778.423,
+      "sectorTimesSeconds": [
+        25.979,
+        29.419,
+        41.778
+      ],
+      "isPersonalBest": false,
+      "trackStatus": "1",
+      "hasData": true,
+      "flags": [],
+      "isValid": true
+    },
+    {
+      "driver": "TSU",
+      "lapNumber": 9,
+      "stint": 1,
+      "compound": "MEDIUM",
+      "tyreLife": 12,
+      "lapTimeSeconds": 97.444,
+      "sessionTimeSeconds": 875.867,
+      "sectorTimesSeconds": [
+        25.901,
+        29.525,
+        42.018
+      ],
+      "isPersonalBest": false,
+      "trackStatus": "1",
+      "hasData": true,
+      "flags": [],
+      "isValid": true
+    },
+    {
+      "driver": "TSU",
+      "lapNumber": 10,
+      "stint": 1,
+      "compound": "MEDIUM",
+      "tyreLife": 13,
+      "lapTimeSeconds": 97.642,
+      "sessionTimeSeconds": 973.509,
+      "sectorTimesSeconds": [
+        25.932,
+        29.672,
+        42.038
+      ],
+      "isPersonalBest": false,
+      "trackStatus": "1",
+      "hasData": true,
+      "flags": [],
+      "isValid": true
+    },
+    {
+      "driver": "TSU",
+      "lapNumber": 11,
+      "stint": 1,
+      "compound": "MEDIUM",
+      "tyreLife": 14,
+      "lapTimeSeconds": 98.185,
+      "sessionTimeSeconds": 1071.694,
+      "sectorTimesSeconds": [
+        26.175,
+        29.822,
+        42.188
+      ],
+      "isPersonalBest": false,
+      "trackStatus": "1",
+      "hasData": true,
+      "flags": [],
+      "isValid": true
+    },
+    {
+      "driver": "TSU",
+      "lapNumber": 12,
+      "stint": 1,
+      "compound": "MEDIUM",
+      "tyreLife": 15,
+      "lapTimeSeconds": 98.174,
+      "sessionTimeSeconds": 1169.868,
+      "sectorTimesSeconds": [
+        26.074,
+        29.852,
+        42.248
+      ],
+      "isPersonalBest": false,
+      "trackStatus": "1",
+      "hasData": true,
+      "flags": [],
+      "isValid": true
+    },
+    {
+      "driver": "TSU",
+      "lapNumber": 13,
+      "stint": 1,
+      "compound": "MEDIUM",
+      "tyreLife": 16,
+      "lapTimeSeconds": 98.608,
+      "sessionTimeSeconds": 1268.476,
+      "sectorTimesSeconds": [
+        26.161,
+        30.079,
+        42.368
+      ],
+      "isPersonalBest": false,
+      "trackStatus": "1",
+      "hasData": true,
+      "flags": [],
+      "isValid": true
+    },
+    {
+      "driver": "TSU",
+      "lapNumber": 14,
+      "stint": 1,
+      "compound": "MEDIUM",
+      "tyreLife": 17,
+      "lapTimeSeconds": 98.639,
+      "sessionTimeSeconds": 1367.115,
+      "sectorTimesSeconds": [
+        26.262,
+        29.938,
+        42.439
+      ],
+      "isPersonalBest": false,
+      "trackStatus": "1",
+      "hasData": true,
+      "flags": [],
+      "isValid": true
+    },
+    {
+      "driver": "TSU",
+      "lapNumber": 15,
+      "stint": 1,
+      "compound": "MEDIUM",
+      "tyreLife": 18,
+      "lapTimeSeconds": 99.093,
+      "sessionTimeSeconds": 1466.208,
+      "sectorTimesSeconds": [
+        26.5,
+        30.27,
+        42.323
+      ],
+      "isPersonalBest": false,
+      "trackStatus": "1",
+      "hasData": true,
+      "flags": [],
+      "isValid": true
+    },
+    {
+      "driver": "TSU",
+      "lapNumber": 16,
+      "stint": 1,
+      "compound": "MEDIUM",
+      "tyreLife": 19,
+      "lapTimeSeconds": 98.926,
+      "sessionTimeSeconds": 1565.134,
+      "sectorTimesSeconds": [
+        26.415,
+        30.253,
+        42.258
+      ],
+      "isPersonalBest": false,
+      "trackStatus": "1",
+      "hasData": true,
+      "flags": [],
+      "isValid": true
+    },
+    {
+      "driver": "TSU",
+      "lapNumber": 17,
+      "stint": 1,
+      "compound": "MEDIUM",
+      "tyreLife": 20,
+      "lapTimeSeconds": 99.038,
+      "sessionTimeSeconds": 1664.172,
+      "sectorTimesSeconds": [
+        26.765,
+        30.111,
+        42.162
+      ],
+      "isPersonalBest": false,
+      "trackStatus": "1",
+      "hasData": true,
+      "flags": [],
+      "isValid": true
+    },
+    {
+      "driver": "TSU",
+      "lapNumber": 18,
+      "stint": 1,
+      "compound": "MEDIUM",
+      "tyreLife": 21,
+      "lapTimeSeconds": 99.344,
+      "sessionTimeSeconds": 1763.516,
+      "sectorTimesSeconds": [
+        26.761,
+        30.249,
+        42.334
+      ],
+      "isPersonalBest": false,
+      "trackStatus": "1",
+      "hasData": true,
+      "flags": [],
+      "isValid": true
+    },
+    {
+      "driver": "TSU",
+      "lapNumber": 19,
+      "stint": 1,
+      "compound": "MEDIUM",
+      "tyreLife": 22,
+      "lapTimeSeconds": 98.994,
+      "sessionTimeSeconds": 1862.51,
+      "sectorTimesSeconds": [
+        26.868,
+        30.129,
+        41.997
+      ],
+      "isPersonalBest": false,
+      "trackStatus": "1",
+      "hasData": true,
+      "flags": [],
+      "isValid": true
+    },
+    {
+      "driver": "ANT",
+      "lapNumber": 1,
+      "stint": 1,
+      "compound": "MEDIUM",
+      "tyreLife": 8,
+      "lapTimeSeconds": null,
+      "sessionTimeSeconds": 101.752,
+      "sectorTimesSeconds": [
+        null,
+        30.106,
+        41.832
+      ],
+      "isPersonalBest": false,
+      "trackStatus": "1",
+      "hasData": false,
+      "flags": [
+        "missing-laptime",
+        "inaccurate"
+      ],
+      "isValid": false
+    },
+    {
+      "driver": "ANT",
+      "lapNumber": 2,
+      "stint": 1,
+      "compound": "MEDIUM",
+      "tyreLife": 9,
+      "lapTimeSeconds": 96.854,
+      "sessionTimeSeconds": 198.606,
+      "sectorTimesSeconds": [
+        25.921,
+        29.632,
+        41.301
+      ],
+      "isPersonalBest": true,
+      "trackStatus": "1",
+      "hasData": true,
+      "flags": [],
+      "isValid": true
+    },
+    {
+      "driver": "ANT",
+      "lapNumber": 3,
+      "stint": 1,
+      "compound": "MEDIUM",
+      "tyreLife": 10,
+      "lapTimeSeconds": 96.659,
+      "sessionTimeSeconds": 295.265,
+      "sectorTimesSeconds": [
+        25.716,
+        29.662,
+        41.281
+      ],
+      "isPersonalBest": true,
+      "trackStatus": "1",
+      "hasData": true,
+      "flags": [],
+      "isValid": true
+    },
+    {
+      "driver": "ANT",
+      "lapNumber": 4,
+      "stint": 1,
+      "compound": "MEDIUM",
+      "tyreLife": 11,
+      "lapTimeSeconds": 96.518,
+      "sessionTimeSeconds": 391.783,
+      "sectorTimesSeconds": [
+        25.772,
+        29.41,
+        41.336
+      ],
+      "isPersonalBest": true,
+      "trackStatus": "1",
+      "hasData": true,
+      "flags": [],
+      "isValid": true
+    },
+    {
+      "driver": "ANT",
+      "lapNumber": 5,
+      "stint": 1,
+      "compound": "MEDIUM",
+      "tyreLife": 12,
+      "lapTimeSeconds": 96.311,
+      "sessionTimeSeconds": 488.094,
+      "sectorTimesSeconds": [
+        25.654,
+        29.407,
+        41.25
+      ],
+      "isPersonalBest": true,
+      "trackStatus": "1",
+      "hasData": true,
+      "flags": [],
+      "isValid": true
+    },
+    {
+      "driver": "ANT",
+      "lapNumber": 6,
+      "stint": 1,
+      "compound": "MEDIUM",
+      "tyreLife": 13,
+      "lapTimeSeconds": 96.859,
+      "sessionTimeSeconds": 584.953,
+      "sectorTimesSeconds": [
+        25.863,
+        29.584,
+        41.412
+      ],
+      "isPersonalBest": false,
+      "trackStatus": "1",
+      "hasData": true,
+      "flags": [],
+      "isValid": true
+    },
+    {
+      "driver": "ANT",
+      "lapNumber": 7,
+      "stint": 1,
+      "compound": "MEDIUM",
+      "tyreLife": 14,
+      "lapTimeSeconds": 96.711,
+      "sessionTimeSeconds": 681.664,
+      "sectorTimesSeconds": [
+        25.909,
+        29.442,
+        41.36
+      ],
+      "isPersonalBest": false,
+      "trackStatus": "1",
+      "hasData": true,
+      "flags": [],
+      "isValid": true
+    },
+    {
+      "driver": "ANT",
+      "lapNumber": 8,
+      "stint": 1,
+      "compound": "MEDIUM",
+      "tyreLife": 15,
+      "lapTimeSeconds": 97.259,
+      "sessionTimeSeconds": 778.923,
+      "sectorTimesSeconds": [
+        26.09,
+        29.611,
+        41.558
+      ],
+      "isPersonalBest": false,
+      "trackStatus": "1",
+      "hasData": true,
+      "flags": [],
+      "isValid": true
+    },
+    {
+      "driver": "ANT",
+      "lapNumber": 9,
+      "stint": 1,
+      "compound": "MEDIUM",
+      "tyreLife": 16,
+      "lapTimeSeconds": 97.318,
+      "sessionTimeSeconds": 876.241,
+      "sectorTimesSeconds": [
+        25.925,
+        29.594,
+        41.799
+      ],
+      "isPersonalBest": false,
+      "trackStatus": "1",
+      "hasData": true,
+      "flags": [],
+      "isValid": true
+    },
+    {
+      "driver": "ANT",
+      "lapNumber": 10,
+      "stint": 1,
+      "compound": "MEDIUM",
+      "tyreLife": 17,
+      "lapTimeSeconds": 97.745,
+      "sessionTimeSeconds": 973.986,
+      "sectorTimesSeconds": [
+        26.156,
+        29.764,
+        41.825
+      ],
+      "isPersonalBest": false,
+      "trackStatus": "1",
+      "hasData": true,
+      "flags": [],
+      "isValid": true
+    },
+    {
+      "driver": "ANT",
+      "lapNumber": 11,
+      "stint": 1,
+      "compound": "MEDIUM",
+      "tyreLife": 18,
+      "lapTimeSeconds": 98.266,
+      "sessionTimeSeconds": 1072.252,
+      "sectorTimesSeconds": [
+        26.251,
+        29.989,
+        42.026
+      ],
+      "isPersonalBest": false,
+      "trackStatus": "1",
+      "hasData": true,
+      "flags": [],
+      "isValid": true
+    },
+    {
+      "driver": "ANT",
+      "lapNumber": 12,
+      "stint": 1,
+      "compound": "MEDIUM",
+      "tyreLife": 19,
+      "lapTimeSeconds": 98.306,
+      "sessionTimeSeconds": 1170.558,
+      "sectorTimesSeconds": [
+        26.158,
+        29.915,
+        42.233
+      ],
+      "isPersonalBest": false,
+      "trackStatus": "1",
+      "hasData": true,
+      "flags": [],
+      "isValid": true
+    },
+    {
+      "driver": "ANT",
+      "lapNumber": 13,
+      "stint": 1,
+      "compound": "MEDIUM",
+      "tyreLife": 20,
+      "lapTimeSeconds": 98.56,
+      "sessionTimeSeconds": 1269.118,
+      "sectorTimesSeconds": [
+        26.187,
+        30.138,
+        42.235
+      ],
+      "isPersonalBest": false,
+      "trackStatus": "1",
+      "hasData": true,
+      "flags": [],
+      "isValid": true
+    },
+    {
+      "driver": "ANT",
+      "lapNumber": 14,
+      "stint": 1,
+      "compound": "MEDIUM",
+      "tyreLife": 21,
+      "lapTimeSeconds": 98.596,
+      "sessionTimeSeconds": 1367.714,
+      "sectorTimesSeconds": [
+        26.384,
+        30.103,
+        42.109
+      ],
+      "isPersonalBest": false,
+      "trackStatus": "1",
+      "hasData": true,
+      "flags": [],
+      "isValid": true
+    },
+    {
+      "driver": "ANT",
+      "lapNumber": 15,
+      "stint": 1,
+      "compound": "MEDIUM",
+      "tyreLife": 22,
+      "lapTimeSeconds": 98.995,
+      "sessionTimeSeconds": 1466.709,
+      "sectorTimesSeconds": [
+        26.62,
+        30.228,
+        42.147
+      ],
+      "isPersonalBest": false,
+      "trackStatus": "1",
+      "hasData": true,
+      "flags": [],
+      "isValid": true
+    },
+    {
+      "driver": "ANT",
+      "lapNumber": 16,
+      "stint": 1,
+      "compound": "MEDIUM",
+      "tyreLife": 23,
+      "lapTimeSeconds": 98.941,
+      "sessionTimeSeconds": 1565.65,
+      "sectorTimesSeconds": [
+        26.519,
+        30.37,
+        42.052
+      ],
+      "isPersonalBest": false,
+      "trackStatus": "1",
+      "hasData": true,
+      "flags": [],
+      "isValid": true
+    },
+    {
+      "driver": "ANT",
+      "lapNumber": 17,
+      "stint": 1,
+      "compound": "MEDIUM",
+      "tyreLife": 24,
+      "lapTimeSeconds": 99.278,
+      "sessionTimeSeconds": 1664.928,
+      "sectorTimesSeconds": [
+        26.714,
+        30.397,
+        42.167
+      ],
+      "isPersonalBest": false,
+      "trackStatus": "1",
+      "hasData": true,
+      "flags": [],
+      "isValid": true
+    },
+    {
+      "driver": "ANT",
+      "lapNumber": 18,
+      "stint": 1,
+      "compound": "MEDIUM",
+      "tyreLife": 25,
+      "lapTimeSeconds": 99.083,
+      "sessionTimeSeconds": 1764.011,
+      "sectorTimesSeconds": [
+        26.533,
+        30.288,
+        42.262
+      ],
+      "isPersonalBest": false,
+      "trackStatus": "1",
+      "hasData": true,
+      "flags": [],
+      "isValid": true
+    },
+    {
+      "driver": "ANT",
+      "lapNumber": 19,
+      "stint": 1,
+      "compound": "MEDIUM",
+      "tyreLife": 26,
+      "lapTimeSeconds": 99.249,
+      "sessionTimeSeconds": 1863.26,
+      "sectorTimesSeconds": [
+        26.837,
+        30.441,
+        41.971
+      ],
+      "isPersonalBest": false,
+      "trackStatus": "1",
+      "hasData": true,
+      "flags": [],
+      "isValid": true
+    },
+    {
+      "driver": "NOR",
+      "lapNumber": 1,
+      "stint": 1,
+      "compound": "MEDIUM",
+      "tyreLife": 4,
+      "lapTimeSeconds": null,
+      "sessionTimeSeconds": 102.993,
+      "sectorTimesSeconds": [
+        null,
+        31.099,
+        42.463
+      ],
+      "isPersonalBest": false,
+      "trackStatus": "1",
+      "hasData": false,
+      "flags": [
+        "missing-laptime",
+        "inaccurate"
+      ],
+      "isValid": false
+    },
+    {
+      "driver": "NOR",
+      "lapNumber": 2,
+      "stint": 1,
+      "compound": "MEDIUM",
+      "tyreLife": 5,
+      "lapTimeSeconds": 96.878,
+      "sessionTimeSeconds": 199.871,
+      "sectorTimesSeconds": [
+        25.679,
+        29.558,
+        41.641
+      ],
+      "isPersonalBest": true,
+      "trackStatus": "1",
+      "hasData": true,
+      "flags": [],
+      "isValid": true
+    },
+    {
+      "driver": "NOR",
+      "lapNumber": 3,
+      "stint": 1,
+      "compound": "MEDIUM",
+      "tyreLife": 6,
+      "lapTimeSeconds": 97.101,
+      "sessionTimeSeconds": 296.972,
+      "sectorTimesSeconds": [
+        25.657,
+        29.717,
+        41.727
+      ],
+      "isPersonalBest": false,
+      "trackStatus": "1",
+      "hasData": true,
+      "flags": [],
+      "isValid": true
+    },
+    {
+      "driver": "NOR",
+      "lapNumber": 4,
+      "stint": 1,
+      "compound": "MEDIUM",
+      "tyreLife": 7,
+      "lapTimeSeconds": 96.708,
+      "sessionTimeSeconds": 393.68,
+      "sectorTimesSeconds": [
+        25.642,
+        29.724,
+        41.342
+      ],
+      "isPersonalBest": true,
+      "trackStatus": "1",
+      "hasData": true,
+      "flags": [],
+      "isValid": true
+    },
+    {
+      "driver": "NOR",
+      "lapNumber": 5,
+      "stint": 1,
+      "compound": "MEDIUM",
+      "tyreLife": 8,
+      "lapTimeSeconds": 97.537,
+      "sessionTimeSeconds": 491.217,
+      "sectorTimesSeconds": [
+        25.925,
+        29.645,
+        41.967
+      ],
+      "isPersonalBest": false,
+      "trackStatus": "1",
+      "hasData": true,
+      "flags": [],
+      "isValid": true
+    },
+    {
+      "driver": "NOR",
+      "lapNumber": 6,
+      "stint": 1,
+      "compound": "MEDIUM",
+      "tyreLife": 9,
+      "lapTimeSeconds": 97.079,
+      "sessionTimeSeconds": 588.296,
+      "sectorTimesSeconds": [
+        25.912,
+        29.444,
+        41.723
+      ],
+      "isPersonalBest": false,
+      "trackStatus": "1",
+      "hasData": true,
+      "flags": [],
+      "isValid": true
+    },
+    {
+      "driver": "NOR",
+      "lapNumber": 7,
+      "stint": 1,
+      "compound": "MEDIUM",
+      "tyreLife": 10,
+      "lapTimeSeconds": 97.098,
+      "sessionTimeSeconds": 685.394,
+      "sectorTimesSeconds": [
+        25.995,
+        29.466,
+        41.637
+      ],
+      "isPersonalBest": false,
+      "trackStatus": "1",
+      "hasData": true,
+      "flags": [],
+      "isValid": true
+    },
+    {
+      "driver": "NOR",
+      "lapNumber": 8,
+      "stint": 1,
+      "compound": "MEDIUM",
+      "tyreLife": 11,
+      "lapTimeSeconds": 97.262,
+      "sessionTimeSeconds": 782.656,
+      "sectorTimesSeconds": [
+        26.023,
+        29.454,
+        41.785
+      ],
+      "isPersonalBest": false,
+      "trackStatus": "1",
+      "hasData": true,
+      "flags": [],
+      "isValid": true
+    },
+    {
+      "driver": "NOR",
+      "lapNumber": 9,
+      "stint": 1,
+      "compound": "MEDIUM",
+      "tyreLife": 12,
+      "lapTimeSeconds": 97.882,
+      "sessionTimeSeconds": 880.538,
+      "sectorTimesSeconds": [
+        25.958,
+        29.561,
+        42.363
+      ],
+      "isPersonalBest": false,
+      "trackStatus": "1",
+      "hasData": true,
+      "flags": [],
+      "isValid": true
+    },
+    {
+      "driver": "NOR",
+      "lapNumber": 10,
+      "stint": 1,
+      "compound": "MEDIUM",
+      "tyreLife": 13,
+      "lapTimeSeconds": 97.869,
+      "sessionTimeSeconds": 978.407,
+      "sectorTimesSeconds": [
+        26.181,
+        29.677,
+        42.011
+      ],
+      "isPersonalBest": false,
+      "trackStatus": "1",
+      "hasData": true,
+      "flags": [],
+      "isValid": true
+    },
+    {
+      "driver": "NOR",
+      "lapNumber": 11,
+      "stint": 1,
+      "compound": "MEDIUM",
+      "tyreLife": 14,
+      "lapTimeSeconds": 98.227,
+      "sessionTimeSeconds": 1076.634,
+      "sectorTimesSeconds": [
+        26.262,
+        29.819,
+        42.146
+      ],
+      "isPersonalBest": false,
+      "trackStatus": "1",
+      "hasData": true,
+      "flags": [],
+      "isValid": true
+    },
+    {
+      "driver": "NOR",
+      "lapNumber": 12,
+      "stint": 1,
+      "compound": "MEDIUM",
+      "tyreLife": 15,
+      "lapTimeSeconds": 97.62,
+      "sessionTimeSeconds": 1174.254,
+      "sectorTimesSeconds": [
+        26.056,
+        29.479,
+        42.085
+      ],
+      "isPersonalBest": false,
+      "trackStatus": "1",
+      "hasData": true,
+      "flags": [],
+      "isValid": true
+    },
+    {
+      "driver": "NOR",
+      "lapNumber": 13,
+      "stint": 1,
+      "compound": "MEDIUM",
+      "tyreLife": 16,
+      "lapTimeSeconds": 97.937,
+      "sessionTimeSeconds": 1272.191,
+      "sectorTimesSeconds": [
+        26.253,
+        29.611,
+        42.073
+      ],
+      "isPersonalBest": false,
+      "trackStatus": "1",
+      "hasData": true,
+      "flags": [],
+      "isValid": true
+    },
+    {
+      "driver": "NOR",
+      "lapNumber": 14,
+      "stint": 1,
+      "compound": "MEDIUM",
+      "tyreLife": 17,
+      "lapTimeSeconds": 97.913,
+      "sessionTimeSeconds": 1370.104,
+      "sectorTimesSeconds": [
+        26.22,
+        29.594,
+        42.099
+      ],
+      "isPersonalBest": false,
+      "trackStatus": "1",
+      "hasData": true,
+      "flags": [],
+      "isValid": true
+    },
+    {
+      "driver": "NOR",
+      "lapNumber": 15,
+      "stint": 1,
+      "compound": "MEDIUM",
+      "tyreLife": 18,
+      "lapTimeSeconds": 98.984,
+      "sessionTimeSeconds": 1469.088,
+      "sectorTimesSeconds": [
+        26.296,
+        29.835,
+        42.853
+      ],
+      "isPersonalBest": false,
+      "trackStatus": "1",
+      "hasData": true,
+      "flags": [],
+      "isValid": true
+    },
+    {
+      "driver": "NOR",
+      "lapNumber": 16,
+      "stint": 1,
+      "compound": "MEDIUM",
+      "tyreLife": 19,
+      "lapTimeSeconds": 98.762,
+      "sessionTimeSeconds": 1567.85,
+      "sectorTimesSeconds": [
+        26.353,
+        30.116,
+        42.293
+      ],
+      "isPersonalBest": false,
+      "trackStatus": "1",
+      "hasData": true,
+      "flags": [],
+      "isValid": true
+    },
+    {
+      "driver": "NOR",
+      "lapNumber": 17,
+      "stint": 1,
+      "compound": "MEDIUM",
+      "tyreLife": 20,
+      "lapTimeSeconds": 98.722,
+      "sessionTimeSeconds": 1666.572,
+      "sectorTimesSeconds": [
+        26.348,
+        30.061,
+        42.313
+      ],
+      "isPersonalBest": false,
+      "trackStatus": "1",
+      "hasData": true,
+      "flags": [],
+      "isValid": true
+    },
+    {
+      "driver": "NOR",
+      "lapNumber": 18,
+      "stint": 1,
+      "compound": "MEDIUM",
+      "tyreLife": 21,
+      "lapTimeSeconds": 98.424,
+      "sessionTimeSeconds": 1764.996,
+      "sectorTimesSeconds": [
+        26.22,
+        30.053,
+        42.151
+      ],
+      "isPersonalBest": false,
+      "trackStatus": "1",
+      "hasData": true,
+      "flags": [],
+      "isValid": true
+    },
+    {
+      "driver": "NOR",
+      "lapNumber": 19,
+      "stint": 1,
+      "compound": "MEDIUM",
+      "tyreLife": 22,
+      "lapTimeSeconds": 98.697,
+      "sessionTimeSeconds": 1863.693,
+      "sectorTimesSeconds": [
+        26.092,
+        30.596,
+        42.009
+      ],
+      "isPersonalBest": false,
+      "trackStatus": "1",
+      "hasData": true,
+      "flags": [],
+      "isValid": true
+    },
+    {
+      "driver": "STR",
+      "lapNumber": 1,
+      "stint": 1,
+      "compound": "MEDIUM",
+      "tyreLife": 4,
+      "lapTimeSeconds": null,
+      "sessionTimeSeconds": 102.36,
+      "sectorTimesSeconds": [
+        null,
+        30.35,
+        42.043
+      ],
+      "isPersonalBest": false,
+      "trackStatus": "1",
+      "hasData": false,
+      "flags": [
+        "missing-laptime",
+        "inaccurate"
+      ],
+      "isValid": false
+    },
+    {
+      "driver": "STR",
+      "lapNumber": 2,
+      "stint": 1,
+      "compound": "MEDIUM",
+      "tyreLife": 5,
+      "lapTimeSeconds": 96.974,
+      "sessionTimeSeconds": 199.334,
+      "sectorTimesSeconds": [
+        25.939,
+        29.7,
+        41.335
+      ],
+      "isPersonalBest": true,
+      "trackStatus": "1",
+      "hasData": true,
+      "flags": [],
+      "isValid": true
+    },
+    {
+      "driver": "STR",
+      "lapNumber": 3,
+      "stint": 1,
+      "compound": "MEDIUM",
+      "tyreLife": 6,
+      "lapTimeSeconds": 96.914,
+      "sessionTimeSeconds": 296.248,
+      "sectorTimesSeconds": [
+        25.733,
+        29.865,
+        41.316
+      ],
+      "isPersonalBest": true,
+      "trackStatus": "1",
+      "hasData": true,
+      "flags": [],
+      "isValid": true
+    },
+    {
+      "driver": "STR",
+      "lapNumber": 4,
+      "stint": 1,
+      "compound": "MEDIUM",
+      "tyreLife": 7,
+      "lapTimeSeconds": 96.435,
+      "sessionTimeSeconds": 392.683,
+      "sectorTimesSeconds": [
+        25.678,
+        29.529,
+        41.228
+      ],
+      "isPersonalBest": true,
+      "trackStatus": "1",
+      "hasData": true,
+      "flags": [],
+      "isValid": true
+    },
+    {
+      "driver": "STR",
+      "lapNumber": 5,
+      "stint": 1,
+      "compound": "MEDIUM",
+      "tyreLife": 8,
+      "lapTimeSeconds": 96.903,
+      "sessionTimeSeconds": 489.586,
+      "sectorTimesSeconds": [
+        25.679,
+        29.55,
+        41.674
+      ],
+      "isPersonalBest": false,
+      "trackStatus": "1",
+      "hasData": true,
+      "flags": [],
+      "isValid": true
+    },
+    {
+      "driver": "STR",
+      "lapNumber": 6,
+      "stint": 1,
+      "compound": "MEDIUM",
+      "tyreLife": 9,
+      "lapTimeSeconds": 97.075,
+      "sessionTimeSeconds": 586.661,
+      "sectorTimesSeconds": [
+        26.001,
+        29.519,
+        41.555
+      ],
+      "isPersonalBest": false,
+      "trackStatus": "1",
+      "hasData": true,
+      "flags": [],
+      "isValid": true
+    },
+    {
+      "driver": "STR",
+      "lapNumber": 7,
+      "stint": 1,
+      "compound": "MEDIUM",
+      "tyreLife": 10,
+      "lapTimeSeconds": 96.895,
+      "sessionTimeSeconds": 683.556,
+      "sectorTimesSeconds": [
+        26.087,
+        29.342,
+        41.466
+      ],
+      "isPersonalBest": false,
+      "trackStatus": "1",
+      "hasData": true,
+      "flags": [],
+      "isValid": true
+    },
+    {
+      "driver": "STR",
+      "lapNumber": 8,
+      "stint": 1,
+      "compound": "MEDIUM",
+      "tyreLife": 11,
+      "lapTimeSeconds": 97.136,
+      "sessionTimeSeconds": 780.692,
+      "sectorTimesSeconds": [
+        25.948,
+        29.528,
+        41.66
+      ],
+      "isPersonalBest": false,
+      "trackStatus": "1",
+      "hasData": true,
+      "flags": [],
+      "isValid": true
+    },
+    {
+      "driver": "STR",
+      "lapNumber": 9,
+      "stint": 1,
+      "compound": "MEDIUM",
+      "tyreLife": 12,
+      "lapTimeSeconds": 97.32,
+      "sessionTimeSeconds": 878.012,
+      "sectorTimesSeconds": [
+        25.995,
+        29.5,
+        41.825
+      ],
+      "isPersonalBest": false,
+      "trackStatus": "1",
+      "hasData": true,
+      "flags": [],
+      "isValid": true
+    },
+    {
+      "driver": "STR",
+      "lapNumber": 10,
+      "stint": 1,
+      "compound": "MEDIUM",
+      "tyreLife": 13,
+      "lapTimeSeconds": 97.23,
+      "sessionTimeSeconds": 975.242,
+      "sectorTimesSeconds": [
+        25.916,
+        29.438,
+        41.876
+      ],
+      "isPersonalBest": false,
+      "trackStatus": "1",
+      "hasData": true,
+      "flags": [],
+      "isValid": true
+    },
+    {
+      "driver": "STR",
+      "lapNumber": 11,
+      "stint": 1,
+      "compound": "MEDIUM",
+      "tyreLife": 14,
+      "lapTimeSeconds": 98.062,
+      "sessionTimeSeconds": 1073.304,
+      "sectorTimesSeconds": [
+        25.965,
+        30.08,
+        42.017
+      ],
+      "isPersonalBest": false,
+      "trackStatus": "1",
+      "hasData": true,
+      "flags": [],
+      "isValid": true
+    },
+    {
+      "driver": "STR",
+      "lapNumber": 12,
+      "stint": 1,
+      "compound": "MEDIUM",
+      "tyreLife": 15,
+      "lapTimeSeconds": 98.22,
+      "sessionTimeSeconds": 1171.524,
+      "sectorTimesSeconds": [
+        26.122,
+        29.925,
+        42.173
+      ],
+      "isPersonalBest": false,
+      "trackStatus": "1",
+      "hasData": true,
+      "flags": [],
+      "isValid": true
+    },
+    {
+      "driver": "STR",
+      "lapNumber": 13,
+      "stint": 1,
+      "compound": "MEDIUM",
+      "tyreLife": 16,
+      "lapTimeSeconds": 98.441,
+      "sessionTimeSeconds": 1269.965,
+      "sectorTimesSeconds": [
+        26.143,
+        30.09,
+        42.208
+      ],
+      "isPersonalBest": false,
+      "trackStatus": "1",
+      "hasData": true,
+      "flags": [],
+      "isValid": true
+    },
+    {
+      "driver": "STR",
+      "lapNumber": 14,
+      "stint": 1,
+      "compound": "MEDIUM",
+      "tyreLife": 17,
+      "lapTimeSeconds": 98.976,
+      "sessionTimeSeconds": 1368.941,
+      "sectorTimesSeconds": [
+        26.292,
+        30.344,
+        42.34
+      ],
+      "isPersonalBest": false,
+      "trackStatus": "1",
+      "hasData": true,
+      "flags": [],
+      "isValid": true
+    },
+    {
+      "driver": "STR",
+      "lapNumber": 15,
+      "stint": 1,
+      "compound": "MEDIUM",
+      "tyreLife": 18,
+      "lapTimeSeconds": 99.505,
+      "sessionTimeSeconds": 1468.446,
+      "sectorTimesSeconds": [
+        26.349,
+        30.325,
+        42.831
+      ],
+      "isPersonalBest": false,
+      "trackStatus": "1",
+      "hasData": true,
+      "flags": [],
+      "isValid": true
+    },
+    {
+      "driver": "STR",
+      "lapNumber": 16,
+      "stint": 1,
+      "compound": "MEDIUM",
+      "tyreLife": 19,
+      "lapTimeSeconds": 98.678,
+      "sessionTimeSeconds": 1567.124,
+      "sectorTimesSeconds": [
+        26.258,
+        29.967,
+        42.453
+      ],
+      "isPersonalBest": false,
+      "trackStatus": "1",
+      "hasData": true,
+      "flags": [],
+      "isValid": true
+    },
+    {
+      "driver": "STR",
+      "lapNumber": 17,
+      "stint": 1,
+      "compound": "MEDIUM",
+      "tyreLife": 20,
+      "lapTimeSeconds": 100.063,
+      "sessionTimeSeconds": 1667.187,
+      "sectorTimesSeconds": [
+        26.285,
+        30.213,
+        43.565
+      ],
+      "isPersonalBest": false,
+      "trackStatus": "1",
+      "hasData": true,
+      "flags": [],
+      "isValid": true
+    },
+    {
+      "driver": "STR",
+      "lapNumber": 18,
+      "stint": 1,
+      "compound": "MEDIUM",
+      "tyreLife": 21,
+      "lapTimeSeconds": 99.066,
+      "sessionTimeSeconds": 1766.253,
+      "sectorTimesSeconds": [
+        26.293,
+        30.139,
+        42.634
+      ],
+      "isPersonalBest": false,
+      "trackStatus": "1",
+      "hasData": true,
+      "flags": [],
+      "isValid": true
+    },
+    {
+      "driver": "STR",
+      "lapNumber": 19,
+      "stint": 1,
+      "compound": "MEDIUM",
+      "tyreLife": 22,
+      "lapTimeSeconds": 98.885,
+      "sessionTimeSeconds": 1865.138,
+      "sectorTimesSeconds": [
+        26.293,
+        29.989,
+        42.603
+      ],
+      "isPersonalBest": false,
+      "trackStatus": "1",
+      "hasData": true,
+      "flags": [],
+      "isValid": true
+    },
+    {
+      "driver": "ALO",
+      "lapNumber": 1,
+      "stint": 1,
+      "compound": "MEDIUM",
+      "tyreLife": 4,
+      "lapTimeSeconds": null,
+      "sessionTimeSeconds": 103.546,
+      "sectorTimesSeconds": [
+        null,
+        30.511,
+        42.747
+      ],
+      "isPersonalBest": false,
+      "trackStatus": "1",
+      "hasData": false,
+      "flags": [
+        "missing-laptime",
+        "inaccurate"
+      ],
+      "isValid": false
+    },
+    {
+      "driver": "ALO",
+      "lapNumber": 2,
+      "stint": 1,
+      "compound": "MEDIUM",
+      "tyreLife": 5,
+      "lapTimeSeconds": 97.296,
+      "sessionTimeSeconds": 200.842,
+      "sectorTimesSeconds": [
+        26.052,
+        29.474,
+        41.77
+      ],
+      "isPersonalBest": true,
+      "trackStatus": "1",
+      "hasData": true,
+      "flags": [],
+      "isValid": true
+    },
+    {
+      "driver": "ALO",
+      "lapNumber": 3,
+      "stint": 1,
+      "compound": "MEDIUM",
+      "tyreLife": 6,
+      "lapTimeSeconds": 97.505,
+      "sessionTimeSeconds": 298.347,
+      "sectorTimesSeconds": [
+        25.647,
+        29.678,
+        42.18
+      ],
+      "isPersonalBest": false,
+      "trackStatus": "1",
+      "hasData": true,
+      "flags": [],
+      "isValid": true
+    },
+    {
+      "driver": "ALO",
+      "lapNumber": 4,
+      "stint": 1,
+      "compound": "MEDIUM",
+      "tyreLife": 7,
+      "lapTimeSeconds": 97.473,
+      "sessionTimeSeconds": 395.82,
+      "sectorTimesSeconds": [
+        25.779,
+        29.766,
+        41.928
+      ],
+      "isPersonalBest": false,
+      "trackStatus": "1",
+      "hasData": true,
+      "flags": [],
+      "isValid": true
+    },
+    {
+      "driver": "ALO",
+      "lapNumber": 5,
+      "stint": 1,
+      "compound": "MEDIUM",
+      "tyreLife": 8,
+      "lapTimeSeconds": 97.603,
+      "sessionTimeSeconds": 493.423,
+      "sectorTimesSeconds": [
+        25.863,
+        29.79,
+        41.95
+      ],
+      "isPersonalBest": false,
+      "trackStatus": "1",
+      "hasData": true,
+      "flags": [],
+      "isValid": true
+    },
+    {
+      "driver": "ALO",
+      "lapNumber": 6,
+      "stint": 1,
+      "compound": "MEDIUM",
+      "tyreLife": 9,
+      "lapTimeSeconds": 97.623,
+      "sessionTimeSeconds": 591.046,
+      "sectorTimesSeconds": [
+        26.088,
+        29.781,
+        41.754
+      ],
+      "isPersonalBest": false,
+      "trackStatus": "1",
+      "hasData": true,
+      "flags": [],
+      "isValid": true
+    },
+    {
+      "driver": "ALO",
+      "lapNumber": 7,
+      "stint": 1,
+      "compound": "MEDIUM",
+      "tyreLife": 10,
+      "lapTimeSeconds": 97.269,
+      "sessionTimeSeconds": 688.315,
+      "sectorTimesSeconds": [
+        25.658,
+        29.631,
+        41.98
+      ],
+      "isPersonalBest": true,
+      "trackStatus": "1",
+      "hasData": true,
+      "flags": [],
+      "isValid": true
+    },
+    {
+      "driver": "ALO",
+      "lapNumber": 8,
+      "stint": 1,
+      "compound": "MEDIUM",
+      "tyreLife": 11,
+      "lapTimeSeconds": 97.058,
+      "sessionTimeSeconds": 785.373,
+      "sectorTimesSeconds": [
+        25.753,
+        29.382,
+        41.923
+      ],
+      "isPersonalBest": true,
+      "trackStatus": "1",
+      "hasData": true,
+      "flags": [],
+      "isValid": true
+    },
+    {
+      "driver": "ALO",
+      "lapNumber": 9,
+      "stint": 1,
+      "compound": "MEDIUM",
+      "tyreLife": 12,
+      "lapTimeSeconds": 97.646,
+      "sessionTimeSeconds": 883.019,
+      "sectorTimesSeconds": [
+        25.879,
+        29.582,
+        42.185
+      ],
+      "isPersonalBest": false,
+      "trackStatus": "1",
+      "hasData": true,
+      "flags": [],
+      "isValid": true
+    },
+    {
+      "driver": "ALO",
+      "lapNumber": 10,
+      "stint": 1,
+      "compound": "MEDIUM",
+      "tyreLife": 13,
+      "lapTimeSeconds": 98.041,
+      "sessionTimeSeconds": 981.06,
+      "sectorTimesSeconds": [
+        25.908,
+        29.671,
+        42.462
+      ],
+      "isPersonalBest": false,
+      "trackStatus": "1",
+      "hasData": true,
+      "flags": [],
+      "isValid": true
+    },
+    {
+      "driver": "ALO",
+      "lapNumber": 11,
+      "stint": 1,
+      "compound": "MEDIUM",
+      "tyreLife": 14,
+      "lapTimeSeconds": 98.384,
+      "sessionTimeSeconds": 1079.444,
+      "sectorTimesSeconds": [
+        25.981,
+        29.786,
+        42.617
+      ],
+      "isPersonalBest": false,
+      "trackStatus": "1",
+      "hasData": true,
+      "flags": [],
+      "isValid": true
+    },
+    {
+      "driver": "ALO",
+      "lapNumber": 12,
+      "stint": 1,
+      "compound": "MEDIUM",
+      "tyreLife": 15,
+      "lapTimeSeconds": 98.886,
+      "sessionTimeSeconds": 1178.33,
+      "sectorTimesSeconds": [
+        26.157,
+        29.935,
+        42.794
+      ],
+      "isPersonalBest": false,
+      "trackStatus": "1",
+      "hasData": true,
+      "flags": [],
+      "isValid": true
+    },
+    {
+      "driver": "ALO",
+      "lapNumber": 13,
+      "stint": 1,
+      "compound": "MEDIUM",
+      "tyreLife": 16,
+      "lapTimeSeconds": 99.229,
+      "sessionTimeSeconds": 1277.559,
+      "sectorTimesSeconds": [
+        26.262,
+        30.051,
+        42.916
+      ],
+      "isPersonalBest": false,
+      "trackStatus": "1",
+      "hasData": true,
+      "flags": [],
+      "isValid": true
+    },
+    {
+      "driver": "ALO",
+      "lapNumber": 14,
+      "stint": 1,
+      "compound": "MEDIUM",
+      "tyreLife": 17,
+      "lapTimeSeconds": 99.602,
+      "sessionTimeSeconds": 1377.161,
+      "sectorTimesSeconds": [
+        26.342,
+        30.346,
+        42.914
+      ],
+      "isPersonalBest": false,
+      "trackStatus": "1",
+      "hasData": true,
+      "flags": [],
+      "isValid": true
+    },
+    {
+      "driver": "ALO",
+      "lapNumber": 15,
+      "stint": 1,
+      "compound": "MEDIUM",
+      "tyreLife": 18,
+      "lapTimeSeconds": 100.376,
+      "sessionTimeSeconds": 1477.537,
+      "sectorTimesSeconds": [
+        26.584,
+        30.713,
+        43.079
+      ],
+      "isPersonalBest": false,
+      "trackStatus": "1",
+      "hasData": true,
+      "flags": [],
+      "isValid": true
+    },
+    {
+      "driver": "ALO",
+      "lapNumber": 16,
+      "stint": 1,
+      "compound": "MEDIUM",
+      "tyreLife": 19,
+      "lapTimeSeconds": 100.059,
+      "sessionTimeSeconds": 1577.596,
+      "sectorTimesSeconds": [
+        26.674,
+        30.546,
+        42.839
+      ],
+      "isPersonalBest": false,
+      "trackStatus": "1",
+      "hasData": true,
+      "flags": [],
+      "isValid": true
+    },
+    {
+      "driver": "ALO",
+      "lapNumber": 17,
+      "stint": 1,
+      "compound": "MEDIUM",
+      "tyreLife": 20,
+      "lapTimeSeconds": 100.072,
+      "sessionTimeSeconds": 1677.668,
+      "sectorTimesSeconds": [
+        26.724,
+        30.493,
+        42.855
+      ],
+      "isPersonalBest": false,
+      "trackStatus": "1",
+      "hasData": true,
+      "flags": [],
+      "isValid": true
+    },
+    {
+      "driver": "ALO",
+      "lapNumber": 18,
+      "stint": 1,
+      "compound": "MEDIUM",
+      "tyreLife": 21,
+      "lapTimeSeconds": 99.905,
+      "sessionTimeSeconds": 1777.573,
+      "sectorTimesSeconds": [
+        26.432,
+        30.296,
+        43.177
+      ],
+      "isPersonalBest": false,
+      "trackStatus": "1",
+      "hasData": true,
+      "flags": [],
+      "isValid": true
+    },
+    {
+      "driver": "ALO",
+      "lapNumber": 19,
+      "stint": 1,
+      "compound": "MEDIUM",
+      "tyreLife": 22,
+      "lapTimeSeconds": 100.867,
+      "sessionTimeSeconds": 1878.44,
+      "sectorTimesSeconds": [
+        26.563,
+        30.316,
+        43.988
+      ],
+      "isPersonalBest": false,
+      "trackStatus": "1",
+      "hasData": true,
+      "flags": [],
+      "isValid": true
+    },
+    {
+      "driver": "ALB",
+      "lapNumber": 1,
+      "stint": 1,
+      "compound": "MEDIUM",
+      "tyreLife": 5,
+      "lapTimeSeconds": null,
+      "sessionTimeSeconds": 103.815,
+      "sectorTimesSeconds": [
+        null,
+        30.948,
+        42.696
+      ],
+      "isPersonalBest": false,
+      "trackStatus": "1",
+      "hasData": false,
+      "flags": [
+        "missing-laptime",
+        "inaccurate"
+      ],
+      "isValid": false
+    },
+    {
+      "driver": "ALB",
+      "lapNumber": 2,
+      "stint": 1,
+      "compound": "MEDIUM",
+      "tyreLife": 6,
+      "lapTimeSeconds": 97.543,
+      "sessionTimeSeconds": 201.358,
+      "sectorTimesSeconds": [
+        26.252,
+        29.729,
+        41.562
+      ],
+      "isPersonalBest": true,
+      "trackStatus": "1",
+      "hasData": true,
+      "flags": [],
+      "isValid": true
+    },
+    {
+      "driver": "ALB",
+      "lapNumber": 3,
+      "stint": 1,
+      "compound": "MEDIUM",
+      "tyreLife": 7,
+      "lapTimeSeconds": 97.347,
+      "sessionTimeSeconds": 298.705,
+      "sectorTimesSeconds": [
+        25.91,
+        29.868,
+        41.569
+      ],
+      "isPersonalBest": true,
+      "trackStatus": "1",
+      "hasData": true,
+      "flags": [],
+      "isValid": true
+    },
+    {
+      "driver": "ALB",
+      "lapNumber": 4,
+      "stint": 1,
+      "compound": "MEDIUM",
+      "tyreLife": 8,
+      "lapTimeSeconds": 97.695,
+      "sessionTimeSeconds": 396.4,
+      "sectorTimesSeconds": [
+        26.096,
+        29.921,
+        41.678
+      ],
+      "isPersonalBest": false,
+      "trackStatus": "1",
+      "hasData": true,
+      "flags": [],
+      "isValid": true
+    },
+    {
+      "driver": "ALB",
+      "lapNumber": 5,
+      "stint": 1,
+      "compound": "MEDIUM",
+      "tyreLife": 9,
+      "lapTimeSeconds": 97.57,
+      "sessionTimeSeconds": 493.97,
+      "sectorTimesSeconds": [
+        26.06,
+        29.824,
+        41.686
+      ],
+      "isPersonalBest": false,
+      "trackStatus": "1",
+      "hasData": true,
+      "flags": [],
+      "isValid": true
+    },
+    {
+      "driver": "ALB",
+      "lapNumber": 6,
+      "stint": 1,
+      "compound": "MEDIUM",
+      "tyreLife": 10,
+      "lapTimeSeconds": 97.6,
+      "sessionTimeSeconds": 591.57,
+      "sectorTimesSeconds": [
+        26.095,
+        29.875,
+        41.63
+      ],
+      "isPersonalBest": false,
+      "trackStatus": "1",
+      "hasData": true,
+      "flags": [],
+      "isValid": true
+    },
+    {
+      "driver": "ALB",
+      "lapNumber": 7,
+      "stint": 1,
+      "compound": "MEDIUM",
+      "tyreLife": 11,
+      "lapTimeSeconds": 97.344,
+      "sessionTimeSeconds": 688.914,
+      "sectorTimesSeconds": [
+        25.992,
+        29.677,
+        41.675
+      ],
+      "isPersonalBest": true,
+      "trackStatus": "1",
+      "hasData": true,
+      "flags": [],
+      "isValid": true
+    },
+    {
+      "driver": "ALB",
+      "lapNumber": 8,
+      "stint": 1,
+      "compound": "MEDIUM",
+      "tyreLife": 12,
+      "lapTimeSeconds": 97.887,
+      "sessionTimeSeconds": 786.801,
+      "sectorTimesSeconds": [
+        26.025,
+        29.772,
+        42.09
+      ],
+      "isPersonalBest": false,
+      "trackStatus": "1",
+      "hasData": true,
+      "flags": [],
+      "isValid": true
+    },
+    {
+      "driver": "ALB",
+      "lapNumber": 9,
+      "stint": 1,
+      "compound": "MEDIUM",
+      "tyreLife": 13,
+      "lapTimeSeconds": 98.512,
+      "sessionTimeSeconds": 885.313,
+      "sectorTimesSeconds": [
+        26.429,
+        29.924,
+        42.159
+      ],
+      "isPersonalBest": false,
+      "trackStatus": "1",
+      "hasData": true,
+      "flags": [],
+      "isValid": true
+    },
+    {
+      "driver": "ALB",
+      "lapNumber": 10,
+      "stint": 1,
+      "compound": "MEDIUM",
+      "tyreLife": 14,
+      "lapTimeSeconds": 98.292,
+      "sessionTimeSeconds": 983.605,
+      "sectorTimesSeconds": [
+        26.411,
+        29.706,
+        42.175
+      ],
+      "isPersonalBest": false,
+      "trackStatus": "1",
+      "hasData": true,
+      "flags": [],
+      "isValid": true
+    },
+    {
+      "driver": "ALB",
+      "lapNumber": 11,
+      "stint": 1,
+      "compound": "MEDIUM",
+      "tyreLife": 15,
+      "lapTimeSeconds": 98.264,
+      "sessionTimeSeconds": 1081.869,
+      "sectorTimesSeconds": [
+        26.312,
+        29.824,
+        42.128
+      ],
+      "isPersonalBest": false,
+      "trackStatus": "1",
+      "hasData": true,
+      "flags": [],
+      "isValid": true
+    },
+    {
+      "driver": "ALB",
+      "lapNumber": 12,
+      "stint": 1,
+      "compound": "MEDIUM",
+      "tyreLife": 16,
+      "lapTimeSeconds": 98.326,
+      "sessionTimeSeconds": 1180.195,
+      "sectorTimesSeconds": [
+        26.201,
+        29.886,
+        42.239
+      ],
+      "isPersonalBest": false,
+      "trackStatus": "1",
+      "hasData": true,
+      "flags": [],
+      "isValid": true
+    },
+    {
+      "driver": "ALB",
+      "lapNumber": 13,
+      "stint": 1,
+      "compound": "MEDIUM",
+      "tyreLife": 17,
+      "lapTimeSeconds": 99.222,
+      "sessionTimeSeconds": 1279.417,
+      "sectorTimesSeconds": [
+        26.428,
+        30.095,
+        42.699
+      ],
+      "isPersonalBest": false,
+      "trackStatus": "1",
+      "hasData": true,
+      "flags": [],
+      "isValid": true
+    },
+    {
+      "driver": "ALB",
+      "lapNumber": 14,
+      "stint": 1,
+      "compound": "MEDIUM",
+      "tyreLife": 18,
+      "lapTimeSeconds": 99.444,
+      "sessionTimeSeconds": 1378.861,
+      "sectorTimesSeconds": [
+        26.633,
+        30.338,
+        42.473
+      ],
+      "isPersonalBest": false,
+      "trackStatus": "1",
+      "hasData": true,
+      "flags": [],
+      "isValid": true
+    },
+    {
+      "driver": "ALB",
+      "lapNumber": 15,
+      "stint": 1,
+      "compound": "MEDIUM",
+      "tyreLife": 19,
+      "lapTimeSeconds": 99.841,
+      "sessionTimeSeconds": 1478.702,
+      "sectorTimesSeconds": [
+        26.754,
+        30.432,
+        42.655
+      ],
+      "isPersonalBest": false,
+      "trackStatus": "1",
+      "hasData": true,
+      "flags": [],
+      "isValid": true
+    },
+    {
+      "driver": "ALB",
+      "lapNumber": 16,
+      "stint": 1,
+      "compound": "MEDIUM",
+      "tyreLife": 20,
+      "lapTimeSeconds": 100.109,
+      "sessionTimeSeconds": 1578.811,
+      "sectorTimesSeconds": [
+        26.759,
+        30.443,
+        42.907
+      ],
+      "isPersonalBest": false,
+      "trackStatus": "1",
+      "hasData": true,
+      "flags": [],
+      "isValid": true
+    },
+    {
+      "driver": "ALB",
+      "lapNumber": 17,
+      "stint": 1,
+      "compound": "MEDIUM",
+      "tyreLife": 21,
+      "lapTimeSeconds": 100.072,
+      "sessionTimeSeconds": 1678.883,
+      "sectorTimesSeconds": [
+        26.657,
+        30.68,
+        42.735
+      ],
+      "isPersonalBest": false,
+      "trackStatus": "1",
+      "hasData": true,
+      "flags": [],
+      "isValid": true
+    },
+    {
+      "driver": "ALB",
+      "lapNumber": 18,
+      "stint": 1,
+      "compound": "MEDIUM",
+      "tyreLife": 22,
+      "lapTimeSeconds": 100.565,
+      "sessionTimeSeconds": 1779.448,
+      "sectorTimesSeconds": [
+        26.728,
+        30.955,
+        42.882
+      ],
+      "isPersonalBest": false,
+      "trackStatus": "1",
+      "hasData": true,
+      "flags": [],
+      "isValid": true
+    },
+    {
+      "driver": "ALB",
+      "lapNumber": 19,
+      "stint": 1,
+      "compound": "MEDIUM",
+      "tyreLife": 23,
+      "lapTimeSeconds": 100.066,
+      "sessionTimeSeconds": 1879.514,
+      "sectorTimesSeconds": [
+        26.947,
+        30.521,
+        42.598
+      ],
+      "isPersonalBest": false,
+      "trackStatus": "1",
+      "hasData": true,
+      "flags": [],
+      "isValid": true
+    },
+    {
+      "driver": "GAS",
+      "lapNumber": 1,
+      "stint": 1,
+      "compound": "MEDIUM",
+      "tyreLife": 7,
+      "lapTimeSeconds": null,
+      "sessionTimeSeconds": 105.299,
+      "sectorTimesSeconds": [
+        null,
+        30.884,
+        43.175
+      ],
+      "isPersonalBest": false,
+      "trackStatus": "1",
+      "hasData": false,
+      "flags": [
+        "missing-laptime",
+        "inaccurate"
+      ],
+      "isValid": false
+    },
+    {
+      "driver": "GAS",
+      "lapNumber": 2,
+      "stint": 1,
+      "compound": "MEDIUM",
+      "tyreLife": 8,
+      "lapTimeSeconds": 98.019,
+      "sessionTimeSeconds": 203.318,
+      "sectorTimesSeconds": [
+        26.719,
+        29.724,
+        41.576
+      ],
+      "isPersonalBest": true,
+      "trackStatus": "1",
+      "hasData": true,
+      "flags": [],
+      "isValid": true
+    },
+    {
+      "driver": "GAS",
+      "lapNumber": 3,
+      "stint": 1,
+      "compound": "MEDIUM",
+      "tyreLife": 9,
+      "lapTimeSeconds": 97.481,
+      "sessionTimeSeconds": 300.799,
+      "sectorTimesSeconds": [
+        25.933,
+        29.615,
+        41.933
+      ],
+      "isPersonalBest": true,
+      "trackStatus": "1",
+      "hasData": true,
+      "flags": [],
+      "isValid": true
+    },
+    {
+      "driver": "GAS",
+      "lapNumber": 4,
+      "stint": 1,
+      "compound": "MEDIUM",
+      "tyreLife": 10,
+      "lapTimeSeconds": 97.697,
+      "sessionTimeSeconds": 398.496,
+      "sectorTimesSeconds": [
+        25.871,
+        29.801,
+        42.025
+      ],
+      "isPersonalBest": false,
+      "trackStatus": "1",
+      "hasData": true,
+      "flags": [],
+      "isValid": true
+    },
+    {
+      "driver": "GAS",
+      "lapNumber": 5,
+      "stint": 1,
+      "compound": "MEDIUM",
+      "tyreLife": 11,
+      "lapTimeSeconds": 97.838,
+      "sessionTimeSeconds": 496.334,
+      "sectorTimesSeconds": [
+        26.102,
+        29.799,
+        41.937
+      ],
+      "isPersonalBest": false,
+      "trackStatus": "1",
+      "hasData": true,
+      "flags": [],
+      "isValid": true
+    },
+    {
+      "driver": "GAS",
+      "lapNumber": 6,
+      "stint": 1,
+      "compound": "MEDIUM",
+      "tyreLife": 12,
+      "lapTimeSeconds": 97.905,
+      "sessionTimeSeconds": 594.239,
+      "sectorTimesSeconds": [
+        26.261,
+        29.75,
+        41.894
+      ],
+      "isPersonalBest": false,
+      "trackStatus": "1",
+      "hasData": true,
+      "flags": [],
+      "isValid": true
+    },
+    {
+      "driver": "GAS",
+      "lapNumber": 7,
+      "stint": 1,
+      "compound": "MEDIUM",
+      "tyreLife": 13,
+      "lapTimeSeconds": 97.897,
+      "sessionTimeSeconds": 692.136,
+      "sectorTimesSeconds": [
+        26.239,
+        29.842,
+        41.816
+      ],
+      "isPersonalBest": false,
+      "trackStatus": "1",
+      "hasData": true,
+      "flags": [],
+      "isValid": true
+    },
+    {
+      "driver": "GAS",
+      "lapNumber": 8,
+      "stint": 1,
+      "compound": "MEDIUM",
+      "tyreLife": 14,
+      "lapTimeSeconds": 98.669,
+      "sessionTimeSeconds": 790.805,
+      "sectorTimesSeconds": [
+        26.159,
+        30.093,
+        42.417
+      ],
+      "isPersonalBest": false,
+      "trackStatus": "1",
+      "hasData": true,
+      "flags": [],
+      "isValid": true
+    },
+    {
+      "driver": "GAS",
+      "lapNumber": 9,
+      "stint": 1,
+      "compound": "MEDIUM",
+      "tyreLife": 15,
+      "lapTimeSeconds": 99.469,
+      "sessionTimeSeconds": 890.274,
+      "sectorTimesSeconds": [
+        26.242,
+        30.062,
+        43.165
+      ],
+      "isPersonalBest": false,
+      "trackStatus": "1",
+      "hasData": true,
+      "flags": [],
+      "isValid": true
+    },
+    {
+      "driver": "GAS",
+      "lapNumber": 10,
+      "stint": 1,
+      "compound": "MEDIUM",
+      "tyreLife": 16,
+      "lapTimeSeconds": 98.216,
+      "sessionTimeSeconds": 988.49,
+      "sectorTimesSeconds": [
+        26.138,
+        30.058,
+        42.02
+      ],
+      "isPersonalBest": false,
+      "trackStatus": "1",
+      "hasData": true,
+      "flags": [],
+      "isValid": true
+    },
+    {
+      "driver": "GAS",
+      "lapNumber": 11,
+      "stint": 1,
+      "compound": "MEDIUM",
+      "tyreLife": 17,
+      "lapTimeSeconds": 98.861,
+      "sessionTimeSeconds": 1087.351,
+      "sectorTimesSeconds": [
+        26.443,
+        29.914,
+        42.504
+      ],
+      "isPersonalBest": false,
+      "trackStatus": "1",
+      "hasData": true,
+      "flags": [],
+      "isValid": true
+    },
+    {
+      "driver": "GAS",
+      "lapNumber": 12,
+      "stint": 1,
+      "compound": "MEDIUM",
+      "tyreLife": 18,
+      "lapTimeSeconds": 98.912,
+      "sessionTimeSeconds": 1186.263,
+      "sectorTimesSeconds": [
+        26.639,
+        29.663,
+        42.61
+      ],
+      "isPersonalBest": false,
+      "trackStatus": "1",
+      "hasData": true,
+      "flags": [],
+      "isValid": true
+    },
+    {
+      "driver": "GAS",
+      "lapNumber": 13,
+      "stint": 1,
+      "compound": "MEDIUM",
+      "tyreLife": 19,
+      "lapTimeSeconds": 99.379,
+      "sessionTimeSeconds": 1285.642,
+      "sectorTimesSeconds": [
+        26.555,
+        29.784,
+        43.04
+      ],
+      "isPersonalBest": false,
+      "trackStatus": "1",
+      "hasData": true,
+      "flags": [],
+      "isValid": true
+    },
+    {
+      "driver": "GAS",
+      "lapNumber": 14,
+      "stint": 1,
+      "compound": "MEDIUM",
+      "tyreLife": 20,
+      "lapTimeSeconds": 99.184,
+      "sessionTimeSeconds": 1384.826,
+      "sectorTimesSeconds": [
+        26.595,
+        29.899,
+        42.69
+      ],
+      "isPersonalBest": false,
+      "trackStatus": "1",
+      "hasData": true,
+      "flags": [],
+      "isValid": true
+    },
+    {
+      "driver": "GAS",
+      "lapNumber": 15,
+      "stint": 1,
+      "compound": "MEDIUM",
+      "tyreLife": 21,
+      "lapTimeSeconds": 98.843,
+      "sessionTimeSeconds": 1483.669,
+      "sectorTimesSeconds": [
+        26.523,
+        29.809,
+        42.511
+      ],
+      "isPersonalBest": false,
+      "trackStatus": "1",
+      "hasData": true,
+      "flags": [],
+      "isValid": true
+    },
+    {
+      "driver": "GAS",
+      "lapNumber": 16,
+      "stint": 1,
+      "compound": "MEDIUM",
+      "tyreLife": 22,
+      "lapTimeSeconds": 99.645,
+      "sessionTimeSeconds": 1583.314,
+      "sectorTimesSeconds": [
+        26.5,
+        30.754,
+        42.391
+      ],
+      "isPersonalBest": false,
+      "trackStatus": "1",
+      "hasData": true,
+      "flags": [],
+      "isValid": true
+    },
+    {
+      "driver": "GAS",
+      "lapNumber": 17,
+      "stint": 1,
+      "compound": "MEDIUM",
+      "tyreLife": 23,
+      "lapTimeSeconds": 99.176,
+      "sessionTimeSeconds": 1682.49,
+      "sectorTimesSeconds": [
+        26.572,
+        30.109,
+        42.495
+      ],
+      "isPersonalBest": false,
+      "trackStatus": "1",
+      "hasData": true,
+      "flags": [],
+      "isValid": true
+    },
+    {
+      "driver": "GAS",
+      "lapNumber": 18,
+      "stint": 1,
+      "compound": "MEDIUM",
+      "tyreLife": 24,
+      "lapTimeSeconds": 98.356,
+      "sessionTimeSeconds": 1780.846,
+      "sectorTimesSeconds": [
+        26.318,
+        29.669,
+        42.369
+      ],
+      "isPersonalBest": false,
+      "trackStatus": "1",
+      "hasData": true,
+      "flags": [],
+      "isValid": true
+    },
+    {
+      "driver": "GAS",
+      "lapNumber": 19,
+      "stint": 1,
+      "compound": "MEDIUM",
+      "tyreLife": 25,
+      "lapTimeSeconds": 99.025,
+      "sessionTimeSeconds": 1879.871,
+      "sectorTimesSeconds": [
+        26.077,
+        30.449,
+        42.499
+      ],
+      "isPersonalBest": false,
+      "trackStatus": "1",
+      "hasData": true,
+      "flags": [],
+      "isValid": true
+    },
+    {
+      "driver": "HAD",
+      "lapNumber": 1,
+      "stint": 1,
+      "compound": "MEDIUM",
+      "tyreLife": 3,
+      "lapTimeSeconds": null,
+      "sessionTimeSeconds": 106.22,
+      "sectorTimesSeconds": [
+        null,
+        31.263,
+        43.612
+      ],
+      "isPersonalBest": false,
+      "trackStatus": "1",
+      "hasData": false,
+      "flags": [
+        "missing-laptime",
+        "inaccurate"
+      ],
+      "isValid": false
+    },
+    {
+      "driver": "HAD",
+      "lapNumber": 2,
+      "stint": 1,
+      "compound": "MEDIUM",
+      "tyreLife": 4,
+      "lapTimeSeconds": 98.139,
+      "sessionTimeSeconds": 204.359,
+      "sectorTimesSeconds": [
+        26.489,
+        30.02,
+        41.63
+      ],
+      "isPersonalBest": true,
+      "trackStatus": "1",
+      "hasData": true,
+      "flags": [],
+      "isValid": true
+    },
+    {
+      "driver": "HAD",
+      "lapNumber": 3,
+      "stint": 1,
+      "compound": "MEDIUM",
+      "tyreLife": 5,
+      "lapTimeSeconds": 97.549,
+      "sessionTimeSeconds": 301.908,
+      "sectorTimesSeconds": [
+        25.944,
+        30.071,
+        41.534
+      ],
+      "isPersonalBest": true,
+      "trackStatus": "1",
+      "hasData": true,
+      "flags": [],
+      "isValid": true
+    },
+    {
+      "driver": "HAD",
+      "lapNumber": 4,
+      "stint": 1,
+      "compound": "MEDIUM",
+      "tyreLife": 6,
+      "lapTimeSeconds": 97.585,
+      "sessionTimeSeconds": 399.493,
+      "sectorTimesSeconds": [
+        25.848,
+        29.847,
+        41.89
+      ],
+      "isPersonalBest": false,
+      "trackStatus": "1",
+      "hasData": true,
+      "flags": [],
+      "isValid": true
+    },
+    {
+      "driver": "HAD",
+      "lapNumber": 5,
+      "stint": 1,
+      "compound": "MEDIUM",
+      "tyreLife": 7,
+      "lapTimeSeconds": 97.915,
+      "sessionTimeSeconds": 497.408,
+      "sectorTimesSeconds": [
+        25.767,
+        30.03,
+        42.118
+      ],
+      "isPersonalBest": false,
+      "trackStatus": "1",
+      "hasData": true,
+      "flags": [],
+      "isValid": true
+    },
+    {
+      "driver": "HAD",
+      "lapNumber": 6,
+      "stint": 1,
+      "compound": "MEDIUM",
+      "tyreLife": 8,
+      "lapTimeSeconds": 97.915,
+      "sessionTimeSeconds": 595.323,
+      "sectorTimesSeconds": [
+        26.049,
+        29.964,
+        41.902
+      ],
+      "isPersonalBest": false,
+      "trackStatus": "1",
+      "hasData": true,
+      "flags": [],
+      "isValid": true
+    },
+    {
+      "driver": "HAD",
+      "lapNumber": 7,
+      "stint": 1,
+      "compound": "MEDIUM",
+      "tyreLife": 9,
+      "lapTimeSeconds": 97.731,
+      "sessionTimeSeconds": 693.054,
+      "sectorTimesSeconds": [
+        25.728,
+        30.274,
+        41.729
+      ],
+      "isPersonalBest": false,
+      "trackStatus": "1",
+      "hasData": true,
+      "flags": [],
+      "isValid": true
+    },
+    {
+      "driver": "HAD",
+      "lapNumber": 8,
+      "stint": 1,
+      "compound": "MEDIUM",
+      "tyreLife": 10,
+      "lapTimeSeconds": 98.147,
+      "sessionTimeSeconds": 791.201,
+      "sectorTimesSeconds": [
+        26.044,
+        29.768,
+        42.335
+      ],
+      "isPersonalBest": false,
+      "trackStatus": "1",
+      "hasData": true,
+      "flags": [],
+      "isValid": true
+    },
+    {
+      "driver": "HAD",
+      "lapNumber": 9,
+      "stint": 1,
+      "compound": "MEDIUM",
+      "tyreLife": 11,
+      "lapTimeSeconds": 98.854,
+      "sessionTimeSeconds": 890.055,
+      "sectorTimesSeconds": [
+        25.956,
+        30.256,
+        42.642
+      ],
+      "isPersonalBest": false,
+      "trackStatus": "1",
+      "hasData": true,
+      "flags": [],
+      "isValid": true
+    },
+    {
+      "driver": "HAD",
+      "lapNumber": 10,
+      "stint": 1,
+      "compound": "MEDIUM",
+      "tyreLife": 12,
+      "lapTimeSeconds": 99.245,
+      "sessionTimeSeconds": 989.3,
+      "sectorTimesSeconds": [
+        26.576,
+        30.136,
+        42.533
+      ],
+      "isPersonalBest": false,
+      "trackStatus": "1",
+      "hasData": true,
+      "flags": [],
+      "isValid": true
+    },
+    {
+      "driver": "HAD",
+      "lapNumber": 11,
+      "stint": 1,
+      "compound": "MEDIUM",
+      "tyreLife": 13,
+      "lapTimeSeconds": 99.799,
+      "sessionTimeSeconds": 1089.099,
+      "sectorTimesSeconds": [
+        26.933,
+        30.371,
+        42.495
+      ],
+      "isPersonalBest": false,
+      "trackStatus": "1",
+      "hasData": true,
+      "flags": [],
+      "isValid": true
+    },
+    {
+      "driver": "HAD",
+      "lapNumber": 12,
+      "stint": 1,
+      "compound": "MEDIUM",
+      "tyreLife": 14,
+      "lapTimeSeconds": 98.373,
+      "sessionTimeSeconds": 1187.472,
+      "sectorTimesSeconds": [
+        26.154,
+        29.756,
+        42.463
+      ],
+      "isPersonalBest": false,
+      "trackStatus": "1",
+      "hasData": true,
+      "flags": [],
+      "isValid": true
+    },
+    {
+      "driver": "HAD",
+      "lapNumber": 13,
+      "stint": 1,
+      "compound": "MEDIUM",
+      "tyreLife": 15,
+      "lapTimeSeconds": 98.644,
+      "sessionTimeSeconds": 1286.116,
+      "sectorTimesSeconds": [
+        26.189,
+        29.797,
+        42.658
+      ],
+      "isPersonalBest": false,
+      "trackStatus": "1",
+      "hasData": true,
+      "flags": [],
+      "isValid": true
+    },
+    {
+      "driver": "HAD",
+      "lapNumber": 14,
+      "stint": 1,
+      "compound": "MEDIUM",
+      "tyreLife": 16,
+      "lapTimeSeconds": 99.094,
+      "sessionTimeSeconds": 1385.21,
+      "sectorTimesSeconds": [
+        26.538,
+        30.065,
+        42.491
+      ],
+      "isPersonalBest": false,
+      "trackStatus": "1",
+      "hasData": true,
+      "flags": [],
+      "isValid": true
+    },
+    {
+      "driver": "HAD",
+      "lapNumber": 15,
+      "stint": 1,
+      "compound": "MEDIUM",
+      "tyreLife": 17,
+      "lapTimeSeconds": 99.143,
+      "sessionTimeSeconds": 1484.353,
+      "sectorTimesSeconds": [
+        26.669,
+        30.093,
+        42.381
+      ],
+      "isPersonalBest": false,
+      "trackStatus": "1",
+      "hasData": true,
+      "flags": [],
+      "isValid": true
+    },
+    {
+      "driver": "HAD",
+      "lapNumber": 16,
+      "stint": 1,
+      "compound": "MEDIUM",
+      "tyreLife": 18,
+      "lapTimeSeconds": 99.534,
+      "sessionTimeSeconds": 1583.887,
+      "sectorTimesSeconds": [
+        26.545,
+        30.301,
+        42.688
+      ],
+      "isPersonalBest": false,
+      "trackStatus": "1",
+      "hasData": true,
+      "flags": [],
+      "isValid": true
+    },
+    {
+      "driver": "HAD",
+      "lapNumber": 17,
+      "stint": 1,
+      "compound": "MEDIUM",
+      "tyreLife": 19,
+      "lapTimeSeconds": 100.727,
+      "sessionTimeSeconds": 1684.614,
+      "sectorTimesSeconds": [
+        26.726,
+        30.947,
+        43.054
+      ],
+      "isPersonalBest": false,
+      "trackStatus": "1",
+      "hasData": true,
+      "flags": [],
+      "isValid": true
+    },
+    {
+      "driver": "HAD",
+      "lapNumber": 18,
+      "stint": 1,
+      "compound": "MEDIUM",
+      "tyreLife": 20,
+      "lapTimeSeconds": 99.532,
+      "sessionTimeSeconds": 1784.146,
+      "sectorTimesSeconds": [
+        26.679,
+        30.362,
+        42.491
+      ],
+      "isPersonalBest": false,
+      "trackStatus": "1",
+      "hasData": true,
+      "flags": [],
+      "isValid": true
+    },
+    {
+      "driver": "HAD",
+      "lapNumber": 19,
+      "stint": 1,
+      "compound": "MEDIUM",
+      "tyreLife": 21,
+      "lapTimeSeconds": 98.476,
+      "sessionTimeSeconds": 1882.622,
+      "sectorTimesSeconds": [
+        26.47,
+        29.714,
+        42.292
+      ],
+      "isPersonalBest": false,
+      "trackStatus": "1",
+      "hasData": true,
+      "flags": [],
+      "isValid": true
+    },
+    {
+      "driver": "LAW",
+      "lapNumber": 1,
+      "stint": 1,
+      "compound": "MEDIUM",
+      "tyreLife": 6,
+      "lapTimeSeconds": null,
+      "sessionTimeSeconds": 107.695,
+      "sectorTimesSeconds": [
+        null,
+        31.579,
+        43.794
+      ],
+      "isPersonalBest": false,
+      "trackStatus": "1",
+      "hasData": false,
+      "flags": [
+        "missing-laptime",
+        "inaccurate"
+      ],
+      "isValid": false
+    },
+    {
+      "driver": "LAW",
+      "lapNumber": 2,
+      "stint": 1,
+      "compound": "MEDIUM",
+      "tyreLife": 7,
+      "lapTimeSeconds": 98.347,
+      "sessionTimeSeconds": 206.042,
+      "sectorTimesSeconds": [
+        26.355,
+        29.996,
+        41.996
+      ],
+      "isPersonalBest": true,
+      "trackStatus": "1",
+      "hasData": true,
+      "flags": [],
+      "isValid": true
+    },
+    {
+      "driver": "LAW",
+      "lapNumber": 3,
+      "stint": 1,
+      "compound": "MEDIUM",
+      "tyreLife": 8,
+      "lapTimeSeconds": 97.724,
+      "sessionTimeSeconds": 303.766,
+      "sectorTimesSeconds": [
+        25.63,
+        29.919,
+        42.175
+      ],
+      "isPersonalBest": true,
+      "trackStatus": "1",
+      "hasData": true,
+      "flags": [],
+      "isValid": true
+    },
+    {
+      "driver": "LAW",
+      "lapNumber": 4,
+      "stint": 1,
+      "compound": "MEDIUM",
+      "tyreLife": 9,
+      "lapTimeSeconds": 97.163,
+      "sessionTimeSeconds": 400.929,
+      "sectorTimesSeconds": [
+        25.552,
+        29.645,
+        41.966
+      ],
+      "isPersonalBest": true,
+      "trackStatus": "1",
+      "hasData": true,
+      "flags": [],
+      "isValid": true
+    },
+    {
+      "driver": "LAW",
+      "lapNumber": 5,
+      "stint": 1,
+      "compound": "MEDIUM",
+      "tyreLife": 10,
+      "lapTimeSeconds": 97.629,
+      "sessionTimeSeconds": 498.558,
+      "sectorTimesSeconds": [
+        25.746,
+        29.687,
+        42.196
+      ],
+      "isPersonalBest": false,
+      "trackStatus": "1",
+      "hasData": true,
+      "flags": [],
+      "isValid": true
+    },
+    {
+      "driver": "LAW",
+      "lapNumber": 6,
+      "stint": 1,
+      "compound": "MEDIUM",
+      "tyreLife": 11,
+      "lapTimeSeconds": 97.509,
+      "sessionTimeSeconds": 596.067,
+      "sectorTimesSeconds": [
+        25.841,
+        29.926,
+        41.742
+      ],
+      "isPersonalBest": false,
+      "trackStatus": "1",
+      "hasData": true,
+      "flags": [],
+      "isValid": true
+    },
+    {
+      "driver": "LAW",
+      "lapNumber": 7,
+      "stint": 1,
+      "compound": "MEDIUM",
+      "tyreLife": 12,
+      "lapTimeSeconds": 98.073,
+      "sessionTimeSeconds": 694.14,
+      "sectorTimesSeconds": [
+        25.842,
+        30.205,
+        42.026
+      ],
+      "isPersonalBest": false,
+      "trackStatus": "1",
+      "hasData": true,
+      "flags": [],
+      "isValid": true
+    },
+    {
+      "driver": "LAW",
+      "lapNumber": 8,
+      "stint": 1,
+      "compound": "MEDIUM",
+      "tyreLife": 13,
+      "lapTimeSeconds": 98.113,
+      "sessionTimeSeconds": 792.253,
+      "sectorTimesSeconds": [
+        26.123,
+        30.092,
+        41.898
+      ],
+      "isPersonalBest": false,
+      "trackStatus": "1",
+      "hasData": true,
+      "flags": [],
+      "isValid": true
+    },
+    {
+      "driver": "LAW",
+      "lapNumber": 9,
+      "stint": 1,
+      "compound": "MEDIUM",
+      "tyreLife": 14,
+      "lapTimeSeconds": 98.644,
+      "sessionTimeSeconds": 890.897,
+      "sectorTimesSeconds": [
+        26.216,
+        30.19,
+        42.238
+      ],
+      "isPersonalBest": false,
+      "trackStatus": "1",
+      "hasData": true,
+      "flags": [],
+      "isValid": true
+    },
+    {
+      "driver": "LAW",
+      "lapNumber": 10,
+      "stint": 1,
+      "compound": "MEDIUM",
+      "tyreLife": 15,
+      "lapTimeSeconds": 99.088,
+      "sessionTimeSeconds": 989.985,
+      "sectorTimesSeconds": [
+        26.206,
+        30.357,
+        42.525
+      ],
+      "isPersonalBest": false,
+      "trackStatus": "1",
+      "hasData": true,
+      "flags": [],
+      "isValid": true
+    },
+    {
+      "driver": "LAW",
+      "lapNumber": 11,
+      "stint": 1,
+      "compound": "MEDIUM",
+      "tyreLife": 16,
+      "lapTimeSeconds": 99.743,
+      "sessionTimeSeconds": 1089.728,
+      "sectorTimesSeconds": [
+        26.496,
+        30.692,
+        42.555
+      ],
+      "isPersonalBest": false,
+      "trackStatus": "1",
+      "hasData": true,
+      "flags": [],
+      "isValid": true
+    },
+    {
+      "driver": "LAW",
+      "lapNumber": 12,
+      "stint": 1,
+      "compound": "MEDIUM",
+      "tyreLife": 17,
+      "lapTimeSeconds": 98.507,
+      "sessionTimeSeconds": 1188.235,
+      "sectorTimesSeconds": [
+        26.24,
+        29.854,
+        42.413
+      ],
+      "isPersonalBest": false,
+      "trackStatus": "1",
+      "hasData": true,
+      "flags": [],
+      "isValid": true
+    },
+    {
+      "driver": "LAW",
+      "lapNumber": 13,
+      "stint": 1,
+      "compound": "MEDIUM",
+      "tyreLife": 18,
+      "lapTimeSeconds": 98.495,
+      "sessionTimeSeconds": 1286.73,
+      "sectorTimesSeconds": [
+        25.967,
+        30.142,
+        42.386
+      ],
+      "isPersonalBest": false,
+      "trackStatus": "1",
+      "hasData": true,
+      "flags": [],
+      "isValid": true
+    },
+    {
+      "driver": "LAW",
+      "lapNumber": 14,
+      "stint": 1,
+      "compound": "MEDIUM",
+      "tyreLife": 19,
+      "lapTimeSeconds": 99.401,
+      "sessionTimeSeconds": 1386.131,
+      "sectorTimesSeconds": [
+        26.546,
+        30.21,
+        42.645
+      ],
+      "isPersonalBest": false,
+      "trackStatus": "1",
+      "hasData": true,
+      "flags": [],
+      "isValid": true
+    },
+    {
+      "driver": "LAW",
+      "lapNumber": 15,
+      "stint": 1,
+      "compound": "MEDIUM",
+      "tyreLife": 20,
+      "lapTimeSeconds": 99.141,
+      "sessionTimeSeconds": 1485.272,
+      "sectorTimesSeconds": [
+        26.488,
+        30.344,
+        42.309
+      ],
+      "isPersonalBest": false,
+      "trackStatus": "1",
+      "hasData": true,
+      "flags": [],
+      "isValid": true
+    },
+    {
+      "driver": "LAW",
+      "lapNumber": 16,
+      "stint": 1,
+      "compound": "MEDIUM",
+      "tyreLife": 21,
+      "lapTimeSeconds": 99.497,
+      "sessionTimeSeconds": 1584.769,
+      "sectorTimesSeconds": [
+        26.394,
+        30.457,
+        42.646
+      ],
+      "isPersonalBest": false,
+      "trackStatus": "1",
+      "hasData": true,
+      "flags": [],
+      "isValid": true
+    },
+    {
+      "driver": "LAW",
+      "lapNumber": 17,
+      "stint": 1,
+      "compound": "MEDIUM",
+      "tyreLife": 22,
+      "lapTimeSeconds": 100.299,
+      "sessionTimeSeconds": 1685.068,
+      "sectorTimesSeconds": [
+        26.477,
+        30.996,
+        42.826
+      ],
+      "isPersonalBest": false,
+      "trackStatus": "1",
+      "hasData": true,
+      "flags": [],
+      "isValid": true
+    },
+    {
+      "driver": "LAW",
+      "lapNumber": 18,
+      "stint": 1,
+      "compound": "MEDIUM",
+      "tyreLife": 23,
+      "lapTimeSeconds": 99.895,
+      "sessionTimeSeconds": 1784.963,
+      "sectorTimesSeconds": [
+        26.808,
+        30.574,
+        42.513
+      ],
+      "isPersonalBest": false,
+      "trackStatus": "1",
+      "hasData": true,
+      "flags": [],
+      "isValid": true
+    },
+    {
+      "driver": "LAW",
+      "lapNumber": 19,
+      "stint": 1,
+      "compound": "MEDIUM",
+      "tyreLife": 24,
+      "lapTimeSeconds": 100.163,
+      "sessionTimeSeconds": 1885.126,
+      "sectorTimesSeconds": [
+        26.9,
+        30.292,
+        42.971
+      ],
+      "isPersonalBest": false,
+      "trackStatus": "1",
+      "hasData": true,
+      "flags": [],
+      "isValid": true
+    },
+    {
+      "driver": "BEA",
+      "lapNumber": 1,
+      "stint": 1,
+      "compound": "MEDIUM",
+      "tyreLife": 4,
+      "lapTimeSeconds": null,
+      "sessionTimeSeconds": 104.341,
+      "sectorTimesSeconds": [
+        null,
+        31.066,
+        42.849
+      ],
+      "isPersonalBest": false,
+      "trackStatus": "1",
+      "hasData": false,
+      "flags": [
+        "missing-laptime",
+        "inaccurate"
+      ],
+      "isValid": false
+    },
+    {
+      "driver": "BEA",
+      "lapNumber": 2,
+      "stint": 1,
+      "compound": "MEDIUM",
+      "tyreLife": 5,
+      "lapTimeSeconds": 97.836,
+      "sessionTimeSeconds": 202.177,
+      "sectorTimesSeconds": [
+        26.264,
+        29.996,
+        41.576
+      ],
+      "isPersonalBest": true,
+      "trackStatus": "1",
+      "hasData": true,
+      "flags": [],
+      "isValid": true
+    },
+    {
+      "driver": "BEA",
+      "lapNumber": 3,
+      "stint": 1,
+      "compound": "MEDIUM",
+      "tyreLife": 6,
+      "lapTimeSeconds": 97.135,
+      "sessionTimeSeconds": 299.312,
+      "sectorTimesSeconds": [
+        25.9,
+        29.767,
+        41.468
+      ],
+      "isPersonalBest": true,
+      "trackStatus": "1",
+      "hasData": true,
+      "flags": [],
+      "isValid": true
+    },
+    {
+      "driver": "BEA",
+      "lapNumber": 4,
+      "stint": 1,
+      "compound": "MEDIUM",
+      "tyreLife": 7,
+      "lapTimeSeconds": 97.959,
+      "sessionTimeSeconds": 397.271,
+      "sectorTimesSeconds": [
+        26.104,
+        30.012,
+        41.843
+      ],
+      "isPersonalBest": false,
+      "trackStatus": "1",
+      "hasData": true,
+      "flags": [],
+      "isValid": true
+    },
+    {
+      "driver": "BEA",
+      "lapNumber": 5,
+      "stint": 1,
+      "compound": "MEDIUM",
+      "tyreLife": 8,
+      "lapTimeSeconds": 97.694,
+      "sessionTimeSeconds": 494.965,
+      "sectorTimesSeconds": [
+        26.048,
+        29.925,
+        41.721
+      ],
+      "isPersonalBest": false,
+      "trackStatus": "1",
+      "hasData": true,
+      "flags": [],
+      "isValid": true
+    },
+    {
+      "driver": "BEA",
+      "lapNumber": 6,
+      "stint": 1,
+      "compound": "MEDIUM",
+      "tyreLife": 9,
+      "lapTimeSeconds": 97.893,
+      "sessionTimeSeconds": 592.858,
+      "sectorTimesSeconds": [
+        26.255,
+        29.758,
+        41.88
+      ],
+      "isPersonalBest": false,
+      "trackStatus": "1",
+      "hasData": true,
+      "flags": [],
+      "isValid": true
+    },
+    {
+      "driver": "BEA",
+      "lapNumber": 7,
+      "stint": 1,
+      "compound": "MEDIUM",
+      "tyreLife": 10,
+      "lapTimeSeconds": 97.739,
+      "sessionTimeSeconds": 690.597,
+      "sectorTimesSeconds": [
+        26.242,
+        29.693,
+        41.804
+      ],
+      "isPersonalBest": false,
+      "trackStatus": "1",
+      "hasData": true,
+      "flags": [],
+      "isValid": true
+    },
+    {
+      "driver": "BEA",
+      "lapNumber": 8,
+      "stint": 1,
+      "compound": "MEDIUM",
+      "tyreLife": 11,
+      "lapTimeSeconds": 98.237,
+      "sessionTimeSeconds": 788.834,
+      "sectorTimesSeconds": [
+        26.543,
+        29.602,
+        42.092
+      ],
+      "isPersonalBest": false,
+      "trackStatus": "1",
+      "hasData": true,
+      "flags": [],
+      "isValid": true
+    },
+    {
+      "driver": "BEA",
+      "lapNumber": 9,
+      "stint": 1,
+      "compound": "MEDIUM",
+      "tyreLife": 12,
+      "lapTimeSeconds": 98.37,
+      "sessionTimeSeconds": 887.204,
+      "sectorTimesSeconds": [
+        26.476,
+        29.787,
+        42.107
+      ],
+      "isPersonalBest": false,
+      "trackStatus": "1",
+      "hasData": true,
+      "flags": [],
+      "isValid": true
+    },
+    {
+      "driver": "BEA",
+      "lapNumber": 10,
+      "stint": 1,
+      "compound": "MEDIUM",
+      "tyreLife": 13,
+      "lapTimeSeconds": 98.313,
+      "sessionTimeSeconds": 985.517,
+      "sectorTimesSeconds": [
+        26.544,
+        29.659,
+        42.11
+      ],
+      "isPersonalBest": false,
+      "trackStatus": "1",
+      "hasData": true,
+      "flags": [],
+      "isValid": true
+    },
+    {
+      "driver": "BEA",
+      "lapNumber": 11,
+      "stint": 1,
+      "compound": "MEDIUM",
+      "tyreLife": 14,
+      "lapTimeSeconds": 98.36,
+      "sessionTimeSeconds": 1083.877,
+      "sectorTimesSeconds": [
+        26.676,
+        29.564,
+        42.12
+      ],
+      "isPersonalBest": false,
+      "trackStatus": "1",
+      "hasData": true,
+      "flags": [],
+      "isValid": true
+    },
+    {
+      "driver": "BEA",
+      "lapNumber": 12,
+      "stint": 1,
+      "compound": "MEDIUM",
+      "tyreLife": 15,
+      "lapTimeSeconds": 99.023,
+      "sessionTimeSeconds": 1182.9,
+      "sectorTimesSeconds": [
+        26.642,
+        29.71,
+        42.671
+      ],
+      "isPersonalBest": false,
+      "trackStatus": "1",
+      "hasData": true,
+      "flags": [],
+      "isValid": true
+    },
+    {
+      "driver": "BEA",
+      "lapNumber": 13,
+      "stint": 1,
+      "compound": "MEDIUM",
+      "tyreLife": 16,
+      "lapTimeSeconds": 99.056,
+      "sessionTimeSeconds": 1281.956,
+      "sectorTimesSeconds": [
+        26.769,
+        29.781,
+        42.506
+      ],
+      "isPersonalBest": false,
+      "trackStatus": "1",
+      "hasData": true,
+      "flags": [],
+      "isValid": true
+    },
+    {
+      "driver": "BEA",
+      "lapNumber": 14,
+      "stint": 1,
+      "compound": "MEDIUM",
+      "tyreLife": 17,
+      "lapTimeSeconds": 100.129,
+      "sessionTimeSeconds": 1382.085,
+      "sectorTimesSeconds": [
+        26.971,
+        30.393,
+        42.765
+      ],
+      "isPersonalBest": false,
+      "trackStatus": "1",
+      "hasData": true,
+      "flags": [],
+      "isValid": true
+    },
+    {
+      "driver": "BEA",
+      "lapNumber": 15,
+      "stint": 1,
+      "compound": "MEDIUM",
+      "tyreLife": 18,
+      "lapTimeSeconds": 100.522,
+      "sessionTimeSeconds": 1482.607,
+      "sectorTimesSeconds": [
+        27.224,
+        30.436,
+        42.862
+      ],
+      "isPersonalBest": false,
+      "trackStatus": "1",
+      "hasData": true,
+      "flags": [],
+      "isValid": true
+    },
+    {
+      "driver": "BEA",
+      "lapNumber": 16,
+      "stint": 1,
+      "compound": "MEDIUM",
+      "tyreLife": 19,
+      "lapTimeSeconds": 100.214,
+      "sessionTimeSeconds": 1582.821,
+      "sectorTimesSeconds": [
+        27.055,
+        30.497,
+        42.662
+      ],
+      "isPersonalBest": false,
+      "trackStatus": "1",
+      "hasData": true,
+      "flags": [],
+      "isValid": true
+    },
+    {
+      "driver": "BEA",
+      "lapNumber": 17,
+      "stint": 1,
+      "compound": "MEDIUM",
+      "tyreLife": 20,
+      "lapTimeSeconds": 101.315,
+      "sessionTimeSeconds": 1684.136,
+      "sectorTimesSeconds": [
+        27.473,
+        30.839,
+        43.003
+      ],
+      "isPersonalBest": false,
+      "trackStatus": "1",
+      "hasData": true,
+      "flags": [],
+      "isValid": true
+    },
+    {
+      "driver": "BEA",
+      "lapNumber": 18,
+      "stint": 1,
+      "compound": "MEDIUM",
+      "tyreLife": 21,
+      "lapTimeSeconds": 100.511,
+      "sessionTimeSeconds": 1784.647,
+      "sectorTimesSeconds": [
+        26.748,
+        30.324,
+        43.439
+      ],
+      "isPersonalBest": false,
+      "trackStatus": "1",
+      "hasData": true,
+      "flags": [],
+      "isValid": true
+    },
+    {
+      "driver": "BEA",
+      "lapNumber": 19,
+      "stint": 1,
+      "compound": "MEDIUM",
+      "tyreLife": 22,
+      "lapTimeSeconds": 101.224,
+      "sessionTimeSeconds": 1885.871,
+      "sectorTimesSeconds": [
+        27.409,
+        30.861,
+        42.954
+      ],
+      "isPersonalBest": false,
+      "trackStatus": "1",
+      "hasData": true,
+      "flags": [],
+      "isValid": true
+    },
+    {
+      "driver": "OCO",
+      "lapNumber": 1,
+      "stint": 1,
+      "compound": "MEDIUM",
+      "tyreLife": 7,
+      "lapTimeSeconds": null,
+      "sessionTimeSeconds": 106.587,
+      "sectorTimesSeconds": [
+        null,
+        31.547,
+        43.259
+      ],
+      "isPersonalBest": false,
+      "trackStatus": "1",
+      "hasData": false,
+      "flags": [
+        "missing-laptime",
+        "inaccurate"
+      ],
+      "isValid": false
+    },
+    {
+      "driver": "OCO",
+      "lapNumber": 2,
+      "stint": 1,
+      "compound": "MEDIUM",
+      "tyreLife": 8,
+      "lapTimeSeconds": 98.29,
+      "sessionTimeSeconds": 204.877,
+      "sectorTimesSeconds": [
+        26.382,
+        29.981,
+        41.927
+      ],
+      "isPersonalBest": true,
+      "trackStatus": "1",
+      "hasData": true,
+      "flags": [],
+      "isValid": true
+    },
+    {
+      "driver": "OCO",
+      "lapNumber": 3,
+      "stint": 1,
+      "compound": "MEDIUM",
+      "tyreLife": 9,
+      "lapTimeSeconds": 97.554,
+      "sessionTimeSeconds": 302.431,
+      "sectorTimesSeconds": [
+        25.88,
+        30.017,
+        41.657
+      ],
+      "isPersonalBest": true,
+      "trackStatus": "1",
+      "hasData": true,
+      "flags": [],
+      "isValid": true
+    },
+    {
+      "driver": "OCO",
+      "lapNumber": 4,
+      "stint": 1,
+      "compound": "MEDIUM",
+      "tyreLife": 10,
+      "lapTimeSeconds": 97.632,
+      "sessionTimeSeconds": 400.063,
+      "sectorTimesSeconds": [
+        25.733,
+        30.009,
+        41.89
+      ],
+      "isPersonalBest": false,
+      "trackStatus": "1",
+      "hasData": true,
+      "flags": [],
+      "isValid": true
+    },
+    {
+      "driver": "OCO",
+      "lapNumber": 5,
+      "stint": 1,
+      "compound": "MEDIUM",
+      "tyreLife": 11,
+      "lapTimeSeconds": 97.754,
+      "sessionTimeSeconds": 497.817,
+      "sectorTimesSeconds": [
+        25.926,
+        29.851,
+        41.977
+      ],
+      "isPersonalBest": false,
+      "trackStatus": "1",
+      "hasData": true,
+      "flags": [],
+      "isValid": true
+    },
+    {
+      "driver": "OCO",
+      "lapNumber": 6,
+      "stint": 1,
+      "compound": "MEDIUM",
+      "tyreLife": 12,
+      "lapTimeSeconds": 98.579,
+      "sessionTimeSeconds": 596.396,
+      "sectorTimesSeconds": [
+        26.206,
+        29.959,
+        42.414
+      ],
+      "isPersonalBest": false,
+      "trackStatus": "1",
+      "hasData": true,
+      "flags": [],
+      "isValid": true
+    },
+    {
+      "driver": "OCO",
+      "lapNumber": 7,
+      "stint": 1,
+      "compound": "MEDIUM",
+      "tyreLife": 13,
+      "lapTimeSeconds": 98.269,
+      "sessionTimeSeconds": 694.665,
+      "sectorTimesSeconds": [
+        26.181,
+        29.965,
+        42.123
+      ],
+      "isPersonalBest": false,
+      "trackStatus": "1",
+      "hasData": true,
+      "flags": [],
+      "isValid": true
+    },
+    {
+      "driver": "OCO",
+      "lapNumber": 8,
+      "stint": 1,
+      "compound": "MEDIUM",
+      "tyreLife": 14,
+      "lapTimeSeconds": 98.443,
+      "sessionTimeSeconds": 793.108,
+      "sectorTimesSeconds": [
+        26.201,
+        29.99,
+        42.252
+      ],
+      "isPersonalBest": false,
+      "trackStatus": "1",
+      "hasData": true,
+      "flags": [],
+      "isValid": true
+    },
+    {
+      "driver": "OCO",
+      "lapNumber": 9,
+      "stint": 1,
+      "compound": "MEDIUM",
+      "tyreLife": 15,
+      "lapTimeSeconds": 98.514,
+      "sessionTimeSeconds": 891.622,
+      "sectorTimesSeconds": [
+        26.088,
+        30.01,
+        42.416
+      ],
+      "isPersonalBest": false,
+      "trackStatus": "1",
+      "hasData": true,
+      "flags": [],
+      "isValid": true
+    },
+    {
+      "driver": "OCO",
+      "lapNumber": 10,
+      "stint": 1,
+      "compound": "MEDIUM",
+      "tyreLife": 16,
+      "lapTimeSeconds": 99.393,
+      "sessionTimeSeconds": 991.015,
+      "sectorTimesSeconds": [
+        26.305,
+        30.421,
+        42.667
+      ],
+      "isPersonalBest": false,
+      "trackStatus": "1",
+      "hasData": true,
+      "flags": [],
+      "isValid": true
+    },
+    {
+      "driver": "OCO",
+      "lapNumber": 11,
+      "stint": 1,
+      "compound": "MEDIUM",
+      "tyreLife": 17,
+      "lapTimeSeconds": 100.137,
+      "sessionTimeSeconds": 1091.152,
+      "sectorTimesSeconds": [
+        26.433,
+        30.817,
+        42.887
+      ],
+      "isPersonalBest": false,
+      "trackStatus": "1",
+      "hasData": true,
+      "flags": [],
+      "isValid": true
+    },
+    {
+      "driver": "OCO",
+      "lapNumber": 12,
+      "stint": 1,
+      "compound": "MEDIUM",
+      "tyreLife": 18,
+      "lapTimeSeconds": 99.304,
+      "sessionTimeSeconds": 1190.456,
+      "sectorTimesSeconds": [
+        26.321,
+        30.211,
+        42.772
+      ],
+      "isPersonalBest": false,
+      "trackStatus": "1",
+      "hasData": true,
+      "flags": [],
+      "isValid": true
+    },
+    {
+      "driver": "OCO",
+      "lapNumber": 13,
+      "stint": 1,
+      "compound": "MEDIUM",
+      "tyreLife": 19,
+      "lapTimeSeconds": 98.871,
+      "sessionTimeSeconds": 1289.327,
+      "sectorTimesSeconds": [
+        26.235,
+        30.016,
+        42.62
+      ],
+      "isPersonalBest": false,
+      "trackStatus": "1",
+      "hasData": true,
+      "flags": [],
+      "isValid": true
+    },
+    {
+      "driver": "OCO",
+      "lapNumber": 14,
+      "stint": 1,
+      "compound": "MEDIUM",
+      "tyreLife": 20,
+      "lapTimeSeconds": 99.18,
+      "sessionTimeSeconds": 1388.507,
+      "sectorTimesSeconds": [
+        26.174,
+        30.349,
+        42.657
+      ],
+      "isPersonalBest": false,
+      "trackStatus": "1",
+      "hasData": true,
+      "flags": [],
+      "isValid": true
+    },
+    {
+      "driver": "OCO",
+      "lapNumber": 15,
+      "stint": 1,
+      "compound": "MEDIUM",
+      "tyreLife": 21,
+      "lapTimeSeconds": 99.454,
+      "sessionTimeSeconds": 1487.961,
+      "sectorTimesSeconds": [
+        26.446,
+        30.428,
+        42.58
+      ],
+      "isPersonalBest": false,
+      "trackStatus": "1",
+      "hasData": true,
+      "flags": [],
+      "isValid": true
+    },
+    {
+      "driver": "OCO",
+      "lapNumber": 16,
+      "stint": 1,
+      "compound": "MEDIUM",
+      "tyreLife": 22,
+      "lapTimeSeconds": 99.226,
+      "sessionTimeSeconds": 1587.187,
+      "sectorTimesSeconds": [
+        26.504,
+        30.258,
+        42.464
+      ],
+      "isPersonalBest": false,
+      "trackStatus": "1",
+      "hasData": true,
+      "flags": [],
+      "isValid": true
+    },
+    {
+      "driver": "OCO",
+      "lapNumber": 17,
+      "stint": 1,
+      "compound": "MEDIUM",
+      "tyreLife": 23,
+      "lapTimeSeconds": 99.565,
+      "sessionTimeSeconds": 1686.752,
+      "sectorTimesSeconds": [
+        26.401,
+        30.495,
+        42.669
+      ],
+      "isPersonalBest": false,
+      "trackStatus": "1",
+      "hasData": true,
+      "flags": [],
+      "isValid": true
+    },
+    {
+      "driver": "OCO",
+      "lapNumber": 18,
+      "stint": 1,
+      "compound": "MEDIUM",
+      "tyreLife": 24,
+      "lapTimeSeconds": 99.736,
+      "sessionTimeSeconds": 1786.488,
+      "sectorTimesSeconds": [
+        26.571,
+        30.557,
+        42.608
+      ],
+      "isPersonalBest": false,
+      "trackStatus": "1",
+      "hasData": true,
+      "flags": [],
+      "isValid": true
+    },
+    {
+      "driver": "OCO",
+      "lapNumber": 19,
+      "stint": 1,
+      "compound": "MEDIUM",
+      "tyreLife": 25,
+      "lapTimeSeconds": 99.916,
+      "sessionTimeSeconds": 1886.404,
+      "sectorTimesSeconds": [
+        26.299,
+        30.7,
+        42.917
+      ],
+      "isPersonalBest": false,
+      "trackStatus": "1",
+      "hasData": true,
+      "flags": [],
+      "isValid": true
+    },
+    {
+      "driver": "SAI",
+      "lapNumber": 1,
+      "stint": 1,
+      "compound": "MEDIUM",
+      "tyreLife": 5,
+      "lapTimeSeconds": null,
+      "sessionTimeSeconds": 104.868,
+      "sectorTimesSeconds": [
+        null,
+        31.188,
+        43.045
+      ],
+      "isPersonalBest": false,
+      "trackStatus": "1",
+      "hasData": false,
+      "flags": [
+        "missing-laptime",
+        "inaccurate"
+      ],
+      "isValid": false
+    },
+    {
+      "driver": "SAI",
+      "lapNumber": 2,
+      "stint": 1,
+      "compound": "MEDIUM",
+      "tyreLife": 6,
+      "lapTimeSeconds": 98.022,
+      "sessionTimeSeconds": 202.89,
+      "sectorTimesSeconds": [
+        26.591,
+        29.753,
+        41.678
+      ],
+      "isPersonalBest": true,
+      "trackStatus": "1",
+      "hasData": true,
+      "flags": [],
+      "isValid": true
+    },
+    {
+      "driver": "SAI",
+      "lapNumber": 3,
+      "stint": 1,
+      "compound": "MEDIUM",
+      "tyreLife": 7,
+      "lapTimeSeconds": 97.302,
+      "sessionTimeSeconds": 300.192,
+      "sectorTimesSeconds": [
+        25.837,
+        29.627,
+        41.838
+      ],
+      "isPersonalBest": true,
+      "trackStatus": "1",
+      "hasData": true,
+      "flags": [],
+      "isValid": true
+    },
+    {
+      "driver": "SAI",
+      "lapNumber": 4,
+      "stint": 1,
+      "compound": "MEDIUM",
+      "tyreLife": 8,
+      "lapTimeSeconds": 97.705,
+      "sessionTimeSeconds": 397.897,
+      "sectorTimesSeconds": [
+        25.918,
+        29.758,
+        42.029
+      ],
+      "isPersonalBest": false,
+      "trackStatus": "1",
+      "hasData": true,
+      "flags": [],
+      "isValid": true
+    },
+    {
+      "driver": "SAI",
+      "lapNumber": 5,
+      "stint": 1,
+      "compound": "MEDIUM",
+      "tyreLife": 9,
+      "lapTimeSeconds": 97.803,
+      "sessionTimeSeconds": 495.7,
+      "sectorTimesSeconds": [
+        26.067,
+        29.813,
+        41.923
+      ],
+      "isPersonalBest": false,
+      "trackStatus": "1",
+      "hasData": true,
+      "flags": [],
+      "isValid": true
+    },
+    {
+      "driver": "SAI",
+      "lapNumber": 6,
+      "stint": 1,
+      "compound": "MEDIUM",
+      "tyreLife": 10,
+      "lapTimeSeconds": 97.885,
+      "sessionTimeSeconds": 593.585,
+      "sectorTimesSeconds": [
+        26.079,
+        29.909,
+        41.897
+      ],
+      "isPersonalBest": false,
+      "trackStatus": "1",
+      "hasData": true,
+      "flags": [],
+      "isValid": true
+    },
+    {
+      "driver": "SAI",
+      "lapNumber": 7,
+      "stint": 1,
+      "compound": "MEDIUM",
+      "tyreLife": 11,
+      "lapTimeSeconds": 97.943,
+      "sessionTimeSeconds": 691.528,
+      "sectorTimesSeconds": [
+        26.191,
+        29.845,
+        41.907
+      ],
+      "isPersonalBest": false,
+      "trackStatus": "1",
+      "hasData": true,
+      "flags": [],
+      "isValid": true
+    },
+    {
+      "driver": "SAI",
+      "lapNumber": 8,
+      "stint": 1,
+      "compound": "MEDIUM",
+      "tyreLife": 12,
+      "lapTimeSeconds": 98.39,
+      "sessionTimeSeconds": 789.918,
+      "sectorTimesSeconds": [
+        26.247,
+        29.954,
+        42.189
+      ],
+      "isPersonalBest": false,
+      "trackStatus": "1",
+      "hasData": true,
+      "flags": [],
+      "isValid": true
+    },
+    {
+      "driver": "SAI",
+      "lapNumber": 9,
+      "stint": 1,
+      "compound": "MEDIUM",
+      "tyreLife": 13,
+      "lapTimeSeconds": 99.349,
+      "sessionTimeSeconds": 889.267,
+      "sectorTimesSeconds": [
+        26.566,
+        30.098,
+        42.685
+      ],
+      "isPersonalBest": false,
+      "trackStatus": "1",
+      "hasData": true,
+      "flags": [],
+      "isValid": true
+    },
+    {
+      "driver": "SAI",
+      "lapNumber": 10,
+      "stint": 1,
+      "compound": "MEDIUM",
+      "tyreLife": 14,
+      "lapTimeSeconds": 99.751,
+      "sessionTimeSeconds": 989.018,
+      "sectorTimesSeconds": [
+        26.56,
+        30.067,
+        43.124
+      ],
+      "isPersonalBest": false,
+      "trackStatus": "1",
+      "hasData": true,
+      "flags": [],
+      "isValid": true
+    },
+    {
+      "driver": "SAI",
+      "lapNumber": 11,
+      "stint": 1,
+      "compound": "MEDIUM",
+      "tyreLife": 15,
+      "lapTimeSeconds": 106.2,
+      "sessionTimeSeconds": 1095.218,
+      "sectorTimesSeconds": [
+        26.92,
+        30.443,
+        48.837
+      ],
+      "isPersonalBest": false,
+      "trackStatus": "1",
+      "hasData": false,
+      "flags": [
+        "inaccurate",
+        "in-lap"
+      ],
+      "isValid": false
+    },
+    {
+      "driver": "SAI",
+      "lapNumber": 12,
+      "stint": 2,
+      "compound": "MEDIUM",
+      "tyreLife": 7,
+      "lapTimeSeconds": 114.357,
+      "sessionTimeSeconds": 1209.575,
+      "sectorTimesSeconds": [
+        43.855,
+        28.854,
+        41.648
+      ],
+      "isPersonalBest": false,
+      "trackStatus": "1",
+      "hasData": false,
+      "flags": [
+        "inaccurate",
+        "out-lap"
+      ],
+      "isValid": false
+    },
+    {
+      "driver": "SAI",
+      "lapNumber": 13,
+      "stint": 2,
+      "compound": "MEDIUM",
+      "tyreLife": 8,
+      "lapTimeSeconds": 95.819,
+      "sessionTimeSeconds": 1305.394,
+      "sectorTimesSeconds": [
+        25.538,
+        28.621,
+        41.66
+      ],
+      "isPersonalBest": true,
+      "trackStatus": "1",
+      "hasData": true,
+      "flags": [],
+      "isValid": true
+    },
+    {
+      "driver": "SAI",
+      "lapNumber": 14,
+      "stint": 2,
+      "compound": "MEDIUM",
+      "tyreLife": 9,
+      "lapTimeSeconds": 96.602,
+      "sessionTimeSeconds": 1401.996,
+      "sectorTimesSeconds": [
+        25.851,
+        28.997,
+        41.754
+      ],
+      "isPersonalBest": false,
+      "trackStatus": "1",
+      "hasData": true,
+      "flags": [],
+      "isValid": true
+    },
+    {
+      "driver": "SAI",
+      "lapNumber": 15,
+      "stint": 2,
+      "compound": "MEDIUM",
+      "tyreLife": 10,
+      "lapTimeSeconds": 97.355,
+      "sessionTimeSeconds": 1499.351,
+      "sectorTimesSeconds": [
+        26.162,
+        29.343,
+        41.85
+      ],
+      "isPersonalBest": false,
+      "trackStatus": "1",
+      "hasData": true,
+      "flags": [],
+      "isValid": true
+    },
+    {
+      "driver": "SAI",
+      "lapNumber": 16,
+      "stint": 2,
+      "compound": "MEDIUM",
+      "tyreLife": 11,
+      "lapTimeSeconds": 97.309,
+      "sessionTimeSeconds": 1596.66,
+      "sectorTimesSeconds": [
+        26.1,
+        29.351,
+        41.858
+      ],
+      "isPersonalBest": false,
+      "trackStatus": "1",
+      "hasData": true,
+      "flags": [],
+      "isValid": true
+    },
+    {
+      "driver": "SAI",
+      "lapNumber": 17,
+      "stint": 2,
+      "compound": "MEDIUM",
+      "tyreLife": 12,
+      "lapTimeSeconds": 97.842,
+      "sessionTimeSeconds": 1694.502,
+      "sectorTimesSeconds": [
+        26.212,
+        29.525,
+        42.105
+      ],
+      "isPersonalBest": false,
+      "trackStatus": "1",
+      "hasData": true,
+      "flags": [],
+      "isValid": true
+    },
+    {
+      "driver": "SAI",
+      "lapNumber": 18,
+      "stint": 2,
+      "compound": "MEDIUM",
+      "tyreLife": 13,
+      "lapTimeSeconds": 97.675,
+      "sessionTimeSeconds": 1792.177,
+      "sectorTimesSeconds": [
+        26.115,
+        29.434,
+        42.126
+      ],
+      "isPersonalBest": false,
+      "trackStatus": "1",
+      "hasData": true,
+      "flags": [],
+      "isValid": true
+    },
+    {
+      "driver": "SAI",
+      "lapNumber": 19,
+      "stint": 2,
+      "compound": "MEDIUM",
+      "tyreLife": 14,
+      "lapTimeSeconds": 99.421,
+      "sessionTimeSeconds": 1891.598,
+      "sectorTimesSeconds": [
+        26.078,
+        29.368,
+        43.975
+      ],
+      "isPersonalBest": false,
+      "trackStatus": "1",
+      "hasData": true,
+      "flags": [],
+      "isValid": true
+    },
+    {
+      "driver": "BOR",
+      "lapNumber": 1,
+      "stint": 1,
+      "compound": "MEDIUM",
+      "tyreLife": 7,
+      "lapTimeSeconds": null,
+      "sessionTimeSeconds": 105.695,
+      "sectorTimesSeconds": [
+        null,
+        31.483,
+        43.209
+      ],
+      "isPersonalBest": false,
+      "trackStatus": "1",
+      "hasData": false,
+      "flags": [
+        "missing-laptime",
+        "inaccurate"
+      ],
+      "isValid": false
+    },
+    {
+      "driver": "BOR",
+      "lapNumber": 2,
+      "stint": 1,
+      "compound": "MEDIUM",
+      "tyreLife": 8,
+      "lapTimeSeconds": 98.13,
+      "sessionTimeSeconds": 203.825,
+      "sectorTimesSeconds": [
+        26.679,
+        29.77,
+        41.681
+      ],
+      "isPersonalBest": true,
+      "trackStatus": "1",
+      "hasData": true,
+      "flags": [],
+      "isValid": true
+    },
+    {
+      "driver": "BOR",
+      "lapNumber": 3,
+      "stint": 1,
+      "compound": "MEDIUM",
+      "tyreLife": 9,
+      "lapTimeSeconds": 97.475,
+      "sessionTimeSeconds": 301.3,
+      "sectorTimesSeconds": [
+        26.059,
+        29.534,
+        41.882
+      ],
+      "isPersonalBest": true,
+      "trackStatus": "1",
+      "hasData": true,
+      "flags": [],
+      "isValid": true
+    },
+    {
+      "driver": "BOR",
+      "lapNumber": 4,
+      "stint": 1,
+      "compound": "MEDIUM",
+      "tyreLife": 10,
+      "lapTimeSeconds": 97.608,
+      "sessionTimeSeconds": 398.908,
+      "sectorTimesSeconds": [
+        25.978,
+        29.664,
+        41.966
+      ],
+      "isPersonalBest": false,
+      "trackStatus": "1",
+      "hasData": true,
+      "flags": [],
+      "isValid": true
+    },
+    {
+      "driver": "BOR",
+      "lapNumber": 5,
+      "stint": 1,
+      "compound": "MEDIUM",
+      "tyreLife": 11,
+      "lapTimeSeconds": 97.963,
+      "sessionTimeSeconds": 496.871,
+      "sectorTimesSeconds": [
+        26.046,
+        29.981,
+        41.936
+      ],
+      "isPersonalBest": false,
+      "trackStatus": "1",
+      "hasData": true,
+      "flags": [],
+      "isValid": true
+    },
+    {
+      "driver": "BOR",
+      "lapNumber": 6,
+      "stint": 1,
+      "compound": "MEDIUM",
+      "tyreLife": 12,
+      "lapTimeSeconds": 97.901,
+      "sessionTimeSeconds": 594.772,
+      "sectorTimesSeconds": [
+        26.191,
+        29.787,
+        41.923
+      ],
+      "isPersonalBest": false,
+      "trackStatus": "1",
+      "hasData": true,
+      "flags": [],
+      "isValid": true
+    },
+    {
+      "driver": "BOR",
+      "lapNumber": 7,
+      "stint": 1,
+      "compound": "MEDIUM",
+      "tyreLife": 13,
+      "lapTimeSeconds": 98.622,
+      "sessionTimeSeconds": 693.394,
+      "sectorTimesSeconds": [
+        26.199,
+        29.938,
+        42.485
+      ],
+      "isPersonalBest": false,
+      "trackStatus": "1",
+      "hasData": true,
+      "flags": [],
+      "isValid": true
+    },
+    {
+      "driver": "BOR",
+      "lapNumber": 8,
+      "stint": 1,
+      "compound": "MEDIUM",
+      "tyreLife": 14,
+      "lapTimeSeconds": 98.353,
+      "sessionTimeSeconds": 791.747,
+      "sectorTimesSeconds": [
+        26.391,
+        29.826999999999998,
+        42.135
+      ],
+      "isPersonalBest": false,
+      "trackStatus": "1",
+      "hasData": true,
+      "flags": [],
+      "isValid": true
+    },
+    {
+      "driver": "BOR",
+      "lapNumber": 9,
+      "stint": 1,
+      "compound": "MEDIUM",
+      "tyreLife": 15,
+      "lapTimeSeconds": 98.949,
+      "sessionTimeSeconds": 890.696,
+      "sectorTimesSeconds": [
+        26.285,
+        30.038,
+        42.626
+      ],
+      "isPersonalBest": false,
+      "trackStatus": "1",
+      "hasData": true,
+      "flags": [],
+      "isValid": true
+    },
+    {
+      "driver": "BOR",
+      "lapNumber": 10,
+      "stint": 1,
+      "compound": "MEDIUM",
+      "tyreLife": 16,
+      "lapTimeSeconds": 99.917,
+      "sessionTimeSeconds": 990.613,
+      "sectorTimesSeconds": [
+        26.538,
+        30.799,
+        42.58
+      ],
+      "isPersonalBest": false,
+      "trackStatus": "1",
+      "hasData": true,
+      "flags": [],
+      "isValid": true
+    },
+    {
+      "driver": "BOR",
+      "lapNumber": 11,
+      "stint": 1,
+      "compound": "MEDIUM",
+      "tyreLife": 17,
+      "lapTimeSeconds": 99.883,
+      "sessionTimeSeconds": 1090.496,
+      "sectorTimesSeconds": [
+        26.601,
+        30.53,
+        42.752
+      ],
+      "isPersonalBest": false,
+      "trackStatus": "1",
+      "hasData": true,
+      "flags": [],
+      "isValid": true
+    },
+    {
+      "driver": "BOR",
+      "lapNumber": 12,
+      "stint": 1,
+      "compound": "MEDIUM",
+      "tyreLife": 18,
+      "lapTimeSeconds": 99.156,
+      "sessionTimeSeconds": 1189.652,
+      "sectorTimesSeconds": [
+        26.504,
+        29.979,
+        42.673
+      ],
+      "isPersonalBest": false,
+      "trackStatus": "1",
+      "hasData": true,
+      "flags": [],
+      "isValid": true
+    },
+    {
+      "driver": "BOR",
+      "lapNumber": 13,
+      "stint": 1,
+      "compound": "MEDIUM",
+      "tyreLife": 19,
+      "lapTimeSeconds": 98.925,
+      "sessionTimeSeconds": 1288.577,
+      "sectorTimesSeconds": [
+        26.438,
+        29.87,
+        42.617
+      ],
+      "isPersonalBest": false,
+      "trackStatus": "1",
+      "hasData": true,
+      "flags": [],
+      "isValid": true
+    },
+    {
+      "driver": "BOR",
+      "lapNumber": 14,
+      "stint": 1,
+      "compound": "MEDIUM",
+      "tyreLife": 20,
+      "lapTimeSeconds": 99.19,
+      "sessionTimeSeconds": 1387.767,
+      "sectorTimesSeconds": [
+        26.635,
+        29.83,
+        42.725
+      ],
+      "isPersonalBest": false,
+      "trackStatus": "1",
+      "hasData": true,
+      "flags": [],
+      "isValid": true
+    },
+    {
+      "driver": "BOR",
+      "lapNumber": 15,
+      "stint": 1,
+      "compound": "MEDIUM",
+      "tyreLife": 21,
+      "lapTimeSeconds": 99.531,
+      "sessionTimeSeconds": 1487.298,
+      "sectorTimesSeconds": [
+        26.672,
+        29.948,
+        42.911
+      ],
+      "isPersonalBest": false,
+      "trackStatus": "1",
+      "hasData": true,
+      "flags": [],
+      "isValid": true
+    },
+    {
+      "driver": "BOR",
+      "lapNumber": 16,
+      "stint": 1,
+      "compound": "MEDIUM",
+      "tyreLife": 22,
+      "lapTimeSeconds": 99.126,
+      "sessionTimeSeconds": 1586.424,
+      "sectorTimesSeconds": [
+        26.513,
+        29.928,
+        42.685
+      ],
+      "isPersonalBest": false,
+      "trackStatus": "1",
+      "hasData": true,
+      "flags": [],
+      "isValid": true
+    },
+    {
+      "driver": "BOR",
+      "lapNumber": 17,
+      "stint": 1,
+      "compound": "MEDIUM",
+      "tyreLife": 23,
+      "lapTimeSeconds": 99.802,
+      "sessionTimeSeconds": 1686.226,
+      "sectorTimesSeconds": [
+        26.717,
+        30.241,
+        42.844
+      ],
+      "isPersonalBest": false,
+      "trackStatus": "1",
+      "hasData": true,
+      "flags": [],
+      "isValid": true
+    },
+    {
+      "driver": "BOR",
+      "lapNumber": 18,
+      "stint": 1,
+      "compound": "MEDIUM",
+      "tyreLife": 24,
+      "lapTimeSeconds": 99.642,
+      "sessionTimeSeconds": 1785.868,
+      "sectorTimesSeconds": [
+        26.765,
+        30.22,
+        42.657
+      ],
+      "isPersonalBest": false,
+      "trackStatus": "1",
+      "hasData": true,
+      "flags": [],
+      "isValid": true
+    },
+    {
+      "driver": "BOR",
+      "lapNumber": 19,
+      "stint": 1,
+      "compound": "MEDIUM",
+      "tyreLife": 25,
+      "lapTimeSeconds": 108.294,
+      "sessionTimeSeconds": 1894.162,
+      "sectorTimesSeconds": [
+        26.399,
+        31.989,
+        49.906
+      ],
+      "isPersonalBest": false,
+      "trackStatus": "12",
+      "hasData": true,
+      "flags": [
+        "yellow-flag"
+      ],
+      "isValid": false
+    },
+    {
+      "driver": "HUL",
+      "lapNumber": 1,
+      "stint": 1,
+      "compound": "MEDIUM",
+      "tyreLife": 7,
+      "lapTimeSeconds": null,
+      "sessionTimeSeconds": 109.052,
+      "sectorTimesSeconds": [
+        null,
+        30.981,
+        42.949
+      ],
+      "isPersonalBest": false,
+      "trackStatus": "1",
+      "hasData": false,
+      "flags": [
+        "missing-laptime",
+        "inaccurate",
+        "out-lap"
+      ],
+      "isValid": false
+    },
+    {
+      "driver": "HUL",
+      "lapNumber": 2,
+      "stint": 1,
+      "compound": "MEDIUM",
+      "tyreLife": 8,
+      "lapTimeSeconds": 99.533,
+      "sessionTimeSeconds": 208.585,
+      "sectorTimesSeconds": [
+        26.783,
+        30.567,
+        42.183
+      ],
+      "isPersonalBest": true,
+      "trackStatus": "1",
+      "hasData": true,
+      "flags": [],
+      "isValid": true
+    },
+    {
+      "driver": "HUL",
+      "lapNumber": 3,
+      "stint": 1,
+      "compound": "MEDIUM",
+      "tyreLife": 9,
+      "lapTimeSeconds": 96.804,
+      "sessionTimeSeconds": 305.389,
+      "sectorTimesSeconds": [
+        25.573,
+        29.674,
+        41.557
+      ],
+      "isPersonalBest": true,
+      "trackStatus": "1",
+      "hasData": true,
+      "flags": [],
+      "isValid": true
+    },
+    {
+      "driver": "HUL",
+      "lapNumber": 4,
+      "stint": 1,
+      "compound": "MEDIUM",
+      "tyreLife": 10,
+      "lapTimeSeconds": 96.529,
+      "sessionTimeSeconds": 401.918,
+      "sectorTimesSeconds": [
+        25.37,
+        29.399,
+        41.76
+      ],
+      "isPersonalBest": true,
+      "trackStatus": "1",
+      "hasData": true,
+      "flags": [],
+      "isValid": true
+    },
+    {
+      "driver": "HUL",
+      "lapNumber": 5,
+      "stint": 1,
+      "compound": "MEDIUM",
+      "tyreLife": 11,
+      "lapTimeSeconds": 97.761,
+      "sessionTimeSeconds": 499.679,
+      "sectorTimesSeconds": [
+        25.959,
+        30.051,
+        41.751
+      ],
+      "isPersonalBest": false,
+      "trackStatus": "1",
+      "hasData": true,
+      "flags": [],
+      "isValid": true
+    },
+    {
+      "driver": "HUL",
+      "lapNumber": 6,
+      "stint": 1,
+      "compound": "MEDIUM",
+      "tyreLife": 12,
+      "lapTimeSeconds": 97.968,
+      "sessionTimeSeconds": 597.647,
+      "sectorTimesSeconds": [
+        25.969,
+        30.164,
+        41.835
+      ],
+      "isPersonalBest": false,
+      "trackStatus": "1",
+      "hasData": true,
+      "flags": [],
+      "isValid": true
+    },
+    {
+      "driver": "HUL",
+      "lapNumber": 7,
+      "stint": 1,
+      "compound": "MEDIUM",
+      "tyreLife": 13,
+      "lapTimeSeconds": 98.493,
+      "sessionTimeSeconds": 696.14,
+      "sectorTimesSeconds": [
+        26.174,
+        30.067,
+        42.252
+      ],
+      "isPersonalBest": false,
+      "trackStatus": "1",
+      "hasData": true,
+      "flags": [],
+      "isValid": true
+    },
+    {
+      "driver": "HUL",
+      "lapNumber": 8,
+      "stint": 1,
+      "compound": "MEDIUM",
+      "tyreLife": 14,
+      "lapTimeSeconds": 98.228,
+      "sessionTimeSeconds": 794.368,
+      "sectorTimesSeconds": [
+        25.938,
+        30.09,
+        42.2
+      ],
+      "isPersonalBest": false,
+      "trackStatus": "1",
+      "hasData": true,
+      "flags": [],
+      "isValid": true
+    },
+    {
+      "driver": "HUL",
+      "lapNumber": 9,
+      "stint": 1,
+      "compound": "MEDIUM",
+      "tyreLife": 15,
+      "lapTimeSeconds": 98.551,
+      "sessionTimeSeconds": 892.919,
+      "sectorTimesSeconds": [
+        26.109,
+        30.127,
+        42.315
+      ],
+      "isPersonalBest": false,
+      "trackStatus": "1",
+      "hasData": true,
+      "flags": [],
+      "isValid": true
+    },
+    {
+      "driver": "HUL",
+      "lapNumber": 10,
+      "stint": 1,
+      "compound": "MEDIUM",
+      "tyreLife": 16,
+      "lapTimeSeconds": 99.068,
+      "sessionTimeSeconds": 991.987,
+      "sectorTimesSeconds": [
+        26.21,
+        30.419,
+        42.439
+      ],
+      "isPersonalBest": false,
+      "trackStatus": "1",
+      "hasData": true,
+      "flags": [],
+      "isValid": true
+    },
+    {
+      "driver": "HUL",
+      "lapNumber": 11,
+      "stint": 1,
+      "compound": "MEDIUM",
+      "tyreLife": 17,
+      "lapTimeSeconds": 100.03,
+      "sessionTimeSeconds": 1092.017,
+      "sectorTimesSeconds": [
+        26.539,
+        30.662,
+        42.829
+      ],
+      "isPersonalBest": false,
+      "trackStatus": "1",
+      "hasData": true,
+      "flags": [],
+      "isValid": true
+    },
+    {
+      "driver": "HUL",
+      "lapNumber": 12,
+      "stint": 1,
+      "compound": "MEDIUM",
+      "tyreLife": 18,
+      "lapTimeSeconds": 99.805,
+      "sessionTimeSeconds": 1191.822,
+      "sectorTimesSeconds": [
+        26.326,
+        30.77,
+        42.709
+      ],
+      "isPersonalBest": false,
+      "trackStatus": "1",
+      "hasData": true,
+      "flags": [],
+      "isValid": true
+    },
+    {
+      "driver": "HUL",
+      "lapNumber": 13,
+      "stint": 1,
+      "compound": "MEDIUM",
+      "tyreLife": 19,
+      "lapTimeSeconds": 99.191,
+      "sessionTimeSeconds": 1291.013,
+      "sectorTimesSeconds": [
+        26.073,
+        30.492,
+        42.626
+      ],
+      "isPersonalBest": false,
+      "trackStatus": "1",
+      "hasData": true,
+      "flags": [],
+      "isValid": true
+    },
+    {
+      "driver": "HUL",
+      "lapNumber": 14,
+      "stint": 1,
+      "compound": "MEDIUM",
+      "tyreLife": 20,
+      "lapTimeSeconds": 99.867,
+      "sessionTimeSeconds": 1390.88,
+      "sectorTimesSeconds": [
+        26.423,
+        30.528,
+        42.916
+      ],
+      "isPersonalBest": false,
+      "trackStatus": "1",
+      "hasData": true,
+      "flags": [],
+      "isValid": true
+    },
+    {
+      "driver": "HUL",
+      "lapNumber": 15,
+      "stint": 1,
+      "compound": "MEDIUM",
+      "tyreLife": 21,
+      "lapTimeSeconds": 99.418,
+      "sessionTimeSeconds": 1490.298,
+      "sectorTimesSeconds": [
+        26.652,
+        30.058,
+        42.708
+      ],
+      "isPersonalBest": false,
+      "trackStatus": "1",
+      "hasData": true,
+      "flags": [],
+      "isValid": true
+    },
+    {
+      "driver": "HUL",
+      "lapNumber": 16,
+      "stint": 1,
+      "compound": "MEDIUM",
+      "tyreLife": 22,
+      "lapTimeSeconds": 98.597,
+      "sessionTimeSeconds": 1588.895,
+      "sectorTimesSeconds": [
+        26.101,
+        30.001,
+        42.495
+      ],
+      "isPersonalBest": false,
+      "trackStatus": "1",
+      "hasData": true,
+      "flags": [],
+      "isValid": true
+    },
+    {
+      "driver": "HUL",
+      "lapNumber": 17,
+      "stint": 1,
+      "compound": "MEDIUM",
+      "tyreLife": 23,
+      "lapTimeSeconds": 99.338,
+      "sessionTimeSeconds": 1688.233,
+      "sectorTimesSeconds": [
+        26.45,
+        30.167,
+        42.721
+      ],
+      "isPersonalBest": false,
+      "trackStatus": "1",
+      "hasData": true,
+      "flags": [],
+      "isValid": true
+    },
+    {
+      "driver": "HUL",
+      "lapNumber": 18,
+      "stint": 1,
+      "compound": "MEDIUM",
+      "tyreLife": 24,
+      "lapTimeSeconds": 101.825,
+      "sessionTimeSeconds": 1790.058,
+      "sectorTimesSeconds": [
+        26.406,
+        30.016,
+        45.403
+      ],
+      "isPersonalBest": false,
+      "trackStatus": "1",
+      "hasData": true,
+      "flags": [],
+      "isValid": true
+    },
+    {
+      "driver": "HUL",
+      "lapNumber": 19,
+      "stint": 1,
+      "compound": "MEDIUM",
+      "tyreLife": 25,
+      "lapTimeSeconds": 106.846,
+      "sessionTimeSeconds": 1896.904,
+      "sectorTimesSeconds": [
+        26.367,
+        29.783,
+        50.696
+      ],
+      "isPersonalBest": false,
+      "trackStatus": "12",
+      "hasData": true,
+      "flags": [
+        "yellow-flag"
+      ],
+      "isValid": false
+    },
+    {
+      "driver": "DOO",
+      "lapNumber": 1,
+      "stint": 1,
+      "compound": "MEDIUM",
+      "tyreLife": 7,
+      "lapTimeSeconds": null,
+      "sessionTimeSeconds": 107.081,
+      "sectorTimesSeconds": [
+        null,
+        31.595,
+        43.853
+      ],
+      "isPersonalBest": false,
+      "trackStatus": "1",
+      "hasData": false,
+      "flags": [
+        "missing-laptime",
+        "inaccurate"
+      ],
+      "isValid": false
+    },
+    {
+      "driver": "DOO",
+      "lapNumber": 2,
+      "stint": 1,
+      "compound": "MEDIUM",
+      "tyreLife": 8,
+      "lapTimeSeconds": 98.336,
+      "sessionTimeSeconds": 205.417,
+      "sectorTimesSeconds": [
+        26.463,
+        29.984,
+        41.889
+      ],
+      "isPersonalBest": true,
+      "trackStatus": "1",
+      "hasData": true,
+      "flags": [],
+      "isValid": true
+    },
+    {
+      "driver": "DOO",
+      "lapNumber": 3,
+      "stint": 1,
+      "compound": "MEDIUM",
+      "tyreLife": 9,
+      "lapTimeSeconds": 97.686,
+      "sessionTimeSeconds": 303.103,
+      "sectorTimesSeconds": [
+        25.807,
+        29.968,
+        41.911
+      ],
+      "isPersonalBest": true,
+      "trackStatus": "1",
+      "hasData": true,
+      "flags": [],
+      "isValid": true
+    },
+    {
+      "driver": "DOO",
+      "lapNumber": 4,
+      "stint": 1,
+      "compound": "MEDIUM",
+      "tyreLife": 10,
+      "lapTimeSeconds": 98.101,
+      "sessionTimeSeconds": 401.204,
+      "sectorTimesSeconds": [
+        25.615,
+        29.892,
+        42.594
+      ],
+      "isPersonalBest": false,
+      "trackStatus": "1",
+      "hasData": true,
+      "flags": [
+        "deleted"
+      ],
+      "isValid": false
+    },
+    {
+      "driver": "DOO",
+      "lapNumber": 5,
+      "stint": 1,
+      "compound": "MEDIUM",
+      "tyreLife": 11,
+      "lapTimeSeconds": 97.88,
+      "sessionTimeSeconds": 499.084,
+      "sectorTimesSeconds": [
+        26.023,
+        29.757,
+        42.1
+      ],
+      "isPersonalBest": false,
+      "trackStatus": "1",
+      "hasData": true,
+      "flags": [],
+      "isValid": true
+    },
+    {
+      "driver": "DOO",
+      "lapNumber": 6,
+      "stint": 1,
+      "compound": "MEDIUM",
+      "tyreLife": 12,
+      "lapTimeSeconds": 97.803,
+      "sessionTimeSeconds": 596.887,
+      "sectorTimesSeconds": [
+        25.957,
+        29.882,
+        41.964
+      ],
+      "isPersonalBest": false,
+      "trackStatus": "1",
+      "hasData": true,
+      "flags": [],
+      "isValid": true
+    },
+    {
+      "driver": "DOO",
+      "lapNumber": 7,
+      "stint": 1,
+      "compound": "MEDIUM",
+      "tyreLife": 13,
+      "lapTimeSeconds": 98.236,
+      "sessionTimeSeconds": 695.123,
+      "sectorTimesSeconds": [
+        26.218,
+        29.897,
+        42.121
+      ],
+      "isPersonalBest": false,
+      "trackStatus": "1",
+      "hasData": true,
+      "flags": [],
+      "isValid": true
+    },
+    {
+      "driver": "DOO",
+      "lapNumber": 8,
+      "stint": 1,
+      "compound": "MEDIUM",
+      "tyreLife": 14,
+      "lapTimeSeconds": 98.419,
+      "sessionTimeSeconds": 793.542,
+      "sectorTimesSeconds": [
+        26.12,
+        30.22,
+        42.079
+      ],
+      "isPersonalBest": false,
+      "trackStatus": "1",
+      "hasData": true,
+      "flags": [],
+      "isValid": true
+    },
+    {
+      "driver": "DOO",
+      "lapNumber": 9,
+      "stint": 1,
+      "compound": "MEDIUM",
+      "tyreLife": 15,
+      "lapTimeSeconds": 98.449,
+      "sessionTimeSeconds": 891.991,
+      "sectorTimesSeconds": [
+        26.159,
+        30.05,
+        42.24
+      ],
+      "isPersonalBest": false,
+      "trackStatus": "1",
+      "hasData": true,
+      "flags": [],
+      "isValid": true
+    },
+    {
+      "driver": "DOO",
+      "lapNumber": 10,
+      "stint": 1,
+      "compound": "MEDIUM",
+      "tyreLife": 16,
+      "lapTimeSeconds": 99.341,
+      "sessionTimeSeconds": 991.332,
+      "sectorTimesSeconds": [
+        26.433,
+        30.438,
+        42.47
+      ],
+      "isPersonalBest": false,
+      "trackStatus": "1",
+      "hasData": true,
+      "flags": [],
+      "isValid": true
+    },
+    {
+      "driver": "DOO",
+      "lapNumber": 11,
+      "stint": 1,
+      "compound": "MEDIUM",
+      "tyreLife": 17,
+      "lapTimeSeconds": 100.104,
+      "sessionTimeSeconds": 1091.436,
+      "sectorTimesSeconds": [
+        26.71,
+        30.665,
+        42.729
+      ],
+      "isPersonalBest": false,
+      "trackStatus": "1",
+      "hasData": true,
+      "flags": [],
+      "isValid": true
+    },
+    {
+      "driver": "DOO",
+      "lapNumber": 12,
+      "stint": 1,
+      "compound": "MEDIUM",
+      "tyreLife": 18,
+      "lapTimeSeconds": 99.579,
+      "sessionTimeSeconds": 1191.015,
+      "sectorTimesSeconds": [
+        26.548000000000002,
+        30.538,
+        42.493
+      ],
+      "isPersonalBest": false,
+      "trackStatus": "1",
+      "hasData": true,
+      "flags": [],
+      "isValid": true
+    },
+    {
+      "driver": "DOO",
+      "lapNumber": 13,
+      "stint": 1,
+      "compound": "MEDIUM",
+      "tyreLife": 19,
+      "lapTimeSeconds": 99.515,
+      "sessionTimeSeconds": 1290.53,
+      "sectorTimesSeconds": [
+        26.437,
+        30.364,
+        42.714
+      ],
+      "isPersonalBest": false,
+      "trackStatus": "1",
+      "hasData": true,
+      "flags": [],
+      "isValid": true
+    },
+    {
+      "driver": "DOO",
+      "lapNumber": 14,
+      "stint": 1,
+      "compound": "MEDIUM",
+      "tyreLife": 20,
+      "lapTimeSeconds": 99.952,
+      "sessionTimeSeconds": 1390.482,
+      "sectorTimesSeconds": [
+        26.671,
+        30.218,
+        43.063
+      ],
+      "isPersonalBest": false,
+      "trackStatus": "1",
+      "hasData": true,
+      "flags": [],
+      "isValid": true
+    },
+    {
+      "driver": "DOO",
+      "lapNumber": 15,
+      "stint": 1,
+      "compound": "MEDIUM",
+      "tyreLife": 21,
+      "lapTimeSeconds": 100.804,
+      "sessionTimeSeconds": 1491.286,
+      "sectorTimesSeconds": [
+        27.017,
+        30.935,
+        42.852
+      ],
+      "isPersonalBest": false,
+      "trackStatus": "1",
+      "hasData": true,
+      "flags": [],
+      "isValid": true
+    },
+    {
+      "driver": "DOO",
+      "lapNumber": 16,
+      "stint": 1,
+      "compound": "MEDIUM",
+      "tyreLife": 22,
+      "lapTimeSeconds": 98.609,
+      "sessionTimeSeconds": 1589.895,
+      "sectorTimesSeconds": [
+        26.391,
+        29.974,
+        42.244
+      ],
+      "isPersonalBest": false,
+      "trackStatus": "1",
+      "hasData": true,
+      "flags": [],
+      "isValid": true
+    },
+    {
+      "driver": "DOO",
+      "lapNumber": 17,
+      "stint": 1,
+      "compound": "MEDIUM",
+      "tyreLife": 23,
+      "lapTimeSeconds": 98.645,
+      "sessionTimeSeconds": 1688.54,
+      "sectorTimesSeconds": [
+        26.412,
+        29.95,
+        42.283
+      ],
+      "isPersonalBest": false,
+      "trackStatus": "1",
+      "hasData": true,
+      "flags": [],
+      "isValid": true
+    },
+    {
+      "driver": "DOO",
+      "lapNumber": 18,
+      "stint": 1,
+      "compound": "MEDIUM",
+      "tyreLife": 24,
+      "lapTimeSeconds": 99.658,
+      "sessionTimeSeconds": 1788.198,
+      "sectorTimesSeconds": [
+        26.474,
+        30.05,
+        43.134
+      ],
+      "isPersonalBest": false,
+      "trackStatus": "1",
+      "hasData": true,
+      "flags": [],
+      "isValid": true
+    },
+    {
+      "driver": "DOO",
+      "lapNumber": 19,
+      "stint": 1,
+      "compound": "MEDIUM",
+      "tyreLife": 25,
+      "lapTimeSeconds": 112.236,
+      "sessionTimeSeconds": 1900.434,
+      "sectorTimesSeconds": [
+        26.524,
+        30.024,
+        55.688
+      ],
+      "isPersonalBest": false,
+      "trackStatus": "12",
+      "hasData": true,
+      "flags": [
+        "yellow-flag"
+      ],
+      "isValid": false
+    }
+  ],
+  "corners": {
+    "HAM": [],
+    "PIA": [],
+    "VER": [],
+    "RUS": [],
+    "LEC": [],
+    "TSU": [],
+    "ANT": [],
+    "NOR": [],
+    "STR": [],
+    "ALO": [],
+    "ALB": [],
+    "GAS": [],
+    "HAD": [],
+    "LAW": [],
+    "BEA": [],
+    "OCO": [],
+    "SAI": [],
+    "BOR": [],
+    "HUL": [],
+    "DOO": []
+  },
+  "notes": [
+    "Flagged 26 of 380 laps as outliers (out laps, safety car periods, yellow flags, etc.).",
+    "Corner-level telemetry aggregation not yet implemented; arrays are placeholders."
+  ],
+  "qualifyingBoundaries": {
+    "q1Start": 0.0,
+    "q1End": 1840.242,
+    "q2Start": null,
+    "q2End": null,
+    "q3Start": null,
+    "q3End": null
+  }
+}

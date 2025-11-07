@@ -147,12 +147,46 @@ def build_session_payload(
 
     is_race_session = getattr(session, "session_type", "").upper() == "R"
 
+    # Get session start time for calculating relative session time
+    # For qualifying, use Q1 start from session_status if available, otherwise use first lap time
+    session_start_time = None
+    q1_start_time = None
+    
+    # Try to get Q1 start from session_status first (most accurate)
+    if pd is not None and hasattr(session, "session_status"):
+        session_status = getattr(session, "session_status", None)
+        if session_status is not None and not session_status.empty:
+            for _, row in session_status.iterrows():
+                status = str(row.get("Status", "")).strip()
+                if status == "Started":
+                    q1_start_time = row.get("Time", None)
+                    break
+    
+    # Use Q1 start if available, otherwise use first lap time
+    if q1_start_time is not None:
+        session_start_time = q1_start_time
+    elif pd is not None and "Time" in laps_df.columns:
+        times = laps_df["Time"].dropna()
+        if len(times) > 0:
+            session_start_time = times.min()
+
     for row in laps_df.itertuples(index=False):
         driver_code = getattr(row, "Driver")
         lap_number = _safe_int(getattr(row, "LapNumber"))
         lap_time_seconds = _timedelta_to_seconds(getattr(row, "LapTime", None))
         track_status_raw = _stringify_track_status(getattr(row, "TrackStatus", None))
         status_codes = _extract_status_codes(track_status_raw)
+        
+        # Calculate session time in seconds (relative to session start)
+        session_time_seconds = None
+        if pd is not None and session_start_time is not None:
+            lap_time = getattr(row, "Time", None)
+            if lap_time is not None and pd.notna(lap_time):
+                try:
+                    time_delta = lap_time - session_start_time
+                    session_time_seconds = float(time_delta.total_seconds())
+                except (AttributeError, TypeError):
+                    pass
 
         flags: List[str] = []
 
@@ -206,6 +240,7 @@ def build_session_payload(
                 "compound": getattr(row, "Compound", None),
                 "tyreLife": _safe_int(getattr(row, "TyreLife")),
                 "lapTimeSeconds": lap_time_seconds,
+                "sessionTimeSeconds": session_time_seconds,
                 "sectorTimesSeconds": [
                     _timedelta_to_seconds(getattr(row, "Sector1Time", None)),
                     _timedelta_to_seconds(getattr(row, "Sector2Time", None)),
@@ -221,6 +256,59 @@ def build_session_payload(
 
     # Corner-level telemetry not yet implemented; include empty arrays with a note.
     corners_payload = {code: [] for code in drivers_payload.keys()}
+
+    # Extract Q1/Q2/Q3 boundaries from session_status for qualifying sessions
+    qualifyingBoundaries = None
+    if pd is not None and hasattr(session, "session_status"):
+        session_status = getattr(session, "session_status", None)
+        if session_status is not None and not session_status.empty:
+            # Find Q1, Q2, Q3 start and finish times
+            # In F1 qualifying, we expect 3 "Started" and 3 "Finished" statuses
+            started_times = []
+            finished_times = []
+            
+            for _, row in session_status.iterrows():
+                status = str(row.get("Status", "")).strip()
+                time_val = row.get("Time", None)
+                
+                if status == "Started" and time_val is not None:
+                    started_times.append(time_val)
+                elif status == "Finished" and time_val is not None:
+                    finished_times.append(time_val)
+            
+            # We need at least Q1 start to calculate boundaries
+            if len(started_times) >= 1:
+                q1_start = started_times[0]
+                
+                # Calculate relative times in seconds from Q1 start
+                q1_start_seconds = 0.0
+                q1_end_seconds = None
+                q2_start_seconds = None
+                q2_end_seconds = None
+                q3_start_seconds = None
+                q3_end_seconds = None
+                
+                if len(finished_times) >= 1:
+                    q1_end_seconds = (finished_times[0] - q1_start).total_seconds()
+                
+                if len(started_times) >= 2:
+                    q2_start_seconds = (started_times[1] - q1_start).total_seconds()
+                    if len(finished_times) >= 2:
+                        q2_end_seconds = (finished_times[1] - q1_start).total_seconds()
+                
+                if len(started_times) >= 3:
+                    q3_start_seconds = (started_times[2] - q1_start).total_seconds()
+                    if len(finished_times) >= 3:
+                        q3_end_seconds = (finished_times[2] - q1_start).total_seconds()
+                
+                qualifyingBoundaries = {
+                    "q1Start": q1_start_seconds,
+                    "q1End": q1_end_seconds,
+                    "q2Start": q2_start_seconds,
+                    "q2End": q2_end_seconds,
+                    "q3Start": q3_start_seconds,
+                    "q3End": q3_end_seconds,
+                }
 
     meta["totalLapCount"] = total_laps
     meta["validLapCount"] = valid_laps
@@ -255,5 +343,9 @@ def build_session_payload(
         "corners": corners_payload,
         "notes": notes,
     }
+    
+    # Add qualifying boundaries if available
+    if qualifyingBoundaries is not None:
+        payload["qualifyingBoundaries"] = qualifyingBoundaries
 
     return payload

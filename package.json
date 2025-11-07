@@ -9,9 +9,11 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@neondatabase/serverless": "^0.10.4",
     "next": "13.4.10",
     "react": "18.2.0",
     "react-dom": "18.2.0",
+    "react-globe.gl": "^2.37.0",
     "recharts": "2.6.2"
   },
   "devDependencies": {

@@ -38,6 +38,7 @@ export type SessionLap = {
   compound?: string | null
   tyreLife?: number | null
   lapTimeSeconds: number | null
+  sessionTimeSeconds?: number | null
   sectorTimesSeconds: Array<number | null>
   isPersonalBest: boolean
   trackStatus?: string | null
@@ -46,12 +47,22 @@ export type SessionLap = {
   isValid?: boolean
 }
 
+export type QualifyingBoundaries = {
+  q1Start: number
+  q1End: number | null
+  q2Start: number | null
+  q2End: number | null
+  q3Start: number | null
+  q3End: number | null
+}
+
 export type SessionPayload = {
   meta: SessionMeta
   drivers: Record<string, SessionDriver>
   laps: SessionLap[]
   corners: Record<string, unknown[]>
   notes?: string[]
+  qualifyingBoundaries?: QualifyingBoundaries
 }
 
 export type DriverDataRequest = SessionIdentifier & {

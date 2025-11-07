@@ -3,7 +3,7 @@
     "year": 2025,
     "round": "azerbaijan",
     "session": "Q",
-    "generatedAt": "2025-10-23T02:09:02.192732+00:00",
+    "generatedAt": "2025-11-06T22:46:21.116798+00:00",
     "requestedDrivers": null,
     "status": "ok",
     "totalLapCount": 335,
@@ -167,6 +167,7 @@
       "compound": "MEDIUM",
       "tyreLife": 1,
       "lapTimeSeconds": null,
+      "sessionTimeSeconds": 281.552,
       "sectorTimesSeconds": [
         null,
         57.234,
@@ -190,6 +191,7 @@
       "compound": "MEDIUM",
       "tyreLife": 2,
       "lapTimeSeconds": 102.21,
+      "sessionTimeSeconds": 383.762,
       "sectorTimesSeconds": [
         36.024,
         41.012,
@@ -210,6 +212,7 @@
       "compound": "MEDIUM",
       "tyreLife": 3,
       "lapTimeSeconds": null,
+      "sessionTimeSeconds": 1000.116,
       "sectorTimesSeconds": [
         null,
         null,
@@ -234,6 +237,7 @@
       "compound": "MEDIUM",
       "tyreLife": 4,
       "lapTimeSeconds": null,
+      "sessionTimeSeconds": 1116.639,
       "sectorTimesSeconds": [
         null,
         46.272,
@@ -256,6 +260,7 @@
       "compound": "MEDIUM",
       "tyreLife": 5,
       "lapTimeSeconds": null,
+      "sessionTimeSeconds": 1772.204,
       "sectorTimesSeconds": [
         35.731,
         40.818,
@@ -280,6 +285,7 @@
       "compound": "MEDIUM",
       "tyreLife": 6,
       "lapTimeSeconds": null,
+      "sessionTimeSeconds": 1887.25,
       "sectorTimesSeconds": [
         null,
         45.299,
@@ -302,6 +308,7 @@
       "compound": "MEDIUM",
       "tyreLife": 7,
       "lapTimeSeconds": 101.331,
+      "sessionTimeSeconds": 1988.581,
       "sectorTimesSeconds": [
         35.416,
         40.978,
@@ -320,6 +327,7 @@
       "compound": "MEDIUM",
       "tyreLife": 8,
       "lapTimeSeconds": null,
+      "sessionTimeSeconds": 2930.323,
       "sectorTimesSeconds": [
         45.696,
         null,
@@ -344,6 +352,7 @@
       "compound": "SOFT",
       "tyreLife": 1,
       "lapTimeSeconds": null,
+      "sessionTimeSeconds": 3054.392,
       "sectorTimesSeconds": [
         null,
         52.626,
@@ -367,6 +376,7 @@
       "compound": "SOFT",
       "tyreLife": 2,
       "lapTimeSeconds": null,
+      "sessionTimeSeconds": 3669.926,
       "sectorTimesSeconds": [
         null,
         null,
@@ -391,6 +401,7 @@
       "compound": "MEDIUM",
       "tyreLife": 1,
       "lapTimeSeconds": null,
+      "sessionTimeSeconds": 3780.005,
       "sectorTimesSeconds": [
         null,
         45.151,
@@ -414,6 +425,7 @@
       "compound": "MEDIUM",
       "tyreLife": 2,
       "lapTimeSeconds": 101.446,
+      "sessionTimeSeconds": 3881.451,
       "sectorTimesSeconds": [
         35.568,
         40.838,
@@ -432,6 +444,7 @@
       "compound": "MEDIUM",
       "tyreLife": 3,
       "lapTimeSeconds": 142.921,
+      "sessionTimeSeconds": 4024.372,
       "sectorTimesSeconds": [
         52.97,
         56.501,
@@ -450,6 +463,7 @@
       "compound": "MEDIUM",
       "tyreLife": 4,
       "lapTimeSeconds": 127.303,
+      "sessionTimeSeconds": 4151.675,
       "sectorTimesSeconds": [
         46.82,
         54.376,
@@ -470,6 +484,7 @@
       "compound": "MEDIUM",
       "tyreLife": 5,
       "lapTimeSeconds": 101.255,
+      "sessionTimeSeconds": 4252.93,
       "sectorTimesSeconds": [
         35.385,
         40.743,
@@ -488,6 +503,7 @@
       "compound": "MEDIUM",
       "tyreLife": 6,
       "lapTimeSeconds": 138.403,
+      "sessionTimeSeconds": 4391.333,
       "sectorTimesSeconds": [
         47.244,
         55.452,
@@ -510,6 +526,7 @@
       "compound": "MEDIUM",
       "tyreLife": 1,
       "lapTimeSeconds": null,
+      "sessionTimeSeconds": 4964.484,
       "sectorTimesSeconds": [
         null,
         45.834,
@@ -533,6 +550,7 @@
       "compound": "MEDIUM",
       "tyreLife": 2,
       "lapTimeSeconds": null,
+      "sessionTimeSeconds": 5822.885,
       "sectorTimesSeconds": [
         null,
         null,
@@ -557,6 +575,7 @@
       "compound": "MEDIUM",
       "tyreLife": 3,
       "lapTimeSeconds": null,
+      "sessionTimeSeconds": 5932.178,
       "sectorTimesSeconds": [
         null,
         44.745,
@@ -579,6 +598,7 @@
       "compound": "MEDIUM",
       "tyreLife": 4,
       "lapTimeSeconds": null,
+      "sessionTimeSeconds": 6879.64,
       "sectorTimesSeconds": [
         35.642,
         40.814,
@@ -603,6 +623,7 @@
       "compound": "SOFT",
       "tyreLife": 1,
       "lapTimeSeconds": null,
+      "sessionTimeSeconds": 6993.061,
       "sectorTimesSeconds": [
         null,
         48.141,
@@ -625,6 +646,7 @@
       "compound": "SOFT",
       "tyreLife": 2,
       "lapTimeSeconds": 101.117,
+      "sessionTimeSeconds": 7094.178,
       "sectorTimesSeconds": [
         35.331,
         40.577,
@@ -643,6 +665,7 @@
       "compound": "SOFT",
       "tyreLife": 3,
       "lapTimeSeconds": null,
+      "sessionTimeSeconds": 7233.798,
       "sectorTimesSeconds": [
         46.572,
         53.86,
@@ -665,6 +688,7 @@
       "compound": "SOFT",
       "tyreLife": 1,
       "lapTimeSeconds": null,
+      "sessionTimeSeconds": 176.445,
       "sectorTimesSeconds": [
         null,
         47.113,
@@ -687,6 +711,7 @@
       "compound": "SOFT",
       "tyreLife": 2,
       "lapTimeSeconds": 103.502,
+      "sessionTimeSeconds": 279.947,
       "sectorTimesSeconds": [
         36.697,
         41.827,
@@ -707,6 +732,7 @@
       "compound": "SOFT",
       "tyreLife": 3,
       "lapTimeSeconds": null,
+      "sessionTimeSeconds": 905.943,
       "sectorTimesSeconds": [
         44.887,
         57.533,
@@ -731,6 +757,7 @@
       "compound": "SOFT",
       "tyreLife": 1,
       "lapTimeSeconds": null,
+      "sessionTimeSeconds": 1023.168,
       "sectorTimesSeconds": [
         null,
         47.663,
@@ -753,6 +780,7 @@
       "compound": "SOFT",
       "tyreLife": 2,
       "lapTimeSeconds": 103.139,
+      "sessionTimeSeconds": 1126.307,
       "sectorTimesSeconds": [
         36.126,
         41.775,
@@ -771,6 +799,7 @@
       "compound": "SOFT",
       "tyreLife": 3,
       "lapTimeSeconds": null,
+      "sessionTimeSeconds": 1901.492,
       "sectorTimesSeconds": [
         45.304,
         null,
@@ -795,6 +824,7 @@
       "compound": "MEDIUM",
       "tyreLife": 1,
       "lapTimeSeconds": null,
+      "sessionTimeSeconds": 2016.366,
       "sectorTimesSeconds": [
         null,
         48.071,
@@ -817,6 +847,7 @@
       "compound": "MEDIUM",
       "tyreLife": 2,
       "lapTimeSeconds": null,
+      "sessionTimeSeconds": 2166.366,
       "sectorTimesSeconds": [
         null,
         null,
@@ -840,6 +871,7 @@
       "compound": "SOFT",
       "tyreLife": 1,
       "lapTimeSeconds": null,
+      "sessionTimeSeconds": 273.701,
       "sectorTimesSeconds": [
         null,
         56.062,
@@ -862,6 +894,7 @@
       "compound": "SOFT",
       "tyreLife": 2,
       "lapTimeSeconds": null,
+      "sessionTimeSeconds": 937.127,
       "sectorTimesSeconds": [
         47.914,
         59.344,
@@ -886,6 +919,7 @@
       "compound": "MEDIUM",
       "tyreLife": 1,
       "lapTimeSeconds": null,
+      "sessionTimeSeconds": 1059.355,
       "sectorTimesSeconds": [
         null,
         47.511,
@@ -908,6 +942,7 @@
       "compound": "MEDIUM",
       "tyreLife": 2,
       "lapTimeSeconds": 103.04,
+      "sessionTimeSeconds": 1162.395,
       "sectorTimesSeconds": [
         35.814,
         41.458,
@@ -928,6 +963,7 @@
       "compound": "MEDIUM",
       "tyreLife": 3,
       "lapTimeSeconds": null,
+      "sessionTimeSeconds": 1738.926,
       "sectorTimesSeconds": [
         null,
         null,
@@ -952,6 +988,7 @@
       "compound": "MEDIUM",
       "tyreLife": 4,
       "lapTimeSeconds": null,
+      "sessionTimeSeconds": 1856.28,
       "sectorTimesSeconds": [
         null,
         46.997,
@@ -974,6 +1011,7 @@
       "compound": "MEDIUM",
       "tyreLife": 5,
       "lapTimeSeconds": 102.247,
+      "sessionTimeSeconds": 1958.527,
       "sectorTimesSeconds": [
         36.006,
         41.281,
@@ -992,6 +1030,7 @@
       "compound": "MEDIUM",
       "tyreLife": 6,
       "lapTimeSeconds": null,
+      "sessionTimeSeconds": 3563.758,
       "sectorTimesSeconds": [
         53.812,
         50.703,
@@ -1016,6 +1055,7 @@
       "compound": "MEDIUM",
       "tyreLife": 1,
       "lapTimeSeconds": null,
+      "sessionTimeSeconds": 3682.017,
       "sectorTimesSeconds": [
         null,
         47.242,
@@ -1039,6 +1079,7 @@
       "compound": "MEDIUM",
       "tyreLife": 2,
       "lapTimeSeconds": 101.531,
+      "sessionTimeSeconds": 3783.548,
       "sectorTimesSeconds": [
         35.737,
         40.8,
@@ -1059,6 +1100,7 @@
       "compound": "MEDIUM",
       "tyreLife": 3,
       "lapTimeSeconds": 145.616,
+      "sessionTimeSeconds": 3929.164,
       "sectorTimesSeconds": [
         51.261,
         58.093,
@@ -1080,6 +1122,7 @@
       "compound": "MEDIUM",
       "tyreLife": 4,
       "lapTimeSeconds": 148.535,
+      "sessionTimeSeconds": 4077.699,
       "sectorTimesSeconds": [
         73.737,
         48.492,
@@ -1101,6 +1144,7 @@
       "compound": "MEDIUM",
       "tyreLife": 5,
       "lapTimeSeconds": 101.464,
+      "sessionTimeSeconds": 4179.163,
       "sectorTimesSeconds": [
         35.739,
         40.827,
@@ -1121,6 +1165,7 @@
       "compound": "MEDIUM",
       "tyreLife": 6,
       "lapTimeSeconds": 132.222,
+      "sessionTimeSeconds": 4311.385,
       "sectorTimesSeconds": [
         43.992,
         54.453,
@@ -1142,6 +1187,7 @@
       "compound": "MEDIUM",
       "tyreLife": 7,
       "lapTimeSeconds": null,
+      "sessionTimeSeconds": 4876.078,
       "sectorTimesSeconds": [
         null,
         46.203,
@@ -1165,6 +1211,7 @@
       "compound": "MEDIUM",
       "tyreLife": 8,
       "lapTimeSeconds": null,
+      "sessionTimeSeconds": 5859.748,
       "sectorTimesSeconds": [
         36.386,
         41.448,
@@ -1189,6 +1236,7 @@
       "compound": "MEDIUM",
       "tyreLife": 1,
       "lapTimeSeconds": null,
+      "sessionTimeSeconds": 5979.46,
       "sectorTimesSeconds": [
         null,
         47.434,
@@ -1211,6 +1259,7 @@
       "compound": "MEDIUM",
       "tyreLife": 2,
       "lapTimeSeconds": null,
+      "sessionTimeSeconds": 6861.25,
       "sectorTimesSeconds": [
         35.816,
         null,
@@ -1235,6 +1284,7 @@
       "compound": "MEDIUM",
       "tyreLife": 3,
       "lapTimeSeconds": null,
+      "sessionTimeSeconds": 6977.362,
       "sectorTimesSeconds": [
         null,
         45.503,
@@ -1257,6 +1307,7 @@
       "compound": "MEDIUM",
       "tyreLife": 4,
       "lapTimeSeconds": 101.717,
+      "sessionTimeSeconds": 7079.079,
       "sectorTimesSeconds": [
         35.718,
         40.84,
@@ -1275,6 +1326,7 @@
       "compound": "MEDIUM",
       "tyreLife": 5,
       "lapTimeSeconds": null,
+      "sessionTimeSeconds": 7227.163,
       "sectorTimesSeconds": [
         47.414,
         57.749,
@@ -1297,6 +1349,7 @@
       "compound": "SOFT",
       "tyreLife": 1,
       "lapTimeSeconds": null,
+      "sessionTimeSeconds": 194.755,
       "sectorTimesSeconds": [
         null,
         48.861,
@@ -1319,6 +1372,7 @@
       "compound": "SOFT",
       "tyreLife": 2,
       "lapTimeSeconds": 102.957,
+      "sessionTimeSeconds": 297.712,
       "sectorTimesSeconds": [
         36.103,
         41.726,
@@ -1339,6 +1393,7 @@
       "compound": "SOFT",
       "tyreLife": 3,
       "lapTimeSeconds": null,
+      "sessionTimeSeconds": 911.84,
       "sectorTimesSeconds": [
         47.186,
         null,
@@ -1363,6 +1418,7 @@
       "compound": "MEDIUM",
       "tyreLife": 1,
       "lapTimeSeconds": null,
+      "sessionTimeSeconds": 1032.543,
       "sectorTimesSeconds": [
         null,
         45.785,
@@ -1385,6 +1441,7 @@
       "compound": "MEDIUM",
       "tyreLife": 2,
       "lapTimeSeconds": 114.503,
+      "sessionTimeSeconds": 1147.046,
       "sectorTimesSeconds": [
         39.08,
         48.775,
@@ -1403,6 +1460,7 @@
       "compound": "MEDIUM",
       "tyreLife": 3,
       "lapTimeSeconds": null,
+      "sessionTimeSeconds": 1723.542,
       "sectorTimesSeconds": [
         36.527,
         null,
@@ -1427,6 +1485,7 @@
       "compound": "MEDIUM",
       "tyreLife": 1,
       "lapTimeSeconds": null,
+      "sessionTimeSeconds": 1840.8,
       "sectorTimesSeconds": [
         null,
         45.717,
@@ -1449,6 +1508,7 @@
       "compound": "MEDIUM",
       "tyreLife": 2,
       "lapTimeSeconds": 128.551,
+      "sessionTimeSeconds": 1969.351,
       "sectorTimesSeconds": [
         39.412,
         62.031,
@@ -1467,6 +1527,7 @@
       "compound": "MEDIUM",
       "tyreLife": 3,
       "lapTimeSeconds": 102.211,
+      "sessionTimeSeconds": 2071.562,
       "sectorTimesSeconds": [
         35.902,
         41.461,
@@ -1487,6 +1548,7 @@
       "compound": "MEDIUM",
       "tyreLife": 4,
       "lapTimeSeconds": null,
+      "sessionTimeSeconds": 2900.614,
       "sectorTimesSeconds": [
         null,
         null,
@@ -1511,6 +1573,7 @@
       "compound": "MEDIUM",
       "tyreLife": 5,
       "lapTimeSeconds": null,
+      "sessionTimeSeconds": 3023.355,
       "sectorTimesSeconds": [
         null,
         45.931,
@@ -1534,6 +1597,7 @@
       "compound": "MEDIUM",
       "tyreLife": 6,
       "lapTimeSeconds": null,
+      "sessionTimeSeconds": 3520.175,
       "sectorTimesSeconds": [
         39.263,
         null,
@@ -1558,6 +1622,7 @@
       "compound": "MEDIUM",
       "tyreLife": 1,
       "lapTimeSeconds": null,
+      "sessionTimeSeconds": 3637.705,
       "sectorTimesSeconds": [
         null,
         46.676,
@@ -1581,6 +1646,7 @@
       "compound": "MEDIUM",
       "tyreLife": 2,
       "lapTimeSeconds": 110.554,
+      "sessionTimeSeconds": 3748.259,
       "sectorTimesSeconds": [
         39.486,
         44.976,
@@ -1599,6 +1665,7 @@
       "compound": "MEDIUM",
       "tyreLife": 3,
       "lapTimeSeconds": 121.455,
+      "sessionTimeSeconds": 3869.714,
       "sectorTimesSeconds": [
         37.891,
         56.706,
@@ -1619,6 +1686,7 @@
       "compound": "MEDIUM",
       "tyreLife": 4,
       "lapTimeSeconds": 121.436,
+      "sessionTimeSeconds": 3991.15,
       "sectorTimesSeconds": [
         43.665,
         50.756,
@@ -1637,6 +1705,7 @@
       "compound": "MEDIUM",
       "tyreLife": 5,
       "lapTimeSeconds": 101.857,
+      "sessionTimeSeconds": 4093.007,
       "sectorTimesSeconds": [
         35.825,
         41.108,
@@ -1655,6 +1724,7 @@
       "compound": "MEDIUM",
       "tyreLife": 6,
       "lapTimeSeconds": 138.812,
+      "sessionTimeSeconds": 4231.819,
       "sectorTimesSeconds": [
         44.598,
         55.145,
@@ -1677,6 +1747,7 @@
       "compound": "SOFT",
       "tyreLife": 1,
       "lapTimeSeconds": null,
+      "sessionTimeSeconds": 236.291,
       "sectorTimesSeconds": [
         null,
         54.23,
@@ -1699,6 +1770,7 @@
       "compound": "SOFT",
       "tyreLife": 2,
       "lapTimeSeconds": 101.982,
+      "sessionTimeSeconds": 338.273,
       "sectorTimesSeconds": [
         35.765,
         41.093,
@@ -1719,6 +1791,7 @@
       "compound": "SOFT",
       "tyreLife": 3,
       "lapTimeSeconds": null,
+      "sessionTimeSeconds": 957.204,
       "sectorTimesSeconds": [
         null,
         null,
@@ -1743,6 +1816,7 @@
       "compound": "SOFT",
       "tyreLife": 4,
       "lapTimeSeconds": null,
+      "sessionTimeSeconds": 1073.855,
       "sectorTimesSeconds": [
         null,
         47.165,
@@ -1765,6 +1839,7 @@
       "compound": "SOFT",
       "tyreLife": 5,
       "lapTimeSeconds": 102.376,
+      "sessionTimeSeconds": 1176.231,
       "sectorTimesSeconds": [
         35.517,
         41.558,
@@ -1783,6 +1858,7 @@
       "compound": "SOFT",
       "tyreLife": 6,
       "lapTimeSeconds": null,
+      "sessionTimeSeconds": 1748.404,
       "sectorTimesSeconds": [
         null,
         null,
@@ -1807,6 +1883,7 @@
       "compound": "SOFT",
       "tyreLife": 7,
       "lapTimeSeconds": null,
+      "sessionTimeSeconds": 1864.919,
       "sectorTimesSeconds": [
         null,
         45.774,
@@ -1829,6 +1906,7 @@
       "compound": "SOFT",
       "tyreLife": 8,
       "lapTimeSeconds": 101.458,
+      "sessionTimeSeconds": 1966.377,
       "sectorTimesSeconds": [
         35.5,
         40.842,
@@ -1847,6 +1925,7 @@
       "compound": "SOFT",
       "tyreLife": 9,
       "lapTimeSeconds": null,
+      "sessionTimeSeconds": 2908.946,
       "sectorTimesSeconds": [
         48.434,
         50.09,
@@ -1871,6 +1950,7 @@
       "compound": "SOFT",
       "tyreLife": 10,
       "lapTimeSeconds": null,
+      "sessionTimeSeconds": 3033.289,
       "sectorTimesSeconds": [
         null,
         45.75,
@@ -1894,6 +1974,7 @@
       "compound": "SOFT",
       "tyreLife": 11,
       "lapTimeSeconds": null,
+      "sessionTimeSeconds": 3482.796,
       "sectorTimesSeconds": [
         null,
         null,
@@ -1918,6 +1999,7 @@
       "compound": "MEDIUM",
       "tyreLife": 1,
       "lapTimeSeconds": null,
+      "sessionTimeSeconds": 3593.094,
       "sectorTimesSeconds": [
         null,
         45.273,
@@ -1940,6 +2022,7 @@
       "compound": "MEDIUM",
       "tyreLife": 2,
       "lapTimeSeconds": 140.087,
+      "sessionTimeSeconds": 3733.181,
       "sectorTimesSeconds": [
         55.09,
         58.744,
@@ -1961,6 +2044,7 @@
       "compound": "MEDIUM",
       "tyreLife": 3,
       "lapTimeSeconds": 132.505,
+      "sessionTimeSeconds": 3865.686,
       "sectorTimesSeconds": [
         51.939,
         48.251,
@@ -1983,6 +2067,7 @@
       "compound": "MEDIUM",
       "tyreLife": 1,
       "lapTimeSeconds": 137.35,
+      "sessionTimeSeconds": 4003.036,
       "sectorTimesSeconds": [
         64.577,
         46.479,
@@ -2004,6 +2089,7 @@
       "compound": "MEDIUM",
       "tyreLife": 2,
       "lapTimeSeconds": 101.519,
+      "sessionTimeSeconds": 4104.555,
       "sectorTimesSeconds": [
         35.797,
         40.785,
@@ -2022,6 +2108,7 @@
       "compound": "MEDIUM",
       "tyreLife": 3,
       "lapTimeSeconds": 137.625,
+      "sessionTimeSeconds": 4242.18,
       "sectorTimesSeconds": [
         51.181,
         48.848,
@@ -2044,6 +2131,7 @@
       "compound": "MEDIUM",
       "tyreLife": 1,
       "lapTimeSeconds": null,
+      "sessionTimeSeconds": 4892.005,
       "sectorTimesSeconds": [
         null,
         48.065,
@@ -2067,6 +2155,7 @@
       "compound": "MEDIUM",
       "tyreLife": 2,
       "lapTimeSeconds": null,
+      "sessionTimeSeconds": 5626.443,
       "sectorTimesSeconds": [
         36.034,
         48.065,
@@ -2091,6 +2180,7 @@
       "compound": "SOFT",
       "tyreLife": 1,
       "lapTimeSeconds": null,
+      "sessionTimeSeconds": 201.419,
       "sectorTimesSeconds": [
         null,
         48.21,
@@ -2113,6 +2203,7 @@
       "compound": "SOFT",
       "tyreLife": 2,
       "lapTimeSeconds": 103.303,
+      "sessionTimeSeconds": 304.722,
       "sectorTimesSeconds": [
         36.48,
         41.955,
@@ -2133,6 +2224,7 @@
       "compound": "SOFT",
       "tyreLife": 3,
       "lapTimeSeconds": null,
+      "sessionTimeSeconds": 923.204,
       "sectorTimesSeconds": [
         43.73,
         null,
@@ -2157,6 +2249,7 @@
       "compound": "MEDIUM",
       "tyreLife": 1,
       "lapTimeSeconds": null,
+      "sessionTimeSeconds": 1044.742,
       "sectorTimesSeconds": [
         null,
         46.609,
@@ -2179,6 +2272,7 @@
       "compound": "MEDIUM",
       "tyreLife": 2,
       "lapTimeSeconds": 120.801,
+      "sessionTimeSeconds": 1165.543,
       "sectorTimesSeconds": [
         40.777,
         53.345,
@@ -2197,6 +2291,7 @@
       "compound": "MEDIUM",
       "tyreLife": 3,
       "lapTimeSeconds": null,
+      "sessionTimeSeconds": 1715.312,
       "sectorTimesSeconds": [
         null,
         null,
@@ -2221,6 +2316,7 @@
       "compound": "MEDIUM",
       "tyreLife": 1,
       "lapTimeSeconds": null,
+      "sessionTimeSeconds": 1835.214,
       "sectorTimesSeconds": [
         null,
         46.624,
@@ -2243,6 +2339,7 @@
       "compound": "MEDIUM",
       "tyreLife": 2,
       "lapTimeSeconds": 126.285,
+      "sessionTimeSeconds": 1961.499,
       "sectorTimesSeconds": [
         39.909,
         56.706,
@@ -2261,6 +2358,7 @@
       "compound": "MEDIUM",
       "tyreLife": 3,
       "lapTimeSeconds": 102.101,
+      "sessionTimeSeconds": 2063.6,
       "sectorTimesSeconds": [
         35.944,
         41.106,
@@ -2281,6 +2379,7 @@
       "compound": "MEDIUM",
       "tyreLife": 4,
       "lapTimeSeconds": null,
+      "sessionTimeSeconds": 2974.323,
       "sectorTimesSeconds": [
         null,
         null,
@@ -2305,6 +2404,7 @@
       "compound": "SOFT",
       "tyreLife": 1,
       "lapTimeSeconds": null,
+      "sessionTimeSeconds": 3511.755,
       "sectorTimesSeconds": [
         null,
         null,
@@ -2330,6 +2430,7 @@
       "compound": "SOFT",
       "tyreLife": 4,
       "lapTimeSeconds": null,
+      "sessionTimeSeconds": 3632.439,
       "sectorTimesSeconds": [
         null,
         48.016,
@@ -2353,6 +2454,7 @@
       "compound": "SOFT",
       "tyreLife": 5,
       "lapTimeSeconds": 103.061,
+      "sessionTimeSeconds": 3735.5,
       "sectorTimesSeconds": [
         36.028,
         42.021,
@@ -2371,6 +2473,7 @@
       "compound": "SOFT",
       "tyreLife": 6,
       "lapTimeSeconds": 122.824,
+      "sessionTimeSeconds": 3858.324,
       "sectorTimesSeconds": [
         42.598,
         46.964,
@@ -2393,6 +2496,7 @@
       "compound": "SOFT",
       "tyreLife": 2,
       "lapTimeSeconds": null,
+      "sessionTimeSeconds": 4098.172,
       "sectorTimesSeconds": [
         null,
         54.834,
@@ -2415,6 +2519,7 @@
       "compound": "SOFT",
       "tyreLife": 3,
       "lapTimeSeconds": 142.307,
+      "sessionTimeSeconds": 4240.479,
       "sectorTimesSeconds": [
         56.061,
         49.182,
@@ -2437,6 +2542,7 @@
       "compound": "MEDIUM",
       "tyreLife": 1,
       "lapTimeSeconds": null,
+      "sessionTimeSeconds": 212.935,
       "sectorTimesSeconds": [
         null,
         46.716,
@@ -2459,6 +2565,7 @@
       "compound": "MEDIUM",
       "tyreLife": 2,
       "lapTimeSeconds": 102.878,
+      "sessionTimeSeconds": 315.813,
       "sectorTimesSeconds": [
         36.503,
         41.355,
@@ -2479,6 +2586,7 @@
       "compound": "MEDIUM",
       "tyreLife": 3,
       "lapTimeSeconds": null,
+      "sessionTimeSeconds": 948.923,
       "sectorTimesSeconds": [
         55.466,
         null,
@@ -2503,6 +2611,7 @@
       "compound": "MEDIUM",
       "tyreLife": 4,
       "lapTimeSeconds": null,
+      "sessionTimeSeconds": 1066.19,
       "sectorTimesSeconds": [
         null,
         47.598,
@@ -2525,6 +2634,7 @@
       "compound": "MEDIUM",
       "tyreLife": 5,
       "lapTimeSeconds": 102.347,
+      "sessionTimeSeconds": 1168.537,
       "sectorTimesSeconds": [
         36.006,
         41.36,
@@ -2543,6 +2653,7 @@
       "compound": "MEDIUM",
       "tyreLife": 6,
       "lapTimeSeconds": null,
+      "sessionTimeSeconds": 1787.807,
       "sectorTimesSeconds": [
         null,
         null,
@@ -2567,6 +2678,7 @@
       "compound": "SOFT",
       "tyreLife": 1,
       "lapTimeSeconds": null,
+      "sessionTimeSeconds": 1917.305,
       "sectorTimesSeconds": [
         null,
         54.836,
@@ -2589,6 +2701,7 @@
       "compound": "SOFT",
       "tyreLife": 2,
       "lapTimeSeconds": 112.554,
+      "sessionTimeSeconds": 2029.859,
       "sectorTimesSeconds": [
         36.3,
         50.187,
@@ -2607,6 +2720,7 @@
       "compound": "SOFT",
       "tyreLife": 3,
       "lapTimeSeconds": null,
+      "sessionTimeSeconds": 2937.965,
       "sectorTimesSeconds": [
         42.685,
         null,
@@ -2631,6 +2745,7 @@
       "compound": "SOFT",
       "tyreLife": 1,
       "lapTimeSeconds": null,
+      "sessionTimeSeconds": 3062.71,
       "sectorTimesSeconds": [
         null,
         51.88,
@@ -2654,6 +2769,7 @@
       "compound": "SOFT",
       "tyreLife": 2,
       "lapTimeSeconds": null,
+      "sessionTimeSeconds": 3655.608,
       "sectorTimesSeconds": [
         null,
         null,
@@ -2678,6 +2794,7 @@
       "compound": "MEDIUM",
       "tyreLife": 1,
       "lapTimeSeconds": null,
+      "sessionTimeSeconds": 3770.388,
       "sectorTimesSeconds": [
         null,
         48.191,
@@ -2701,6 +2818,7 @@
       "compound": "MEDIUM",
       "tyreLife": 2,
       "lapTimeSeconds": 101.967,
+      "sessionTimeSeconds": 3872.355,
       "sectorTimesSeconds": [
         35.9,
         41.101,
@@ -2719,6 +2837,7 @@
       "compound": "MEDIUM",
       "tyreLife": 3,
       "lapTimeSeconds": 138.596,
+      "sessionTimeSeconds": 4010.951,
       "sectorTimesSeconds": [
         55.615,
         54.763,
@@ -2737,6 +2856,7 @@
       "compound": "MEDIUM",
       "tyreLife": 4,
       "lapTimeSeconds": 131.076,
+      "sessionTimeSeconds": 4142.027,
       "sectorTimesSeconds": [
         51.921,
         52.849,
@@ -2757,6 +2877,7 @@
       "compound": "MEDIUM",
       "tyreLife": 5,
       "lapTimeSeconds": 101.788,
+      "sessionTimeSeconds": 4243.815,
       "sectorTimesSeconds": [
         35.775,
         40.837,
@@ -2775,6 +2896,7 @@
       "compound": "MEDIUM",
       "tyreLife": 6,
       "lapTimeSeconds": 138.587,
+      "sessionTimeSeconds": 4382.402,
       "sectorTimesSeconds": [
         46.284,
         55.12,
@@ -2797,6 +2919,7 @@
       "compound": "MEDIUM",
       "tyreLife": 7,
       "lapTimeSeconds": null,
+      "sessionTimeSeconds": 4899.796,
       "sectorTimesSeconds": [
         null,
         46.325,
@@ -2820,6 +2943,7 @@
       "compound": "MEDIUM",
       "tyreLife": 8,
       "lapTimeSeconds": null,
+      "sessionTimeSeconds": 5974.76,
       "sectorTimesSeconds": [
         36.108,
         null,
@@ -2844,6 +2968,7 @@
       "compound": "SOFT",
       "tyreLife": 1,
       "lapTimeSeconds": null,
+      "sessionTimeSeconds": 6882.271,
       "sectorTimesSeconds": [
         null,
         null,
@@ -2869,6 +2994,7 @@
       "compound": "SOFT",
       "tyreLife": 2,
       "lapTimeSeconds": null,
+      "sessionTimeSeconds": 7000.29,
       "sectorTimesSeconds": [
         null,
         49.008,
@@ -2891,6 +3017,7 @@
       "compound": "SOFT",
       "tyreLife": 3,
       "lapTimeSeconds": 102.143,
+      "sessionTimeSeconds": 7102.433,
       "sectorTimesSeconds": [
         36.038,
         40.979,
@@ -2909,6 +3036,7 @@
       "compound": "SOFT",
       "tyreLife": 4,
       "lapTimeSeconds": null,
+      "sessionTimeSeconds": 7272.704,
       "sectorTimesSeconds": [
         53.715,
         50.34,
@@ -2931,6 +3059,7 @@
       "compound": "SOFT",
       "tyreLife": 1,
       "lapTimeSeconds": null,
+      "sessionTimeSeconds": 117.595,
       "sectorTimesSeconds": [
         null,
         47.159,
@@ -2953,6 +3082,7 @@
       "compound": "SOFT",
       "tyreLife": 2,
       "lapTimeSeconds": 103.778,
+      "sessionTimeSeconds": 221.373,
       "sectorTimesSeconds": [
         36.704,
         41.721,
@@ -2971,6 +3101,7 @@
       "compound": "SOFT",
       "tyreLife": 3,
       "lapTimeSeconds": 135.207,
+      "sessionTimeSeconds": 356.58,
       "sectorTimesSeconds": [
         57.203,
         51.89,
@@ -2991,6 +3122,7 @@
       "compound": "SOFT",
       "tyreLife": 4,
       "lapTimeSeconds": null,
+      "sessionTimeSeconds": 723.544,
       "sectorTimesSeconds": [
         57.203,
         null,
@@ -3015,6 +3147,7 @@
       "compound": "SOFT",
       "tyreLife": 1,
       "lapTimeSeconds": null,
+      "sessionTimeSeconds": 123.505,
       "sectorTimesSeconds": [
         null,
         47.89,
@@ -3037,6 +3170,7 @@
       "compound": "SOFT",
       "tyreLife": 2,
       "lapTimeSeconds": 104.259,
+      "sessionTimeSeconds": 227.764,
       "sectorTimesSeconds": [
         36.613,
         42.441,
@@ -3055,6 +3189,7 @@
       "compound": "SOFT",
       "tyreLife": 3,
       "lapTimeSeconds": 123.963,
+      "sessionTimeSeconds": 351.727,
       "sectorTimesSeconds": [
         41.043,
         50.551,
@@ -3077,6 +3212,7 @@
       "compound": "MEDIUM",
       "tyreLife": 1,
       "lapTimeSeconds": null,
+      "sessionTimeSeconds": 1152.524,
       "sectorTimesSeconds": [
         null,
         52.707,
@@ -3099,6 +3235,7 @@
       "compound": "MEDIUM",
       "tyreLife": 2,
       "lapTimeSeconds": null,
+      "sessionTimeSeconds": 1805.568,
       "sectorTimesSeconds": [
         null,
         null,
@@ -3123,6 +3260,7 @@
       "compound": "SOFT",
       "tyreLife": 1,
       "lapTimeSeconds": null,
+      "sessionTimeSeconds": 1936.587,
       "sectorTimesSeconds": [
         null,
         56.537,
@@ -3145,6 +3283,7 @@
       "compound": "SOFT",
       "tyreLife": 2,
       "lapTimeSeconds": 102.916,
+      "sessionTimeSeconds": 2039.503,
       "sectorTimesSeconds": [
         36.348,
         41.592,
@@ -3163,6 +3302,7 @@
       "compound": "SOFT",
       "tyreLife": 3,
       "lapTimeSeconds": null,
+      "sessionTimeSeconds": 2189.503,
       "sectorTimesSeconds": [
         null,
         null,
@@ -3186,6 +3326,7 @@
       "compound": "SOFT",
       "tyreLife": 1,
       "lapTimeSeconds": null,
+      "sessionTimeSeconds": 185.72,
       "sectorTimesSeconds": [
         null,
         47.316,
@@ -3208,6 +3349,7 @@
       "compound": "SOFT",
       "tyreLife": 2,
       "lapTimeSeconds": 102.448,
+      "sessionTimeSeconds": 288.168,
       "sectorTimesSeconds": [
         36.205,
         41.377,
@@ -3228,6 +3370,7 @@
       "compound": "SOFT",
       "tyreLife": 3,
       "lapTimeSeconds": null,
+      "sessionTimeSeconds": 1039.388,
       "sectorTimesSeconds": [
         49.578,
         null,
@@ -3252,6 +3395,7 @@
       "compound": "MEDIUM",
       "tyreLife": 1,
       "lapTimeSeconds": null,
+      "sessionTimeSeconds": 1177.055,
       "sectorTimesSeconds": [
         null,
         57.034,
@@ -3274,6 +3418,7 @@
       "compound": "MEDIUM",
       "tyreLife": 2,
       "lapTimeSeconds": null,
+      "sessionTimeSeconds": 1698.744,
       "sectorTimesSeconds": [
         null,
         null,
@@ -3298,6 +3443,7 @@
       "compound": "MEDIUM",
       "tyreLife": 1,
       "lapTimeSeconds": null,
+      "sessionTimeSeconds": 1816.61,
       "sectorTimesSeconds": [
         null,
         47.185,
@@ -3320,6 +3466,7 @@
       "compound": "MEDIUM",
       "tyreLife": 2,
       "lapTimeSeconds": 124.199,
+      "sessionTimeSeconds": 1940.809,
       "sectorTimesSeconds": [
         44.599,
         53.161,
@@ -3338,6 +3485,7 @@
       "compound": "MEDIUM",
       "tyreLife": 3,
       "lapTimeSeconds": 102.257,
+      "sessionTimeSeconds": 2043.066,
       "sectorTimesSeconds": [
         36.057,
         41.364,
@@ -3356,6 +3504,7 @@
       "compound": "MEDIUM",
       "tyreLife": 4,
       "lapTimeSeconds": null,
+      "sessionTimeSeconds": 2895.543,
       "sectorTimesSeconds": [
         null,
         null,
@@ -3380,6 +3529,7 @@
       "compound": "SOFT",
       "tyreLife": 1,
       "lapTimeSeconds": null,
+      "sessionTimeSeconds": 3017.674,
       "sectorTimesSeconds": [
         null,
         48.206,
@@ -3403,6 +3553,7 @@
       "compound": "SOFT",
       "tyreLife": 2,
       "lapTimeSeconds": null,
+      "sessionTimeSeconds": 3505.04,
       "sectorTimesSeconds": [
         35.942,
         null,
@@ -3427,6 +3578,7 @@
       "compound": "SOFT",
       "tyreLife": 1,
       "lapTimeSeconds": null,
+      "sessionTimeSeconds": 3624.176,
       "sectorTimesSeconds": [
         null,
         45.886,
@@ -3450,6 +3602,7 @@
       "compound": "SOFT",
       "tyreLife": 2,
       "lapTimeSeconds": 101.807,
+      "sessionTimeSeconds": 3725.983,
       "sectorTimesSeconds": [
         35.73,
         41.242,
@@ -3468,6 +3621,7 @@
       "compound": "SOFT",
       "tyreLife": 3,
       "lapTimeSeconds": 122.888,
+      "sessionTimeSeconds": 3848.871,
       "sectorTimesSeconds": [
         39.219,
         48.187,
@@ -3490,6 +3644,7 @@
       "compound": "MEDIUM",
       "tyreLife": 5,
       "lapTimeSeconds": 146.796,
+      "sessionTimeSeconds": 3995.667,
       "sectorTimesSeconds": [
         70.308,
         49.363,
@@ -3511,6 +3666,7 @@
       "compound": "MEDIUM",
       "tyreLife": 6,
       "lapTimeSeconds": 117.865,
+      "sessionTimeSeconds": 4113.532,
       "sectorTimesSeconds": [
         41.19,
         50.759,
@@ -3531,6 +3687,7 @@
       "compound": "MEDIUM",
       "tyreLife": 7,
       "lapTimeSeconds": 101.537,
+      "sessionTimeSeconds": 4215.069,
       "sectorTimesSeconds": [
         35.701,
         40.943,
@@ -3551,6 +3708,7 @@
       "compound": "MEDIUM",
       "tyreLife": 8,
       "lapTimeSeconds": 139.214,
+      "sessionTimeSeconds": 4354.283,
       "sectorTimesSeconds": [
         45.183,
         52.437,
@@ -3572,6 +3730,7 @@
       "compound": "SOFT",
       "tyreLife": 4,
       "lapTimeSeconds": null,
+      "sessionTimeSeconds": 4832.854,
       "sectorTimesSeconds": [
         null,
         47.352,
@@ -3595,6 +3754,7 @@
       "compound": "SOFT",
       "tyreLife": 5,
       "lapTimeSeconds": 102.56,
+      "sessionTimeSeconds": 4935.414,
       "sectorTimesSeconds": [
         36.056,
         41.434,
@@ -3615,6 +3775,7 @@
       "compound": "SOFT",
       "tyreLife": 6,
       "lapTimeSeconds": null,
+      "sessionTimeSeconds": 5831.61,
       "sectorTimesSeconds": [
         null,
         null,
@@ -3639,6 +3800,7 @@
       "compound": "SOFT",
       "tyreLife": 1,
       "lapTimeSeconds": null,
+      "sessionTimeSeconds": 5951.405,
       "sectorTimesSeconds": [
         null,
         47.678,
@@ -3661,6 +3823,7 @@
       "compound": "SOFT",
       "tyreLife": 2,
       "lapTimeSeconds": null,
+      "sessionTimeSeconds": 6853.74,
       "sectorTimesSeconds": [
         35.686,
         null,
@@ -3685,6 +3848,7 @@
       "compound": "SOFT",
       "tyreLife": 3,
       "lapTimeSeconds": null,
+      "sessionTimeSeconds": 6971.0,
       "sectorTimesSeconds": [
         null,
         45.726,
@@ -3707,6 +3871,7 @@
       "compound": "SOFT",
       "tyreLife": 4,
       "lapTimeSeconds": 101.707,
+      "sessionTimeSeconds": 7072.707,
       "sectorTimesSeconds": [
         35.432,
         41.316,
@@ -3725,6 +3890,7 @@
       "compound": "SOFT",
       "tyreLife": 5,
       "lapTimeSeconds": null,
+      "sessionTimeSeconds": 7223.664,
       "sectorTimesSeconds": [
         51.604,
         57.097,
@@ -3747,6 +3913,7 @@
       "compound": "SOFT",
       "tyreLife": 1,
       "lapTimeSeconds": null,
+      "sessionTimeSeconds": 142.976,
       "sectorTimesSeconds": [
         null,
         46.794,
@@ -3769,6 +3936,7 @@
       "compound": "SOFT",
       "tyreLife": 2,
       "lapTimeSeconds": 103.247,
+      "sessionTimeSeconds": 246.223,
       "sectorTimesSeconds": [
         36.579,
         41.634,
@@ -3787,6 +3955,7 @@
       "compound": "SOFT",
       "tyreLife": 3,
       "lapTimeSeconds": 135.334,
+      "sessionTimeSeconds": 381.557,
       "sectorTimesSeconds": [
         54.742,
         53.848,
@@ -3807,6 +3976,7 @@
       "compound": "SOFT",
       "tyreLife": 4,
       "lapTimeSeconds": null,
+      "sessionTimeSeconds": 1127.224,
       "sectorTimesSeconds": [
         null,
         null,
@@ -3831,6 +4001,7 @@
       "compound": "SOFT",
       "tyreLife": 1,
       "lapTimeSeconds": null,
+      "sessionTimeSeconds": 1693.546,
       "sectorTimesSeconds": [
         null,
         null,
@@ -3856,6 +4027,7 @@
       "compound": "SOFT",
       "tyreLife": 1,
       "lapTimeSeconds": null,
+      "sessionTimeSeconds": 1806.738,
       "sectorTimesSeconds": [
         null,
         45.468,
@@ -3878,6 +4050,7 @@
       "compound": "SOFT",
       "tyreLife": 2,
       "lapTimeSeconds": 115.104,
+      "sessionTimeSeconds": 1921.842,
       "sectorTimesSeconds": [
         39.648,
         49.242,
@@ -3896,6 +4069,7 @@
       "compound": "SOFT",
       "tyreLife": 3,
       "lapTimeSeconds": 103.004,
+      "sessionTimeSeconds": 2024.846,
       "sectorTimesSeconds": [
         36.311,
         41.681,
@@ -3914,6 +4088,7 @@
       "compound": "SOFT",
       "tyreLife": 4,
       "lapTimeSeconds": null,
+      "sessionTimeSeconds": 2193.686,
       "sectorTimesSeconds": [
         51.086,
         null,
@@ -3938,6 +4113,7 @@
       "compound": "MEDIUM",
       "tyreLife": 1,
       "lapTimeSeconds": null,
+      "sessionTimeSeconds": 250.105,
       "sectorTimesSeconds": [
         null,
         50.226,
@@ -3960,6 +4136,7 @@
       "compound": "MEDIUM",
       "tyreLife": 2,
       "lapTimeSeconds": 102.407,
+      "sessionTimeSeconds": 352.512,
       "sectorTimesSeconds": [
         36.363,
         41.137,
@@ -3980,6 +4157,7 @@
       "compound": "MEDIUM",
       "tyreLife": 3,
       "lapTimeSeconds": null,
+      "sessionTimeSeconds": 990.095,
       "sectorTimesSeconds": [
         null,
         null,
@@ -4004,6 +4182,7 @@
       "compound": "MEDIUM",
       "tyreLife": 4,
       "lapTimeSeconds": null,
+      "sessionTimeSeconds": 1104.309,
       "sectorTimesSeconds": [
         null,
         44.252,
@@ -4026,6 +4205,7 @@
       "compound": "MEDIUM",
       "tyreLife": 5,
       "lapTimeSeconds": null,
+      "sessionTimeSeconds": 1759.9,
       "sectorTimesSeconds": [
         35.986,
         40.941,
@@ -4050,6 +4230,7 @@
       "compound": "SOFT",
       "tyreLife": 1,
       "lapTimeSeconds": null,
+      "sessionTimeSeconds": 1876.942,
       "sectorTimesSeconds": [
         null,
         45.063,
@@ -4072,6 +4253,7 @@
       "compound": "SOFT",
       "tyreLife": 2,
       "lapTimeSeconds": 101.322,
+      "sessionTimeSeconds": 1978.264,
       "sectorTimesSeconds": [
         35.478,
         40.982,
@@ -4090,6 +4272,7 @@
       "compound": "SOFT",
       "tyreLife": 3,
       "lapTimeSeconds": null,
+      "sessionTimeSeconds": 2962.782,
       "sectorTimesSeconds": [
         44.152,
         49.512,
@@ -4114,6 +4297,7 @@
       "compound": "SOFT",
       "tyreLife": 4,
       "lapTimeSeconds": null,
+      "sessionTimeSeconds": 3531.18,
       "sectorTimesSeconds": [
         null,
         55.617,
@@ -4139,6 +4323,7 @@
       "compound": "SOFT",
       "tyreLife": 5,
       "lapTimeSeconds": null,
+      "sessionTimeSeconds": 3648.499,
       "sectorTimesSeconds": [
         null,
         46.687,
@@ -4162,6 +4347,7 @@
       "compound": "SOFT",
       "tyreLife": 6,
       "lapTimeSeconds": 101.396,
+      "sessionTimeSeconds": 3749.895,
       "sectorTimesSeconds": [
         35.585,
         40.836,
@@ -4180,6 +4366,7 @@
       "compound": "SOFT",
       "tyreLife": 7,
       "lapTimeSeconds": 140.643,
+      "sessionTimeSeconds": 3890.538,
       "sectorTimesSeconds": [
         49.361,
         57.237,
@@ -4202,6 +4389,7 @@
       "compound": "MEDIUM",
       "tyreLife": 1,
       "lapTimeSeconds": 133.254,
+      "sessionTimeSeconds": 4023.792,
       "sectorTimesSeconds": [
         57.788,
         47.215,
@@ -4223,6 +4411,7 @@
       "compound": "MEDIUM",
       "tyreLife": 2,
       "lapTimeSeconds": 134.51,
+      "sessionTimeSeconds": 4158.302,
       "sectorTimesSeconds": [
         36.881,
         48.599,
@@ -4245,6 +4434,7 @@
       "compound": "MEDIUM",
       "tyreLife": 3,
       "lapTimeSeconds": null,
+      "sessionTimeSeconds": 4864.642,
       "sectorTimesSeconds": [
         null,
         44.186,
@@ -4268,6 +4458,7 @@
       "compound": "MEDIUM",
       "tyreLife": 4,
       "lapTimeSeconds": null,
+      "sessionTimeSeconds": 5848.86,
       "sectorTimesSeconds": [
         37.647,
         47.301,
@@ -4292,6 +4483,7 @@
       "compound": "SOFT",
       "tyreLife": 1,
       "lapTimeSeconds": null,
+      "sessionTimeSeconds": 5967.661,
       "sectorTimesSeconds": [
         null,
         48.048,
@@ -4314,6 +4506,7 @@
       "compound": "SOFT",
       "tyreLife": 2,
       "lapTimeSeconds": null,
+      "sessionTimeSeconds": 6845.221,
       "sectorTimesSeconds": [
         35.506,
         null,
@@ -4338,6 +4531,7 @@
       "compound": "SOFT",
       "tyreLife": 3,
       "lapTimeSeconds": null,
+      "sessionTimeSeconds": 6952.632,
       "sectorTimesSeconds": [
         null,
         43.63,
@@ -4360,6 +4554,7 @@
       "compound": "SOFT",
       "tyreLife": 4,
       "lapTimeSeconds": 102.239,
+      "sessionTimeSeconds": 7054.871,
       "sectorTimesSeconds": [
         35.512,
         41.417,
@@ -4378,6 +4573,7 @@
       "compound": "SOFT",
       "tyreLife": 5,
       "lapTimeSeconds": null,
+      "sessionTimeSeconds": 7185.743,
       "sectorTimesSeconds": [
         43.019,
         51.889,
@@ -4400,6 +4596,7 @@
       "compound": "SOFT",
       "tyreLife": 1,
       "lapTimeSeconds": null,
+      "sessionTimeSeconds": 148.621,
       "sectorTimesSeconds": [
         null,
         46.683,
@@ -4422,6 +4619,7 @@
       "compound": "SOFT",
       "tyreLife": 2,
       "lapTimeSeconds": 104.057,
+      "sessionTimeSeconds": 252.678,
       "sectorTimesSeconds": [
         36.662,
         42.448,
@@ -4440,6 +4638,7 @@
       "compound": "SOFT",
       "tyreLife": 3,
       "lapTimeSeconds": 127.254,
+      "sessionTimeSeconds": 379.932,
       "sectorTimesSeconds": [
         46.356,
         50.153,
@@ -4462,6 +4661,7 @@
       "compound": "SOFT",
       "tyreLife": 1,
       "lapTimeSeconds": null,
+      "sessionTimeSeconds": 1084.42,
       "sectorTimesSeconds": [
         null,
         47.053,
@@ -4484,6 +4684,7 @@
       "compound": "SOFT",
       "tyreLife": 2,
       "lapTimeSeconds": 102.779,
+      "sessionTimeSeconds": 1187.199,
       "sectorTimesSeconds": [
         35.907,
         41.759,
@@ -4504,6 +4705,7 @@
       "compound": "SOFT",
       "tyreLife": 3,
       "lapTimeSeconds": null,
+      "sessionTimeSeconds": 1905.252,
       "sectorTimesSeconds": [
         null,
         null,
@@ -4528,6 +4730,7 @@
       "compound": "MEDIUM",
       "tyreLife": 1,
       "lapTimeSeconds": null,
+      "sessionTimeSeconds": 2023.326,
       "sectorTimesSeconds": [
         null,
         47.586,
@@ -4550,6 +4753,7 @@
       "compound": "MEDIUM",
       "tyreLife": 2,
       "lapTimeSeconds": null,
+      "sessionTimeSeconds": 2773.05,
       "sectorTimesSeconds": [
         null,
         null,
@@ -4574,6 +4778,7 @@
       "compound": "SOFT",
       "tyreLife": 1,
       "lapTimeSeconds": null,
+      "sessionTimeSeconds": 241.111,
       "sectorTimesSeconds": [
         null,
         51.588,
@@ -4596,6 +4801,7 @@
       "compound": "SOFT",
       "tyreLife": 2,
       "lapTimeSeconds": 102.752,
+      "sessionTimeSeconds": 343.863,
       "sectorTimesSeconds": [
         36.202,
         41.506,
@@ -4616,6 +4822,7 @@
       "compound": "SOFT",
       "tyreLife": 3,
       "lapTimeSeconds": null,
+      "sessionTimeSeconds": 963.485,
       "sectorTimesSeconds": [
         null,
         null,
@@ -4640,6 +4847,7 @@
       "compound": "SOFT",
       "tyreLife": 4,
       "lapTimeSeconds": null,
+      "sessionTimeSeconds": 1080.235,
       "sectorTimesSeconds": [
         null,
         46.004,
@@ -4662,6 +4870,7 @@
       "compound": "SOFT",
       "tyreLife": 5,
       "lapTimeSeconds": 101.821,
+      "sessionTimeSeconds": 1182.056,
       "sectorTimesSeconds": [
         35.572,
         41.265,
@@ -4680,6 +4889,7 @@
       "compound": "SOFT",
       "tyreLife": 6,
       "lapTimeSeconds": null,
+      "sessionTimeSeconds": 1779.5,
       "sectorTimesSeconds": [
         null,
         null,
@@ -4704,6 +4914,7 @@
       "compound": "SOFT",
       "tyreLife": 7,
       "lapTimeSeconds": null,
+      "sessionTimeSeconds": 1900.909,
       "sectorTimesSeconds": [
         null,
         50.103,
@@ -4726,6 +4937,7 @@
       "compound": "SOFT",
       "tyreLife": 8,
       "lapTimeSeconds": 135.219,
+      "sessionTimeSeconds": 2036.128,
       "sectorTimesSeconds": [
         47.212,
         61.299,
@@ -4744,6 +4956,7 @@
       "compound": "SOFT",
       "tyreLife": 9,
       "lapTimeSeconds": null,
+      "sessionTimeSeconds": 2917.008,
       "sectorTimesSeconds": [
         null,
         null,
@@ -4768,6 +4981,7 @@
       "compound": "SOFT",
       "tyreLife": 10,
       "lapTimeSeconds": null,
+      "sessionTimeSeconds": 3040.478,
       "sectorTimesSeconds": [
         null,
         45.209,
@@ -4791,6 +5005,7 @@
       "compound": "SOFT",
       "tyreLife": 11,
       "lapTimeSeconds": null,
+      "sessionTimeSeconds": 3485.263,
       "sectorTimesSeconds": [
         null,
         null,
@@ -4815,6 +5030,7 @@
       "compound": "SOFT",
       "tyreLife": 1,
       "lapTimeSeconds": null,
+      "sessionTimeSeconds": 3599.667,
       "sectorTimesSeconds": [
         null,
         47.041,
@@ -4837,6 +5053,7 @@
       "compound": "SOFT",
       "tyreLife": 2,
       "lapTimeSeconds": 123.493,
+      "sessionTimeSeconds": 3723.16,
       "sectorTimesSeconds": [
         46.125,
         51.247,
@@ -4857,6 +5074,7 @@
       "compound": "SOFT",
       "tyreLife": 3,
       "lapTimeSeconds": 102.824,
+      "sessionTimeSeconds": 3825.984,
       "sectorTimesSeconds": [
         35.688,
         41.586,
@@ -4877,6 +5095,7 @@
       "compound": "SOFT",
       "tyreLife": 4,
       "lapTimeSeconds": 135.27,
+      "sessionTimeSeconds": 3961.254,
       "sectorTimesSeconds": [
         52.008,
         56.321,
@@ -4895,6 +5114,7 @@
       "compound": "SOFT",
       "tyreLife": 5,
       "lapTimeSeconds": 102.183,
+      "sessionTimeSeconds": 4063.437,
       "sectorTimesSeconds": [
         35.711,
         41.361,
@@ -4913,6 +5133,7 @@
       "compound": "SOFT",
       "tyreLife": 6,
       "lapTimeSeconds": 141.012,
+      "sessionTimeSeconds": 4204.449,
       "sectorTimesSeconds": [
         56.631,
         50.834,
@@ -4935,6 +5156,7 @@
       "compound": "SOFT",
       "tyreLife": 1,
       "lapTimeSeconds": null,
+      "sessionTimeSeconds": 128.506,
       "sectorTimesSeconds": [
         null,
         46.561,
@@ -4957,6 +5179,7 @@
       "compound": "SOFT",
       "tyreLife": 2,
       "lapTimeSeconds": 103.856,
+      "sessionTimeSeconds": 232.362,
       "sectorTimesSeconds": [
         37.026,
         41.719,
@@ -4975,6 +5198,7 @@
       "compound": "SOFT",
       "tyreLife": 3,
       "lapTimeSeconds": null,
+      "sessionTimeSeconds": 386.25,
       "sectorTimesSeconds": [
         47.796,
         51.011,
@@ -4998,6 +5222,7 @@
       "compound": "MEDIUM",
       "tyreLife": 1,
       "lapTimeSeconds": null,
+      "sessionTimeSeconds": 1157.431,
       "sectorTimesSeconds": [
         null,
         53.236,
@@ -5020,6 +5245,7 @@
       "compound": "MEDIUM",
       "tyreLife": 2,
       "lapTimeSeconds": null,
+      "sessionTimeSeconds": 1708.84,
       "sectorTimesSeconds": [
         36.135,
         null,
@@ -5044,6 +5270,7 @@
       "compound": "MEDIUM",
       "tyreLife": 3,
       "lapTimeSeconds": null,
+      "sessionTimeSeconds": 1827.197,
       "sectorTimesSeconds": [
         null,
         47.577,
@@ -5066,6 +5293,7 @@
       "compound": "MEDIUM",
       "tyreLife": 4,
       "lapTimeSeconds": 125.577,
+      "sessionTimeSeconds": 1952.774,
       "sectorTimesSeconds": [
         42.25,
         56.835,
@@ -5084,6 +5312,7 @@
       "compound": "MEDIUM",
       "tyreLife": 5,
       "lapTimeSeconds": 102.511,
+      "sessionTimeSeconds": 2055.285,
       "sectorTimesSeconds": [
         36.029,
         41.213,
@@ -5102,6 +5331,7 @@
       "compound": "MEDIUM",
       "tyreLife": 6,
       "lapTimeSeconds": null,
+      "sessionTimeSeconds": 2969.432,
       "sectorTimesSeconds": [
         null,
         null,
@@ -5126,6 +5356,7 @@
       "compound": "SOFT",
       "tyreLife": 1,
       "lapTimeSeconds": null,
+      "sessionTimeSeconds": 3489.247,
       "sectorTimesSeconds": [
         null,
         52.411,
@@ -5151,6 +5382,7 @@
       "compound": "SOFT",
       "tyreLife": 2,
       "lapTimeSeconds": null,
+      "sessionTimeSeconds": 3606.393,
       "sectorTimesSeconds": [
         null,
         48.176,
@@ -5174,6 +5406,7 @@
       "compound": "SOFT",
       "tyreLife": 3,
       "lapTimeSeconds": 103.214,
+      "sessionTimeSeconds": 3709.607,
       "sectorTimesSeconds": [
         36.649,
         41.415,
@@ -5192,6 +5425,7 @@
       "compound": "SOFT",
       "tyreLife": 4,
       "lapTimeSeconds": 125.694,
+      "sessionTimeSeconds": 3835.301,
       "sectorTimesSeconds": [
         43.873,
         49.143,
@@ -5214,6 +5448,7 @@
       "compound": "MEDIUM",
       "tyreLife": 1,
       "lapTimeSeconds": null,
+      "sessionTimeSeconds": 4082.96,
       "sectorTimesSeconds": [
         null,
         47.994,
@@ -5236,6 +5471,7 @@
       "compound": "MEDIUM",
       "tyreLife": 2,
       "lapTimeSeconds": 102.277,
+      "sessionTimeSeconds": 4185.237,
       "sectorTimesSeconds": [
         35.854,
         41.07,
@@ -5256,6 +5492,7 @@
       "compound": "MEDIUM",
       "tyreLife": 3,
       "lapTimeSeconds": 143.974,
+      "sessionTimeSeconds": 4329.211,
       "sectorTimesSeconds": [
         46.818,
         57.772,
@@ -5277,6 +5514,7 @@
       "compound": "SOFT",
       "tyreLife": 1,
       "lapTimeSeconds": null,
+      "sessionTimeSeconds": 160.358,
       "sectorTimesSeconds": [
         null,
         46.524,
@@ -5299,6 +5537,7 @@
       "compound": "SOFT",
       "tyreLife": 2,
       "lapTimeSeconds": 102.635,
+      "sessionTimeSeconds": 262.993,
       "sectorTimesSeconds": [
         36.179,
         41.332,
@@ -5317,6 +5556,7 @@
       "compound": "SOFT",
       "tyreLife": 3,
       "lapTimeSeconds": null,
+      "sessionTimeSeconds": 1004.826,
       "sectorTimesSeconds": [
         60.224,
         54.464,
@@ -5341,6 +5581,7 @@
       "compound": "SOFT",
       "tyreLife": 4,
       "lapTimeSeconds": null,
+      "sessionTimeSeconds": 1134.81,
       "sectorTimesSeconds": [
         null,
         46.588,
@@ -5363,6 +5604,7 @@
       "compound": "SOFT",
       "tyreLife": 5,
       "lapTimeSeconds": null,
+      "sessionTimeSeconds": 1684.699,
       "sectorTimesSeconds": [
         36.193,
         null,
@@ -5387,6 +5629,7 @@
       "compound": "SOFT",
       "tyreLife": 1,
       "lapTimeSeconds": null,
+      "sessionTimeSeconds": 1796.849,
       "sectorTimesSeconds": [
         null,
         47.172,
@@ -5409,6 +5652,7 @@
       "compound": "SOFT",
       "tyreLife": 2,
       "lapTimeSeconds": 102.638,
+      "sessionTimeSeconds": 1899.487,
       "sectorTimesSeconds": [
         36.023,
         41.337,
@@ -5427,6 +5671,7 @@
       "compound": "SOFT",
       "tyreLife": 3,
       "lapTimeSeconds": null,
+      "sessionTimeSeconds": 2066.972,
       "sectorTimesSeconds": [
         78.067,
         62.17,
@@ -5449,6 +5694,7 @@
       "compound": "SOFT",
       "tyreLife": 4,
       "lapTimeSeconds": null,
+      "sessionTimeSeconds": 2882.529,
       "sectorTimesSeconds": [
         null,
         null,
@@ -5473,6 +5719,7 @@
       "compound": "MEDIUM",
       "tyreLife": 1,
       "lapTimeSeconds": null,
+      "sessionTimeSeconds": 2997.683,
       "sectorTimesSeconds": [
         null,
         47.764,
@@ -5496,6 +5743,7 @@
       "compound": "MEDIUM",
       "tyreLife": 2,
       "lapTimeSeconds": null,
+      "sessionTimeSeconds": 3496.078,
       "sectorTimesSeconds": [
         35.848,
         null,
@@ -5520,6 +5768,7 @@
       "compound": "MEDIUM",
       "tyreLife": 3,
       "lapTimeSeconds": null,
+      "sessionTimeSeconds": 3614.015,
       "sectorTimesSeconds": [
         null,
         48.683,
@@ -5543,6 +5792,7 @@
       "compound": "MEDIUM",
       "tyreLife": 4,
       "lapTimeSeconds": 101.675,
+      "sessionTimeSeconds": 3715.69,
       "sectorTimesSeconds": [
         35.652,
         40.833,
@@ -5561,6 +5811,7 @@
       "compound": "MEDIUM",
       "tyreLife": 5,
       "lapTimeSeconds": 134.236,
+      "sessionTimeSeconds": 3849.926,
       "sectorTimesSeconds": [
         47.048,
         50.996,
@@ -5583,6 +5834,7 @@
       "compound": "MEDIUM",
       "tyreLife": 1,
       "lapTimeSeconds": null,
+      "sessionTimeSeconds": 4107.503,
       "sectorTimesSeconds": [
         null,
         50.52,
@@ -5605,6 +5857,7 @@
       "compound": "MEDIUM",
       "tyreLife": 2,
       "lapTimeSeconds": 118.16,
+      "sessionTimeSeconds": 4225.663,
       "sectorTimesSeconds": [
         35.841,
         43.706,
@@ -5627,6 +5880,7 @@
       "compound": "MEDIUM",
       "tyreLife": 6,
       "lapTimeSeconds": null,
+      "sessionTimeSeconds": 4841.265,
       "sectorTimesSeconds": [
         null,
         48.264,
@@ -5650,6 +5904,7 @@
       "compound": "MEDIUM",
       "tyreLife": 7,
       "lapTimeSeconds": 101.595,
+      "sessionTimeSeconds": 4942.86,
       "sectorTimesSeconds": [
         35.838,
         40.574,
@@ -5670,6 +5925,7 @@
       "compound": "MEDIUM",
       "tyreLife": 8,
       "lapTimeSeconds": null,
+      "sessionTimeSeconds": 5826.171,
       "sectorTimesSeconds": [
         null,
         null,
@@ -5694,6 +5950,7 @@
       "compound": "SOFT",
       "tyreLife": 5,
       "lapTimeSeconds": null,
+      "sessionTimeSeconds": 5956.338,
       "sectorTimesSeconds": [
         null,
         48.465,
@@ -5717,6 +5974,7 @@
       "compound": "MEDIUM",
       "tyreLife": 3,
       "lapTimeSeconds": null,
+      "sessionTimeSeconds": 6965.411,
       "sectorTimesSeconds": [
         null,
         46.398,
@@ -5739,6 +5997,7 @@
       "compound": "MEDIUM",
       "tyreLife": 4,
       "lapTimeSeconds": 101.864,
+      "sessionTimeSeconds": 7067.275,
       "sectorTimesSeconds": [
         35.337,
         41.51,
@@ -5757,6 +6016,7 @@
       "compound": "MEDIUM",
       "tyreLife": 5,
       "lapTimeSeconds": null,
+      "sessionTimeSeconds": 7213.544,
       "sectorTimesSeconds": [
         50.292,
         55.918,
@@ -5779,6 +6039,7 @@
       "compound": "SOFT",
       "tyreLife": 1,
       "lapTimeSeconds": null,
+      "sessionTimeSeconds": 166.494,
       "sectorTimesSeconds": [
         null,
         45.93,
@@ -5801,6 +6062,7 @@
       "compound": "SOFT",
       "tyreLife": 2,
       "lapTimeSeconds": 103.154,
+      "sessionTimeSeconds": 269.648,
       "sectorTimesSeconds": [
         36.208,
         41.796,
@@ -5819,6 +6081,7 @@
       "compound": "SOFT",
       "tyreLife": 3,
       "lapTimeSeconds": null,
+      "sessionTimeSeconds": 1009.795,
       "sectorTimesSeconds": [
         57.34,
         null,
@@ -5843,6 +6106,7 @@
       "compound": "MEDIUM",
       "tyreLife": 1,
       "lapTimeSeconds": null,
+      "sessionTimeSeconds": 1140.709,
       "sectorTimesSeconds": [
         null,
         49.166,
@@ -5865,6 +6129,7 @@
       "compound": "MEDIUM",
       "tyreLife": 2,
       "lapTimeSeconds": null,
+      "sessionTimeSeconds": 1703.871,
       "sectorTimesSeconds": [
         35.912,
         null,
@@ -5889,6 +6154,7 @@
       "compound": "MEDIUM",
       "tyreLife": 1,
       "lapTimeSeconds": null,
+      "sessionTimeSeconds": 1821.839,
       "sectorTimesSeconds": [
         null,
         47.393,
@@ -5911,6 +6177,7 @@
       "compound": "MEDIUM",
       "tyreLife": 2,
       "lapTimeSeconds": 124.819,
+      "sessionTimeSeconds": 1946.658,
       "sectorTimesSeconds": [
         43.781,
         54.636,
@@ -5929,6 +6196,7 @@
       "compound": "MEDIUM",
       "tyreLife": 3,
       "lapTimeSeconds": 101.656,
+      "sessionTimeSeconds": 2048.314,
       "sectorTimesSeconds": [
         35.73,
         40.984,
@@ -5947,6 +6215,7 @@
       "compound": "MEDIUM",
       "tyreLife": 4,
       "lapTimeSeconds": null,
+      "sessionTimeSeconds": 2890.114,
       "sectorTimesSeconds": [
         null,
         null,
@@ -5971,6 +6240,7 @@
       "compound": "SOFT",
       "tyreLife": 1,
       "lapTimeSeconds": null,
+      "sessionTimeSeconds": 3046.781,
       "sectorTimesSeconds": [
         null,
         48.575,
@@ -5994,6 +6264,7 @@
       "compound": "SOFT",
       "tyreLife": 2,
       "lapTimeSeconds": null,
+      "sessionTimeSeconds": 3499.074,
       "sectorTimesSeconds": [
         null,
         null,
@@ -6018,6 +6289,7 @@
       "compound": "SOFT",
       "tyreLife": 1,
       "lapTimeSeconds": null,
+      "sessionTimeSeconds": 3619.66,
       "sectorTimesSeconds": [
         null,
         47.924,
@@ -6041,6 +6313,7 @@
       "compound": "SOFT",
       "tyreLife": 2,
       "lapTimeSeconds": 101.94,
+      "sessionTimeSeconds": 3721.6,
       "sectorTimesSeconds": [
         35.618,
         41.277,
@@ -6059,6 +6332,7 @@
       "compound": "SOFT",
       "tyreLife": 3,
       "lapTimeSeconds": 137.747,
+      "sessionTimeSeconds": 3859.347,
       "sectorTimesSeconds": [
         42.207,
         48.033,
@@ -6081,6 +6355,7 @@
       "compound": "MEDIUM",
       "tyreLife": 5,
       "lapTimeSeconds": null,
+      "sessionTimeSeconds": 4088.157,
       "sectorTimesSeconds": [
         null,
         56.588,
@@ -6103,6 +6378,7 @@
       "compound": "MEDIUM",
       "tyreLife": 6,
       "lapTimeSeconds": 101.647,
+      "sessionTimeSeconds": 4189.804,
       "sectorTimesSeconds": [
         35.668,
         40.956,
@@ -6123,6 +6399,7 @@
       "compound": "MEDIUM",
       "tyreLife": 7,
       "lapTimeSeconds": 142.366,
+      "sessionTimeSeconds": 4332.17,
       "sectorTimesSeconds": [
         42.906,
         59.128,
@@ -6144,6 +6421,7 @@
       "compound": "SOFT",
       "tyreLife": 4,
       "lapTimeSeconds": null,
+      "sessionTimeSeconds": 4846.763,
       "sectorTimesSeconds": [
         null,
         47.743,
@@ -6167,6 +6445,7 @@
       "compound": "SOFT",
       "tyreLife": 5,
       "lapTimeSeconds": 102.863,
+      "sessionTimeSeconds": 4949.626,
       "sectorTimesSeconds": [
         35.953,
         41.571,
@@ -6187,6 +6466,7 @@
       "compound": "SOFT",
       "tyreLife": 6,
       "lapTimeSeconds": null,
+      "sessionTimeSeconds": 5837.228,
       "sectorTimesSeconds": [
         null,
         null,
@@ -6211,6 +6491,7 @@
       "compound": "SOFT",
       "tyreLife": 1,
       "lapTimeSeconds": null,
+      "sessionTimeSeconds": 5957.36,
       "sectorTimesSeconds": [
         null,
         47.861,
@@ -6233,6 +6514,7 @@
       "compound": "SOFT",
       "tyreLife": 2,
       "lapTimeSeconds": null,
+      "sessionTimeSeconds": 6867.03,
       "sectorTimesSeconds": [
         35.706,
         null,
@@ -6257,6 +6539,7 @@
       "compound": "SOFT",
       "tyreLife": 3,
       "lapTimeSeconds": null,
+      "sessionTimeSeconds": 6983.67,
       "sectorTimesSeconds": [
         null,
         45.269,
@@ -6279,6 +6562,7 @@
       "compound": "SOFT",
       "tyreLife": 4,
       "lapTimeSeconds": 102.372,
+      "sessionTimeSeconds": 7086.042,
       "sectorTimesSeconds": [
         35.556,
         41.066,
@@ -6297,6 +6581,7 @@
       "compound": "SOFT",
       "tyreLife": 5,
       "lapTimeSeconds": null,
+      "sessionTimeSeconds": 7231.986,
       "sectorTimesSeconds": [
         45.554,
         60.915,
@@ -6319,6 +6604,7 @@
       "compound": "SOFT",
       "tyreLife": 1,
       "lapTimeSeconds": null,
+      "sessionTimeSeconds": 255.98,
       "sectorTimesSeconds": [
         null,
         50.142,
@@ -6341,6 +6627,7 @@
       "compound": "SOFT",
       "tyreLife": 2,
       "lapTimeSeconds": 102.671,
+      "sessionTimeSeconds": 358.651,
       "sectorTimesSeconds": [
         36.291,
         41.459,
@@ -6361,6 +6648,7 @@
       "compound": "SOFT",
       "tyreLife": 3,
       "lapTimeSeconds": null,
+      "sessionTimeSeconds": 930.588,
       "sectorTimesSeconds": [
         null,
         null,
@@ -6385,6 +6673,7 @@
       "compound": "MEDIUM",
       "tyreLife": 1,
       "lapTimeSeconds": null,
+      "sessionTimeSeconds": 1049.377,
       "sectorTimesSeconds": [
         null,
         45.826,
@@ -6407,6 +6696,7 @@
       "compound": "MEDIUM",
       "tyreLife": 2,
       "lapTimeSeconds": 123.342,
+      "sessionTimeSeconds": 1172.719,
       "sectorTimesSeconds": [
         40.579,
         54.768,
@@ -6425,6 +6715,7 @@
       "compound": "MEDIUM",
       "tyreLife": 3,
       "lapTimeSeconds": null,
+      "sessionTimeSeconds": 1732.968,
       "sectorTimesSeconds": [
         null,
         null,
@@ -6449,6 +6740,7 @@
       "compound": "MEDIUM",
       "tyreLife": 4,
       "lapTimeSeconds": null,
+      "sessionTimeSeconds": 1848.426,
       "sectorTimesSeconds": [
         null,
         45.93,
@@ -6471,6 +6763,7 @@
       "compound": "MEDIUM",
       "tyreLife": 5,
       "lapTimeSeconds": 101.646,
+      "sessionTimeSeconds": 1950.072,
       "sectorTimesSeconds": [
         35.849,
         41.051,
@@ -6489,6 +6782,7 @@
       "compound": "MEDIUM",
       "tyreLife": 6,
       "lapTimeSeconds": null,
+      "sessionTimeSeconds": 3561.139,
       "sectorTimesSeconds": [
         48.314,
         53.364,
@@ -6513,6 +6807,7 @@
       "compound": "MEDIUM",
       "tyreLife": 1,
       "lapTimeSeconds": null,
+      "sessionTimeSeconds": 3670.733,
       "sectorTimesSeconds": [
         null,
         45.415,
@@ -6536,6 +6831,7 @@
       "compound": "MEDIUM",
       "tyreLife": 2,
       "lapTimeSeconds": 101.455,
+      "sessionTimeSeconds": 3772.188,
       "sectorTimesSeconds": [
         35.582,
         40.99,
@@ -6556,6 +6852,7 @@
       "compound": "MEDIUM",
       "tyreLife": 3,
       "lapTimeSeconds": 144.194,
+      "sessionTimeSeconds": 3916.382,
       "sectorTimesSeconds": [
         52.641,
         55.832,
@@ -6577,6 +6874,7 @@
       "compound": "MEDIUM",
       "tyreLife": 4,
       "lapTimeSeconds": null,
+      "sessionTimeSeconds": 4069.636,
       "sectorTimesSeconds": [
         77.427,
         49.8,
@@ -6599,6 +6897,7 @@
       "compound": "MEDIUM",
       "tyreLife": 5,
       "lapTimeSeconds": 101.723,
+      "sessionTimeSeconds": 4171.359,
       "sectorTimesSeconds": [
         35.913,
         40.827,
@@ -6619,6 +6918,7 @@
       "compound": "MEDIUM",
       "tyreLife": 6,
       "lapTimeSeconds": 133.033,
+      "sessionTimeSeconds": 4304.392,
       "sectorTimesSeconds": [
         47.87,
         51.496,
@@ -6640,6 +6940,7 @@
       "compound": "MEDIUM",
       "tyreLife": 1,
       "lapTimeSeconds": null,
+      "sessionTimeSeconds": 4851.474,
       "sectorTimesSeconds": [
         null,
         45.445,
@@ -6663,6 +6964,7 @@
       "compound": "MEDIUM",
       "tyreLife": 2,
       "lapTimeSeconds": null,
+      "sessionTimeSeconds": 5850.264,
       "sectorTimesSeconds": [
         60.455,
         50.194,
@@ -6687,6 +6989,7 @@
       "compound": "MEDIUM",
       "tyreLife": 3,
       "lapTimeSeconds": null,
+      "sessionTimeSeconds": 5972.894,
       "sectorTimesSeconds": [
         null,
         50.304,
@@ -6709,6 +7012,7 @@
       "compound": "MEDIUM",
       "tyreLife": 4,
       "lapTimeSeconds": null,
+      "sessionTimeSeconds": 6848.894,
       "sectorTimesSeconds": [
         35.691,
         null,
@@ -6733,6 +7037,7 @@
       "compound": "SOFT",
       "tyreLife": 1,
       "lapTimeSeconds": null,
+      "sessionTimeSeconds": 6958.111,
       "sectorTimesSeconds": [
         null,
         44.911,
@@ -6755,6 +7060,7 @@
       "compound": "SOFT",
       "tyreLife": 2,
       "lapTimeSeconds": 102.07,
+      "sessionTimeSeconds": 7060.181,
       "sectorTimesSeconds": [
         35.752,
         41.331,
@@ -6773,6 +7079,7 @@
       "compound": "SOFT",
       "tyreLife": 3,
       "lapTimeSeconds": null,
+      "sessionTimeSeconds": 7209.891,
       "sectorTimesSeconds": [
         53.64,
         57.203,
@@ -6795,6 +7102,7 @@
       "compound": "MEDIUM",
       "tyreLife": 1,
       "lapTimeSeconds": null,
+      "sessionTimeSeconds": 304.658,
       "sectorTimesSeconds": [
         null,
         55.405,
@@ -6818,6 +7126,7 @@
       "compound": "MEDIUM",
       "tyreLife": 2,
       "lapTimeSeconds": null,
+      "sessionTimeSeconds": 977.388,
       "sectorTimesSeconds": [
         35.993,
         41.341,
@@ -6842,6 +7151,7 @@
       "compound": "MEDIUM",
       "tyreLife": 3,
       "lapTimeSeconds": null,
+      "sessionTimeSeconds": 1093.871,
       "sectorTimesSeconds": [
         null,
         46.546,
@@ -6864,6 +7174,7 @@
       "compound": "MEDIUM",
       "tyreLife": 4,
       "lapTimeSeconds": 101.839,
+      "sessionTimeSeconds": 1195.71,
       "sectorTimesSeconds": [
         35.689,
         41.016,
@@ -6884,6 +7195,7 @@
       "compound": "MEDIUM",
       "tyreLife": 5,
       "lapTimeSeconds": null,
+      "sessionTimeSeconds": 1797.272,
       "sectorTimesSeconds": [
         null,
         null,
@@ -6908,6 +7220,7 @@
       "compound": "MEDIUM",
       "tyreLife": 6,
       "lapTimeSeconds": null,
+      "sessionTimeSeconds": 1931.98,
       "sectorTimesSeconds": [
         null,
         56.623,
@@ -6930,6 +7243,7 @@
       "compound": "MEDIUM",
       "tyreLife": 7,
       "lapTimeSeconds": 122.359,
+      "sessionTimeSeconds": 2054.339,
       "sectorTimesSeconds": [
         35.795,
         47.953,
@@ -6951,6 +7265,7 @@
       "compound": "SOFT",
       "tyreLife": 1,
       "lapTimeSeconds": null,
+      "sessionTimeSeconds": 3540.221,
       "sectorTimesSeconds": [
         null,
         50.543,
@@ -6976,6 +7291,7 @@
       "compound": "SOFT",
       "tyreLife": 2,
       "lapTimeSeconds": null,
+      "sessionTimeSeconds": 3663.329,
       "sectorTimesSeconds": [
         null,
         46.856,
@@ -6999,6 +7315,7 @@
       "compound": "SOFT",
       "tyreLife": 3,
       "lapTimeSeconds": 101.636,
+      "sessionTimeSeconds": 3764.965,
       "sectorTimesSeconds": [
         35.257,
         41.175,
@@ -7017,6 +7334,7 @@
       "compound": "SOFT",
       "tyreLife": 4,
       "lapTimeSeconds": 145.697,
+      "sessionTimeSeconds": 3910.662,
       "sectorTimesSeconds": [
         55.537,
         53.037,
@@ -7039,6 +7357,7 @@
       "compound": "SOFT",
       "tyreLife": 5,
       "lapTimeSeconds": 144.277,
+      "sessionTimeSeconds": 4054.939,
       "sectorTimesSeconds": [
         61.598,
         55.878,
@@ -7060,6 +7379,7 @@
       "compound": "SOFT",
       "tyreLife": 6,
       "lapTimeSeconds": 101.414,
+      "sessionTimeSeconds": 4156.353,
       "sectorTimesSeconds": [
         35.45,
         40.825,
@@ -7080,6 +7400,7 @@
       "compound": "SOFT",
       "tyreLife": 7,
       "lapTimeSeconds": 131.994,
+      "sessionTimeSeconds": 4288.347,
       "sectorTimesSeconds": [
         45.762,
         49.504,
@@ -7101,6 +7422,7 @@
       "compound": "MEDIUM",
       "tyreLife": 1,
       "lapTimeSeconds": null,
+      "sessionTimeSeconds": 4884.594,
       "sectorTimesSeconds": [
         null,
         45.411,
@@ -7124,6 +7446,7 @@
       "compound": "MEDIUM",
       "tyreLife": 2,
       "lapTimeSeconds": null,
+      "sessionTimeSeconds": 5866.214,
       "sectorTimesSeconds": [
         35.823,
         41.596,
@@ -7148,6 +7471,7 @@
       "compound": "SOFT",
       "tyreLife": 1,
       "lapTimeSeconds": null,
+      "sessionTimeSeconds": 5989.916,
       "sectorTimesSeconds": [
         null,
         46.827,
@@ -7170,6 +7494,7 @@
       "compound": "SOFT",
       "tyreLife": 1,
       "lapTimeSeconds": null,
+      "sessionTimeSeconds": 134.755,
       "sectorTimesSeconds": [
         null,
         46.813,
@@ -7192,6 +7517,7 @@
       "compound": "SOFT",
       "tyreLife": 2,
       "lapTimeSeconds": 103.122,
+      "sessionTimeSeconds": 237.877,
       "sectorTimesSeconds": [
         36.461,
         41.685,
@@ -7210,6 +7536,7 @@
       "compound": "SOFT",
       "tyreLife": 3,
       "lapTimeSeconds": 136.81,
+      "sessionTimeSeconds": 374.687,
       "sectorTimesSeconds": [
         58.153,
         52.312,
@@ -7230,6 +7557,7 @@
       "compound": "SOFT",
       "tyreLife": 4,
       "lapTimeSeconds": null,
+      "sessionTimeSeconds": 1124.515,
       "sectorTimesSeconds": [
         null,
         null,
@@ -7254,6 +7582,7 @@
       "compound": "SOFT",
       "tyreLife": 1,
       "lapTimeSeconds": null,
+      "sessionTimeSeconds": 1689.143,
       "sectorTimesSeconds": [
         null,
         null,
@@ -7279,6 +7608,7 @@
       "compound": "SOFT",
       "tyreLife": 1,
       "lapTimeSeconds": null,
+      "sessionTimeSeconds": 1800.609,
       "sectorTimesSeconds": [
         null,
         45.513,
@@ -7301,6 +7631,7 @@
       "compound": "SOFT",
       "tyreLife": 2,
       "lapTimeSeconds": 111.254,
+      "sessionTimeSeconds": 1911.863,
       "sectorTimesSeconds": [
         40.333,
         44.614,
@@ -7319,6 +7650,7 @@
       "compound": "SOFT",
       "tyreLife": 3,
       "lapTimeSeconds": 102.666,
+      "sessionTimeSeconds": 2014.529,
       "sectorTimesSeconds": [
         36.506,
         41.225,
@@ -7337,6 +7669,7 @@
       "compound": "SOFT",
       "tyreLife": 4,
       "lapTimeSeconds": null,
+      "sessionTimeSeconds": 2886.235,
       "sectorTimesSeconds": [
         56.816,
         null,
@@ -7361,6 +7694,7 @@
       "compound": "MEDIUM",
       "tyreLife": 1,
       "lapTimeSeconds": null,
+      "sessionTimeSeconds": 3002.947,
       "sectorTimesSeconds": [
         null,
         48.092,
@@ -7384,6 +7718,7 @@
       "compound": "MEDIUM",
       "tyreLife": 2,
       "lapTimeSeconds": null,
+      "sessionTimeSeconds": 3300.775,
       "sectorTimesSeconds": [
         null,
         null,
@@ -7427,5 +7762,13 @@
   "notes": [
     "Flagged 272 of 335 laps as outliers (out laps, safety car periods, yellow flags, etc.).",
     "Corner-level telemetry aggregation not yet implemented; arrays are placeholders."
-  ]
+  ],
+  "qualifyingBoundaries": {
+    "q1Start": 0.0,
+    "q1End": 2076.044,
+    "q2Start": 900.001,
+    "q2End": 4194.054,
+    "q3Start": 1680.018,
+    "q3End": 7061.009
+  }
 }

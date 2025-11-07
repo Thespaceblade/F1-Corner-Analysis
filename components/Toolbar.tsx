@@ -2,8 +2,9 @@
 
 import React, { useEffect, useMemo, useRef, useState } from 'react'
 import { f1Teams } from '../lib/teamData'
+import CustomSelect from './CustomSelect'
 
-const years = [2025]
+// Years provided by parent based on discovered sessions
 
 type Track = {
   id: string
@@ -26,10 +27,14 @@ type ToolbarProps = {
   }>
   selectedTrack: string
   onTrackChangeAction: (trackId: string) => void
+  years: number[]
+  selectedYear: number
+  onYearChangeAction: (year: number) => void
   selectedDrivers: string[]
   onDriversChangeAction: (drivers: string[]) => void
   selectedSession: string
   onSessionChangeAction: (sessionCode: string) => void
+  availableSessions?: string[]
 }
 
 export const sessionOptions = [
@@ -39,14 +44,28 @@ export const sessionOptions = [
   { label: 'Sprint', value: 'S' },
 ]
 
+// Tracks that have sprint weekends (Sprint Qualifying and Sprint sessions)
+const SPRINT_WEEKEND_TRACKS = new Set([
+  'china',
+  'miami',
+  'belgium', // spa
+  'united-states', // austin
+  'brazil', // sao paolo
+  'qatar', // lusail
+])
+
 export default function Toolbar({
   tracks,
   selectedTrack,
   onTrackChangeAction,
+  years,
+  selectedYear,
+  onYearChangeAction,
   selectedDrivers,
   onDriversChangeAction,
   selectedSession,
   onSessionChangeAction,
+  availableSessions = [],
 }: ToolbarProps) {
   const [openTeamId, setOpenTeamId] = useState<string | null>(null)
   const closeTimer = useRef<ReturnType<typeof setTimeout> | null>(null)
@@ -95,43 +114,72 @@ export default function Toolbar({
     }
   }
 
+  const yearOptions = useMemo(() => 
+    years.map(y => ({ value: y, label: String(y) })), 
+    [years]
+  )
+
+  const trackOptions = useMemo(() => [
+    { value: '', label: 'Select Track' },
+    ...tracks.map(track => ({ value: track.id, label: track.name }))
+  ], [tracks])
+
+  const sessionOptionsList = useMemo(() => {
+    // Show all session options by default
+    if (!selectedTrack || availableSessions.length === 0) {
+      return sessionOptions.map(option => ({ value: option.value, label: option.label }))
+    }
+    
+    // Check if this is a known sprint weekend track
+    const isSprintWeekend = SPRINT_WEEKEND_TRACKS.has(selectedTrack)
+    
+    // When we have confirmed session data for a track:
+    const hasQualifyingOrRace = availableSessions.some(s => s === 'Q' || s === 'R')
+    const hasSprint = availableSessions.some(s => s === 'SQ' || s === 'S')
+    
+    if (isSprintWeekend) {
+      // Known sprint weekend - always show sprint options even if data not fetched yet
+      return sessionOptions.map(option => ({ value: option.value, label: option.label }))
+    }
+    
+    if (hasQualifyingOrRace && !hasSprint) {
+      // We have race data but no sprint data - this race didn't have sprints
+      return sessionOptions
+        .filter(option => option.value !== 'SQ' && option.value !== 'S')
+        .map(option => ({ value: option.value, label: option.label }))
+    }
+    
+    // Show all options (either we have sprint data, or data is incomplete)
+    return sessionOptions.map(option => ({ value: option.value, label: option.label }))
+  }, [availableSessions, selectedTrack])
+
   return (
     <div className="panel p-3 flex flex-col sm:flex-row sm:items-center gap-3">
       <div className="flex items-center gap-3">
-        <select 
-          className="input-slim min-w-[120px]"
-          value={2025}
-          disabled
-        >
-          {years.map(y => (
-            <option key={y} value={y}>{y}</option>
-          ))}
-        </select>
+        <CustomSelect
+          options={yearOptions}
+          value={selectedYear}
+          onChange={(val) => onYearChangeAction(Number(val))}
+          className="w-[100px]"
+          minWidth="100px"
+        />
         
-        <select 
-          className="input-slim min-w-[240px]"
+        <CustomSelect
+          options={trackOptions}
           value={selectedTrack}
-          onChange={e => onTrackChangeAction(e.target.value)}
-        >
-          <option value="">Select Track</option>
-          {tracks.map(track => (
-            <option key={track.id} value={track.id}>
-              {track.name}
-            </option>
-          ))}
-        </select>
+          onChange={(val) => onTrackChangeAction(String(val))}
+          placeholder="Select Track"
+          className="flex-1"
+          minWidth="240px"
+        />
 
-        <select
-          className="input-slim min-w-[180px]"
+        <CustomSelect
+          options={sessionOptionsList}
           value={selectedSession}
-          onChange={e => onSessionChangeAction(e.target.value)}
-        >
-          {sessionOptions.map(option => (
-            <option key={option.value} value={option.value}>
-              {option.label}
-            </option>
-          ))}
-        </select>
+          onChange={(val) => onSessionChangeAction(String(val))}
+          className="flex-1"
+          minWidth="180px"
+        />
       </div>
 
       <div className="flex-1 flex items-center justify-end gap-2 flex-wrap">

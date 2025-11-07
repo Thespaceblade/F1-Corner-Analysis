@@ -1,0 +1,88 @@
+import { NextResponse } from 'next/server'
+import { promises as fs } from 'fs'
+import path from 'path'
+import { getDb, isDatabaseEnabled } from '../../../../lib/db'
+
+type SessionIndex = {
+  years: Record<string, {
+    rounds: Array<{ id: string, sessions: string[] }>
+  }>
+}
+
+async function exists(filePath: string): Promise<boolean> {
+  try {
+    await fs.access(filePath)
+    return true
+  } catch {
+    return false
+  }
+}
+
+export async function GET() {
+  const index: SessionIndex = { years: {} }
+
+  try {
+    if (isDatabaseEnabled()) {
+      const sql = getDb()
+      const rows = await sql`select distinct year, round_slug, session_code from sessions order by year, round_slug, session_code`
+      for (const row of rows as any[]) {
+        const y = String(row.year)
+        if (!index.years[y]) index.years[y] = { rounds: [] }
+        const entry = index.years[y]
+        let round = entry.rounds.find(r => r.id === row.round_slug)
+        if (!round) {
+          round = { id: row.round_slug as string, sessions: [] }
+          entry.rounds.push(round)
+        }
+        if (!round.sessions.includes(row.session_code)) {
+          round.sessions.push(row.session_code)
+        }
+      }
+      // sort rounds and sessions
+      for (const y of Object.keys(index.years)) {
+        index.years[y].rounds.sort((a, b) => a.id.localeCompare(b.id))
+        index.years[y].rounds.forEach(r => r.sessions.sort())
+      }
+      return NextResponse.json(index)
+    }
+
+    const root = path.join(process.cwd(), 'public', 'data', 'sessions')
+    const years = await fs.readdir(root, { withFileTypes: true })
+    for (const yearDir of years) {
+      if (!yearDir.isDirectory()) continue
+      const year = yearDir.name
+      const yearPath = path.join(root, year)
+      const rounds: Array<{ id: string, sessions: string[] }> = []
+
+      const roundDirs = await fs.readdir(yearPath, { withFileTypes: true })
+      for (const rd of roundDirs) {
+        if (!rd.isDirectory()) continue
+        const roundId = rd.name
+        const roundPath = path.join(yearPath, roundId)
+        const sessionDirs = await fs.readdir(roundPath, { withFileTypes: true })
+        const sessions: string[] = []
+        for (const sd of sessionDirs) {
+          if (!sd.isDirectory()) continue
+          const sessionCode = sd.name
+          const sessionJson = path.join(roundPath, sessionCode, 'session.json')
+          if (await exists(sessionJson)) {
+            sessions.push(sessionCode)
+          }
+        }
+        if (sessions.length) {
+          rounds.push({ id: roundId, sessions: sessions.sort() })
+        }
+      }
+
+      if (rounds.length) {
+        index.years[year] = { rounds: rounds.sort((a, b) => a.id.localeCompare(b.id)) }
+      }
+    }
+
+    return NextResponse.json(index)
+  } catch (error) {
+    return NextResponse.json({ error: 'Failed to scan sessions', details: error instanceof Error ? error.message : String(error) }, { status: 500 })
+  }
+}
+
+

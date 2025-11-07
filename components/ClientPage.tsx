@@ -32,6 +32,12 @@ type TrackData = {
     x: number
     y: number
   }>
+  coordinates?: {
+    latitude: number
+    longitude: number
+  }
+  city?: string
+  country?: string
 }
 
 type TracksData = {
@@ -54,13 +60,58 @@ export default function ClientPage(){
     fetch('/data/tracks.json').then(r => r.json()).then(setTrackData)
   }, [])
 
+  const [selectedYear, setSelectedYear] = useState<number>(new Date().getFullYear())
+  const [availableYears, setAvailableYears] = useState<number[]>([])
+  const [availableRoundsByYear, setAvailableRoundsByYear] = useState<Record<string, string[]>>({})
+  const [sessionsByRound, setSessionsByRound] = useState<Record<string, Record<string, string[]>>>({})
   const [calendarData, setCalendarData] = useState<Calendar | null>(null)
-  const [selectedYear, setSelectedYear] = useState<number>(2025)
 
   useEffect(() => {
-    // Load calendar data
-    fetch('/data/calendar2025.json').then(r => r.json()).then(setCalendarData)
+    // Discover available sessions (years/rounds) via server-side index
+    fetch('/api/sessions/index')
+      .then(r => r.json())
+      .then((idx) => {
+        const years = Object.keys(idx?.years ?? {}).map(Number).sort((a,b) => a - b)
+        setAvailableYears(years)
+        if (years.length) {
+          const latest = years[years.length - 1]
+          setSelectedYear(latest)
+        }
+
+        const map: Record<string, string[]> = {}
+        const sessionsMap: Record<string, Record<string, string[]>> = {}
+        for (const [year, payload] of Object.entries(idx?.years ?? {})) {
+          const rounds = (payload as any)?.rounds
+          map[year] = Array.isArray(rounds) ? rounds.map((r: any) => r.id) : []
+          
+          // Store sessions per round per year
+          sessionsMap[year] = {}
+          if (Array.isArray(rounds)) {
+            for (const round of rounds) {
+              if (round.id && Array.isArray(round.sessions)) {
+                sessionsMap[year][round.id] = round.sessions
+              }
+            }
+          }
+        }
+        setAvailableRoundsByYear(map)
+        setSessionsByRound(sessionsMap)
+      })
+      .catch(() => {
+        // leave empty on failure
+      })
   }, [])
+
+  useEffect(() => {
+    // Load calendar data for the selected year to get round ordering
+    fetch(`/data/calendar${selectedYear}.json`)
+      .then(r => r.json())
+      .then(setCalendarData)
+      .catch(() => {
+        // If calendar file doesn't exist for this year, that's okay
+        setCalendarData(null)
+      })
+  }, [selectedYear])
 
   useEffect(() => {
     if (!selectedTrack) {
@@ -99,18 +150,79 @@ export default function ClientPage(){
   }, [selectedTrack, selectedSession, selectedDrivers, selectedYear])
 
   const currentTrack = trackData?.tracks[selectedTrack]
-  const currentCalendarTrack = calendarData?.rounds.find(t => t.id === selectedTrack)
+  
+  // Get available sessions for the selected track
+  const availableSessions = useMemo(() => {
+    if (!selectedTrack || !selectedYear) return []
+    const yearSessions = sessionsByRound[String(selectedYear)]
+    if (!yearSessions) return []
+    return yearSessions[selectedTrack] ?? []
+  }, [selectedTrack, selectedYear, sessionsByRound])
+
+  // Reset selected session if it's not available for the selected track
+  useEffect(() => {
+    if (selectedTrack && availableSessions.length > 0) {
+      if (!availableSessions.includes(selectedSession)) {
+        // Reset to first available session (prefer Q, then R, then first available)
+        const preferredOrder = ['Q', 'R', 'SQ', 'S']
+        const preferred = preferredOrder.find(s => availableSessions.includes(s))
+        const newSession = preferred || availableSessions[0]
+        if (newSession !== selectedSession) {
+          setSelectedSession(newSession)
+        }
+      }
+    }
+  }, [selectedTrack, availableSessions, selectedSession])
+
   const sessionLabel = useMemo(() => {
     const found = sessionOptions.find(option => option.value === selectedSession)
     return found?.label ?? selectedSession
   }, [selectedSession])
 
-  if(!trackData || !calendarData) return <div>Loading...</div>
+  const roundIds = availableRoundsByYear[String(selectedYear)] ?? []
+  
+  // Create a map of round ID to round number from calendar data for sorting
+  const roundNumberMap = useMemo(() => {
+    if (!calendarData?.rounds) return new Map<string, number>()
+    const map = new Map<string, number>()
+    calendarData.rounds.forEach(round => {
+      map.set(round.id, round.round)
+    })
+    return map
+  }, [calendarData])
 
-  const trackList = calendarData.rounds.map(round => ({
-    id: round.id,
-    name: round.name
-  }))
+  const trackList = useMemo(() => {
+    if (!trackData) return []
+    const tracks = roundIds
+      .filter(id => !!trackData.tracks[id])
+      .map(id => {
+        const trackInfo = trackData.tracks[id]
+        const calendarRound = calendarData?.rounds.find(round => round.id === id)
+        return {
+          id, 
+          name: trackInfo.name,
+          coordinates: trackInfo.coordinates ? {
+            ...trackInfo.coordinates,
+            city: trackInfo.city,
+            country: trackInfo.country
+          } : undefined,
+          date: calendarRound?.date
+        }
+      })
+    
+    // Sort by round number if calendar data is available, otherwise keep original order
+    if (roundNumberMap.size > 0) {
+      tracks.sort((a, b) => {
+        const roundA = roundNumberMap.get(a.id) ?? 999
+        const roundB = roundNumberMap.get(b.id) ?? 999
+        return roundA - roundB
+      })
+    }
+    
+    return tracks
+  }, [roundIds, trackData, calendarData, roundNumberMap])
+
+  if(!trackData || !availableYears.length) return <div>Loading...</div>
 
   return (
     <main className="max-w-6xl mx-auto px-4">
@@ -137,13 +249,20 @@ export default function ClientPage(){
         tracks={trackList}
         selectedTrack={selectedTrack}
         onTrackChangeAction={setSelectedTrack}
+        years={availableYears}
+        selectedYear={selectedYear}
+        onYearChangeAction={(y) => {
+          setSelectedYear(y)
+          setSelectedTrack('')
+        }}
         selectedDrivers={selectedDrivers}
         onDriversChangeAction={setSelectedDrivers}
         selectedSession={selectedSession}
         onSessionChangeAction={setSelectedSession}
+        availableSessions={availableSessions}
       />
 
-      {currentTrack && currentCalendarTrack && (
+      {currentTrack && (
         <>
           <div className="mt-6 grid lg:grid-cols-2 gap-6">
             <div className="panel p-4">
@@ -153,12 +272,8 @@ export default function ClientPage(){
               />
             </div>
             <div className="panel p-4">
-              <div className="text-lg font-bold">
-                {currentCalendarTrack.officialName}
-              </div>
-              <div className="text-gray-600">
-                {currentCalendarTrack.date}
-              </div>
+              <div className="text-lg font-bold">{trackData.tracks[selectedTrack]?.name}</div>
+              <div className="text-gray-600">{selectedYear}</div>
               <div className="mt-2 text-sm text-gray-400">
                 Session: {sessionLabel}
               </div>

@@ -1,0 +1,16 @@
+{
+  "meta": {
+    "year": 2025,
+    "round": "italy",
+    "session": "S",
+    "generatedAt": "2025-11-06T22:46:19.929295+00:00",
+    "requestedDrivers": null,
+    "status": "error"
+  },
+  "drivers": {},
+  "laps": [],
+  "corners": {},
+  "notes": [
+    "ValueError: Session type 'S' does not exist for this event"
+  ]
+}
