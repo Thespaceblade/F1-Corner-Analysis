@@ -21,7 +21,6 @@ const svgLoaders: Record<string, () => Promise<SvgModule>> = {
   'monaco.svg': () => import('../public/Tracks/monaco.svg?raw'),
   'monza.svg': () => import('../public/Tracks/monza.svg?raw'),
   'netherlands.svg': () => import('../public/Tracks/netherlands.svg?raw'),
-  'portugal.svg': () => import('../public/Tracks/portugal.svg?raw'),
   'qatar.svg': () => import('../public/Tracks/qatar.svg?raw'),
   'saudi_arabia.svg': () => import('../public/Tracks/saudi_arabia.svg?raw'),
   'silverstone.svg': () => import('../public/Tracks/silverstone.svg?raw'),

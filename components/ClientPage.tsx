@@ -197,16 +197,9 @@ export default function ClientPage(){
       .filter(id => !!trackData.tracks[id])
       .map(id => {
         const trackInfo = trackData.tracks[id]
-        const calendarRound = calendarData?.rounds.find(round => round.id === id)
         return {
-          id, 
+          id,
           name: trackInfo.name,
-          coordinates: trackInfo.coordinates ? {
-            ...trackInfo.coordinates,
-            city: trackInfo.city,
-            country: trackInfo.country
-          } : undefined,
-          date: calendarRound?.date
         }
       })
     
@@ -220,7 +213,7 @@ export default function ClientPage(){
     }
     
     return tracks
-  }, [roundIds, trackData, calendarData, roundNumberMap])
+  }, [roundIds, trackData, roundNumberMap])
 
   if(!trackData || !availableYears.length) return <div>Loading...</div>
 

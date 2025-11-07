@@ -6,20 +6,6 @@ import CustomSelect from './CustomSelect'
 
 // Years provided by parent based on discovered sessions
 
-type Track = {
-  id: string
-  name: string
-  location: string
-  date: string
-  officialName: string
-  round: number
-}
-
-type Calendar = {
-  year: number
-  rounds: Track[]
-}
-
 type ToolbarProps = {
   tracks: Array<{
     id: string
