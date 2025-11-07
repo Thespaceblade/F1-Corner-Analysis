@@ -285,9 +285,6 @@ export default function GlobeTrackSelector({
             onPointClick={handleMarkerClick}
             onPointHover={handleMarkerHover}
             pointAltitude={0}
-            pointLabelColor={() => '#ffffff'}
-            pointLabelBgColor={() => 'rgba(0, 0, 0, 0.75)'}
-            pointLabelPixelOffset={() => [0, -12]}
             animateIn={true}
             enablePointerInteraction={true}
             showAtmosphere={true}
