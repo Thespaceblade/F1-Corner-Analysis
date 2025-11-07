@@ -290,7 +290,6 @@ export default function GlobeTrackSelector({
             showAtmosphere={true}
             atmosphereColor="#3b82f6"
             atmosphereAltitude={0.12}
-            transitionDuration={300}
           />
         </div>
       </div>
