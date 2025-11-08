@@ -11,6 +11,14 @@ A web application for analyzing Formula 1 corner telemetry data. This project pr
   - Braking and acceleration zones
   - Track corner matching
 - **Track Visualization**: SVG track layouts with corner markers and telemetry overlays
+  - Interactive corner performance overlays with color-coded metrics
+  - Hover tooltips showing detailed corner statistics
+  - Clickable corners for detailed analysis
+- **Corner Performance Analysis**: Advanced corner-by-corner analysis tools
+  - Corner performance overlay with speed differentials
+  - Aggregated corner metrics (average, best times, lap counts)
+  - Corner delta charts comparing driver performance
+  - Visual corner indicators on track SVG
 - **Driver Comparison Tools**: Compare lap times, sector times, and corner performance across drivers
 - **Session Data Management**: Support for Practice, Qualifying, Sprint Qualifying, and Race sessions
 - **Real-time Telemetry Processing**: FastF1 integration for automatic data fetching and processing
@@ -26,7 +34,7 @@ A web application for analyzing Formula 1 corner telemetry data. This project pr
 ### 1. Clone the repository
 
 ```bash
-git clone <repository-url>
+git clone https://github.com/Thespaceblade/F1-Corner-Analysis.git
 cd F1-Corner-Analysis
 ```
 
@@ -124,12 +132,20 @@ F1-Corner-Analysis/
 │   └── layout.tsx         # Root layout
 ├── components/            # React components
 │   ├── GlobeTrackSelector.tsx  # 3D globe track selector
-│   ├── CornerTable.tsx    # Corner analysis table
+│   ├── TrackPanel.tsx     # Track SVG visualization with corner overlays
+│   ├── CornerTable.tsx    # Corner analysis table with aggregated metrics
+│   ├── CornerPerformanceOverlay.tsx  # Interactive corner performance visualization
+│   ├── CornerTooltip.tsx  # Detailed corner statistics tooltip
+│   ├── CornerDeltaChart.tsx  # Corner-by-corner delta comparison charts
 │   ├── ChartPanel.tsx     # Data visualization panels
+│   ├── ClientPage.tsx     # Main client-side page component
 │   └── ...
 ├── lib/                   # Utility libraries
 │   ├── db.ts             # Database client (Neon)
 │   ├── sessionDataClient.ts  # Session data fetching
+│   ├── cornerPerformanceAggregator.ts  # Corner performance data aggregation
+│   ├── cornerPositionCalculator.ts     # Corner position calculations
+│   ├── trackSvgLoader.ts # Track SVG loading utilities
 │   └── ...
 ├── scripts/               # Python data processing scripts
 │   ├── fastf1_pipeline/  # Core pipeline modules
@@ -237,11 +253,67 @@ npm install react-globe.gl
 
 The component uses dynamic imports to avoid SSR issues, so it should work in both development and production builds.
 
+## Features in Detail
+
+### Corner Performance Visualization
+
+The application provides detailed corner-by-corner analysis:
+
+- **Performance Overlay**: Visual indicators on track SVG showing corner performance metrics
+- **Corner Tooltips**: Hover over corners to see detailed statistics including:
+  - Average entry/apex/exit speeds
+  - Best corner time and lap number
+  - Number of valid laps analyzed
+  - Driver comparisons
+- **Corner Table**: Aggregated corner metrics table showing:
+  - Corner type (slow/medium/fast)
+  - Average speeds per driver
+  - Best corner times
+  - Lap counts
+
+### Data Visualization
+
+- **Lap Time Charts**: Interactive charts for race and qualifying sessions
+- **Corner Delta Charts**: Visual comparison of corner performance between drivers
+- **Track Overlays**: Real-time telemetry overlays on track SVG
+- **Driver Selection**: Team-based and individual driver filtering
+
+## Tech Stack
+
+- **Frontend**: Next.js 13, React 18, TypeScript
+- **Visualization**: Recharts, react-globe.gl
+- **Data Processing**: Python 3.8+, FastF1, Pandas, NumPy
+- **Database**: Neon (PostgreSQL) with JSON file fallback
+- **Styling**: Tailwind CSS
+- **Deployment**: Vercel
+
 ## License
 
-[Add your license information here]
+MIT License - see [LICENSE](LICENSE) file for details
 
 ## Contributing
 
-[Add contribution guidelines if applicable]
+Contributions are welcome! Please feel free to submit a Pull Request.
+
+### Development Workflow
+
+1. Fork the repository
+2. Create a feature branch (`git checkout -b feature/amazing-feature`)
+3. Commit your changes (`git commit -m 'Add some amazing feature'`)
+4. Push to the branch (`git push origin feature/amazing-feature`)
+5. Open a Pull Request
+
+### Code Style
+
+- TypeScript: Follow Next.js and React best practices
+- Python: Follow PEP 8 conventions
+- Use meaningful commit messages
+- Add comments for complex logic
+- Update documentation for new features
+
+## Acknowledgments
+
+- [FastF1](https://github.com/theOehrly/Fast-F1) for F1 data access
+- [react-globe.gl](https://github.com/vasturiano/react-globe.gl) for 3D globe visualization
+- Formula 1 for providing official data through their API
 

@@ -1,7 +1,24 @@
 {
   "name": "f1-corner-analysis-ui",
   "version": "0.1.0",
+  "description": "A web application for analyzing Formula 1 corner telemetry data with interactive visualizations and detailed corner-by-corner performance metrics",
   "private": true,
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Thespaceblade/F1-Corner-Analysis.git"
+  },
+  "keywords": [
+    "f1",
+    "formula1",
+    "telemetry",
+    "corner-analysis",
+    "racing",
+    "data-visualization",
+    "nextjs",
+    "fastf1"
+  ],
+  "author": "Thespaceblade",
+  "license": "MIT",
   "scripts": {
     "dev": "next dev",
     "build": "next build",
