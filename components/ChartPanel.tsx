@@ -26,6 +26,18 @@ type ChartPanelProps = {
   selectedDrivers: string[]
   loading: boolean
   showOutliers: boolean
+  cornerFilter: {
+    type: 'all' | 'qualifying-segment' | 'lap' | 'average'
+    segment?: 'Q1' | 'Q2' | 'Q3'
+    lapNumber?: number
+  }
+  onCornerFilterChange: (filter: {
+    type: 'all' | 'qualifying-segment' | 'lap' | 'average'
+    segment?: 'Q1' | 'Q2' | 'Q3'
+    lapNumber?: number
+  }) => void
+  isQualifyingSession: boolean
+  isRaceSession: boolean
 }
 
 type ChartDatum = {
@@ -222,7 +234,173 @@ const computeYDomain = (data: ChartDatum[], drivers: string[]): [number, number]
   return [Math.max(min - padding, 0), max + padding]
 }
 
-export default function ChartPanel({ sessionData, selectedDrivers, loading, showOutliers }: ChartPanelProps) {
+type RacePointEvent = {
+  lapNumber: number
+  type: 'race-start' | 'pit-stop' | 'yellow-flag' | 'red-flag'
+  driver?: string
+}
+
+type RacePeriodEvent = {
+  startLap: number
+  endLap: number
+  type: 'safety-car' | 'virtual-safety-car'
+}
+
+type RaceEvents = {
+  pointEvents: RacePointEvent[]
+  periodEvents: RacePeriodEvent[]
+}
+
+const extractRaceEvents = (
+  sessionData: SessionPayload | null,
+  drivers: string[],
+  includeOutliers: boolean
+): RaceEvents => {
+  if (!sessionData || !drivers.length) {
+    return { pointEvents: [], periodEvents: [] }
+  }
+
+  const pointEvents: RacePointEvent[] = []
+  const periodEvents: RacePeriodEvent[] = []
+  const driversSet = new Set(drivers.map(code => code.toUpperCase()))
+  
+  // Track last stint per driver to detect pit stops
+  const lastStintByDriver = new Map<string, number | null>()
+  
+  // Track which laps have which flags for point events
+  const redFlagLaps = new Set<number>()
+  const yellowFlagLaps = new Set<number>()
+  
+  // Track safety car and VSC periods
+  // Use a Map to track the highest priority flag per lap (SC > VSC)
+  const scLapsByFlag = new Map<number, 'safety-car' | 'virtual-safety-car'>()
+  
+  // Race start (lap 1)
+  const hasRaceStart = sessionData.laps.some(
+    lap => lap.lapNumber === 1 && driversSet.has(lap.driver?.toUpperCase() ?? '')
+  )
+  if (hasRaceStart) {
+    pointEvents.push({ lapNumber: 1, type: 'race-start' })
+  }
+
+  // Sort laps by lap number to process in order
+  const sortedLaps = [...sessionData.laps].sort((a, b) => {
+    const aNum = a.lapNumber ?? 0
+    const bNum = b.lapNumber ?? 0
+    return aNum - bNum
+  })
+
+  // First pass: collect all flag information from selected drivers
+  // Note: For SC/VSC periods, we look at ALL laps (not just selected drivers) to get complete race-wide periods
+  const allLapsForSC = includeOutliers 
+    ? sessionData.laps 
+    : sessionData.laps.filter(lap => lap.isValid !== false)
+
+  // Track SC/VSC from all drivers to get complete periods
+  for (const lap of allLapsForSC) {
+    if (!lap || lap.lapNumber == null) continue
+    const lapNumber = Number(lap.lapNumber)
+    if (Number.isNaN(lapNumber)) continue
+    
+    const flags = lap.flags || []
+    
+    // Track safety car and VSC periods (period events) - SC takes priority over VSC
+    if (flags.includes('safety-car')) {
+      scLapsByFlag.set(lapNumber, 'safety-car')
+    } else if (flags.includes('virtual-safety-car') && !scLapsByFlag.has(lapNumber)) {
+      // Only set VSC if SC hasn't been set for this lap
+      scLapsByFlag.set(lapNumber, 'virtual-safety-car')
+    }
+  }
+
+  // Second pass: collect point events from selected drivers only
+  for (const lap of sortedLaps) {
+    if (!lap || lap.lapNumber == null) continue
+    if (!includeOutliers && lap.isValid === false) continue
+    
+    const normalizedDriver = lap.driver?.toUpperCase()
+    if (!driversSet.has(normalizedDriver ?? '')) continue
+
+    const lapNumber = Number(lap.lapNumber)
+    if (Number.isNaN(lapNumber)) continue
+
+    const flags = lap.flags || []
+    
+    // Track red flags and yellow flags (point events) - only for selected drivers
+    if (flags.includes('red-flag')) {
+      redFlagLaps.add(lapNumber)
+    }
+    // Only track yellow flags if they're not part of SC/VSC (those are shown as periods)
+    if (flags.includes('yellow-flag') && !flags.includes('safety-car') && !flags.includes('virtual-safety-car')) {
+      yellowFlagLaps.add(lapNumber)
+    }
+
+    // Check for pit stops (stint change) - only for selected drivers
+    if (normalizedDriver && lap.stint != null) {
+      const lastStint = lastStintByDriver.get(normalizedDriver)
+      if (lastStint != null && lastStint !== lap.stint && lapNumber > 1) {
+        pointEvents.push({
+          lapNumber,
+          type: 'pit-stop',
+          driver: normalizedDriver,
+        })
+      }
+      lastStintByDriver.set(normalizedDriver, lap.stint)
+    }
+  }
+
+  // Convert red flag and yellow flag laps to point events
+  for (const lapNumber of redFlagLaps) {
+    pointEvents.push({ lapNumber, type: 'red-flag' })
+  }
+  for (const lapNumber of yellowFlagLaps) {
+    pointEvents.push({ lapNumber, type: 'yellow-flag' })
+  }
+
+  // Convert safety car/VSC laps to periods
+  // Group consecutive laps with the same flag type
+  const scLaps = Array.from(scLapsByFlag.entries())
+    .sort((a, b) => a[0] - b[0])
+  
+  if (scLaps.length > 0) {
+    let currentPeriod: { startLap: number; endLap: number; type: 'safety-car' | 'virtual-safety-car' } | null = null
+    
+    for (const [lapNumber, type] of scLaps) {
+      if (!currentPeriod) {
+        // Start a new period
+        currentPeriod = { startLap: lapNumber, endLap: lapNumber, type }
+      } else if (currentPeriod.type === type && lapNumber === currentPeriod.endLap + 1) {
+        // Continue the current period (consecutive lap with same type)
+        currentPeriod.endLap = lapNumber
+      } else {
+        // End current period (either type changed or gap in laps) and start a new one
+        periodEvents.push(currentPeriod)
+        currentPeriod = { startLap: lapNumber, endLap: lapNumber, type }
+      }
+    }
+    
+    // Don't forget the last period
+    if (currentPeriod) {
+      periodEvents.push(currentPeriod)
+    }
+  }
+
+  // Sort point events by lap number
+  pointEvents.sort((a, b) => a.lapNumber - b.lapNumber)
+
+  return { pointEvents, periodEvents }
+}
+
+export default function ChartPanel({ 
+  sessionData, 
+  selectedDrivers, 
+  loading, 
+  showOutliers,
+  cornerFilter,
+  onCornerFilterChange,
+  isQualifyingSession,
+  isRaceSession,
+}: ChartPanelProps) {
   // Toggle for showing all valid times vs only fastest per driver (qualifying only)
   const [showAllValidTimes, setShowAllValidTimes] = useState(false)
   const normalizedSelectedDrivers = useMemo(
@@ -247,13 +425,6 @@ export default function ChartPanel({ sessionData, selectedDrivers, loading, show
     return availableDrivers.slice(0, 4)
   }, [availableDrivers, normalizedSelectedDrivers, sessionData])
 
-  // Check if this is a qualifying or sprint qualifying session
-  const isQualifyingSession = useMemo(() => {
-    if (!sessionData) return false
-    const sessionCode = sessionData.meta?.session?.toUpperCase()
-    return sessionCode === 'Q' || sessionCode === 'SQ'
-  }, [sessionData])
-
   const chartData = useMemo(
     () => buildChartData(sessionData, driversToDisplay, showOutliers),
     [sessionData, driversToDisplay, showOutliers]
@@ -268,6 +439,16 @@ export default function ChartPanel({ sessionData, selectedDrivers, loading, show
     () => buildCompoundMap(sessionData, driversToDisplay, showOutliers),
     [sessionData, driversToDisplay, showOutliers]
   )
+
+  // Extract race events for markers (only show when outliers are visible)
+  // We extract events from all laps (including outliers) to get accurate event detection
+  const raceEvents = useMemo(() => {
+    if (!isRaceSession || !showOutliers) {
+      return { pointEvents: [], periodEvents: [] }
+    }
+    // Always extract from all laps (pass true to include outliers) to detect events accurately
+    return extractRaceEvents(sessionData, driversToDisplay, true)
+  }, [sessionData, driversToDisplay, showOutliers, isRaceSession])
 
   const yDomain = useMemo(() => {
     if (isQualifyingSession && qualifyingData.length > 0) {
@@ -714,6 +895,23 @@ export default function ChartPanel({ sessionData, selectedDrivers, loading, show
     return filtered
   }, [qualifyingByDriver, isQualifyingSession, showAllValidTimes])
 
+  // Get available lap numbers for race sessions
+  const availableLapNumbers = useMemo(() => {
+    if (!isRaceSession || !sessionData) return []
+    const lapNumbers = new Set<number>()
+    sessionData.laps.forEach(lap => {
+      if (lap.lapNumber !== null && lap.isValid !== false) {
+        lapNumbers.add(lap.lapNumber)
+      }
+    })
+    return Array.from(lapNumbers).sort((a, b) => a - b)
+  }, [isRaceSession, sessionData])
+
+  // Check if qualifying boundaries are available
+  const hasQualifyingBoundaries = useMemo(() => {
+    return isQualifyingSession && sessionData?.qualifyingBoundaries !== undefined
+  }, [isQualifyingSession, sessionData])
+
   return (
     <div className="mt-6 panel p-4">
       <div className="mb-4 flex items-center justify-between gap-3">
@@ -744,6 +942,105 @@ export default function ChartPanel({ sessionData, selectedDrivers, loading, show
           </div>
         )}
         </div>
+      </div>
+
+      {/* Corner Performance Filter Controls */}
+      <div className="mb-4 flex flex-wrap items-center gap-3 p-3 rounded border border-gray-700 bg-gray-800/50">
+        <div className="text-xs font-semibold text-gray-300 uppercase tracking-wide">
+          Corner Analysis:
+        </div>
+        
+        {isQualifyingSession && hasQualifyingBoundaries && (
+          <div className="flex items-center gap-2">
+            <span className="text-xs text-gray-400">Show fastest lap from:</span>
+            <div className="flex gap-1">
+              {(['Q1', 'Q2', 'Q3'] as const).map((segment) => {
+                const isSelected = cornerFilter.type === 'qualifying-segment' && cornerFilter.segment === segment
+                return (
+                  <button
+                    key={segment}
+                    type="button"
+                    onClick={() => {
+                      onCornerFilterChange({
+                        type: 'qualifying-segment',
+                        segment,
+                      })
+                    }}
+                    className={`px-3 py-1 text-xs font-medium rounded transition ${
+                      isSelected
+                        ? 'bg-accent text-white border border-accent'
+                        : 'bg-gray-700 text-gray-300 border border-gray-600 hover:bg-gray-600 hover:border-gray-500'
+                    }`}
+                  >
+                    {segment}
+                  </button>
+                )
+              })}
+              <button
+                type="button"
+                onClick={() => {
+                  onCornerFilterChange({ type: 'all' })
+                }}
+                className={`px-3 py-1 text-xs font-medium rounded transition ${
+                  cornerFilter.type === 'all'
+                    ? 'bg-accent text-white border border-accent'
+                    : 'bg-gray-700 text-gray-300 border border-gray-600 hover:bg-gray-600 hover:border-gray-500'
+                }`}
+              >
+                All
+              </button>
+            </div>
+          </div>
+        )}
+        
+        {isRaceSession && (
+          <div className="flex items-center gap-2 flex-wrap">
+            <span className="text-xs text-gray-400">Show corners from:</span>
+            <div className="flex gap-1 flex-wrap">
+              <button
+                type="button"
+                onClick={() => {
+                  onCornerFilterChange({ type: 'average' })
+                }}
+                className={`px-3 py-1 text-xs font-medium rounded transition ${
+                  cornerFilter.type === 'average'
+                    ? 'bg-accent text-white border border-accent'
+                    : 'bg-gray-700 text-gray-300 border border-gray-600 hover:bg-gray-600 hover:border-gray-500'
+                }`}
+              >
+                Average
+              </button>
+              {availableLapNumbers.length > 0 && (
+                <select
+                  value={cornerFilter.type === 'lap' ? cornerFilter.lapNumber || '' : ''}
+                  onChange={(e) => {
+                    const lapNumber = parseInt(e.target.value, 10)
+                    if (!isNaN(lapNumber)) {
+                      onCornerFilterChange({
+                        type: 'lap',
+                        lapNumber,
+                      })
+                    }
+                  }}
+                  className="px-3 py-1 text-xs font-medium rounded bg-gray-700 text-gray-300 border border-gray-600 hover:bg-gray-600 hover:border-gray-500 focus:outline-none focus:ring-2 focus:ring-accent focus:border-accent"
+                >
+                  <option value="">Select Lap</option>
+                  {availableLapNumbers.map((lapNum) => (
+                    <option key={lapNum} value={lapNum}>
+                      Lap {lapNum}
+                    </option>
+                  ))}
+                </select>
+              )}
+            </div>
+          </div>
+        )}
+        
+        {!isQualifyingSession && !isRaceSession && (
+          <div className="text-xs text-gray-500">
+            Corner analysis available for qualifying and race sessions
+          </div>
+        )}
       </div>
 
       {loading && (
@@ -1003,6 +1300,87 @@ export default function ChartPanel({ sessionData, selectedDrivers, loading, show
               />
               <Tooltip content={<ChartTooltip compoundMap={compoundMap} />} />
               <Legend />
+              {/* Race Period Events - Highlighted areas for Safety Car and VSC */}
+              {raceEvents.periodEvents.map((period, idx) => {
+                const getPeriodStyle = (type: 'safety-car' | 'virtual-safety-car') => {
+                  switch (type) {
+                    case 'safety-car':
+                      return {
+                        fill: '#facc15',
+                        fillOpacity: 0.15,
+                        stroke: '#facc15',
+                        strokeWidth: 1,
+                        strokeOpacity: 0.6,
+                        label: 'SC',
+                      }
+                    case 'virtual-safety-car':
+                      return {
+                        fill: '#fbbf24',
+                        fillOpacity: 0.12,
+                        stroke: '#fbbf24',
+                        strokeWidth: 1,
+                        strokeOpacity: 0.5,
+                        label: 'VSC',
+                      }
+                  }
+                }
+                const style = getPeriodStyle(period.type)
+                return (
+                  <ReferenceArea
+                    key={`period-${period.type}-${period.startLap}-${period.endLap}-${idx}`}
+                    x1={period.startLap - 0.5}
+                    x2={period.endLap + 0.5}
+                    fill={style.fill}
+                    fillOpacity={style.fillOpacity}
+                    stroke={style.stroke}
+                    strokeWidth={style.strokeWidth}
+                    strokeOpacity={style.strokeOpacity}
+                    label={{
+                      value: style.label,
+                      position: 'top',
+                      offset: 5,
+                      fill: style.stroke,
+                      fontSize: 10,
+                      fontWeight: 'normal',
+                    }}
+                  />
+                )
+              })}
+              {/* Race Point Events - Vertical dashed lines for race start, pit stops, flags */}
+              {raceEvents.pointEvents.map((event, idx) => {
+                const getEventStyle = (type: RacePointEvent['type']) => {
+                  switch (type) {
+                    case 'race-start':
+                      return { stroke: '#22c55e', strokeWidth: 2, strokeDasharray: '5 5', label: '🏁 Start' }
+                    case 'pit-stop':
+                      return { stroke: '#f97316', strokeWidth: 1.5, strokeDasharray: '4 4', label: 'Pit' }
+                    case 'yellow-flag':
+                      return { stroke: '#eab308', strokeWidth: 1, strokeDasharray: '3 3', label: 'Yellow' }
+                    case 'red-flag':
+                      return { stroke: '#ef4444', strokeWidth: 2.5, strokeDasharray: '10 5', label: 'Red Flag' }
+                    default:
+                      return { stroke: '#9aa4b2', strokeWidth: 1, strokeDasharray: '3 3', label: '' }
+                  }
+                }
+                const style = getEventStyle(event.type)
+                return (
+                  <ReferenceLine
+                    key={`point-${event.lapNumber}-${event.type}-${idx}`}
+                    x={event.lapNumber}
+                    stroke={style.stroke}
+                    strokeWidth={style.strokeWidth}
+                    strokeDasharray={style.strokeDasharray}
+                    label={{
+                      value: style.label,
+                      position: 'top',
+                      offset: 5,
+                      fill: style.stroke,
+                      fontSize: 10,
+                      fontWeight: event.type === 'red-flag' || event.type === 'race-start' ? 'bold' : 'normal',
+                    }}
+                  />
+                )
+              })}
               {driversToDisplay.map((code, index) => (
                 <Line
                   key={code}

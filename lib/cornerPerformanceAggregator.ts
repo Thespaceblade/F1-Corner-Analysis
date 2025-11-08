@@ -5,7 +5,7 @@
  * for display on track SVG overlays.
  */
 
-import { CornerMetrics } from './sessionDataClient'
+import { CornerMetrics, SessionLap, QualifyingBoundaries } from './sessionDataClient'
 
 export type CornerPerformance = {
   cornerNumber: number
@@ -36,16 +36,81 @@ export type CornerPerformance = {
   timeDelta?: number
 }
 
+export type CornerFilter = 
+  | { type: 'all' }
+  | { type: 'qualifying-segment'; segment: 'Q1' | 'Q2' | 'Q3'; boundaries: QualifyingBoundaries; laps: SessionLap[] }
+  | { type: 'lap'; lapNumber: number }
+  | { type: 'average' } // For race sessions - average across all valid laps
+
+/**
+ * Filter corners based on the selected filter criteria.
+ */
+function filterCorners(
+  driverCorners: CornerMetrics[],
+  filter: CornerFilter,
+  driverCode: string
+): CornerMetrics[] {
+  if (filter.type === 'all' || filter.type === 'average') {
+    return driverCorners
+  }
+  
+  if (filter.type === 'lap') {
+    return driverCorners.filter(c => c.lapNumber === filter.lapNumber)
+  }
+  
+  if (filter.type === 'qualifying-segment') {
+    const { segment, boundaries, laps } = filter
+    
+    // Find laps for this driver in the selected segment
+    const segmentLaps = laps.filter(lap => {
+      if (lap.driver?.toUpperCase() !== driverCode.toUpperCase()) return false
+      if (!lap.sessionTimeSeconds) return false
+      
+      const sessionTime = lap.sessionTimeSeconds
+      
+      if (segment === 'Q1') {
+        return boundaries.q1End !== null && sessionTime <= boundaries.q1End
+      } else if (segment === 'Q2') {
+        return boundaries.q2Start !== null && 
+               boundaries.q2End !== null &&
+               sessionTime > boundaries.q2Start && 
+               sessionTime <= boundaries.q2End
+      } else if (segment === 'Q3') {
+        return boundaries.q3Start !== null &&
+               sessionTime > boundaries.q3Start
+      }
+      
+      return false
+    })
+    
+    // Get the fastest lap in this segment
+    const fastestLap = segmentLaps
+      .filter(lap => lap.lapTimeSeconds !== null && lap.isValid !== false)
+      .sort((a, b) => (a.lapTimeSeconds || Infinity) - (b.lapTimeSeconds || Infinity))[0]
+    
+    if (!fastestLap || fastestLap.lapNumber === null) {
+      return []
+    }
+    
+    // Return corners only from the fastest lap in this segment
+    return driverCorners.filter(c => c.lapNumber === fastestLap.lapNumber)
+  }
+  
+  return driverCorners
+}
+
 /**
  * Aggregate corner performance data by corner number.
  * 
  * @param corners - Corner metrics by driver code
  * @param selectedDrivers - Optional filter for specific drivers
+ * @param filter - Optional filter for qualifying segments or lap numbers
  * @returns Aggregated performance data by corner number
  */
 export function aggregateCornerPerformance(
   corners: Record<string, CornerMetrics[]>,
-  selectedDrivers?: string[]
+  selectedDrivers?: string[],
+  filter?: CornerFilter
 ): Record<number, CornerPerformance> {
   const result: Record<number, CornerPerformance> = {}
   
@@ -58,6 +123,8 @@ export function aggregateCornerPerformance(
     return result
   }
   
+  const activeFilter = filter || { type: 'all' }
+  
   // Group corners by corner number
   const cornersByNumber: Record<number, {
     metrics: CornerMetrics[]
@@ -68,7 +135,10 @@ export function aggregateCornerPerformance(
   for (const driver of driversToProcess) {
     const driverCorners = corners[driver] || []
     
-    for (const corner of driverCorners) {
+    // Apply filter
+    const filteredCorners = filterCorners(driverCorners, activeFilter, driver)
+    
+    for (const corner of filteredCorners) {
       const cornerNumber = corner.cornerNumber
       
       if (!cornerNumber) continue
@@ -135,43 +205,46 @@ export function aggregateCornerPerformance(
       sampleCount: number
     }> = {}
     
-    for (const driver of data.drivers) {
-      const driverCorners = metrics.filter(m => {
-        // Match by driver - we need to track which driver each corner belongs to
-        // For now, we'll aggregate all corners and note this limitation
-        return true
-      })
-      
-      // Group by driver code - we need to pass driver info with corners
-      // For now, aggregate all drivers together
-    }
-    
-    // If we have multiple drivers, calculate per-driver metrics
+    // Calculate per-driver metrics using filtered corners
     if (driversToProcess.length > 1) {
       for (const driver of driversToProcess) {
-        const driverCorners = corners[driver]?.filter(
-          c => c.cornerNumber === cornerNumber
-        ) || []
+        // Get filtered corners for this driver and corner number
+        const driverCorners = corners[driver] || []
+        const filteredDriverCorners = filterCorners(driverCorners, activeFilter, driver)
+        const cornerMetrics = filteredDriverCorners.filter(c => c.cornerNumber === cornerNumber)
         
-        if (driverCorners.length > 0) {
-          const driverEntrySpeeds = driverCorners.map(c => c.entrySpeed).filter(s => s > 0)
-          const driverApexSpeeds = driverCorners.map(c => c.apexSpeed).filter(s => s > 0)
-          const driverExitSpeeds = driverCorners.map(c => c.exitSpeed).filter(s => s > 0)
-          const driverTimes = driverCorners
+        if (cornerMetrics.length > 0) {
+          const driverEntrySpeeds = cornerMetrics.map(c => c.entrySpeed).filter(s => s > 0)
+          const driverApexSpeeds = cornerMetrics.map(c => c.apexSpeed).filter(s => s > 0)
+          const driverExitSpeeds = cornerMetrics.map(c => c.exitSpeed).filter(s => s > 0)
+          const driverTimes = cornerMetrics
             .map(c => c.cornerTime)
             .filter((t): t is number => t !== null && t > 0)
           
           const driverAvgSpeed = driverApexSpeeds.length > 0
             ? driverApexSpeeds.reduce((a, b) => a + b, 0) / driverApexSpeeds.length
             : 0
-          const driverAvgTime = driverTimes.length > 0
-            ? driverTimes.reduce((a, b) => a + b, 0) / driverTimes.length
-            : null
+          
+          // For single lap or fastest lap in segment, use the actual time (not average)
+          // For average mode, calculate average time
+          let driverAvgTime: number | null = null
+          if (driverTimes.length > 0) {
+            if (activeFilter.type === 'lap' || activeFilter.type === 'qualifying-segment') {
+              // Single lap - for qualifying segment, we've already filtered to fastest lap
+              // For specific lap, we've filtered to that lap
+              // Each corner should have one time value, so we can use the first (and only) one
+              // But if there are multiple corners of the same number (shouldn't happen), average them
+              driverAvgTime = driverTimes.reduce((a, b) => a + b, 0) / driverTimes.length
+            } else {
+              // Average mode - calculate average across all laps
+              driverAvgTime = driverTimes.reduce((a, b) => a + b, 0) / driverTimes.length
+            }
+          }
           
           driverPerformance[driver] = {
             avgSpeed: driverAvgSpeed,
             avgTime: driverAvgTime,
-            sampleCount: driverCorners.length,
+            sampleCount: cornerMetrics.length,
           }
         }
       }

@@ -260,20 +260,37 @@ The component uses dynamic imports to avoid SSR issues, so it should work in bot
 The application provides detailed corner-by-corner analysis:
 
 - **Performance Overlay**: Visual indicators on track SVG showing corner performance metrics
+  - Color-coded performance indicators based on selected filter
+  - Real-time updates when changing corner filter mode
 - **Corner Tooltips**: Hover over corners to see detailed statistics including:
   - Average entry/apex/exit speeds
   - Best corner time and lap number
   - Number of valid laps analyzed
   - Driver comparisons
+  - Filtered data based on current selection (segment/lap/average)
 - **Corner Table**: Aggregated corner metrics table showing:
   - Corner type (slow/medium/fast)
   - Average speeds per driver
   - Best corner times
   - Lap counts
+  - Filtered metrics based on qualifying segment or lap selection
+- **Corner Filtering**: Advanced filtering options for detailed analysis:
+  - **Qualifying Segments**: View corner performance from fastest lap in Q1, Q2, or Q3
+  - **Lap Selection**: Analyze corners from a specific lap number
+  - **Average Mode**: View average corner performance across all valid laps (race sessions)
+  - **All Corners**: Comprehensive view of all corner data
 
 ### Data Visualization
 
 - **Lap Time Charts**: Interactive charts for race and qualifying sessions
+  - Race event markers: Pit stops, safety car periods, yellow/red flags, race start
+  - Safety car and VSC period visualization
+  - Outlier filtering for in-laps, out-laps, and safety car periods
+- **Corner Filtering**: Advanced corner analysis filtering
+  - Filter by qualifying segment (Q1, Q2, Q3) - shows fastest lap from selected segment
+  - Filter by specific lap number
+  - Average mode for race sessions (averages across all valid laps)
+  - All corners mode for comprehensive analysis
 - **Corner Delta Charts**: Visual comparison of corner performance between drivers
 - **Track Overlays**: Real-time telemetry overlays on track SVG
 - **Driver Selection**: Team-based and individual driver filtering

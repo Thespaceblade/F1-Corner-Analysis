@@ -56,7 +56,7 @@ export default function ClientPage(){
   const [sessionData, setSessionData] = useState<SessionPayload | null>(null)
   const [sessionLoading, setSessionLoading] = useState<boolean>(false)
   const [sessionError, setSessionError] = useState<string | null>(null)
-  const [showOutliers, setShowOutliers] = useState<boolean>(false)
+  const [showOutliers, setShowOutliers] = useState<boolean>(true)
 
   useEffect(() => {
     fetch('/data/tracks.json').then(r => r.json()).then(setTrackData)
@@ -153,11 +153,63 @@ export default function ClientPage(){
 
   const currentTrack = trackData?.tracks[selectedTrack]
   
+  // Filter state for corner performance
+  const [cornerFilter, setCornerFilter] = useState<{
+    type: 'all' | 'qualifying-segment' | 'lap' | 'average'
+    segment?: 'Q1' | 'Q2' | 'Q3'
+    lapNumber?: number
+  }>({ type: 'all' })
+  
+  // Check if this is a qualifying session
+  const isQualifyingSession = useMemo(() => {
+    if (!sessionData) return false
+    const sessionCode = sessionData.meta?.session?.toUpperCase()
+    return sessionCode === 'Q' || sessionCode === 'SQ'
+  }, [sessionData])
+  
+  // Check if this is a race session
+  const isRaceSession = useMemo(() => {
+    if (!sessionData) return false
+    const sessionCode = sessionData.meta?.session?.toUpperCase()
+    return sessionCode === 'R'
+  }, [sessionData])
+  
+  // Reset filter when session changes
+  useEffect(() => {
+    if (isQualifyingSession) {
+      setCornerFilter({ type: 'all' })
+    } else if (isRaceSession) {
+      setCornerFilter({ type: 'average' })
+    } else {
+      setCornerFilter({ type: 'all' })
+    }
+  }, [selectedSession, isQualifyingSession, isRaceSession])
+  
+  // Build corner filter for aggregator
+  const cornerPerformanceFilter = useMemo(() => {
+    if (cornerFilter.type === 'qualifying-segment' && cornerFilter.segment && sessionData?.qualifyingBoundaries) {
+      return {
+        type: 'qualifying-segment' as const,
+        segment: cornerFilter.segment,
+        boundaries: sessionData.qualifyingBoundaries,
+        laps: sessionData.laps,
+      }
+    } else if (cornerFilter.type === 'lap' && cornerFilter.lapNumber !== undefined) {
+      return {
+        type: 'lap' as const,
+        lapNumber: cornerFilter.lapNumber,
+      }
+    } else if (cornerFilter.type === 'average') {
+      return { type: 'average' as const }
+    }
+    return { type: 'all' as const }
+  }, [cornerFilter, sessionData])
+  
   // Aggregate corner performance data
   const cornerPerformance = useMemo(() => {
     if (!sessionData?.corners || !selectedDrivers.length) return undefined
-    return aggregateCornerPerformance(sessionData.corners, selectedDrivers)
-  }, [sessionData?.corners, selectedDrivers])
+    return aggregateCornerPerformance(sessionData.corners, selectedDrivers, cornerPerformanceFilter)
+  }, [sessionData?.corners, selectedDrivers, cornerPerformanceFilter])
   
   // Get available sessions for the selected track
   const availableSessions = useMemo(() => {
@@ -429,12 +481,16 @@ export default function ClientPage(){
             </div>
           </div>
 
-          <ChartPanel 
-            sessionData={sessionData}
-            selectedDrivers={selectedDrivers}
-            loading={sessionLoading}
-            showOutliers={showOutliers}
-          />
+            <ChartPanel 
+              sessionData={sessionData}
+              selectedDrivers={selectedDrivers}
+              loading={sessionLoading}
+              showOutliers={showOutliers}
+              cornerFilter={cornerFilter}
+              onCornerFilterChange={setCornerFilter}
+              isQualifyingSession={isQualifyingSession}
+              isRaceSession={isRaceSession}
+            />
 
           <CornerTable 
             corners={sessionData?.corners ?? {}} 
