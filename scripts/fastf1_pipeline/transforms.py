@@ -242,7 +242,24 @@ def build_session_payload(
         }
 
     session = fetch_result.session
-    laps_df = getattr(session, "laps", None)
+    
+    # Safely get laps - handle cases where session failed to load properly
+    try:
+        laps_df = getattr(session, "laps", None)
+        if laps_df is None:
+            # Try to access it to trigger loading check
+            laps_df = session.laps
+    except Exception as e:
+        # Session data not available (future session, data unavailable, etc.)
+        return {
+            "meta": {**meta, "status": "error"},
+            "drivers": {},
+            "laps": [],
+            "corners": {},
+            "notes": [
+                f"Session data not available: {str(e)}"
+            ],
+        }
 
     if laps_df is None or laps_df.empty:
         return {

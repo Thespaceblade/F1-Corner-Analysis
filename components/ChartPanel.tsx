@@ -1,6 +1,6 @@
 'use client'
 
-import React, { useMemo } from 'react'
+import React, { useMemo, useState } from 'react'
 import {
   LineChart,
   Line,
@@ -224,7 +224,7 @@ const computeYDomain = (data: ChartDatum[], drivers: string[]): [number, number]
 
 export default function ChartPanel({ sessionData, selectedDrivers, loading, showOutliers }: ChartPanelProps) {
   // Toggle for showing all valid times vs only fastest per driver (qualifying only)
-  const [showAllValidTimes, setShowAllValidTimes] = React.useState(false)
+  const [showAllValidTimes, setShowAllValidTimes] = useState(false)
   const normalizedSelectedDrivers = useMemo(
     () => selectedDrivers.map(code => code.toUpperCase()),
     [selectedDrivers]
@@ -281,6 +281,110 @@ export default function ChartPanel({ sessionData, selectedDrivers, loading, show
     return computeYDomain(chartData, driversToDisplay)
   }, [isQualifyingSession, qualifyingData, chartData, driversToDisplay])
 
+  // Helper function to assign Q segment to an attempt based on session time or boundaries
+  const assignSegmentToAttempt = (
+    attempt: QualifyingAttempt,
+    boundaries: { q1End: number; q2End: number; q3End: number } | null,
+    sessionData: SessionPayload | null,
+    allAttempts: QualifyingAttempt[]
+  ): { qSegment: 'Q1' | 'Q2' | 'Q3'; xPosition: number } => {
+    let qSegment: 'Q1' | 'Q2' | 'Q3' = 'Q1'
+    let xPosition = 1
+
+    if (boundaries && typeof attempt.sessionTimeSeconds === 'number' && sessionData?.qualifyingBoundaries) {
+      // Use official qualifying boundaries from session_status
+      const officialBoundaries = sessionData.qualifyingBoundaries
+      const sessionTime = attempt.sessionTimeSeconds
+      
+      if (officialBoundaries.q1End !== null && sessionTime <= officialBoundaries.q1End) {
+        qSegment = 'Q1'
+        xPosition = 1
+      } else if (officialBoundaries.q2End !== null && sessionTime <= officialBoundaries.q2End) {
+        qSegment = 'Q2'
+        xPosition = 2
+      } else {
+        qSegment = 'Q3'
+        xPosition = 3
+      }
+    } else if (boundaries && typeof attempt.sessionTimeSeconds === 'number') {
+      // Fallback: Calculate boundaries from session time gaps
+      const sessionTimes = allAttempts
+        .map(a => a.sessionTimeSeconds)
+        .filter((t): t is number => typeof t === 'number' && !Number.isNaN(t))
+        .sort((a, b) => a - b)
+      
+      if (sessionTimes.length > 0) {
+        const firstLapTime = sessionTimes[0]
+        const gaps: Array<{ beforeTime: number; afterTime: number; gap: number }> = []
+        for (let i = 1; i < sessionTimes.length; i++) {
+          const gap = sessionTimes[i] - sessionTimes[i - 1]
+          if (gap >= 120) {
+            gaps.push({
+              beforeTime: sessionTimes[i - 1],
+              afterTime: sessionTimes[i],
+              gap,
+            })
+          }
+        }
+        
+        gaps.sort((a, b) => b.gap - a.gap)
+        
+        let q1EndTime: number | null = null
+        let q2EndTime: number | null = null
+        
+        if (gaps.length >= 2) {
+          const sortedByTime = [...gaps].sort((a, b) => a.beforeTime - b.beforeTime)
+          q1EndTime = sortedByTime[0].beforeTime
+          q2EndTime = sortedByTime[1].beforeTime
+        } else if (gaps.length === 1) {
+          q1EndTime = gaps[0].beforeTime
+          q2EndTime = gaps[0].afterTime + 900
+        } else {
+          q1EndTime = firstLapTime + 1080
+          q2EndTime = firstLapTime + 1080 + 150 + 900
+        }
+        
+        const sessionTime = attempt.sessionTimeSeconds
+        if (q1EndTime !== null && sessionTime <= q1EndTime) {
+          qSegment = 'Q1'
+          xPosition = 1
+        } else if (q2EndTime !== null && sessionTime <= q2EndTime) {
+          qSegment = 'Q2'
+          xPosition = 2
+        } else {
+          qSegment = 'Q3'
+          xPosition = 3
+        }
+      } else if (boundaries) {
+        // Fallback to attempt number if no session time
+        if (boundaries.q1End > 0 && attempt.attemptNumber <= boundaries.q1End) {
+          qSegment = 'Q1'
+          xPosition = 1
+        } else if (boundaries.q2End > 0 && attempt.attemptNumber <= boundaries.q2End) {
+          qSegment = 'Q2'
+          xPosition = 2
+        } else {
+          qSegment = 'Q3'
+          xPosition = 3
+        }
+      }
+    } else if (boundaries) {
+      // Fallback to attempt number if no session time
+      if (boundaries.q1End > 0 && attempt.attemptNumber <= boundaries.q1End) {
+        qSegment = 'Q1'
+        xPosition = 1
+      } else if (boundaries.q2End > 0 && attempt.attemptNumber <= boundaries.q2End) {
+        qSegment = 'Q2'
+        xPosition = 2
+      } else {
+        qSegment = 'Q3'
+        xPosition = 3
+      }
+    }
+
+    return { qSegment, xPosition }
+  }
+
   // Calculate Q1/Q2/Q3 boundaries using official session_status data from FastF1
   // FastF1 provides session_status with "Started" and "Finished" events for each Q session
   // This is the most reliable way to identify Q boundaries
@@ -293,16 +397,16 @@ export default function ChartPanel({ sessionData, selectedDrivers, loading, show
       
       // Map session times to attempt numbers
       const attemptByTime = new Map<number, number>()
-      for (const attempt of qualifyingData) {
+    for (const attempt of qualifyingData) {
         if (typeof attempt.sessionTimeSeconds === 'number' && !Number.isNaN(attempt.sessionTimeSeconds)) {
           attemptByTime.set(attempt.sessionTimeSeconds, attempt.attemptNumber)
         }
       }
 
       // Find attempt numbers at boundaries
-      let q1End = 0
-      let q2End = 0
-      let q3End = 0
+    let q1End = 0
+    let q2End = 0
+    let q3End = 0
 
       // Q1 end
       if (boundaries.q1End !== null) {
@@ -438,11 +542,21 @@ export default function ChartPanel({ sessionData, selectedDrivers, loading, show
 
   // Find fastest time in each Q segment (across ALL drivers, not just selected)
   const fastestTimesBySegment = useMemo(() => {
-    if (!isQualifyingSession || !sessionData) return { Q1: null, Q2: null, Q3: null }
+    if (!isQualifyingSession || !sessionData || !qualifyingBoundaries) return { Q1: null, Q2: null, Q3: null }
     
     // Get all qualifying attempts from all drivers
     const allDrivers = Object.keys(sessionData.drivers || {})
     const allQualifyingData = buildQualifyingData(sessionData, allDrivers, showOutliers)
+    
+    // Assign segments to all attempts
+    const attemptsWithSegments = allQualifyingData.map(attempt => {
+      const { qSegment, xPosition } = assignSegmentToAttempt(attempt, qualifyingBoundaries, sessionData, allQualifyingData)
+      return {
+        ...attempt,
+        qSegment,
+        xPosition,
+      }
+    })
     
     // Group by Q segment and find fastest in each
     const fastest: { Q1: QualifyingAttempt | null, Q2: QualifyingAttempt | null, Q3: QualifyingAttempt | null } = {
@@ -451,7 +565,7 @@ export default function ChartPanel({ sessionData, selectedDrivers, loading, show
       Q3: null,
     }
     
-    for (const attempt of allQualifyingData) {
+    for (const attempt of attemptsWithSegments) {
       if (!attempt.qSegment) continue
       const current = fastest[attempt.qSegment]
       if (!current || attempt.lapTimeSeconds < current.lapTimeSeconds) {
@@ -460,109 +574,21 @@ export default function ChartPanel({ sessionData, selectedDrivers, loading, show
     }
     
     return fastest
-  }, [isQualifyingSession, sessionData, showOutliers])
+  }, [isQualifyingSession, sessionData, showOutliers, qualifyingBoundaries])
 
   // Assign Q segments to attempts based on session time and group by driver
   // Also add collision detection offsets and fastest time markers
   const qualifyingByDriver = useMemo(() => {
     if (!isQualifyingSession) return {}
     
-    // First, assign Q segments and X positions to each attempt based on session time
+    // First, assign Q segments and X positions to each attempt using the helper function
     const attemptsWithSegments = qualifyingData.map(attempt => {
-      let qSegment: 'Q1' | 'Q2' | 'Q3' = 'Q1'
-      let xPosition = 1 // Default to Q1
-      
-      if (qualifyingBoundaries && typeof attempt.sessionTimeSeconds === 'number' && sessionData?.qualifyingBoundaries) {
-        // Use official qualifying boundaries from session_status
-        const boundaries = sessionData.qualifyingBoundaries
-        const sessionTime = attempt.sessionTimeSeconds
-        
-        // Assign segment based on official boundaries
-        if (boundaries.q1End !== null && sessionTime <= boundaries.q1End) {
-          qSegment = 'Q1'
-          xPosition = 1
-        } else if (boundaries.q2End !== null && sessionTime <= boundaries.q2End) {
-          qSegment = 'Q2'
-          xPosition = 2
-        } else {
-          qSegment = 'Q3'
-          xPosition = 3
-        }
-      } else if (qualifyingBoundaries && typeof attempt.sessionTimeSeconds === 'number') {
-        // Fallback: Use session time gaps if no official boundaries
-        const sessionTime = attempt.sessionTimeSeconds
-        const sessionTimes = qualifyingData
-          .map(a => a.sessionTimeSeconds)
-          .filter((t): t is number => typeof t === 'number' && !Number.isNaN(t))
-          .sort((a, b) => a - b)
-        
-        if (sessionTimes.length > 0) {
-          const firstLapTime = sessionTimes[0]
-          const gaps: Array<{ beforeTime: number; afterTime: number; gap: number }> = []
-          for (let i = 1; i < sessionTimes.length; i++) {
-            const gap = sessionTimes[i] - sessionTimes[i - 1]
-            if (gap >= 120) {
-              gaps.push({
-                beforeTime: sessionTimes[i - 1],
-                afterTime: sessionTimes[i],
-                gap,
-              })
-            }
-          }
-          
-          gaps.sort((a, b) => b.gap - a.gap)
-          
-          let q1EndTime: number | null = null
-          let q2EndTime: number | null = null
-          
-          if (gaps.length >= 2) {
-            const sortedByTime = [...gaps].sort((a, b) => a.beforeTime - b.beforeTime)
-            q1EndTime = sortedByTime[0].beforeTime
-            q2EndTime = sortedByTime[1].beforeTime
-          } else if (gaps.length === 1) {
-            q1EndTime = gaps[0].beforeTime
-            q2EndTime = gaps[0].afterTime + 900
-          } else {
-            q1EndTime = firstLapTime + 1080
-            q2EndTime = firstLapTime + 1080 + 150 + 900
-          }
-          
-          if (q1EndTime !== null && sessionTime <= q1EndTime) {
-            qSegment = 'Q1'
-            xPosition = 1
-          } else if (q2EndTime !== null && sessionTime <= q2EndTime) {
-            qSegment = 'Q2'
-            xPosition = 2
-          } else {
-            qSegment = 'Q3'
-            xPosition = 3
-          }
-        } else {
-          // Fallback to attempt number
-          if (qualifyingBoundaries.q1End > 0 && attempt.attemptNumber <= qualifyingBoundaries.q1End) {
-            qSegment = 'Q1'
-            xPosition = 1
-          } else if (qualifyingBoundaries.q2End > 0 && attempt.attemptNumber <= qualifyingBoundaries.q2End) {
-            qSegment = 'Q2'
-            xPosition = 2
-          } else {
-            qSegment = 'Q3'
-            xPosition = 3
-          }
-        }
-      } else if (qualifyingBoundaries) {
-        // Fallback to attempt number if no session time
-        if (qualifyingBoundaries.q1End > 0 && attempt.attemptNumber <= qualifyingBoundaries.q1End) {
-          qSegment = 'Q1'
-          xPosition = 1
-        } else if (qualifyingBoundaries.q2End > 0 && attempt.attemptNumber <= qualifyingBoundaries.q2End) {
-          qSegment = 'Q2'
-          xPosition = 2
-        } else {
-          qSegment = 'Q3'
-          xPosition = 3
-        }
-      }
+      const { qSegment, xPosition } = assignSegmentToAttempt(
+        attempt,
+        qualifyingBoundaries,
+        sessionData,
+        qualifyingData
+      )
       
       // Check if this is the fastest time in its segment
       const isFastest = fastestTimesBySegment[qSegment]?.driver === attempt.driver &&
@@ -641,7 +667,7 @@ export default function ChartPanel({ sessionData, selectedDrivers, loading, show
       grouped[attempt.driver].push(attempt)
     }
     return grouped
-  }, [isQualifyingSession, qualifyingData, qualifyingBoundaries, fastestTimesBySegment])
+  }, [isQualifyingSession, qualifyingData, qualifyingBoundaries, fastestTimesBySegment, sessionData])
 
   const showNoSelectionMessage =
     !normalizedSelectedDrivers.length ||

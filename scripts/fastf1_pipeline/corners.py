@@ -11,15 +11,49 @@ from typing import Any, Dict, List
 
 try:
     import numpy as np  # type: ignore
-    import pandas as pd  # type: ignore
-    from pandas.api.types import (
-        is_numeric_dtype,
-        is_datetime64_any_dtype,
-        is_timedelta64_any_dtype,
-    )
 except ImportError:
     np = None  # type: ignore
+
+try:
+    import pandas as pd  # type: ignore
+except ImportError:
     pd = None  # type: ignore
+
+# Import pandas API types separately
+try:
+    if pd is not None:
+        from pandas.api.types import (
+            is_numeric_dtype,
+            is_datetime64_any_dtype,
+            is_timedelta64_dtype,
+        )
+    else:
+        raise ImportError("pandas not available")
+except ImportError:
+    # Fallback functions if pandas API types can't be imported
+    def is_numeric_dtype(dtype):  # type: ignore
+        if pd is None:
+            return False
+        try:
+            return pd.api.types.is_numeric_dtype(dtype)
+        except (AttributeError, ImportError):
+            return False
+    
+    def is_datetime64_any_dtype(dtype):  # type: ignore
+        if pd is None:
+            return False
+        try:
+            return pd.api.types.is_datetime64_any_dtype(dtype)
+        except (AttributeError, ImportError):
+            return False
+    
+    def is_timedelta64_dtype(dtype):  # type: ignore
+        if pd is None:
+            return False
+        try:
+            return pd.api.types.is_timedelta64_dtype(dtype)
+        except (AttributeError, ImportError):
+            return False
 
 
 def resample_to_common_distance(
@@ -54,7 +88,7 @@ def resample_to_common_distance(
     for col in tel_df.columns:
         if col == "Distance" or col == "Time":
             continue
-        if is_datetime64_any_dtype(tel_df[col]) or is_timedelta64_any_dtype(tel_df[col]):
+        if is_datetime64_any_dtype(tel_df[col]) or is_timedelta64_dtype(tel_df[col]):
             continue
         if not is_numeric_dtype(tel_df[col]):
             continue
@@ -263,7 +297,10 @@ def match_corners_to_track(
                 expected_max = track_corner["expectedDistanceRange"]["max"]
 
                 if expected_min <= apex_dist <= expected_max:
-                    diff = min(abs(apex_dist - expected_min), abs(apex_dist - expected_max))
+                    # If within range, this is a perfect match (diff = 0)
+                    # Use distance from range center for ranking if multiple matches
+                    range_center = (expected_min + expected_max) / 2.0
+                    diff = abs(apex_dist - range_center)
                     if diff < best_diff:
                         best_match = track_idx
                         best_diff = diff
@@ -274,22 +311,51 @@ def match_corners_to_track(
                     best_match = track_idx
                     best_diff = 0
 
-        if best_match is not None and best_diff <= tolerance_meters:
-            matched_corner = {
-                **detected,
-                "cornerNumber": track_corners[best_match].get("number", len(matched) + 1),
-                "cornerType": track_corners[best_match].get("type", "medium"),
-            }
-            matched.append(matched_corner)
-            used_track_corners.add(best_match)
-        else:
-            # Unmatched corner - assign sequential number
-            matched_corner = {
-                **detected,
-                "cornerNumber": len(matched) + 1,
-                "cornerType": "unknown",
-            }
-            matched.append(matched_corner)
+        # If we found a match within a distance range, accept it regardless of tolerance
+        # Tolerance is only for proximity-based matching when no range is available
+        if best_match is not None:
+            # Check if the match was within a range (best_diff would be small relative to range)
+            track_corner = track_corners[best_match]
+            if "expectedDistanceRange" in track_corner:
+                expected_min = track_corner["expectedDistanceRange"]["min"]
+                expected_max = track_corner["expectedDistanceRange"]["max"]
+                # If apex is within range, accept the match
+                if expected_min <= apex_dist <= expected_max:
+                    matched_corner = {
+                        **detected,
+                        "cornerNumber": track_corners[best_match].get("number", len(matched) + 1),
+                        "cornerType": track_corners[best_match].get("type", "medium"),
+                    }
+                    matched.append(matched_corner)
+                    used_track_corners.add(best_match)
+                    continue
+                # If outside range but within tolerance, also accept
+                elif best_diff <= tolerance_meters:
+                    matched_corner = {
+                        **detected,
+                        "cornerNumber": track_corners[best_match].get("number", len(matched) + 1),
+                        "cornerType": track_corners[best_match].get("type", "medium"),
+                    }
+                    matched.append(matched_corner)
+                    used_track_corners.add(best_match)
+                    continue
+            elif best_diff <= tolerance_meters:
+                # Fallback matching within tolerance
+                matched_corner = {
+                    **detected,
+                    "cornerNumber": track_corners[best_match].get("number", len(matched) + 1),
+                    "cornerType": track_corners[best_match].get("type", "medium"),
+                }
+                matched.append(matched_corner)
+                used_track_corners.add(best_match)
+                continue
+        
+        # No match found - assign sequential number
+        matched_corner = {
+            **detected,
+            "cornerNumber": len(matched) + 1,
+            "cornerType": "unknown",
+        }
+        matched.append(matched_corner)
 
     return matched
-
