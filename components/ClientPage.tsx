@@ -1,12 +1,17 @@
 'use client'
 
+// TODO: Verify AnalysisPanel and TableOfContents are fully functional
+// FIXME: Check if GlobeTrackSelector deletion was intentional - update README if 3D globe is no longer a feature
+// TODO: Add error boundaries for better error handling
+// TODO: Add loading states for all async operations
+
 import React, { useEffect, useMemo, useState } from 'react'
 import Image from 'next/image'
 import Toolbar, { sessionOptions } from './Toolbar'
 import TrackPanel from './TrackPanel'
 import ChartPanel from './ChartPanel'
-import CornerTable from './CornerTable'
-import CornerDeltaChart from './CornerDeltaChart'
+import AnalysisPanel from './AnalysisPanel'
+import TableOfContents from './TableOfContents'
 import { loadSessionData, SessionPayload } from '../lib/sessionDataClient'
 import { aggregateCornerPerformance } from '../lib/cornerPerformanceAggregator'
 
@@ -275,10 +280,26 @@ export default function ClientPage(){
     return tracks
   }, [roundIds, trackData, roundNumberMap])
 
+  // Define TOC sections
+  const tocSections = useMemo(() => {
+    if (!currentTrack) return []
+    return [
+      { id: 'track-visualization', label: 'Track Visualization', level: 1 },
+      { id: 'track-information', label: 'Track Information', level: 1 },
+      { id: 'lap-time-comparison', label: 'Lap Time Comparison', level: 1 },
+      { id: 'analysis-panel', label: 'Analysis Panel', level: 1 },
+    ]
+  }, [currentTrack])
+
   if(!trackData || !availableYears.length) return <div>Loading...</div>
 
   return (
     <main className="max-w-6xl mx-auto px-4">
+      {/* Table of Contents */}
+      <TableOfContents 
+        sections={tocSections} 
+        isVisible={!!currentTrack}
+      />
       <header className="relative mb-8 overflow-visible">
         {/* Animated gradient background - behind text/logo, text will obscure edges */}
         <div className="absolute inset-0 bg-gradient-radial-header animate-pulse-slow pointer-events-none" style={{ zIndex: 0 }} />
@@ -402,7 +423,7 @@ export default function ClientPage(){
 
       {currentTrack && (
         <>
-          <div className="mt-6 grid lg:grid-cols-2 gap-6">
+          <section id="track-visualization" className="mt-6 grid lg:grid-cols-2 gap-6">
             <div className="panel p-4">
               <TrackPanel 
                 svgFile={currentTrack.svgFile}
@@ -411,7 +432,7 @@ export default function ClientPage(){
                 selectedDrivers={selectedDrivers}
               />
             </div>
-            <div className="panel p-4">
+            <div id="track-information" className="panel p-4">
               <div className="text-lg font-bold">{trackData.tracks[selectedTrack]?.name}</div>
               <div className="text-gray-600">{selectedYear}</div>
               <div className="mt-2 text-sm text-gray-400">
@@ -479,8 +500,9 @@ export default function ClientPage(){
                 </div>
               ) : null}
             </div>
-          </div>
+          </section>
 
+          <section id="lap-time-comparison">
             <ChartPanel 
               sessionData={sessionData}
               selectedDrivers={selectedDrivers}
@@ -491,20 +513,17 @@ export default function ClientPage(){
               isQualifyingSession={isQualifyingSession}
               isRaceSession={isRaceSession}
             />
+          </section>
 
-          <CornerTable 
-            corners={sessionData?.corners ?? {}} 
-            cornerInfo={currentTrack.corners}
+          <section id="analysis-panel">
+            <AnalysisPanel
+            sessionData={sessionData}
+            cornerPerformance={cornerPerformance}
             selectedDrivers={selectedDrivers}
+            currentTrack={currentTrack}
+            cornerFilter={cornerFilter}
           />
-
-          {selectedDrivers.length >= 2 && (
-            <CornerDeltaChart
-              corners={sessionData?.corners ?? {}}
-              cornerInfo={currentTrack.corners}
-              selectedDrivers={selectedDrivers}
-            />
-          )}
+          </section>
         </>
       )}
     </main>

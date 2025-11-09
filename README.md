@@ -376,9 +376,24 @@ Contributions are welcome! Please feel free to submit a Pull Request.
 - Fixed corner hover detection issues
 - Improved API route error handling
 - Optimized Vercel deployment configuration
+- Added Table of Contents navigation component
 
 ### Performance Improvements
 - Removed build artifacts from repository (reduced repository size)
 - Optimized build process for Vercel deployments
 - Improved error handling for missing data
+
+## Known Issues & TODO
+
+For a comprehensive list of unfinished work, known issues, and planned improvements, see:
+- **[TODO.md](TODO.md)** - Unfinished work and future improvements
+- **[FIXME.md](FIXME.md)** - Known bugs and issues that need fixing
+- **[docs/remaining-tasks.md](docs/remaining-tasks.md)** - Detailed task list
+
+### Quick Summary of Outstanding Items
+- ⚠️ **Verify deleted components**: GlobeTrackSelector and cornerPositionCalculator were removed - need to verify if functionality was replaced
+- 🔧 **Corner coordinate validation**: Need to validate coordinates for all tracks
+- 🧪 **Testing**: New AnalysisPanel and TableOfContents components need thorough testing
+- 📊 **Data quality**: Improve corner detection accuracy and validation
+- 🎨 **UI enhancements**: Various UI/UX improvements planned
 

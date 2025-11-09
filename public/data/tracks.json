@@ -59,8 +59,8 @@
           "number": 6,
           "type": "medium",
           "expectedDistanceRange": {
-            "min": 4331,
-            "max": 4433
+            "min": 4320,
+            "max": 4440
           },
           "x": 199.2,
           "y": 27.4
@@ -69,8 +69,8 @@
           "number": 7,
           "type": "fast",
           "expectedDistanceRange": {
-            "min": 4515,
-            "max": 4520
+            "min": 4570,
+            "max": 4620
           },
           "x": 244.9,
           "y": 38
@@ -79,8 +79,8 @@
           "number": 8,
           "type": "fast",
           "expectedDistanceRange": {
-            "min": 4520,
-            "max": 4550
+            "min": 4600,
+            "max": 4625
           },
           "x": 299.4,
           "y": 60.9
@@ -89,8 +89,8 @@
           "number": 9,
           "type": "slow",
           "expectedDistanceRange": {
-            "min": 4550,
-            "max": 4620
+            "min": 4540,
+            "max": 4630
           },
           "x": 395.5,
           "y": 436.7
@@ -99,8 +99,8 @@
           "number": 10,
           "type": "slow",
           "expectedDistanceRange": {
-            "min": 4620,
-            "max": 4650
+            "min": 4605,
+            "max": 4625
           },
           "x": 441.5,
           "y": 435.2
@@ -109,8 +109,8 @@
           "number": 11,
           "type": "fast",
           "expectedDistanceRange": {
-            "min": 4800,
-            "max": 5000
+            "min": 4606,
+            "max": 4620
           },
           "x": 571.1,
           "y": 655.9
@@ -119,8 +119,8 @@
           "number": 12,
           "type": "fast",
           "expectedDistanceRange": {
-            "min": 5000,
-            "max": 5150
+            "min": 4620,
+            "max": 4635
           },
           "x": 479.2,
           "y": 675.7
@@ -129,8 +129,8 @@
           "number": 13,
           "type": "slow",
           "expectedDistanceRange": {
-            "min": 5150,
-            "max": 5200
+            "min": 4630,
+            "max": 4645
           },
           "x": 426.1,
           "y": 604.1
@@ -139,8 +139,8 @@
           "number": 14,
           "type": "medium",
           "expectedDistanceRange": {
-            "min": 5200,
-            "max": 5230
+            "min": 4635,
+            "max": 4655
           },
           "x": 382.4,
           "y": 633

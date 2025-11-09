@@ -448,14 +448,21 @@ def match_corners_to_track(
                 expected_min = track_corner["expectedDistanceRange"]["min"]
                 expected_max = track_corner["expectedDistanceRange"]["max"]
 
-                if expected_min <= apex_dist <= expected_max:
-                    # If within range, this is a perfect match (diff = 0)
-                    # Use distance from range center for ranking if multiple matches
+                # Calculate distance from range (0 if inside, distance to nearest bound if outside)
+                if apex_dist < expected_min:
+                    dist_from_range = expected_min - apex_dist
+                elif apex_dist > expected_max:
+                    dist_from_range = apex_dist - expected_max
+                else:
+                    # Inside range - use distance from center for ranking
                     range_center = (expected_min + expected_max) / 2.0
-                    diff = abs(apex_dist - range_center)
-                    if diff < best_diff:
+                    dist_from_range = abs(apex_dist - range_center)
+                
+                # Consider this corner if it's within tolerance of the range
+                if dist_from_range <= tolerance_meters:
+                    if dist_from_range < best_diff:
                         best_match = track_idx
-                        best_diff = diff
+                        best_diff = dist_from_range
             else:
                 # Fallback: sequential matching (assumes corners are in order)
                 # This is less accurate but works if we don't have distance data
@@ -463,44 +470,17 @@ def match_corners_to_track(
                     best_match = track_idx
                     best_diff = 0
 
-        # If we found a match within a distance range, accept it regardless of tolerance
-        # Tolerance is only for proximity-based matching when no range is available
-        if best_match is not None:
-            # Check if the match was within a range (best_diff would be small relative to range)
+        # If we found a match, accept it
+        if best_match is not None and best_diff <= tolerance_meters:
             track_corner = track_corners[best_match]
-            if "expectedDistanceRange" in track_corner:
-                expected_min = track_corner["expectedDistanceRange"]["min"]
-                expected_max = track_corner["expectedDistanceRange"]["max"]
-                # If apex is within range, accept the match
-                if expected_min <= apex_dist <= expected_max:
-                    matched_corner = {
-                        **detected,
-                        "cornerNumber": track_corners[best_match].get("number", len(matched) + 1),
-                        "cornerType": track_corners[best_match].get("type", "medium"),
-                    }
-                    matched.append(matched_corner)
-                    used_track_corners.add(best_match)
-                    continue
-                # If outside range but within tolerance, also accept
-                elif best_diff <= tolerance_meters:
-                    matched_corner = {
-                        **detected,
-                        "cornerNumber": track_corners[best_match].get("number", len(matched) + 1),
-                        "cornerType": track_corners[best_match].get("type", "medium"),
-                    }
-                    matched.append(matched_corner)
-                    used_track_corners.add(best_match)
-                    continue
-            elif best_diff <= tolerance_meters:
-                # Fallback matching within tolerance
-                matched_corner = {
-                    **detected,
-                    "cornerNumber": track_corners[best_match].get("number", len(matched) + 1),
-                    "cornerType": track_corners[best_match].get("type", "medium"),
-                }
-                matched.append(matched_corner)
-                used_track_corners.add(best_match)
-                continue
+            matched_corner = {
+                **detected,
+                "cornerNumber": track_corner.get("number", len(matched) + 1),
+                "cornerType": track_corner.get("type", "medium"),
+            }
+            matched.append(matched_corner)
+            used_track_corners.add(best_match)
+            continue
         
         # No match found - assign sequential number
         matched_corner = {

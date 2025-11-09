@@ -1134,6 +1134,128 @@ export default function ChartPanel({
         </div>
       </div>
 
+      {/* Event Marker Legend - Only show for race sessions when outliers are shown */}
+      {isRaceSession && showOutliers && (raceEvents.pointEvents.length > 0 || raceEvents.periodEvents.length > 0) && (
+        <div className="mb-4 rounded border border-gray-700 bg-gray-800/50 p-3">
+          <div className="mb-2 text-xs font-semibold uppercase tracking-wide text-gray-300">
+            Event Markers
+          </div>
+          <div className="flex flex-wrap gap-x-4 gap-y-2 text-xs">
+            {/* Point Events */}
+            <div className="flex items-center gap-2">
+              <svg width="32" height="4" className="flex-shrink-0">
+                <line
+                  x1="0"
+                  y1="2"
+                  x2="32"
+                  y2="2"
+                  stroke="#22c55e"
+                  strokeWidth="2"
+                  strokeDasharray="5 5"
+                />
+              </svg>
+              <span className="text-gray-300">🏁 Start</span>
+            </div>
+            <div className="flex items-center gap-2">
+              <svg width="32" height="4" className="flex-shrink-0">
+                <line
+                  x1="0"
+                  y1="2"
+                  x2="32"
+                  y2="2"
+                  stroke="#f97316"
+                  strokeWidth="1.5"
+                  strokeDasharray="4 4"
+                />
+              </svg>
+              <span className="text-gray-300">Pit Stop</span>
+            </div>
+            <div className="flex items-center gap-2">
+              <svg width="32" height="4" className="flex-shrink-0">
+                <line
+                  x1="0"
+                  y1="2"
+                  x2="32"
+                  y2="2"
+                  stroke="#eab308"
+                  strokeWidth="1"
+                  strokeDasharray="3 3"
+                />
+              </svg>
+              <span className="text-gray-300">Yellow Flag</span>
+            </div>
+            <div className="flex items-center gap-2">
+              <svg width="32" height="4" className="flex-shrink-0">
+                <line
+                  x1="0"
+                  y1="2"
+                  x2="32"
+                  y2="2"
+                  stroke="#ef4444"
+                  strokeWidth="2.5"
+                  strokeDasharray="10 5"
+                />
+              </svg>
+              <span className="text-gray-300 font-bold">Red Flag</span>
+            </div>
+            {/* Period Events */}
+            {periodEventsForAreas.some(p => p.type === 'safety-car') && (
+              <div className="flex items-center gap-2">
+                <div className="flex items-center gap-1">
+                  <div
+                    className="h-3 w-3 rounded-sm flex-shrink-0"
+                    style={{
+                      backgroundColor: '#facc15',
+                      opacity: 0.15,
+                    }}
+                  />
+                  <svg width="16" height="4" className="flex-shrink-0">
+                    <line
+                      x1="0"
+                      y1="2"
+                      x2="16"
+                      y2="2"
+                      stroke="#facc15"
+                      strokeWidth="2"
+                      strokeDasharray="5 5"
+                    />
+                  </svg>
+                </div>
+                <span className="text-gray-300">Safety Car</span>
+              </div>
+            )}
+            {periodEventsForAreas.some(p => p.type === 'virtual-safety-car') && (
+              <div className="flex items-center gap-2">
+                <div className="flex items-center gap-1">
+                  <div
+                    className="h-3 w-3 rounded-sm flex-shrink-0"
+                    style={{
+                      backgroundColor: '#fbbf24',
+                      opacity: 0.12,
+                    }}
+                  />
+                  <svg width="16" height="4" className="flex-shrink-0">
+                    <line
+                      x1="0"
+                      y1="2"
+                      x2="16"
+                      y2="2"
+                      stroke="#fbbf24"
+                      strokeWidth="2"
+                      strokeDasharray="5 5"
+                    />
+                  </svg>
+                </div>
+                <span className="text-gray-300">Virtual Safety Car</span>
+              </div>
+            )}
+          </div>
+          <p className="mt-2 text-[10px] text-gray-500">
+            Event markers appear when "Hide outlier laps" is unchecked. Periods (SC/VSC) are shown as highlighted areas with start/end markers.
+          </p>
+        </div>
+      )}
+
       {/* Corner Performance Filter Controls */}
       <div className="mb-4 flex flex-wrap items-center gap-3 p-3 rounded border border-gray-700 bg-gray-800/50">
         <div className="text-xs font-semibold text-gray-300 uppercase tracking-wide">
