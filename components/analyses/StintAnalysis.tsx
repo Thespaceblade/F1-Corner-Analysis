@@ -72,7 +72,7 @@ export default function StintAnalysis({
         const stint = parseInt(stintStr)
         const stintData = stintsByDriver[driver][stint]
         if (stintData.laps.length > 0) {
-          stintData.avgLapTime = stintData.laps.reduce((a, b) => a + b, 0) / stintData.laps.length
+          stintData.avgLapTime = stintData.laps.reduce((a: number, b: number) => a + b, 0) / stintData.laps.length
         }
       })
     })

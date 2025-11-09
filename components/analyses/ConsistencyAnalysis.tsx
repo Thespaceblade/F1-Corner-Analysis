@@ -68,12 +68,12 @@ export default function ConsistencyAnalysis({
         return
       }
 
-      const avgLapTime = driverLaps.reduce((a, b) => a + b, 0) / driverLaps.length
+      const avgLapTime = driverLaps.reduce((a: number, b: number) => a + b, 0) / driverLaps.length
       const bestLapTime = Math.min(...driverLaps)
       const worstLapTime = Math.max(...driverLaps)
 
       // Calculate standard deviation
-      const variance = driverLaps.reduce((sum, time) => sum + Math.pow(time - avgLapTime, 2), 0) / driverLaps.length
+      const variance = driverLaps.reduce((sum: number, time: number) => sum + Math.pow(time - avgLapTime, 2), 0) / driverLaps.length
       const stdDev = Math.sqrt(variance)
 
       // Consistency score (coefficient of variation) - lower is more consistent
@@ -326,5 +326,6 @@ export default function ConsistencyAnalysis({
     </div>
   )
 }
+
 
 

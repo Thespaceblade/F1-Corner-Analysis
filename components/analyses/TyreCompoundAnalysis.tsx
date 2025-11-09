@@ -82,18 +82,18 @@ export default function TyreCompoundAnalysis({
       Object.keys(compoundStats[driver]).forEach(compound => {
         const stats = compoundStats[driver][compound]
         if (stats.laps.length > 0) {
-          stats.avgLapTime = stats.laps.reduce((a, b) => a + b, 0) / stats.laps.length
+          stats.avgLapTime = stats.laps.reduce((a: number, b: number) => a + b, 0) / stats.laps.length
           stats.bestLapTime = Math.min(...stats.laps)
           stats.worstLapTime = Math.max(...stats.laps)
         }
 
         // Calculate average tyre life
         const tyreLives = driverLaps
-          .filter(lap => lap.compound?.toUpperCase() === compound && lap.tyreLife !== null)
+          .filter(lap => lap.compound?.toUpperCase() === compound && lap.tyreLife !== null && lap.tyreLife !== undefined)
           .map(lap => lap.tyreLife!)
         
         if (tyreLives.length > 0) {
-          stats.avgTyreLife = tyreLives.reduce((a, b) => a + b, 0) / tyreLives.length
+          stats.avgTyreLife = tyreLives.reduce((a: number, b: number) => a + b, 0) / tyreLives.length
         }
       })
     })
@@ -152,20 +152,28 @@ export default function TyreCompoundAnalysis({
 
     return Object.entries(performanceByLife)
       .map(([tyreLife, drivers]) => {
-        const dataPoint: { tyreLife: number; [driverCode: string]: number | null } = {
-          tyreLife: parseInt(tyreLife),
+        const tyreLifeNum = parseInt(tyreLife, 10)
+        const dataPoint: Record<string, number | null> = {
+          tyreLife: tyreLifeNum,
         }
 
         selectedDrivers.forEach(driver => {
           const times = drivers[driver] || []
           dataPoint[driver] = times.length > 0
-            ? times.reduce((a, b) => a + b, 0) / times.length
+            ? times.reduce((a: number, b: number) => a + b, 0) / times.length
             : null
         })
 
         return dataPoint
       })
-      .sort((a, b) => a.tyreLife - b.tyreLife)
+      .sort((a, b) => {
+        const aLife = a.tyreLife
+        const bLife = b.tyreLife
+        if (typeof aLife === 'number' && typeof bLife === 'number') {
+          return aLife - bLife
+        }
+        return 0
+      })
   }, [sessionData, selectedDrivers])
 
   return (

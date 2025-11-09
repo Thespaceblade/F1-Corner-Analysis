@@ -117,11 +117,11 @@ export default function CornerPerformanceAnalysis({
           .map(c => c.cornerTime)
           .filter((t): t is number => t !== null && !isNaN(t))
 
-        const avgEntrySpeed = cornerLaps.reduce((sum, c) => sum + c.entrySpeed, 0) / cornerLaps.length
-        const avgApexSpeed = cornerLaps.reduce((sum, c) => sum + c.apexSpeed, 0) / cornerLaps.length
-        const avgExitSpeed = cornerLaps.reduce((sum, c) => sum + c.exitSpeed, 0) / cornerLaps.length
+        const avgEntrySpeed = cornerLaps.reduce((sum: number, c) => sum + c.entrySpeed, 0) / cornerLaps.length
+        const avgApexSpeed = cornerLaps.reduce((sum: number, c) => sum + c.apexSpeed, 0) / cornerLaps.length
+        const avgExitSpeed = cornerLaps.reduce((sum: number, c) => sum + c.exitSpeed, 0) / cornerLaps.length
         const avgCornerTime = validTimes.length > 0
-          ? validTimes.reduce((sum, t) => sum + t, 0) / validTimes.length
+          ? validTimes.reduce((sum: number, t: number) => sum + t, 0) / validTimes.length
           : null
 
         const bestTimeIndex = validTimes.length > 0
@@ -195,8 +195,8 @@ export default function CornerPerformanceAnalysis({
         return
       }
 
-      const driver1Avg = driver1Times.reduce((sum, t) => sum + t, 0) / driver1Times.length
-      const driver2Avg = driver2Times.reduce((sum, t) => sum + t, 0) / driver2Times.length
+      const driver1Avg = driver1Times.reduce((sum: number, t: number) => sum + t, 0) / driver1Times.length
+      const driver2Avg = driver2Times.reduce((sum: number, t: number) => sum + t, 0) / driver2Times.length
 
       // Delta: positive means driver1 is slower
       const delta = driver1Avg - driver2Avg

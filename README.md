@@ -34,6 +34,11 @@ A web application for analyzing Formula 1 corner telemetry data. This project pr
   - Event priority system for critical events
   - Safety car and VSC period visualization
   - Outlier filtering for in-laps, out-laps, and safety car periods
+- **AI-Powered Chatbot**: Natural language interface for querying F1 data
+  - Ask questions about corner performance, driver statistics, and session data
+  - Context-aware responses based on current track, session, and drivers
+  - Powered by Google Gemini AI
+  - Integrated with session data and corner analysis
 - **Driver Comparison Tools**: Compare lap times, sector times, and corner performance across drivers
 - **Session Data Management**: Support for Practice, Qualifying, Sprint Qualifying, and Race sessions
 - **Real-time Telemetry Processing**: FastF1 integration for automatic data fetching and processing
@@ -77,6 +82,13 @@ DATABASE_URL=your_neon_database_url
 ```
 
 If not using a database, the application will use file-based data from `public/data/sessions/`.
+
+**For Chatbot Feature** (optional):
+```env
+GEMINI_API_KEY=your_google_gemini_api_key
+```
+
+The chatbot feature requires a Google Gemini API key. You can get one from [Google AI Studio](https://makersuite.google.com/app/apikey). If not configured, the chatbot will display an error message when used.
 
 ## Usage
 
@@ -150,7 +162,9 @@ The application is configured for deployment on Vercel:
 ```
 F1-Corner-Analysis/
 ├── app/                    # Next.js app directory
-│   ├── api/               # API routes for session data
+│   ├── api/               # API routes
+│   │   ├── sessions/      # Session data API routes
+│   │   └── chat/          # Chatbot API route
 │   ├── page.tsx           # Main page component
 │   └── layout.tsx         # Root layout
 ├── components/            # React components
@@ -161,21 +175,30 @@ F1-Corner-Analysis/
 │   ├── CornerDeltaChart.tsx  # Corner-by-corner delta comparison charts
 │   ├── ChartPanel.tsx     # Data visualization panels with race events
 │   ├── AnalysisPanel.tsx  # Advanced analysis panel container
+│   ├── Chatbot.tsx        # AI-powered chatbot component
 │   ├── ClientPage.tsx     # Main client-side page component
 │   ├── Toolbar.tsx        # Session and driver selection toolbar
+│   ├── TableOfContents.tsx # Navigation table of contents
 │   ├── analyses/          # Analysis components
 │   │   ├── CornerDifficultyAnalysis.tsx  # Corner difficulty metrics
 │   │   ├── CornerEntryExitAnalysis.tsx   # Entry/exit speed analysis
 │   │   ├── StintAnalysis.tsx             # Stint and tyre analysis
-│   │   └── ExportAnalysis.tsx            # Data export functionality
+│   │   ├── ExportAnalysis.tsx            # Data export functionality
+│   │   └── ... (additional analysis components)
 │   └── ...
 ├── lib/                   # Utility libraries
 │   ├── db.ts             # Database client (Neon)
 │   ├── sessionDataClient.ts  # Session data fetching and types
 │   ├── cornerPerformanceAggregator.ts  # Corner performance data aggregation
-│   ├── cornerPositionCalculator.ts     # Corner position calculations
+│   ├── cornerFilter.ts   # Corner filtering utilities
 │   ├── trackSvgLoader.ts # Track SVG loading utilities
 │   ├── teamData.ts       # Team and driver data utilities
+│   ├── chatbot/          # Chatbot utilities
+│   │   ├── queryClassifier.ts  # Query classification
+│   │   ├── queryExecutor.ts    # Query execution
+│   │   ├── responseGenerator.ts # Response generation
+│   │   ├── prompts.ts          # AI prompts
+│   │   └── types.ts            # TypeScript types
 │   └── ...
 ├── scripts/               # Python data processing scripts
 │   ├── fastf1_pipeline/  # Core pipeline modules
@@ -240,6 +263,27 @@ Parameters:
 
 Optional query parameters:
 - `drivers`: Comma-separated driver codes (e.g., "VER,PER")
+
+### Chatbot API
+
+```
+POST /api/chat
+```
+
+Request body:
+```json
+{
+  "query": "Who was fastest at corner 5?",
+  "context": {
+    "track": "monaco",
+    "year": 2025,
+    "session": "Q",
+    "drivers": ["VER", "NOR"]
+  }
+}
+```
+
+Returns a chatbot response with answer, data, and sources.
 
 ## Development
 
@@ -331,6 +375,7 @@ The application provides detailed corner-by-corner analysis:
 
 - **Frontend**: Next.js 13, React 18, TypeScript
 - **Visualization**: Recharts, react-globe.gl
+- **AI/ML**: Google Gemini AI (Generative AI)
 - **Data Processing**: Python 3.8+, FastF1, Pandas, NumPy
 - **Database**: Neon (PostgreSQL) with JSON file fallback
 - **Styling**: Tailwind CSS
@@ -370,6 +415,7 @@ Contributions are welcome! Please feel free to submit a Pull Request.
 ## Recent Updates
 
 ### Latest Features
+- **AI-Powered Chatbot**: Natural language interface for querying F1 data using Google Gemini AI
 - Advanced analysis panels with corner difficulty, entry/exit, and stint analysis
 - Improved corner detection using throttle/brake signals for fast corners
 - Enhanced race event visualization with smart label positioning
@@ -377,6 +423,7 @@ Contributions are welcome! Please feel free to submit a Pull Request.
 - Improved API route error handling
 - Optimized Vercel deployment configuration
 - Added Table of Contents navigation component
+- Improved TypeScript type safety in analysis components
 
 ### Performance Improvements
 - Removed build artifacts from repository (reduced repository size)

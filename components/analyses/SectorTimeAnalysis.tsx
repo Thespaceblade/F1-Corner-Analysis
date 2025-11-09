@@ -90,13 +90,13 @@ export default function SectorTimeAnalysis({
       })
 
       const avgSector1 = sector1Times.length > 0
-        ? sector1Times.reduce((a, b) => a + b, 0) / sector1Times.length
+        ? sector1Times.reduce((a: number, b: number) => a + b, 0) / sector1Times.length
         : null
       const avgSector2 = sector2Times.length > 0
-        ? sector2Times.reduce((a, b) => a + b, 0) / sector2Times.length
+        ? sector2Times.reduce((a: number, b: number) => a + b, 0) / sector2Times.length
         : null
       const avgSector3 = sector3Times.length > 0
-        ? sector3Times.reduce((a, b) => a + b, 0) / sector3Times.length
+        ? sector3Times.reduce((a: number, b: number) => a + b, 0) / sector3Times.length
         : null
 
       sectorStats[driver] = {

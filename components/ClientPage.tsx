@@ -12,6 +12,7 @@ import TrackPanel from './TrackPanel'
 import ChartPanel from './ChartPanel'
 import AnalysisPanel from './AnalysisPanel'
 import TableOfContents from './TableOfContents'
+import Chatbot from './Chatbot'
 import { loadSessionData, SessionPayload } from '../lib/sessionDataClient'
 import { aggregateCornerPerformance } from '../lib/cornerPerformanceAggregator'
 
@@ -526,6 +527,14 @@ export default function ClientPage(){
           </section>
         </>
       )}
+      <Chatbot 
+        context={{
+          track: selectedTrack,
+          year: selectedYear,
+          session: selectedSession,
+          drivers: selectedDrivers,
+        }}
+      />
     </main>
   )
 }
