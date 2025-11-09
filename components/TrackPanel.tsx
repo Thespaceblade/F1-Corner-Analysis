@@ -92,7 +92,7 @@ export default function TrackPanel({
               // Add pointer-events: none to SVG root so overlay markers can receive events
               if (/style=/i.test(adjusted)) {
                 // Append pointer-events: none to existing style
-                adjusted = adjusted.replace(/style\s*=\s*["']([^"']*)["']/i, (match, styles) => {
+                adjusted = adjusted.replace(/style\s*=\s*["']([^"']*)["']/i, (match: string, styles: string) => {
                   const cleanStyles = styles.replace(/pointer-events\s*:\s*[^;]+;?/gi, '').trim()
                   return `style="${cleanStyles}${cleanStyles && !cleanStyles.endsWith(';') ? '; ' : ''}pointer-events: none;"`
                 })

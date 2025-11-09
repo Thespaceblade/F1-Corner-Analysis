@@ -208,8 +208,8 @@ export default function ClientPage(){
   // Aggregate corner performance data
   const cornerPerformance = useMemo(() => {
     if (!sessionData?.corners || !selectedDrivers.length) return undefined
-    return aggregateCornerPerformance(sessionData.corners, selectedDrivers, cornerPerformanceFilter)
-  }, [sessionData?.corners, selectedDrivers, cornerPerformanceFilter])
+    return aggregateCornerPerformance(sessionData.corners, selectedDrivers)
+  }, [sessionData?.corners, selectedDrivers])
   
   // Get available sessions for the selected track
   const availableSessions = useMemo(() => {

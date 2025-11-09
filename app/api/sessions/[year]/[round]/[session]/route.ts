@@ -3,6 +3,9 @@ import { promises as fs } from 'fs'
 import path from 'path'
 import { getDb, isDatabaseEnabled, DriverRow, LapRow, SessionRow } from '../../../../../../lib/db'
 
+// Mark this route as dynamic to prevent static generation issues
+export const dynamic = 'force-dynamic'
+
 type Params = {
   params: {
     year: string

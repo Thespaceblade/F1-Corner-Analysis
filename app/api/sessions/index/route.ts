@@ -3,6 +3,9 @@ import { promises as fs } from 'fs'
 import path from 'path'
 import { getDb, isDatabaseEnabled } from '../../../../lib/db'
 
+// Mark this route as dynamic to prevent static generation issues
+export const dynamic = 'force-dynamic'
+
 type SessionIndex = {
   years: Record<string, {
     rounds: Array<{ id: string, sessions: string[] }>
@@ -47,6 +50,15 @@ export async function GET() {
     }
 
     const root = path.join(process.cwd(), 'public', 'data', 'sessions')
+    
+    // Check if directory exists before trying to read it
+    try {
+      await fs.access(root)
+    } catch {
+      // Directory doesn't exist, return empty index
+      return NextResponse.json(index)
+    }
+    
     const years = await fs.readdir(root, { withFileTypes: true })
     for (const yearDir of years) {
       if (!yearDir.isDirectory()) continue
