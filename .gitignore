@@ -25,6 +25,9 @@ public/data/sessions/__generated_cache__/
 # Cache directories
 cache/
 
+# TypeScript build info
+*.tsbuildinfo
+
 # Temporary documentation files (generated during development)
 ACTIONABLE_COMMIT_SUMMARY.md
 CHANGES_SUMMARY.md
