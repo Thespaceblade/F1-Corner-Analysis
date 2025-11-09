@@ -1,0 +1,45 @@
+# Vercel ignore file
+# Files and directories that should not be uploaded to Vercel during deployment
+
+# Build artifacts (Vercel builds these from source)
+.next/
+
+# Node modules (installed by Vercel)
+node_modules/
+
+# Development and IDE files
+.vscode/
+.cursor/
+*.tsbuildinfo
+
+# Local cache (not needed on Vercel)
+cache/
+
+# Python files and scripts (not needed for Next.js runtime)
+# Note: Keep scripts/ if data processing is needed, but typically not needed at runtime
+scripts/
+*.py
+__pycache__/
+*.pyc
+
+# Documentation (not needed for deployment)
+docs/
+*.md
+!README.md
+
+# Git files
+.git/
+
+# Environment files (use Vercel environment variables instead)
+.env
+.env.*
+
+# Temporary and output files
+*.log
+*.tmp
+.DS_Store
+output/
+
+# Keep public/data/sessions/ - this is needed at runtime!
+# Keep all source code (app/, components/, lib/, etc.)
+

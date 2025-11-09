@@ -122,6 +122,22 @@ npm run build
 npm start
 ```
 
+### Deployment on Vercel
+
+The application is configured for deployment on Vercel:
+
+1. **Build Configuration**: Vercel automatically detects Next.js and runs `npm run build`
+2. **API Routes**: API routes are marked as dynamic to prevent static generation issues
+3. **Build Artifacts**: The `.next/` directory is excluded from git and built on Vercel
+4. **Environment Variables**: Set any required environment variables in Vercel dashboard
+5. **Public Data**: The `public/data/sessions/` directory is included in deployment
+
+**Important Notes**:
+- The `.next/` directory should NOT be committed to git (it's in `.gitignore`)
+- Vercel will build the application from source during deployment
+- If you encounter build issues, ensure all dependencies are in `package.json`
+- API routes use `export const dynamic = 'force-dynamic'` to prevent static generation
+
 ## Project Structure
 
 ```

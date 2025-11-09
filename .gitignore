@@ -12,7 +12,7 @@ node_modules/
 .env.*
 
 # Next.js build outputs
-# .next/ - Commented out to allow tracking for Vercel deployment
+.next/
 .out/
 dist/
 .vercel/
