@@ -111,7 +111,7 @@ export default function TyreCompoundAnalysis({
     })
 
     return Array.from(allCompounds).map(compound => {
-      const dataPoint: { compound: string; [driverCode: string]: number | null } = {
+      const dataPoint: Record<string, string | number | null> = {
         compound,
       }
 

@@ -2,12 +2,28 @@
 
 import React, { useMemo } from 'react'
 import { SessionPayload } from '../../lib/sessionDataClient'
-import { BarChart, Bar, XAxis, YAxis, Tooltip, ResponsiveContainer, Legend, CartesianGrid, Cell } from 'recharts'
+import { BarChart, Bar, XAxis, YAxis, Tooltip, ResponsiveContainer, Legend, CartesianGrid, Cell, ReferenceLine } from 'recharts'
 import { driverColorMap } from '../../lib/teamData'
 
 type SectorTimeAnalysisProps = {
   sessionData: SessionPayload
   selectedDrivers: string[]
+}
+
+type SectorStats = {
+  driver: string
+  sector1: number[]
+  sector2: number[]
+  sector3: number[]
+  bestSector1: number | null
+  bestSector2: number | null
+  bestSector3: number | null
+  avgSector1: number | null
+  avgSector2: number | null
+  avgSector3: number | null
+  bestLap: number | null
+  bestLapNumber: number | null
+  sampleCount: number
 }
 
 const FALLBACK_COLORS = [
@@ -35,24 +51,10 @@ export default function SectorTimeAnalysis({
   selectedDrivers,
 }: SectorTimeAnalysisProps) {
   // Aggregate sector times by driver
-  const sectorData = useMemo(() => {
-    if (!sessionData?.laps) return []
+  const sectorData = useMemo((): SectorStats[] => {
+    if (!sessionData?.laps) return [] as SectorStats[]
 
-    const sectorStats: Record<string, {
-      driver: string
-      sector1: number[]
-      sector2: number[]
-      sector3: number[]
-      bestSector1: number | null
-      bestSector2: number | null
-      bestSector3: number | null
-      avgSector1: number | null
-      avgSector2: number | null
-      avgSector3: number | null
-      bestLap: number | null
-      bestLapNumber: number | null
-      sampleCount: number
-    }> = {}
+    const sectorStats: Record<string, SectorStats> = {}
 
     selectedDrivers.forEach(driver => {
       const driverLaps = sessionData.laps.filter(
@@ -114,7 +116,7 @@ export default function SectorTimeAnalysis({
       }
     })
 
-    return Object.values(sectorStats)
+    return Object.values(sectorStats) as SectorStats[]
   }, [sessionData, selectedDrivers])
 
   // Chart data for sector comparison
@@ -136,7 +138,7 @@ export default function SectorTimeAnalysis({
     let bestS2: { driver: string; time: number } | null = null
     let bestS3: { driver: string; time: number } | null = null
 
-    sectorData.forEach(driver => {
+    for (const driver of sectorData) {
       if (driver.bestSector1 !== null) {
         if (!bestS1 || driver.bestSector1 < bestS1.time) {
           bestS1 = { driver: driver.driver, time: driver.bestSector1 }
@@ -152,7 +154,7 @@ export default function SectorTimeAnalysis({
           bestS3 = { driver: driver.driver, time: driver.bestSector3 }
         }
       }
-    })
+    }
 
     return { bestS1, bestS2, bestS3 }
   }, [sectorData])
@@ -226,45 +228,52 @@ export default function SectorTimeAnalysis({
               </tr>
             </thead>
             <tbody>
-              {sectorData.map((driver) => (
-                <tr key={driver.driver} className="border-b border-gray-800 hover:bg-gray-800/30">
-                  <td className="py-2 px-3 font-medium text-gray-200">{driver.driver}</td>
-                  <td className="text-right py-2 px-3 text-gray-300">
-                    {driver.avgSector1 !== null ? driver.avgSector1.toFixed(3) : 'N/A'}
-                    {bestSectors.bestS1?.driver === driver.driver && (
-                      <span className="ml-1 text-green-400 text-xs">⭐</span>
-                    )}
-                  </td>
-                  <td className="text-right py-2 px-3 text-gray-300">
-                    {driver.bestSector1 !== null ? driver.bestSector1.toFixed(3) : 'N/A'}
-                  </td>
-                  <td className="text-right py-2 px-3 text-gray-300">
-                    {driver.avgSector2 !== null ? driver.avgSector2.toFixed(3) : 'N/A'}
-                    {bestSectors.bestS2?.driver === driver.driver && (
-                      <span className="ml-1 text-green-400 text-xs">⭐</span>
-                    )}
-                  </td>
-                  <td className="text-right py-2 px-3 text-gray-300">
-                    {driver.bestSector2 !== null ? driver.bestSector2.toFixed(3) : 'N/A'}
-                  </td>
-                  <td className="text-right py-2 px-3 text-gray-300">
-                    {driver.avgSector3 !== null ? driver.avgSector3.toFixed(3) : 'N/A'}
-                    {bestSectors.bestS3?.driver === driver.driver && (
-                      <span className="ml-1 text-green-400 text-xs">⭐</span>
-                    )}
-                  </td>
-                  <td className="text-right py-2 px-3 text-gray-300">
-                    {driver.bestSector3 !== null ? driver.bestSector3.toFixed(3) : 'N/A'}
-                  </td>
-                  <td className="text-right py-2 px-3 text-gray-300">
-                    {driver.bestLap !== null ? driver.bestLap.toFixed(3) : 'N/A'}
-                    {driver.bestLapNumber && (
-                      <span className="ml-1 text-xs text-gray-500">(Lap {driver.bestLapNumber})</span>
-                    )}
-                  </td>
-                  <td className="text-right py-2 px-3 text-gray-400">{driver.sampleCount}</td>
-                </tr>
-              ))}
+              {sectorData.map((driverItem) => {
+                const driverCode = driverItem.driver
+                const isBestS1 = bestSectors.bestS1 !== null && bestSectors.bestS1.driver === driverCode
+                const isBestS2 = bestSectors.bestS2 !== null && bestSectors.bestS2.driver === driverCode
+                const isBestS3 = bestSectors.bestS3 !== null && bestSectors.bestS3.driver === driverCode
+                
+                return (
+                  <tr key={driverCode} className="border-b border-gray-800 hover:bg-gray-800/30">
+                    <td className="py-2 px-3 font-medium text-gray-200">{driverCode}</td>
+                    <td className="text-right py-2 px-3 text-gray-300">
+                      {driverItem.avgSector1 !== null ? driverItem.avgSector1.toFixed(3) : 'N/A'}
+                      {isBestS1 && (
+                        <span className="ml-1 text-green-400 text-xs">⭐</span>
+                      )}
+                    </td>
+                    <td className="text-right py-2 px-3 text-gray-300">
+                      {driverItem.bestSector1 !== null ? driverItem.bestSector1.toFixed(3) : 'N/A'}
+                    </td>
+                    <td className="text-right py-2 px-3 text-gray-300">
+                      {driverItem.avgSector2 !== null ? driverItem.avgSector2.toFixed(3) : 'N/A'}
+                      {isBestS2 && (
+                        <span className="ml-1 text-green-400 text-xs">⭐</span>
+                      )}
+                    </td>
+                    <td className="text-right py-2 px-3 text-gray-300">
+                      {driverItem.bestSector2 !== null ? driverItem.bestSector2.toFixed(3) : 'N/A'}
+                    </td>
+                    <td className="text-right py-2 px-3 text-gray-300">
+                      {driverItem.avgSector3 !== null ? driverItem.avgSector3.toFixed(3) : 'N/A'}
+                      {isBestS3 && (
+                        <span className="ml-1 text-green-400 text-xs">⭐</span>
+                      )}
+                    </td>
+                    <td className="text-right py-2 px-3 text-gray-300">
+                      {driverItem.bestSector3 !== null ? driverItem.bestSector3.toFixed(3) : 'N/A'}
+                    </td>
+                    <td className="text-right py-2 px-3 text-gray-300">
+                      {driverItem.bestLap !== null ? driverItem.bestLap.toFixed(3) : 'N/A'}
+                      {driverItem.bestLapNumber && (
+                        <span className="ml-1 text-xs text-gray-500">(Lap {driverItem.bestLapNumber})</span>
+                      )}
+                    </td>
+                    <td className="text-right py-2 px-3 text-gray-400">{driverItem.sampleCount}</td>
+                  </tr>
+                )
+              })}
             </tbody>
           </table>
         </div>
