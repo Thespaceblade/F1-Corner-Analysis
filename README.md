@@ -416,6 +416,10 @@ Contributions are welcome! Please feel free to submit a Pull Request.
 
 ### Latest Features
 - **AI-Powered Chatbot**: Natural language interface for querying F1 data using Google Gemini AI
+  - Improved error handling with user-friendly messages
+  - Fallback response generation when AI API fails
+  - Enhanced query classification with better driver/track name recognition
+  - Context-aware responses based on current page state
 - Advanced analysis panels with corner difficulty, entry/exit, and stint analysis
 - Improved corner detection using throttle/brake signals for fast corners
 - Enhanced race event visualization with smart label positioning
