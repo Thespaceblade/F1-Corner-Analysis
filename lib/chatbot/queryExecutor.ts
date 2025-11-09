@@ -468,6 +468,9 @@ export async function executeQuery(
       if (!parameters.cornerNumber) {
         throw new Error('Corner number is required for corner performance queries')
       }
+      if (!track) {
+        throw new Error('Track/round slug is required for corner performance queries')
+      }
       const data = await getCornerPerformance(
         parameters.cornerNumber,
         track,
@@ -491,6 +494,9 @@ export async function executeQuery(
       if (!parameters.driverCode) {
         throw new Error('Driver code is required for driver performance queries')
       }
+      if (!track) {
+        throw new Error('Track/round slug is required for driver performance queries')
+      }
       const data = await getDriverCornerStats(
         parameters.driverCode,
         track,
@@ -513,6 +519,9 @@ export async function executeQuery(
     case 'COMPARISON': {
       if (!parameters.driverCodes || parameters.driverCodes.length < 2) {
         throw new Error('At least two driver codes are required for comparison')
+      }
+      if (!track) {
+        throw new Error('Track/round slug is required for comparison queries')
       }
       const data = await compareDrivers(
         parameters.driverCodes[0],

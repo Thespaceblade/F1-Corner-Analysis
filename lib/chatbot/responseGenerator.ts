@@ -115,7 +115,7 @@ function generateFallbackResponse(
           .map((d: any) => d.timeDelta)
           .filter((d: number | null): d is number => d !== null)
         if (avgDelta.length > 0) {
-          const overallDelta = avgDelta.reduce((a, b) => a + b, 0) / avgDelta.length
+          const overallDelta = avgDelta.reduce((a: number, b: number) => a + b, 0) / avgDelta.length
           const driver1 = classifiedQuery.parameters.driverCodes?.[0] || 'Driver 1'
           const driver2 = classifiedQuery.parameters.driverCodes?.[1] || 'Driver 2'
           if (overallDelta > 0) {
