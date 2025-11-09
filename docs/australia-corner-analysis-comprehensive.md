@@ -189,3 +189,4 @@ The distance ranges have been updated to match actual detected distances. Howeve
 The next step is to regenerate the session data and verify if the updated ranges improve corner matching. If corners are still missing, we need to investigate the corner detection algorithm and potentially adjust its parameters for the Australia track.
 
 
+
