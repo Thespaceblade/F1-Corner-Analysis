@@ -1,6 +1,7 @@
 'use client'
 
 import React, { useState, useCallback, useRef } from 'react'
+import { createPortal } from 'react-dom'
 import { CornerPerformance } from '../lib/cornerPerformanceAggregator'
 import CornerTooltip from './CornerTooltip'
 
@@ -76,7 +77,6 @@ export default function CornerPerformanceOverlay({
     const avgDelta = driversWithTimes.reduce((sum, item) => sum + (item.time - fastestTime), 0) / driversWithTimes.length
     
     // Color based on how close drivers are to fastest (lighter colors = closer competition)
-    // We use a more subtle color scheme since we're showing individual driver data in tooltip
     if (avgDelta < 0.03) return '#22c55e' // Very close competition
     if (avgDelta < 0.08) return '#4ade80' // Close competition
     if (avgDelta < 0.15) return '#fbbf24' // Moderate spread
@@ -125,7 +125,7 @@ export default function CornerPerformanceOverlay({
       }
     }
   }, [])
-
+  
   return (
     <>
       {corners.map(corner => {
@@ -164,7 +164,7 @@ export default function CornerPerformanceOverlay({
               />
             )}
             
-            {/* Main corner marker */}
+            {/* Main corner marker - ALWAYS render and hoverable */}
             <circle
               cx={corner.x}
               cy={corner.y}
@@ -202,7 +202,6 @@ export default function CornerPerformanceOverlay({
           </g>
         )
       })}
-      
     </>
   )
 }
@@ -241,3 +240,4 @@ export function CornerTooltipPortal({
     />
   )
 }
+

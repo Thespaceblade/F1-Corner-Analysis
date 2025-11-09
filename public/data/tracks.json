@@ -17,7 +17,7 @@
         },
         {
           "number": 2,
-          "type": "slow",
+          "type": "fast",
           "expectedDistanceRange": {
             "min": 981,
             "max": 1121
@@ -27,7 +27,7 @@
         },
         {
           "number": 3,
-          "type": "fast",
+          "type": "slow",
           "expectedDistanceRange": {
             "min": 1791,
             "max": 1925
@@ -37,17 +37,17 @@
         },
         {
           "number": 4,
-          "type": "fast",
+          "type": "medium",
           "expectedDistanceRange": {
             "min": 3223,
             "max": 3377
           },
           "x": 75.7,
-          "y": 178
+          "y":178
         },
         {
           "number": 5,
-          "type": "slow",
+          "type": "fast",
           "expectedDistanceRange": {
             "min": 4039,
             "max": 4141
@@ -67,40 +67,40 @@
         },
         {
           "number": 7,
-          "type": "slow",
+          "type": "fast",
           "expectedDistanceRange": {
             "min": 4515,
-            "max": 4657
+            "max": 4520
           },
           "x": 244.9,
           "y": 38
         },
         {
           "number": 8,
-          "type": "medium",
+          "type": "fast",
           "expectedDistanceRange": {
-            "min": 4700,
-            "max": 4850
+            "min": 4520,
+            "max": 4550
           },
           "x": 299.4,
           "y": 60.9
         },
         {
           "number": 9,
-          "type": "fast",
+          "type": "slow",
           "expectedDistanceRange": {
-            "min": 5000,
-            "max": 5200
+            "min": 4550,
+            "max": 4620
           },
           "x": 395.5,
           "y": 436.7
         },
         {
           "number": 10,
-          "type": "medium",
+          "type": "slow",
           "expectedDistanceRange": {
-            "min": 5300,
-            "max": 5450
+            "min": 4620,
+            "max": 4650
           },
           "x": 441.5,
           "y": 435.2
@@ -109,38 +109,38 @@
           "number": 11,
           "type": "fast",
           "expectedDistanceRange": {
-            "min": 5600,
-            "max": 5800
+            "min": 4800,
+            "max": 5000
           },
           "x": 571.1,
           "y": 655.9
         },
         {
           "number": 12,
-          "type": "slow",
+          "type": "fast",
           "expectedDistanceRange": {
-            "min": 5900,
-            "max": 6050
+            "min": 5000,
+            "max": 5150
           },
           "x": 479.2,
           "y": 675.7
         },
         {
           "number": 13,
-          "type": "medium",
+          "type": "slow",
           "expectedDistanceRange": {
-            "min": 6200,
-            "max": 6350
+            "min": 5150,
+            "max": 5200
           },
           "x": 426.1,
           "y": 604.1
         },
         {
           "number": 14,
-          "type": "fast",
+          "type": "medium",
           "expectedDistanceRange": {
-            "min": 6500,
-            "max": 6700
+            "min": 5200,
+            "max": 5230
           },
           "x": 382.4,
           "y": 633

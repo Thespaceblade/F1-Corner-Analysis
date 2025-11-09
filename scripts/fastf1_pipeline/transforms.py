@@ -167,10 +167,19 @@ def process_session_corners(
             if telemetry_resampled.empty or "Speed" not in telemetry_resampled.columns:
                 continue
 
-            # Detect corners
+            # Detect corners using enhanced method that includes fast corner detection
+            # Uses speed gradient analysis to detect fast corners with minimal speed drops
+            throttle_series = telemetry_resampled.get("Throttle") if "Throttle" in telemetry_resampled.columns else None
+            brake_series = telemetry_resampled.get("Brake") if "Brake" in telemetry_resampled.columns else None
+            
             detected = detect_corners(
                 telemetry_resampled["Speed"],
                 telemetry_resampled["Distance"],
+                min_drop_kmh=10.0,  # Reduced from default 18.0 to catch fast corners
+                min_recovery_kmh=8.0,  # Reduced from default 10.0
+                throttle_series=throttle_series,
+                brake_series=brake_series,
+                use_throttle_brake=True,  # Enable fast corner detection using speed gradient analysis
             )
 
             if not detected:

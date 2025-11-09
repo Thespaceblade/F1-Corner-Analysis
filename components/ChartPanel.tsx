@@ -244,11 +244,38 @@ type RacePeriodEvent = {
   startLap: number
   endLap: number
   type: 'safety-car' | 'virtual-safety-car'
+  startLabel: string
+  endLabel: string
 }
 
 type RaceEvents = {
   pointEvents: RacePointEvent[]
   periodEvents: RacePeriodEvent[]
+}
+
+// Unified event for label positioning
+type LabeledEvent = {
+  lapNumber: number
+  label: string
+  priority: number
+  type: 'point' | 'period-start' | 'period-end'
+  eventType: string
+  driver?: string
+  stroke: string
+  strokeWidth: number
+  strokeDasharray: string
+  fontWeight: 'normal' | 'bold'
+  offset: number  // Calculated vertical offset to prevent overlaps
+}
+
+// Event priority (lower number = higher priority, appears higher on chart)
+const EVENT_PRIORITY: Record<string, number> = {
+  'red-flag': 1,
+  'race-start': 2,
+  'period-start': 3,
+  'period-end': 4,
+  'pit-stop': 5,
+  'yellow-flag': 6,
 }
 
 const extractRaceEvents = (
@@ -335,16 +362,18 @@ const extractRaceEvents = (
       yellowFlagLaps.add(lapNumber)
     }
 
-    // Check for pit stops (stint change) - only for selected drivers
+    // Check for pit stops - look for "in-lap" flag (when driver actually pits)
+    // Only for race sessions, not qualifying
+    if (flags.includes('in-lap') && normalizedDriver && lapNumber > 1) {
+      pointEvents.push({
+        lapNumber,
+        type: 'pit-stop',
+        driver: normalizedDriver,
+      })
+    }
+    
+    // Track stint for reference (not used for pit detection anymore)
     if (normalizedDriver && lap.stint != null) {
-      const lastStint = lastStintByDriver.get(normalizedDriver)
-      if (lastStint != null && lastStint !== lap.stint && lapNumber > 1) {
-        pointEvents.push({
-          lapNumber,
-          type: 'pit-stop',
-          driver: normalizedDriver,
-        })
-      }
       lastStintByDriver.set(normalizedDriver, lap.stint)
     }
   }
@@ -363,24 +392,29 @@ const extractRaceEvents = (
     .sort((a, b) => a[0] - b[0])
   
   if (scLaps.length > 0) {
-    let currentPeriod: { startLap: number; endLap: number; type: 'safety-car' | 'virtual-safety-car' } | null = null
+    let currentPeriod: { startLap: number; endLap: number; type: 'safety-car' | 'virtual-safety-car'; startLabel: string; endLabel: string } | null = null
     
     for (const [lapNumber, type] of scLaps) {
       if (!currentPeriod) {
         // Start a new period
-        currentPeriod = { startLap: lapNumber, endLap: lapNumber, type }
+        const label: string = type === 'safety-car' ? 'SC start' : 'VSC start'
+        currentPeriod = { startLap: lapNumber, endLap: lapNumber, type, startLabel: label, endLabel: '' }
       } else if (currentPeriod.type === type && lapNumber === currentPeriod.endLap + 1) {
         // Continue the current period (consecutive lap with same type)
         currentPeriod.endLap = lapNumber
       } else {
         // End current period (either type changed or gap in laps) and start a new one
+        // Set end label for the previous period
+        currentPeriod.endLabel = currentPeriod.type === 'safety-car' ? 'SC end' : 'VSC end'
         periodEvents.push(currentPeriod)
-        currentPeriod = { startLap: lapNumber, endLap: lapNumber, type }
+        const label: string = type === 'safety-car' ? 'SC start' : 'VSC start'
+        currentPeriod = { startLap: lapNumber, endLap: lapNumber, type, startLabel: label, endLabel: '' }
       }
     }
     
-    // Don't forget the last period
+    // Don't forget the last period - set end label
     if (currentPeriod) {
+      currentPeriod.endLabel = currentPeriod.type === 'safety-car' ? 'SC end' : 'VSC end'
       periodEvents.push(currentPeriod)
     }
   }
@@ -389,6 +423,149 @@ const extractRaceEvents = (
   pointEvents.sort((a, b) => a.lapNumber - b.lapNumber)
 
   return { pointEvents, periodEvents }
+}
+
+// Calculate label offsets to prevent overlaps
+const calculateLabelOffsets = (events: LabeledEvent[]): LabeledEvent[] => {
+  const MIN_OFFSET = 5
+  const OFFSET_STEP = 18  // Vertical spacing between labels
+  const COLLISION_THRESHOLD = 2  // Consider events within 2 laps as potentially overlapping
+  const MIN_LABEL_SPACING = 14  // Minimum pixels between labels
+  
+  // Sort by lap number, then priority
+  const sorted = [...events].sort((a, b) => {
+    if (a.lapNumber !== b.lapNumber) {
+      return a.lapNumber - b.lapNumber
+    }
+    return a.priority - b.priority
+  })
+  
+  // Calculate offsets with collision detection
+  for (let i = 0; i < sorted.length; i++) {
+    const current = sorted[i]
+    // Base offset: minimum + (priority level * step)
+    let offset = MIN_OFFSET + ((current.priority - 1) * OFFSET_STEP)
+    
+    // Check for collisions with previous events
+    for (let j = 0; j < i; j++) {
+      const previous = sorted[j]
+      const lapDiff = Math.abs(current.lapNumber - previous.lapNumber)
+      
+      // If events are close together (within collision threshold)
+      if (lapDiff <= COLLISION_THRESHOLD) {
+        const offsetDiff = Math.abs(offset - previous.offset)
+        
+        // If offsets are too close, push current event down
+        if (offsetDiff < MIN_LABEL_SPACING) {
+          offset = previous.offset + MIN_LABEL_SPACING
+        }
+      }
+    }
+    
+    // Ensure offset doesn't go too high (limit to reasonable chart margin)
+    current.offset = Math.min(offset, 120)  // Max 120px offset
+  }
+  
+  return sorted
+}
+
+// Convert race events to labeled events for positioning
+const createLabeledEvents = (
+  pointEvents: RacePointEvent[],
+  periodEvents: RacePeriodEvent[]
+): LabeledEvent[] => {
+  const labeledEvents: LabeledEvent[] = []
+  
+  // Convert point events
+  for (const event of pointEvents) {
+    let label: string = ''
+    let stroke: string = '#9aa4b2'
+    let strokeWidth: number = 1
+    let strokeDasharray: string = '3 3'
+    let fontWeight: 'normal' | 'bold' = 'normal'
+    
+    switch (event.type) {
+      case 'race-start':
+        label = '🏁 Start'
+        stroke = '#22c55e'
+        strokeWidth = 2
+        strokeDasharray = '5 5'
+        fontWeight = 'bold'
+        break
+      case 'pit-stop':
+        label = event.driver ? `Pit (${event.driver})` : 'Pit'
+        stroke = '#f97316'
+        strokeWidth = 1.5
+        strokeDasharray = '4 4'
+        break
+      case 'yellow-flag':
+        label = 'Yellow'
+        stroke = '#eab308'
+        strokeWidth = 1
+        strokeDasharray = '3 3'
+        break
+      case 'red-flag':
+        label = 'Red Flag'
+        stroke = '#ef4444'
+        strokeWidth = 2.5
+        strokeDasharray = '10 5'
+        fontWeight = 'bold'
+        break
+    }
+    
+    labeledEvents.push({
+      lapNumber: event.lapNumber,
+      label,
+      priority: EVENT_PRIORITY[event.type] || 10,
+      type: 'point',
+      eventType: event.type,
+      driver: event.driver,
+      stroke,
+      strokeWidth,
+      strokeDasharray,
+      fontWeight,
+      offset: 5,  // Temporary, will be calculated
+    })
+  }
+  
+  // Convert period events (start and end)
+  for (const period of periodEvents) {
+    const periodStroke = period.type === 'safety-car' ? '#facc15' : '#fbbf24'
+    const periodStrokeWidth = 2
+    const periodDashArray = '5 5'
+    
+    // Start event
+    labeledEvents.push({
+      lapNumber: period.startLap,
+      label: period.startLabel,
+      priority: EVENT_PRIORITY['period-start'],
+      type: 'period-start',
+      eventType: period.type,
+      stroke: periodStroke,
+      strokeWidth: periodStrokeWidth,
+      strokeDasharray: periodDashArray,
+      fontWeight: 'normal',
+      offset: 5,  // Temporary, will be calculated
+    })
+    
+    // End event (only if different from start)
+    if (period.endLap !== period.startLap) {
+      labeledEvents.push({
+        lapNumber: period.endLap,
+        label: period.endLabel,
+        priority: EVENT_PRIORITY['period-end'],
+        type: 'period-end',
+        eventType: period.type,
+        stroke: periodStroke,
+        strokeWidth: periodStrokeWidth,
+        strokeDasharray: periodDashArray,
+        fontWeight: 'normal',
+        offset: 5,  // Temporary, will be calculated
+      })
+    }
+  }
+  
+  return calculateLabelOffsets(labeledEvents)
 }
 
 export default function ChartPanel({ 
@@ -449,6 +626,19 @@ export default function ChartPanel({
     // Always extract from all laps (pass true to include outliers) to detect events accurately
     return extractRaceEvents(sessionData, driversToDisplay, true)
   }, [sessionData, driversToDisplay, showOutliers, isRaceSession])
+
+  // Create labeled events with calculated offsets to prevent overlaps
+  const labeledEvents = useMemo(() => {
+    if (!isRaceSession || !showOutliers || (!raceEvents.pointEvents.length && !raceEvents.periodEvents.length)) {
+      return []
+    }
+    return createLabeledEvents(raceEvents.pointEvents, raceEvents.periodEvents)
+  }, [raceEvents, isRaceSession, showOutliers])
+
+  // Separate period events for area rendering (they need to be rendered separately)
+  const periodEventsForAreas = useMemo(() => {
+    return raceEvents.periodEvents
+  }, [raceEvents.periodEvents])
 
   const yDomain = useMemo(() => {
     if (isQualifyingSession && qualifyingData.length > 0) {
@@ -1300,87 +1490,52 @@ export default function ChartPanel({
               />
               <Tooltip content={<ChartTooltip compoundMap={compoundMap} />} />
               <Legend />
-              {/* Race Period Events - Highlighted areas for Safety Car and VSC */}
-              {raceEvents.periodEvents.map((period, idx) => {
+              {/* Race Period Events - Highlighted areas for Safety Car and VSC (render areas first, behind lines) */}
+              {periodEventsForAreas.map((period, idx) => {
                 const getPeriodStyle = (type: 'safety-car' | 'virtual-safety-car') => {
                   switch (type) {
                     case 'safety-car':
                       return {
                         fill: '#facc15',
                         fillOpacity: 0.15,
-                        stroke: '#facc15',
-                        strokeWidth: 1,
-                        strokeOpacity: 0.6,
-                        label: 'SC',
                       }
                     case 'virtual-safety-car':
                       return {
                         fill: '#fbbf24',
                         fillOpacity: 0.12,
-                        stroke: '#fbbf24',
-                        strokeWidth: 1,
-                        strokeOpacity: 0.5,
-                        label: 'VSC',
                       }
                   }
                 }
                 const style = getPeriodStyle(period.type)
                 return (
                   <ReferenceArea
-                    key={`period-${period.type}-${period.startLap}-${period.endLap}-${idx}`}
+                    key={`period-area-${period.type}-${period.startLap}-${period.endLap}-${idx}`}
                     x1={period.startLap - 0.5}
                     x2={period.endLap + 0.5}
                     fill={style.fill}
                     fillOpacity={style.fillOpacity}
-                    stroke={style.stroke}
-                    strokeWidth={style.strokeWidth}
-                    strokeOpacity={style.strokeOpacity}
-                    label={{
-                      value: style.label,
-                      position: 'top',
-                      offset: 5,
-                      fill: style.stroke,
-                      fontSize: 10,
-                      fontWeight: 'normal',
-                    }}
+                    stroke="none"
                   />
                 )
               })}
-              {/* Race Point Events - Vertical dashed lines for race start, pit stops, flags */}
-              {raceEvents.pointEvents.map((event, idx) => {
-                const getEventStyle = (type: RacePointEvent['type']) => {
-                  switch (type) {
-                    case 'race-start':
-                      return { stroke: '#22c55e', strokeWidth: 2, strokeDasharray: '5 5', label: '🏁 Start' }
-                    case 'pit-stop':
-                      return { stroke: '#f97316', strokeWidth: 1.5, strokeDasharray: '4 4', label: 'Pit' }
-                    case 'yellow-flag':
-                      return { stroke: '#eab308', strokeWidth: 1, strokeDasharray: '3 3', label: 'Yellow' }
-                    case 'red-flag':
-                      return { stroke: '#ef4444', strokeWidth: 2.5, strokeDasharray: '10 5', label: 'Red Flag' }
-                    default:
-                      return { stroke: '#9aa4b2', strokeWidth: 1, strokeDasharray: '3 3', label: '' }
-                  }
-                }
-                const style = getEventStyle(event.type)
-                return (
-                  <ReferenceLine
-                    key={`point-${event.lapNumber}-${event.type}-${idx}`}
-                    x={event.lapNumber}
-                    stroke={style.stroke}
-                    strokeWidth={style.strokeWidth}
-                    strokeDasharray={style.strokeDasharray}
-                    label={{
-                      value: style.label,
-                      position: 'top',
-                      offset: 5,
-                      fill: style.stroke,
-                      fontSize: 10,
-                      fontWeight: event.type === 'red-flag' || event.type === 'race-start' ? 'bold' : 'normal',
-                    }}
-                  />
-                )
-              })}
+              {/* All Race Events - Vertical dashed lines with smart label positioning */}
+              {labeledEvents.map((event, idx) => (
+                <ReferenceLine
+                  key={`event-${event.type}-${event.lapNumber}-${event.eventType}-${idx}`}
+                  x={event.lapNumber}
+                  stroke={event.stroke}
+                  strokeWidth={event.strokeWidth}
+                  strokeDasharray={event.strokeDasharray}
+                  label={{
+                    value: event.label,
+                    position: 'top',
+                    offset: event.offset,
+                    fill: event.stroke,
+                    fontSize: 10,
+                    fontWeight: event.fontWeight,
+                  }}
+                />
+              ))}
               {driversToDisplay.map((code, index) => (
                 <Line
                   key={code}

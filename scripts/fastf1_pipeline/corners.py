@@ -111,14 +111,20 @@ def detect_corners(
     min_drop_kmh: float = 18.0,
     min_recovery_kmh: float = 10.0,
     min_len_pts: int = 4,
+    throttle_series: pd.Series | None = None,
+    brake_series: pd.Series | None = None,
+    use_throttle_brake: bool = False,
 ) -> List[Dict[str, int]]:
     """
     Detect corners from speed/distance telemetry using speed drop heuristic.
+    Optionally uses throttle/brake signals to detect fast corners.
 
     Algorithm:
-    - A corner begins when speed starts a sustained drop larger than min_drop_kmh
+    - Primary: A corner begins when speed starts a sustained drop larger than min_drop_kmh
     - The apex is the local minimum after the drop
     - Corner ends when speed recovers by min_recovery_kmh or trend reverses
+    - Secondary (if use_throttle_brake): Detect corners from throttle lifts or brake applications
+      even when speed drop is minimal (for fast corners)
 
     Args:
         speed_series: Series of speed values in km/h
@@ -126,6 +132,9 @@ def detect_corners(
         min_drop_kmh: Minimum speed drop to detect corner start (default: 18.0)
         min_recovery_kmh: Minimum speed recovery to detect corner end (default: 10.0)
         min_len_pts: Minimum number of points for valid corner (default: 4)
+        throttle_series: Optional series of throttle values (0-100%)
+        brake_series: Optional series of brake values (0-100%)
+        use_throttle_brake: If True, use throttle/brake signals for fast corner detection
 
     Returns:
         List of dicts with start_idx, apex_idx, end_idx
@@ -143,6 +152,7 @@ def detect_corners(
     corners = []
     i = 1
 
+    # Primary detection: speed-based corners (slow/medium corners)
     while i < n - 2:
         # Look for start of braking - negative gradient region
         if sp[i - 1] - sp[i] < 0.5:
@@ -181,7 +191,149 @@ def detect_corners(
         else:
             i = j + 1
 
-    return corners
+    # Secondary detection: speed gradient-based corners (fast corners)
+    # Look for local minima in speed gradient, even when overall speed is increasing
+    # This catches fast corners that don't have significant speed drops
+    if use_throttle_brake:
+        # Calculate speed gradient (rate of change)
+        speed_gradient = np.gradient(sp)
+        speed_gradient_smooth = np.convolve(speed_gradient, np.ones(5)/5, mode='same')
+        
+        # Find local minima in speed gradient (points where acceleration decreases)
+        # These indicate corners even if speed is still increasing
+        i = 10
+        while i < n - 10:
+            # Check if this is a local minimum in speed gradient
+            is_local_min = True
+            for offset in [-5, -3, -1, 1, 3, 5]:
+                if i + offset < n and speed_gradient_smooth[i] >= speed_gradient_smooth[i + offset]:
+                    is_local_min = False
+                    break
+            
+            # Also check for actual speed local minima (even very shallow ones)
+            speed_is_local_min = True
+            for offset in [-3, -2, -1, 1, 2, 3]:
+                if 0 <= i + offset < n and sp[i] > sp[i + offset]:
+                    speed_is_local_min = False
+                    break
+            
+            # Detect corner if gradient minimum OR speed minimum (even shallow)
+            if is_local_min or speed_is_local_min:
+                # Find the actual speed minimum in this region (apex)
+                apex_idx = i
+                min_speed = sp[i]
+                search_start = max(0, i - 10)
+                search_end = min(n - 1, i + 15)
+                for j in range(search_start, search_end):
+                    if sp[j] < min_speed:
+                        min_speed = sp[j]
+                        apex_idx = j
+                
+                # Find start (look backward for speed peak or gradient change)
+                start_idx = apex_idx
+                for j in range(apex_idx, max(0, apex_idx - 25), -1):
+                    if j > 0 and sp[j] > sp[j-1]:
+                        start_idx = j
+                        break
+                start_idx = max(0, start_idx - 3)
+                
+                # Find end (look forward for speed recovery)
+                end_idx = apex_idx
+                for j in range(apex_idx, min(n - 1, apex_idx + 25)):
+                    if j < n - 1 and sp[j] < sp[j+1]:
+                        end_idx = j
+                        break
+                end_idx = min(n - 1, end_idx + 3)
+                
+                # Only add if:
+                # 1. Corner is at least min_len_pts long
+                # 2. Doesn't overlap with existing corners
+                # 3. Has some speed variation (even if small, > 1 km/h difference)
+                speed_variation = sp[start_idx] - sp[apex_idx] if start_idx < apex_idx else sp[apex_idx] - sp[end_idx]
+                
+                if end_idx - start_idx >= min_len_pts and speed_variation > 1.0:
+                    overlaps = False
+                    for existing in corners:
+                        existing_start = existing["start_idx"]
+                        existing_end = existing["end_idx"]
+                        if not (end_idx < existing_start - 30 or start_idx > existing_end + 30):
+                            overlaps = True
+                            break
+                    
+                    if not overlaps:
+                        corners.append({
+                            "start_idx": int(start_idx),
+                            "apex_idx": int(apex_idx),
+                            "end_idx": int(end_idx),
+                        })
+                
+                i = end_idx + 5
+            else:
+                i += 1
+    
+    # Also use brake signals if available
+    if use_throttle_brake and brake_series is not None:
+        brake = np.asarray(brake_series)
+        
+        # Detect corners from brake applications (even minimal braking)
+        i = 5
+        while i < n - 5:
+            # Check for any brake application
+            brake_window = brake[max(0, i-5):min(n, i+5)]
+            max_brake = np.max(brake_window)
+            
+            if max_brake > 1.0:  # Any braking at all
+                # Find the braking peak (corner entry)
+                brake_peak_idx = i
+                for j in range(i, min(i + 15, n - 1)):
+                    if brake[j] > brake[brake_peak_idx]:
+                        brake_peak_idx = j
+                
+                # Find apex (speed minimum near brake application)
+                apex_idx = brake_peak_idx
+                min_speed = sp[brake_peak_idx]
+                for j in range(brake_peak_idx, min(brake_peak_idx + 25, n - 1)):
+                    if sp[j] < min_speed:
+                        min_speed = sp[j]
+                        apex_idx = j
+                
+                # Find start and end
+                start_idx = max(0, brake_peak_idx - 10)
+                end_idx = min(n - 1, apex_idx + 20)
+                
+                # Check for overlaps
+                overlaps = False
+                for existing in corners:
+                    existing_start = existing["start_idx"]
+                    existing_end = existing["end_idx"]
+                    if not (end_idx < existing_start - 50 or start_idx > existing_end + 50):
+                        overlaps = True
+                        break
+                
+                if not overlaps and end_idx - start_idx >= min_len_pts:
+                    corners.append({
+                        "start_idx": int(start_idx),
+                        "apex_idx": int(apex_idx),
+                        "end_idx": int(end_idx),
+                    })
+                
+                i = end_idx + 1
+            else:
+                i += 1
+    
+    # Sort corners by apex distance and remove any that are too close together
+    corners.sort(key=lambda c: c["apex_idx"])
+    filtered_corners = []
+    for corner in corners:
+        if not filtered_corners:
+            filtered_corners.append(corner)
+        else:
+            # Only add if apex is at least 20 points away from previous
+            last_apex = filtered_corners[-1]["apex_idx"]
+            if abs(corner["apex_idx"] - last_apex) >= 20:
+                filtered_corners.append(corner)
+    
+    return filtered_corners
 
 
 def calculate_corner_metrics(

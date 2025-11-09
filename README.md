@@ -284,7 +284,9 @@ The application provides detailed corner-by-corner analysis:
 
 - **Lap Time Charts**: Interactive charts for race and qualifying sessions
   - Race event markers: Pit stops, safety car periods, yellow/red flags, race start
-  - Safety car and VSC period visualization
+  - Smart event label positioning: Automatic overlap prevention with priority-based labeling
+  - Event priority system: Critical events (red flags, race start) displayed prominently
+  - Safety car and VSC period visualization with labeled start/end markers
   - Outlier filtering for in-laps, out-laps, and safety car periods
 - **Corner Filtering**: Advanced corner analysis filtering
   - Filter by qualifying segment (Q1, Q2, Q3) - shows fastest lap from selected segment
@@ -293,6 +295,9 @@ The application provides detailed corner-by-corner analysis:
   - All corners mode for comprehensive analysis
 - **Corner Delta Charts**: Visual comparison of corner performance between drivers
 - **Track Overlays**: Real-time telemetry overlays on track SVG
+  - Interactive corner markers with hover tooltips
+  - Performance-based color coding
+  - Fixed corner hover detection for all corners
 - **Driver Selection**: Team-based and individual driver filtering
 
 ## Tech Stack
