@@ -458,7 +458,8 @@ export async function executeQuery(
   const session = parameters.session || 'Q'
   const track = parameters.track || parameters.roundSlug
 
-  if (!track) {
+  // SESSION_INFO queries don't always require a track
+  if (!track && intent !== 'SESSION_INFO') {
     throw new Error('Track/round slug is required')
   }
 
@@ -534,15 +535,29 @@ export async function executeQuery(
     }
 
     case 'SESSION_INFO': {
-      const data = await getAvailableSessions(track, year)
-      return {
-        type: 'SESSION_INFO',
-        data,
-        metadata: {
-          track,
-          year,
-          timestamp: new Date().toISOString(),
-        },
+      // If track is provided, get sessions for that track
+      // If not, we might want to list all tracks (future enhancement)
+      if (track) {
+        const data = await getAvailableSessions(track, year)
+        return {
+          type: 'SESSION_INFO',
+          data,
+          metadata: {
+            track,
+            year,
+            timestamp: new Date().toISOString(),
+          },
+        }
+      } else {
+        // Return message that track is needed
+        return {
+          type: 'SESSION_INFO',
+          data: { message: 'Please specify a track to see available sessions' },
+          metadata: {
+            year,
+            timestamp: new Date().toISOString(),
+          },
+        }
       }
     }
 

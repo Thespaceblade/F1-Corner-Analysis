@@ -91,7 +91,10 @@ export async function POST(request: NextRequest) {
       )
     } catch (error) {
       console.error('Error executing query:', error)
+      console.error('Query intent:', classifiedQuery.intent)
+      console.error('Query parameters:', JSON.stringify(classifiedQuery.parameters, null, 2))
       const errorMessage = error instanceof Error ? error.message : String(error)
+      const errorStack = error instanceof Error ? error.stack : undefined
 
       // Provide helpful error messages
       if (errorMessage.includes('not found') || errorMessage.includes('does not exist')) {
@@ -107,14 +110,47 @@ export async function POST(request: NextRequest) {
         })
       }
 
-      return NextResponse.json(
-        {
-          error: 'Query execution error',
-          message: 'Failed to execute query',
-          details: errorMessage,
-        } as ChatError,
-        { status: 500 }
-      )
+      // Handle missing track
+      if (errorMessage.includes('Track/round slug is required')) {
+        return NextResponse.json({
+          answer: "I need to know which track you're asking about. Please specify the track, for example: 'Compare VER and NOR at corner 2 at Monaco 2025' or 'Compare VER and NOR at Australia 2025'.",
+          data: undefined,
+          sources: [],
+          followUpSuggestions: [
+            'Compare VER and NOR at Monaco 2025',
+            'Compare VER and NOR at Australia 2025',
+            'What tracks are available?',
+          ],
+        })
+      }
+
+      // Handle missing driver codes for comparison
+      if (errorMessage.includes('driver codes are required') || errorMessage.includes('driver code is required')) {
+        return NextResponse.json({
+          answer: `I need driver information to answer that question. ${errorMessage}. Please try: 'Compare VER and NOR at corner 2 at Monaco 2025' or specify the drivers you want to compare.`,
+          data: undefined,
+          sources: [],
+          followUpSuggestions: [
+            'Compare VER and NOR at Monaco 2025',
+            'Compare VER and HAM at corner 3',
+            'Who was fastest at corner 8 at Monaco 2025?',
+          ],
+        })
+      }
+
+      // Log full error for debugging but return user-friendly message
+      console.error('Full error stack:', errorStack)
+      
+      return NextResponse.json({
+        answer: `I encountered an issue processing your query. ${errorMessage}. Please try rephrasing your question or check that the track, year, and session are correct.`,
+        data: undefined,
+        sources: [],
+        followUpSuggestions: [
+          'Who was fastest at corner 8 at Monaco 2025?',
+          'Compare VER and NOR at Monaco 2025',
+          'What sessions are available for Monaco 2025?',
+        ],
+      })
     }
 
     // Step 3: Generate response using Gemini
@@ -127,15 +163,20 @@ export async function POST(request: NextRequest) {
         context
       )
     } catch (error) {
-      console.error('Error generating response:', error)
-      return NextResponse.json(
-        {
-          error: 'Response generation error',
-          message: 'Failed to generate response',
-          details: error instanceof Error ? error.message : String(error),
-        } as ChatError,
-        { status: 500 }
-      )
+      console.error('Error generating response (should not happen as we have fallback):', error)
+      // This should not happen as generateResponse now has a fallback
+      // But if it does, return a helpful error message
+      const errorMessage = error instanceof Error ? error.message : String(error)
+      return NextResponse.json({
+        answer: `I encountered an issue generating a response. ${errorMessage}. Please try rephrasing your question.`,
+        data: undefined,
+        sources: [],
+        followUpSuggestions: [
+          'Who was fastest at corner 8 at Monaco 2025?',
+          'Compare VER and NOR at Monaco 2025',
+          'What sessions are available for Monaco 2025?',
+        ],
+      })
     }
 
     // Return success response
