@@ -1,0 +1,20 @@
+# Requirements for corner coordinate editor script
+# Install with: pip install -r scripts/requirements-corner-editor.txt
+
+# Image processing (required)
+Pillow>=9.0.0
+
+# SVG rendering (choose one):
+# Option 1: cairosvg (recommended - better quality)
+cairosvg>=2.7.0
+
+# Option 2: svglib (alternative)
+# svglib>=1.5.0
+# reportlab>=3.6.0
+
+# Note: tkinter is usually included with Python, but on some Linux systems
+# you may need to install it separately:
+# Ubuntu/Debian: sudo apt-get install python3-tk
+# Fedora: sudo dnf install python3-tkinter
+# macOS: tkinter is included with Python installed via Homebrew or official installer
+

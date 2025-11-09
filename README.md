@@ -206,7 +206,9 @@ F1-Corner-Analysis/
 │   │   ├── transforms.py # Data transformation
 │   │   └── corners.py    # Corner detection and analysis
 │   ├── fetch_fastf1_data.py      # Single session fetcher
-│   └── bulk_fetch_fastf1_data.py # Bulk fetcher
+│   ├── bulk_fetch_fastf1_data.py # Bulk fetcher
+│   ├── edit_corner_coordinates.py # Interactive corner coordinate editor
+│   └── README-corner-editor.md    # Corner editor documentation
 ├── public/                # Static assets
 │   ├── data/             # Generated session JSON files
 │   ├── Tracks/           # Track SVG files
@@ -304,6 +306,31 @@ The Python pipeline follows PEP 8 conventions. Consider using a formatter like `
 1. Add track SVG to `public/Tracks/`
 2. Add track metadata to `public/data/tracks.json`
 3. Update calendar data in `public/data/calendar[year].json`
+
+### Editing Corner Coordinates
+
+Use the interactive corner coordinate editor to visually position corners on track maps:
+
+```bash
+python scripts/edit_corner_coordinates.py
+```
+
+**Features**:
+- Visual track SVG display with corner markers
+- Drag-and-drop corner positioning
+- Track selector dropdown (edit all tracks in one session)
+- Zoom and pan controls
+- Delete corner functionality
+- Saves directly to `tracks.json`
+
+**Usage**:
+1. Run the script (no arguments needed)
+2. Select a track from the dropdown
+3. Drag corners to correct positions on the track map
+4. Delete extra corners if needed
+5. Click "Save Changes" to update `tracks.json`
+
+For detailed documentation, see `scripts/README-corner-editor.md`.
 
 ## Troubleshooting
 
@@ -415,6 +442,13 @@ Contributions are welcome! Please feel free to submit a Pull Request.
 ## Recent Updates
 
 ### Latest Features
+- **Interactive Corner Coordinate Editor**: Visual GUI tool for editing corner positions on track maps
+  - Drag-and-drop corner positioning
+  - Track selector dropdown (edit all tracks in one session)
+  - Direct SVG path rendering (no external dependencies)
+  - Delete corner functionality with automatic renumbering
+  - Zoom and pan controls
+  - Saves directly to tracks.json
 - **AI-Powered Chatbot**: Natural language interface for querying F1 data using Google Gemini AI
   - Improved error handling with user-friendly messages
   - Fallback response generation when AI API fails
