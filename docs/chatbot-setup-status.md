@@ -244,3 +244,4 @@ curl -X POST http://localhost:3000/api/chat \
 
 **Current Status**: Steps 1-6 completed. **Next: Set up environment variables and test the API!**
 
+
