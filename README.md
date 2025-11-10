@@ -42,11 +42,18 @@ A web application for analyzing Formula 1 corner telemetry data. This project pr
 - **AI-Powered Chatbot**: Natural language interface for querying F1 data
   - Ask questions about corner performance, driver statistics, and session data
   - Context-aware responses based on current track, session, and drivers
-  - Powered by Google Gemini AI
+  - Powered by Google Gemini AI with fallback response generation
+  - Markdown-formatted responses with structured data display
+  - Improved error handling with user-friendly messages
+  - Enhanced query classification with better driver/track name recognition
   - Integrated with session data and corner analysis
 - **Driver Comparison Tools**: Compare lap times, sector times, and corner performance across drivers
 - **Session Data Management**: Support for Practice, Qualifying, Sprint Qualifying, and Race sessions
 - **Real-time Telemetry Processing**: FastF1 integration for automatic data fetching and processing
+- **Formatting Utilities**: Consistent data formatting across the application
+  - Time, speed, delta, and number formatting utilities
+  - Reusable formatting components (TimeDisplay, DriverBadge, DeltaBadge, etc.)
+  - Color-coded deltas and formatted metrics throughout the UI
 
 ## Prerequisites
 
@@ -453,6 +460,7 @@ The application provides detailed corner-by-corner analysis:
 - **Frontend**: Next.js 13, React 18, TypeScript
 - **Visualization**: Recharts
 - **AI/ML**: Google Gemini AI (Generative AI)
+- **Markdown**: react-markdown, remark-gfm (for chatbot responses)
 - **Data Processing**: Python 3.8+, FastF1, Pandas, NumPy
 - **Database**: Neon (PostgreSQL) with JSON file fallback
 - **Styling**: Tailwind CSS
@@ -492,6 +500,18 @@ Contributions are welcome! Please feel free to submit a Pull Request.
 ## Recent Updates
 
 ### Latest Features
+- **Documentation Reorganization**: Comprehensive documentation restructure
+  - Organized documentation by category (guides, architecture, features, implementation, testing, troubleshooting)
+  - Added documentation index for easy navigation
+  - Moved feature-specific docs to appropriate subdirectories
+  - Improved documentation discoverability and organization
+- **Formatting Utilities Library**: Consistent data formatting across the application
+  - Time, speed, delta, and number formatting utilities (`lib/formatting/`)
+  - Reusable formatting components (`components/formatting/`)
+    - TimeDisplay, DriverBadge, DeltaBadge, CornerBadge
+    - MetricCard, SpeedDisplay, TrendIndicator
+  - Color-coded deltas (green=faster, red=slower)
+  - Integrated into all analysis components for consistent display
 - **Interactive Corner Coordinate Editor**: Visual GUI tool for editing corner positions on track maps
   - Drag-and-drop corner positioning
   - Track selector dropdown (edit all tracks in one session)
@@ -500,10 +520,18 @@ Contributions are welcome! Please feel free to submit a Pull Request.
   - Zoom and pan controls
   - Saves directly to tracks.json
 - **AI-Powered Chatbot**: Natural language interface for querying F1 data using Google Gemini AI
+  - Markdown-formatted responses with structured data display
   - Improved error handling with user-friendly messages
   - Fallback response generation when AI API fails
   - Enhanced query classification with better driver/track name recognition
   - Context-aware responses based on current page state
+  - Insight-based response generation for consistent formatting
+- **UI Improvements**:
+  - Loading screen transitions with smooth fade effects
+  - Timeout handling for session data loading (60s timeout)
+  - Improved error handling and user feedback
+  - Enhanced responsive design for mobile devices
+  - Better tooltip formatting and display
 - Advanced analysis panels with comprehensive analysis tools:
   - Corner difficulty, entry/exit, and stint analysis
   - Tyre compound analysis and sector time analysis
@@ -512,7 +540,7 @@ Contributions are welcome! Please feel free to submit a Pull Request.
 - Improved corner detection using throttle/brake signals for fast corners
 - Enhanced race event visualization with smart label positioning
 - Fixed corner hover detection issues
-- Improved API route error handling
+- Improved API route error handling with timeout support
 - Optimized Vercel deployment configuration
 - Added Table of Contents navigation component
 - Improved TypeScript type safety in analysis components
@@ -522,6 +550,9 @@ Contributions are welcome! Please feel free to submit a Pull Request.
 - Removed build artifacts from repository (reduced repository size)
 - Optimized build process for Vercel deployments
 - Improved error handling for missing data
+- Added timeout handling for API requests (30s file read, 60s session load)
+- Improved loading states and transitions
+- Better error recovery and user feedback
 
 ## Documentation
 
