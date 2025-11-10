@@ -5,6 +5,12 @@
 import { GoogleGenerativeAI } from '@google/generative-ai'
 import { buildResponsePrompt } from './prompts'
 import type { ChatbotResponse, QueryResult, ClassifiedQuery } from './types'
+import {
+  generateComparisonInsights,
+  generateCornerPerformanceInsights,
+  generateDriverPerformanceInsights,
+  formatInsightsAsBullets,
+} from './insightGenerator'
 
 const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY || '')
 
@@ -14,8 +20,30 @@ export async function generateResponse(
   queryResult: QueryResult,
   context?: any
 ): Promise<ChatbotResponse> {
+  // Always use concise insight-based responses for now
+  // This ensures consistent, readable responses without relying on Gemini formatting
+  const answer = generateConciseResponse(query, classifiedQuery, queryResult)
+  const data = extractResponseData(queryResult, classifiedQuery)
+
+  // Generate follow-up suggestions
+  const followUpSuggestions = generateFollowUpSuggestions(
+    classifiedQuery,
+    queryResult
+  )
+
+  return {
+    answer,
+    data,
+    sources: [`${queryResult.metadata.track} ${queryResult.metadata.year} ${queryResult.metadata.session || ''}`.trim()],
+    followUpSuggestions,
+    confidence: classifiedQuery.confidence,
+  }
+
+  // NOTE: Gemini API integration can be re-enabled later if needed
+  // For now, we use insight-based responses for consistency and readability
+  /*
   if (!process.env.GEMINI_API_KEY) {
-    throw new Error('GEMINI_API_KEY environment variable is not set')
+    return generateFallbackResponse(query, classifiedQuery, queryResult, 'No API key')
   }
 
   try {
@@ -55,10 +83,85 @@ export async function generateResponse(
     console.warn('Gemini API failed, using fallback response generation')
     return generateFallbackResponse(query, classifiedQuery, queryResult, errorMessage)
   }
+  */
+}
+
+/**
+ * Generate a concise, insight-focused response
+ * Uses insight generator to create bullet-point responses instead of paragraphs
+ */
+function generateConciseResponse(
+  query: string,
+  classifiedQuery: ClassifiedQuery,
+  queryResult: QueryResult
+): string {
+  const track = queryResult.metadata.track || ''
+  const year = queryResult.metadata.year || new Date().getFullYear()
+  const session = queryResult.metadata.session || 'Q'
+
+  switch (queryResult.type) {
+    case 'CORNER_PERFORMANCE': {
+      const cornerData = queryResult.data as any[]
+      if (cornerData.length === 0) {
+        return `No corner performance data for corner ${classifiedQuery.parameters.cornerNumber} at ${track} ${year} ${session}`
+      }
+
+      const insights = generateCornerPerformanceInsights(cornerData)
+      const header = `Corner ${classifiedQuery.parameters.cornerNumber} - ${track} ${session}`
+      return formatInsightsAsBullets(insights, header)
+    }
+
+    case 'DRIVER_PERFORMANCE': {
+      const stats = queryResult.data as any[]
+      if (stats.length === 0) {
+        return `No performance data for ${classifiedQuery.parameters.driverCode} at ${track} ${year} ${session}`
+      }
+
+      const insights = generateDriverPerformanceInsights(
+        stats,
+        classifiedQuery.parameters.driverCode || ''
+      )
+      const header = `${classifiedQuery.parameters.driverCode} - ${track} ${session}`
+      return formatInsightsAsBullets(insights, header)
+    }
+
+    case 'COMPARISON': {
+      const comparisonData = queryResult.data as any
+      if (!comparisonData.deltas || comparisonData.deltas.length === 0) {
+        const driver1 = classifiedQuery.parameters.driverCodes?.[0] || 'Driver 1'
+        const driver2 = classifiedQuery.parameters.driverCodes?.[1] || 'Driver 2'
+        return `No comparison data for ${driver1} vs ${driver2} at ${track} ${year} ${session}`
+      }
+
+      const driver1 = classifiedQuery.parameters.driverCodes?.[0] || 'Driver 1'
+      const driver2 = classifiedQuery.parameters.driverCodes?.[1] || 'Driver 2'
+
+      const insights = generateComparisonInsights(
+        comparisonData,
+        driver1,
+        driver2
+      )
+      const header = `${driver1} vs ${driver2} - ${track} ${session}`
+      return formatInsightsAsBullets(insights, header)
+    }
+
+    case 'SESSION_INFO': {
+      const sessions = queryResult.data as any[]
+      if (Array.isArray(sessions) && sessions.length > 0) {
+        const sessionList = sessions.map((s) => s.session).join(', ')
+        return `Available sessions for ${track} ${year}: ${sessionList}`
+      }
+      return `No session information for ${track} ${year}`
+    }
+
+    default:
+      return `No data available for ${track || 'this track'}`
+  }
 }
 
 /**
  * Generate a fallback response when Gemini API fails
+ * Uses concise insight-based responses
  */
 function generateFallbackResponse(
   query: string,
@@ -66,86 +169,8 @@ function generateFallbackResponse(
   queryResult: QueryResult,
   errorMessage: string
 ): ChatbotResponse {
-  let answer = ''
+  const answer = generateConciseResponse(query, classifiedQuery, queryResult)
   const data = extractResponseData(queryResult, classifiedQuery)
-
-  switch (queryResult.type) {
-    case 'CORNER_PERFORMANCE': {
-      const cornerData = queryResult.data as any[]
-      if (cornerData.length === 0) {
-        answer = `I don't have corner performance data for corner ${classifiedQuery.parameters.cornerNumber} at ${queryResult.metadata.track} ${queryResult.metadata.year} ${queryResult.metadata.session || ''}. The corner data may not be available for this session.`
-      } else {
-        // Find the fastest corner time
-        const fastest = cornerData.reduce((best, current) => {
-          if (!best.cornerTime) return current
-          if (!current.cornerTime) return best
-          return current.cornerTime < best.cornerTime ? current : best
-        })
-
-        answer = `The fastest driver at corner ${classifiedQuery.parameters.cornerNumber} at ${queryResult.metadata.track} ${queryResult.metadata.year} ${queryResult.metadata.session || ''} was ${fastest.driverCode} with a time of ${fastest.cornerTime?.toFixed(3)}s. `
-        if (fastest.apexSpeed) {
-          answer += `They averaged ${fastest.apexSpeed.toFixed(0)} km/h through the corner.`
-        }
-      }
-      break
-    }
-
-    case 'DRIVER_PERFORMANCE': {
-      const stats = queryResult.data as any[]
-      if (stats.length === 0) {
-        answer = `I don't have performance data for ${classifiedQuery.parameters.driverCode} at ${queryResult.metadata.track} ${queryResult.metadata.year} ${queryResult.metadata.session || ''}.`
-      } else {
-        const avgTime = stats
-          .map((s) => s.avgTime)
-          .filter((t): t is number => t !== null)
-        if (avgTime.length > 0) {
-          const overallAvg = avgTime.reduce((a, b) => a + b, 0) / avgTime.length
-          answer = `${classifiedQuery.parameters.driverCode}'s average corner time at ${queryResult.metadata.track} ${queryResult.metadata.year} ${queryResult.metadata.session || ''} was ${overallAvg.toFixed(3)}s across ${stats.length} corners.`
-        } else {
-          answer = `I have performance data for ${classifiedQuery.parameters.driverCode} at ${queryResult.metadata.track}, but corner times are not available.`
-        }
-      }
-      break
-    }
-
-    case 'COMPARISON': {
-      const comparisonData = queryResult.data as any
-      if (comparisonData.deltas && comparisonData.deltas.length > 0) {
-        const avgDelta = comparisonData.deltas
-          .map((d: any) => d.timeDelta)
-          .filter((d: number | null): d is number => d !== null)
-        if (avgDelta.length > 0) {
-          const overallDelta = avgDelta.reduce((a: number, b: number) => a + b, 0) / avgDelta.length
-          const driver1 = classifiedQuery.parameters.driverCodes?.[0] || 'Driver 1'
-          const driver2 = classifiedQuery.parameters.driverCodes?.[1] || 'Driver 2'
-          if (overallDelta > 0) {
-            answer = `${driver2} was faster than ${driver1} by an average of ${Math.abs(overallDelta).toFixed(3)}s per corner at ${queryResult.metadata.track} ${queryResult.metadata.year} ${queryResult.metadata.session || ''}.`
-          } else {
-            answer = `${driver1} was faster than ${driver2} by an average of ${Math.abs(overallDelta).toFixed(3)}s per corner at ${queryResult.metadata.track} ${queryResult.metadata.year} ${queryResult.metadata.session || ''}.`
-          }
-        } else {
-          answer = `I have comparison data for ${classifiedQuery.parameters.driverCodes?.[0]} and ${classifiedQuery.parameters.driverCodes?.[1]} at ${queryResult.metadata.track}, but corner time data is not available.`
-        }
-      } else {
-        answer = `I don't have comparison data for ${classifiedQuery.parameters.driverCodes?.[0]} and ${classifiedQuery.parameters.driverCodes?.[1]} at ${queryResult.metadata.track} ${queryResult.metadata.year} ${queryResult.metadata.session || ''}.`
-      }
-      break
-    }
-
-    case 'SESSION_INFO': {
-      const sessions = queryResult.data as any[]
-      if (Array.isArray(sessions) && sessions.length > 0) {
-        const sessionList = sessions.map((s) => s.session).join(', ')
-        answer = `Available sessions for ${queryResult.metadata.track} ${queryResult.metadata.year}: ${sessionList}`
-      } else {
-        answer = `I don't have session information for ${queryResult.metadata.track} ${queryResult.metadata.year}.`
-      }
-      break
-    }
-
-    default:
-      answer = `I processed your query about ${queryResult.metadata.track || 'the track'} but encountered an issue generating a detailed response. The data is available, but I couldn't format it properly.`
-  }
 
   return {
     answer,

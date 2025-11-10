@@ -328,10 +328,60 @@ def detect_corners(
         if not filtered_corners:
             filtered_corners.append(corner)
         else:
-            # Only add if apex is at least 20 points away from previous
             last_apex = filtered_corners[-1]["apex_idx"]
-            if abs(corner["apex_idx"] - last_apex) >= 20:
+            apex_distance_diff = abs(corner["apex_idx"] - last_apex)
+            
+            # Calculate actual distance difference if distance series is available
+            # This allows for adaptive spacing based on actual track distance
+            distance_diff_meters = None
+            try:
+                if len(distance_series) > max(corner["apex_idx"], last_apex):
+                    # Convert to array if it's a Series for indexing
+                    if hasattr(distance_series, 'iloc'):
+                        dist1 = float(distance_series.iloc[last_apex])
+                        dist2 = float(distance_series.iloc[corner["apex_idx"]])
+                    else:
+                        dist1 = float(distance_series[last_apex])
+                        dist2 = float(distance_series[corner["apex_idx"]])
+                    distance_diff_meters = abs(dist2 - dist1)
+            except (IndexError, ValueError, TypeError):
+                pass
+            
+            # Minimum spacing: 
+            # - 10 points (20m) for general corners
+            # - 5 points (10m) if distance difference is < 100m (for corner clusters)
+            # This allows closely-spaced corners like corners 11-14 to be detected
+            min_spacing_points = 10  # Default: 20m
+            if distance_diff_meters is not None and distance_diff_meters < 100:
+                # For corners within 100m of each other, use smaller spacing
+                min_spacing_points = 5  # 10m spacing
+            
+            if apex_distance_diff >= min_spacing_points:
                 filtered_corners.append(corner)
+            # If corners are very close but have significant speed differences, 
+            # they might be distinct corners - keep the one with larger speed drop
+            elif apex_distance_diff >= 3:  # At least 6m apart
+                # Check if this corner has a significantly different speed profile
+                # Compare speed drops between the two corners
+                last_corner_speed_drop = 0
+                current_corner_speed_drop = 0
+                
+                if last_apex < len(sp) - 1 and last_apex > 0:
+                    last_start_idx = filtered_corners[-1].get("start_idx", last_apex - 5)
+                    last_start_idx = max(0, min(last_start_idx, last_apex))
+                    if last_start_idx < len(sp):
+                        last_corner_speed_drop = sp[last_start_idx] - sp[last_apex]
+                
+                if corner["apex_idx"] < len(sp) - 1 and corner["apex_idx"] > 0:
+                    current_start_idx = corner.get("start_idx", corner["apex_idx"] - 5)
+                    current_start_idx = max(0, min(current_start_idx, corner["apex_idx"]))
+                    if current_start_idx < len(sp):
+                        current_corner_speed_drop = sp[current_start_idx] - sp[corner["apex_idx"]]
+                
+                # If current corner has significantly different speed drop (>5 km/h difference),
+                # keep it as a distinct corner
+                if abs(current_corner_speed_drop - last_corner_speed_drop) > 5.0:
+                    filtered_corners.append(corner)
     
     return filtered_corners
 

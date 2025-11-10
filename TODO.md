@@ -36,7 +36,24 @@ This file tracks unfinished work, known issues, and planned improvements that ne
 
 ## 🎨 UI/UX Improvements
 
-### 6. Chart Enhancements
+### 6. Output Formatting & Visual Clarity ⭐ NEW
+- [ ] Create formatting utilities library (formatTime, formatDelta, formatSpeed)
+- [ ] Build reusable component library (MetricCard, DeltaBadge, CornerBadge, DriverBadge)
+- [ ] Add markdown support to chatbot responses
+- [ ] Enhance table formatting with visual indicators and highlighting
+- [ ] Implement color-coded deltas (green=faster, red=slower)
+- [ ] Add icon indicators for best times, trends, and status
+- [ ] Create comparison cards for driver comparisons
+- [ ] Enhance chart tooltips with formatted data and context
+- [ ] Improve typography hierarchy and spacing
+- [ ] Add data quality indicators (badges, warnings)
+- [ ] Implement responsive table design
+- [ ] Add accessibility improvements (ARIA labels, keyboard navigation)
+- **See**: `docs/output-formatting-plan.md` for detailed plan
+- **Quick Reference**: `docs/output-formatting-quick-reference.md`
+- **Summary**: `docs/output-formatting-summary.md`
+
+### 7. Chart Enhancements
 - [ ] Add lap time delta visualization (time gained/lost vs reference)
 - [ ] Add sector time breakdown in tooltip
 - [ ] Add compound change indicators on chart
@@ -45,7 +62,7 @@ This file tracks unfinished work, known issues, and planned improvements that ne
 - [ ] Add chart zoom/pan for race sessions
 - [ ] Add lap range selector
 
-### 7. Track Panel Improvements
+### 8. Track Panel Improvements
 - [ ] Add corner coordinate editing UI
 - [ ] Add corner position adjustment tool
 - [ ] Show corner coordinates in tooltip
@@ -54,7 +71,7 @@ This file tracks unfinished work, known issues, and planned improvements that ne
 - [ ] Add speed trace overlay option
 - [ ] Add braking/acceleration zone visualization
 
-### 8. Analysis Panel Enhancements
+### 9. Analysis Panel Enhancements
 - [ ] Verify all analysis panels are working correctly
 - [ ] Add more analysis types
 - [ ] Improve analysis visualization
@@ -62,21 +79,21 @@ This file tracks unfinished work, known issues, and planned improvements that ne
 
 ## 📊 Feature Enhancements
 
-### 9. Corner Analysis
+### 10. Corner Analysis
 - [ ] Add corner-by-corner comparison
 - [ ] Add corner performance trends over time
 - [ ] Add corner difficulty ranking
 - [ ] Add corner overtaking analysis
 - [ ] Add corner-specific strategy analysis
 
-### 10. Session Analysis
+### 11. Session Analysis
 - [ ] Add race pace analysis
 - [ ] Complete stint analysis implementation
 - [ ] Add tyre degradation visualization
 - [ ] Add fuel load estimation
 - [ ] Add pit stop strategy comparison
 
-### 11. Race Event Visualization
+### 12. Race Event Visualization
 - [ ] Add legend for event markers
 - [ ] Add tooltip on hover for event markers showing details
 - [ ] Fine-tune event label positioning for edge cases
@@ -84,14 +101,14 @@ This file tracks unfinished work, known issues, and planned improvements that ne
 
 ## 🏗️ Technical Debt
 
-### 12. Code Quality
+### 13. Code Quality
 - [ ] Add TypeScript strict mode
 - [ ] Add unit tests for critical functions
 - [ ] Add E2E tests for key workflows
 - [ ] Improve code documentation
 - [ ] Add JSDoc comments to functions
 
-### 13. Performance
+### 14. Performance
 - [ ] Optimize large session data rendering
 - [ ] Add virtual scrolling for corner table
 - [ ] Add data caching for frequently accessed sessions
@@ -99,7 +116,7 @@ This file tracks unfinished work, known issues, and planned improvements that ne
 - [ ] Implement data pagination
 - [ ] Add request caching
 
-### 14. Testing
+### 15. Testing
 - [ ] Test all tracks for corner hover
 - [ ] Test all session types
 - [ ] Test with various driver combinations
@@ -109,7 +126,7 @@ This file tracks unfinished work, known issues, and planned improvements that ne
 
 ## 📚 Documentation
 
-### 15. Documentation Updates
+### 16. Documentation Updates
 - [ ] Update README with latest changes
 - [ ] Add API documentation
 - [ ] Add component documentation
@@ -120,7 +137,7 @@ This file tracks unfinished work, known issues, and planned improvements that ne
 
 ## ♿ Accessibility
 
-### 16. Accessibility Improvements
+### 17. Accessibility Improvements
 - [ ] Add keyboard navigation
 - [ ] Add screen reader support
 - [ ] Add ARIA labels
@@ -130,21 +147,21 @@ This file tracks unfinished work, known issues, and planned improvements that ne
 
 ## 🚀 Future Features
 
-### 17. Advanced Analytics
+### 18. Advanced Analytics
 - [ ] Add machine learning predictions
 - [ ] Add driver performance models
 - [ ] Add strategy optimization
 - [ ] Add race simulation
 - [ ] Add weather impact analysis
 
-### 18. Mobile Support
+### 19. Mobile Support
 - [ ] Optimize for mobile devices
 - [ ] Add touch gestures
 - [ ] Add mobile-specific UI
 - [ ] Add offline support
 - [ ] Add PWA features
 
-### 19. Social Features
+### 20. Social Features
 - [ ] Add session sharing
 - [ ] Add comparison sharing
 - [ ] Add comments/annotations
@@ -209,6 +226,8 @@ This file tracks unfinished work, known issues, and planned improvements that ne
 6. ✅ Verify GEMINI_API_KEY environment variable setup - Fixed model name
 7. Test chatbot with edge cases and various query formats
 8. Monitor chatbot performance and error rates
+9. ⭐ **Review output formatting plan** - See `docs/output-formatting-plan.md`
+10. ⭐ **Start Phase 1 implementation** - Create formatting utilities and base components
 
 ### Code Markers to Search For
 - `TODO:` - Work that needs to be done

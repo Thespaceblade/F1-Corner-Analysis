@@ -48,60 +48,70 @@ type AnalysisPanelProps = {
 const analysisTabs: Array<{
   id: AnalysisType
   label: string
+  shortLabel: string
   description: string
   icon: string
 }> = [
   {
     id: 'overview',
     label: 'Overview',
+    shortLabel: 'Overview',
     description: 'Quick insights and key session metrics',
     icon: '📋',
   },
   {
     id: 'corner-performance',
     label: 'Corner Performance',
+    shortLabel: 'Corners',
     description: 'Corner performance table and delta comparison',
     icon: '📈',
   },
   {
     id: 'corner-entry-exit',
     label: 'Corner Entry/Exit',
+    shortLabel: 'Entry/Exit',
     description: 'Analyze corner entry speeds, exit speeds, and braking points',
     icon: '↗️',
   },
   {
     id: 'stint',
     label: 'Stint Analysis',
+    shortLabel: 'Stints',
     description: 'Analyze performance across stints and tyre life',
     icon: '📊',
   },
   {
     id: 'corner-difficulty',
     label: 'Corner Difficulty',
+    shortLabel: 'Difficulty',
     description: 'Rank corners by difficulty and importance',
     icon: '🏁',
   },
   {
     id: 'sector-times',
     label: 'Sector Times',
+    shortLabel: 'Sectors',
     description: 'Sector-by-sector analysis and comparison',
     icon: '⚡',
   },
   {
     id: 'tyre-compounds',
     label: 'Tyre Compounds',
+    shortLabel: 'Tyres',
     description: 'Performance analysis by tyre compound',
     icon: '🏎️',
   },
   {
     id: 'consistency',
     label: 'Consistency',
+    shortLabel: 'Consistency',
     description: 'Lap time consistency and distribution analysis',
     icon: '📊',
   },
   {
     id: 'export',
     label: 'Export & Share',
+    shortLabel: 'Export',
     description: 'Export data and charts, generate shareable links',
     icon: '📤',
   },
@@ -139,8 +149,8 @@ export default function AnalysisPanel({
   return (
     <div className="mt-6 panel p-4">
       {/* Analysis Tabs */}
-      <div className="mb-4 border-b border-gray-700">
-        <div className="flex flex-wrap gap-2">
+      <div className="mb-4 border-b border-gray-700/60">
+        <div className="flex gap-0 overflow-x-auto scrollbar-hide sm:overflow-x-visible sm:justify-stretch">
           {analysisTabs.map((tab) => {
             const isSelected = selectedAnalysis === tab.id
             return (
@@ -148,15 +158,26 @@ export default function AnalysisPanel({
                 key={tab.id}
                 type="button"
                 onClick={() => setSelectedAnalysis(tab.id)}
-                className={`px-4 py-2 text-sm font-medium rounded-t-lg transition-colors ${
+                className={`group relative px-1.5 sm:px-3 py-2 text-[10px] sm:text-xs font-medium rounded-t-lg whitespace-nowrap flex items-center justify-center gap-0.5 sm:gap-1.5 flex-shrink-0 sm:flex-1 transition-all duration-200 ease-out ${
                   isSelected
-                    ? 'bg-accent/20 text-accent border-b-2 border-accent'
-                    : 'text-gray-400 hover:text-gray-300 hover:bg-gray-800/50'
+                    ? 'bg-accent/15 text-accent border-b-2 border-accent shadow-[0_-2px_8px_rgba(124,199,255,0.15)]'
+                    : 'text-gray-400 hover:text-gray-200 hover:bg-gray-800/40 border-b-2 border-transparent'
                 }`}
-                title={tab.description}
               >
-                <span className="mr-2">{tab.icon}</span>
-                {tab.label}
+                <span className={`text-[10px] sm:text-sm flex-shrink-0 leading-none transition-transform duration-200 ${isSelected ? 'scale-110' : 'group-hover:scale-105'}`}>
+                  {tab.icon}
+                </span>
+                <span className="hidden sm:inline text-[10px] sm:text-xs leading-tight font-medium">
+                  {tab.shortLabel}
+                </span>
+                {/* Enhanced tooltip on hover */}
+                <div className="absolute bottom-full left-1/2 transform -translate-x-1/2 mb-2 px-3 py-2 bg-gray-900/95 backdrop-blur-sm text-white text-xs rounded-lg shadow-xl opacity-0 group-hover:opacity-100 pointer-events-none transition-all duration-200 ease-out whitespace-nowrap z-50 border border-gray-700/50 translate-y-1 group-hover:translate-y-0">
+                  <div className="font-semibold mb-1 text-accent">{tab.label}</div>
+                  <div className="text-gray-400 text-[10px] leading-relaxed">{tab.description}</div>
+                  <div className="absolute top-full left-1/2 transform -translate-x-1/2 -mt-px">
+                    <div className="border-4 border-transparent border-t-gray-900/95"></div>
+                  </div>
+                </div>
               </button>
             )
           })}
@@ -164,77 +185,82 @@ export default function AnalysisPanel({
       </div>
 
       {/* Analysis Content */}
-      <div className="mt-4">
-        {selectedAnalysis === 'overview' && (
-          <SessionOverview
-            sessionData={sessionData}
-            selectedDrivers={selectedDrivers}
-          />
-        )}
+      <div className="mt-4 relative min-h-[200px]">
+        <div 
+          key={selectedAnalysis}
+          className="animate-in fade-in duration-200"
+        >
+          {selectedAnalysis === 'overview' && (
+            <SessionOverview
+              sessionData={sessionData}
+              selectedDrivers={selectedDrivers}
+            />
+          )}
 
-        {selectedAnalysis === 'corner-performance' && (
-          <CornerPerformanceAnalysis
-            corners={sessionData?.corners ?? {}}
-            cornerInfo={currentTrack.corners}
-            selectedDrivers={selectedDrivers}
-            cornerFilter={cornerFilter}
-            sessionData={sessionData}
-          />
-        )}
+          {selectedAnalysis === 'corner-performance' && (
+            <CornerPerformanceAnalysis
+              corners={sessionData?.corners ?? {}}
+              cornerInfo={currentTrack.corners}
+              selectedDrivers={selectedDrivers}
+              cornerFilter={cornerFilter}
+              sessionData={sessionData}
+            />
+          )}
 
-        {selectedAnalysis === 'corner-entry-exit' && (
-          <CornerEntryExitAnalysis
-            sessionData={sessionData}
-            cornerPerformance={cornerPerformance}
-            selectedDrivers={selectedDrivers}
-            cornerInfo={currentTrack.corners}
-          />
-        )}
+          {selectedAnalysis === 'corner-entry-exit' && (
+            <CornerEntryExitAnalysis
+              sessionData={sessionData}
+              cornerPerformance={cornerPerformance}
+              selectedDrivers={selectedDrivers}
+              cornerInfo={currentTrack.corners}
+            />
+          )}
 
-        {selectedAnalysis === 'stint' && (
-          <StintAnalysis
-            sessionData={sessionData}
-            selectedDrivers={selectedDrivers}
-          />
-        )}
+          {selectedAnalysis === 'stint' && (
+            <StintAnalysis
+              sessionData={sessionData}
+              selectedDrivers={selectedDrivers}
+            />
+          )}
 
-        {selectedAnalysis === 'corner-difficulty' && (
-          <CornerDifficultyAnalysis
-            sessionData={sessionData}
-            cornerPerformance={cornerPerformance}
-            selectedDrivers={selectedDrivers}
-            cornerInfo={currentTrack.corners}
-          />
-        )}
+          {selectedAnalysis === 'corner-difficulty' && (
+            <CornerDifficultyAnalysis
+              sessionData={sessionData}
+              cornerPerformance={cornerPerformance}
+              selectedDrivers={selectedDrivers}
+              cornerInfo={currentTrack.corners}
+            />
+          )}
 
-        {selectedAnalysis === 'sector-times' && (
-          <SectorTimeAnalysis
-            sessionData={sessionData}
-            selectedDrivers={selectedDrivers}
-          />
-        )}
+          {selectedAnalysis === 'sector-times' && (
+            <SectorTimeAnalysis
+              sessionData={sessionData}
+              selectedDrivers={selectedDrivers}
+            />
+          )}
 
-        {selectedAnalysis === 'tyre-compounds' && (
-          <TyreCompoundAnalysis
-            sessionData={sessionData}
-            selectedDrivers={selectedDrivers}
-          />
-        )}
+          {selectedAnalysis === 'tyre-compounds' && (
+            <TyreCompoundAnalysis
+              sessionData={sessionData}
+              selectedDrivers={selectedDrivers}
+            />
+          )}
 
-        {selectedAnalysis === 'consistency' && (
-          <ConsistencyAnalysis
-            sessionData={sessionData}
-            selectedDrivers={selectedDrivers}
-          />
-        )}
+          {selectedAnalysis === 'consistency' && (
+            <ConsistencyAnalysis
+              sessionData={sessionData}
+              selectedDrivers={selectedDrivers}
+            />
+          )}
 
-        {selectedAnalysis === 'export' && (
-          <ExportAnalysis
-            sessionData={sessionData}
-            selectedDrivers={selectedDrivers}
-            trackName={currentTrack.name}
-          />
-        )}
+          {selectedAnalysis === 'export' && (
+            <ExportAnalysis
+              sessionData={sessionData}
+              selectedDrivers={selectedDrivers}
+              trackName={currentTrack.name}
+            />
+          )}
+        </div>
       </div>
     </div>
   )

@@ -101,6 +101,41 @@ body{
   background: rgba(124, 199, 255, 0.5);
 }
 
+/* Hide scrollbar but keep functionality */
+.scrollbar-hide {
+  -ms-overflow-style: none;  /* IE and Edge */
+  scrollbar-width: none;  /* Firefox */
+}
+
+.scrollbar-hide::-webkit-scrollbar {
+  display: none;  /* Chrome, Safari and Opera */
+}
+
+/* Smooth tab transitions */
+.analysis-tab {
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.analysis-tab:hover {
+  transform: translateY(-1px);
+}
+
+/* Smooth tooltip animations */
+@keyframes tooltip-fade-in {
+  from {
+    opacity: 0;
+    transform: translateY(4px) translateX(-50%);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) translateX(-50%);
+  }
+}
+
+.tooltip-enter {
+  animation: tooltip-fade-in 0.2s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+}
+
 /* Animation utilities */
 @keyframes fade-in {
   from {
@@ -227,10 +262,49 @@ body{
 .toc-sidebar {
   position: fixed;
   top: 120px;
-  right: 20px;
   z-index: 100;
   overflow: hidden;
-  will-change: width, height, padding, border-radius;
+  will-change: width, height, padding, border-radius, right;
+}
+
+/* Responsive positioning - calculated based on viewport and content width */
+@media (min-width: 1024px) {
+  .toc-sidebar {
+    /* Default: position relative to content container (max-w-6xl = 1152px) */
+    /* Formula: (viewport width - content width) / 2 + margin */
+    /* But ensure it doesn't overlap content or go off-screen */
+    right: max(20px, min(calc((100vw - 1152px) / 2 + 20px), calc(100vw - 280px)));
+  }
+}
+
+/* Ensure sidebar doesn't go off-screen on smaller large screens */
+@media (min-width: 1024px) and (max-width: 1279px) {
+  .toc-sidebar {
+    /* On smaller lg screens, keep it simple - fixed position */
+    right: 20px;
+  }
+}
+
+/* Prevent overlap on narrow large screens */
+@media (min-width: 1024px) and (max-width: 1400px) {
+  .toc-sidebar.expanded {
+    /* Ensure sidebar fits within viewport with content */
+    max-width: min(240px, calc(100vw - 1200px));
+  }
+}
+
+/* Larger screens - position next to content with proper spacing */
+@media (min-width: 1280px) and (max-width: 1535px) {
+  .toc-sidebar {
+    right: clamp(20px, calc((100vw - 1152px) / 2 + 20px), calc(100vw - 280px));
+  }
+}
+
+/* Very large screens - more spacing from content */
+@media (min-width: 1536px) {
+  .toc-sidebar {
+    right: clamp(40px, calc((100vw - 1152px) / 2 + 20px), calc(100vw - 300px));
+  }
 }
 
 /* Collapsed state - icon only */
@@ -532,14 +606,239 @@ body{
   }
 }
 
-/* Adjust sidebar position on larger screens */
-@media (min-width: 1536px) {
+/* Tablet and medium screen adjustments */
+@media (min-width: 768px) and (max-width: 1023px) {
+  /* Hide desktop sidebar on tablets, show mobile toggle */
   .toc-sidebar {
-    right: calc((100vw - 1536px) / 2 + 20px);
+    display: none !important;
+  }
+  
+  .toc-mobile-toggle {
+    display: flex !important;
+  }
+}
+
+/* Ensure sidebar width doesn't exceed viewport on smaller screens */
+@media (min-width: 1024px) and (max-width: 1279px) {
+  .toc-sidebar.expanded {
+    max-width: min(240px, calc(100vw - 40px));
+  }
+}
+
+@media (min-width: 1280px) {
+  .toc-sidebar.expanded {
+    width: 240px;
+    max-width: 240px;
+  }
+}
+
+/* Very large screens - slightly wider sidebar for better readability */
+@media (min-width: 1536px) {
+  .toc-sidebar.expanded {
+    width: 260px;
+    max-width: 260px;
   }
 }
 
 /* Ensure content doesn't wrap in expanded state */
 .toc-sidebar.expanded .toc-item {
   white-space: nowrap;
+}
+
+/* Sidebar overlays content - no padding adjustments needed */
+
+/* Header-integrated TOC Styles */
+.toc-header-nav {
+  position: relative;
+  display: none; /* Hidden by default on mobile */
+  align-items: center;
+  justify-content: flex-end;
+  transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+  will-change: width, height;
+  overflow: visible;
+}
+
+/* Show on large screens */
+@media (min-width: 1024px) {
+  .toc-header-nav {
+    display: flex;
+  }
+}
+
+/* Collapsed state - icon only */
+.toc-header-nav.collapsed {
+  width: 40px;
+  height: 40px;
+  min-width: 40px;
+  min-height: 40px;
+  border-radius: 50%;
+  background: rgba(18, 21, 27, 0.8);
+  border: 1px solid rgba(42, 49, 58, 0.6);
+  backdrop-filter: blur(8px);
+  cursor: pointer;
+  display: flex !important;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+  position: relative;
+  flex-shrink: 0;
+}
+
+.toc-header-nav.collapsed:hover {
+  background: rgba(18, 21, 27, 0.95);
+  border-color: rgba(124, 199, 255, 0.5);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4), 0 0 0 1px rgba(124, 199, 255, 0.1);
+  transform: scale(1.05);
+}
+
+/* Expanded state - dropdown menu */
+.toc-header-nav.expanded {
+  position: relative;
+  width: auto;
+  height: auto;
+  border-radius: 0;
+  background: transparent;
+  border: none;
+  box-shadow: none;
+  padding: 0;
+  overflow: visible;
+  z-index: 200;
+}
+
+/* Header icon container */
+.toc-header-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+  transition: opacity 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.toc-header-nav.collapsed .toc-header-icon {
+  opacity: 1;
+}
+
+.toc-header-nav.expanded .toc-header-icon {
+  opacity: 0;
+  pointer-events: none;
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 40px;
+  height: 40px;
+}
+
+/* Header icon SVG */
+.toc-header-icon-svg {
+  width: 20px;
+  height: 20px;
+  color: rgba(124, 199, 255, 0.9);
+  transition: color 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  flex-shrink: 0;
+}
+
+.toc-header-nav.collapsed:hover .toc-header-icon-svg {
+  color: rgba(124, 199, 255, 1);
+}
+
+/* Header content - expanded dropdown menu */
+.toc-header-content {
+  position: absolute;
+  top: calc(100% + 12px);
+  right: 0;
+  width: 220px;
+  max-height: calc(100vh - 200px);
+  border-radius: 12px;
+  background: var(--panel-bg);
+  border: 1px solid var(--border-clr);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.5), inset 0 1px 0 rgba(255, 255, 255, 0.02);
+  padding: 12px;
+  overflow-y: auto;
+  overflow-x: hidden;
+  z-index: 200;
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  transform: translateY(-8px);
+  transition: opacity 0.25s cubic-bezier(0.4, 0, 0.2, 1) 0.05s,
+              transform 0.25s cubic-bezier(0.4, 0, 0.2, 1) 0.05s,
+              visibility 0s linear 0s;
+}
+
+.toc-header-content::-webkit-scrollbar {
+  width: 6px;
+}
+
+.toc-header-content::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.toc-header-content::-webkit-scrollbar-thumb {
+  background: rgba(124, 199, 255, 0.3);
+  border-radius: 3px;
+}
+
+.toc-header-content::-webkit-scrollbar-thumb:hover {
+  background: rgba(124, 199, 255, 0.5);
+}
+
+.toc-header-nav.expanded .toc-header-content {
+  opacity: 1;
+  visibility: visible;
+  pointer-events: all;
+  transform: translateY(0);
+  transition: opacity 0.25s cubic-bezier(0.4, 0, 0.2, 1) 0.05s,
+              transform 0.25s cubic-bezier(0.4, 0, 0.2, 1) 0.05s,
+              visibility 0s linear 0s;
+}
+
+.toc-header-nav.collapsed .toc-header-content {
+  transition: opacity 0.15s cubic-bezier(0.4, 0, 0.2, 1) 0s,
+              transform 0.15s cubic-bezier(0.4, 0, 0.2, 1) 0s,
+              visibility 0s linear 0.15s;
+}
+
+/* Header navigation list */
+.toc-header-nav-list {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+/* Header navigation items */
+.toc-header-item {
+  display: block;
+  padding: 8px 12px;
+  margin: 2px 0;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  color: var(--subtext-clr);
+  font-size: 13px;
+  text-decoration: none;
+  border-left: 3px solid transparent;
+  white-space: nowrap;
+}
+
+.toc-header-item:hover {
+  background: var(--surface-bg);
+  color: var(--text-clr);
+  border-left-color: rgba(124, 199, 255, 0.3);
+}
+
+.toc-header-item.active {
+  color: var(--accent-clr);
+  font-weight: 600;
+  border-left-color: var(--accent-clr);
+  background: rgba(124, 199, 255, 0.08);
+}
+
+/* Smaller screens - already handled by media query above */
+
+/* Adjust header TOC for very large screens */
+@media (min-width: 1280px) {
+  .toc-header-nav.expanded .toc-header-content {
+    width: 240px;
+  }
 }

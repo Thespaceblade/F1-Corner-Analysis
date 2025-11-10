@@ -11,11 +11,13 @@ type TOCSection = {
 type TableOfContentsProps = {
   sections: TOCSection[]
   isVisible?: boolean
+  variant?: 'sidebar' | 'header'
 }
 
 export default function TableOfContents({ 
   sections, 
-  isVisible = true 
+  isVisible = true,
+  variant = 'sidebar'
 }: TableOfContentsProps) {
   const [activeSection, setActiveSection] = useState<string | null>(null)
   const [isMobileOpen, setIsMobileOpen] = useState(false)
@@ -156,8 +158,150 @@ export default function TableOfContents({
     }
   }, [isMobileOpen])
 
-  if (!isVisible || sections.length === 0) return null
+  // Header variant - integrated into header
+  if (variant === 'header') {
+    // Don't return null for header variant - let it render even if no sections
+    // The parent component handles visibility
+    return (
+      <>
+        {/* Mobile Toggle Button */}
+        {sections.length > 0 && (
+          <button
+            type="button"
+            onClick={() => setIsMobileOpen(true)}
+            className="toc-mobile-toggle lg:hidden"
+            aria-label="Open table of contents"
+            aria-expanded={isMobileOpen}
+          >
+            <svg
+              className="w-6 h-6"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+              aria-hidden="true"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth={2}
+                d="M4 6h16M4 12h16M4 18h16"
+              />
+            </svg>
+          </button>
+        )}
 
+        {/* Mobile Backdrop */}
+        {isMobileOpen && sections.length > 0 && (
+          <div
+            className="toc-backdrop lg:hidden open"
+            onClick={() => setIsMobileOpen(false)}
+            aria-hidden="true"
+          />
+        )}
+
+        {/* Header-integrated TOC - Desktop */}
+        {sections.length > 0 && isVisible && (
+          <div
+            className={`toc-header-nav ${isHovered ? 'expanded' : 'collapsed'}`}
+            aria-label="Table of contents"
+            onMouseEnter={() => setIsHovered(true)}
+            onMouseLeave={() => setIsHovered(false)}
+          >
+            {/* Icon when collapsed - always visible */}
+            <div className="toc-header-icon">
+              <svg
+                className="toc-header-icon-svg"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+                aria-hidden="true"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={2.5}
+                  d="M4 6h16M4 12h16M4 18h16"
+                />
+              </svg>
+            </div>
+            
+            {/* Expanded content */}
+            <div className="toc-header-content">
+              <nav className="toc-header-nav-list">
+                {sections.map((section) => {
+                  const isActive = activeSection === section.id
+                  return (
+                    <a
+                      key={section.id}
+                      href={`#${section.id}`}
+                      onClick={(e) => scrollToSection(section.id, e)}
+                      className={`toc-header-item ${isActive ? 'active' : ''}`}
+                      aria-current={isActive ? 'location' : undefined}
+                    >
+                      {section.label}
+                    </a>
+                  )
+                })}
+              </nav>
+            </div>
+          </div>
+        )}
+
+        {/* Mobile Drawer */}
+        <aside
+          className={`toc-drawer lg:hidden ${isMobileOpen ? 'open' : ''}`}
+          aria-label="Table of contents"
+          aria-hidden={!isMobileOpen}
+        >
+          <div className="toc-drawer-header">
+            <h3 className="toc-title">Contents</h3>
+            <button
+              type="button"
+              onClick={() => setIsMobileOpen(false)}
+              className="toc-close-button"
+              aria-label="Close table of contents"
+            >
+              <svg
+                className="w-6 h-6"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+                aria-hidden="true"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={2}
+                  d="M6 18L18 6M6 6l12 12"
+                />
+              </svg>
+            </button>
+          </div>
+          <nav className="toc-nav">
+            {sections.map((section) => {
+              const isActive = activeSection === section.id
+              return (
+                <a
+                  key={section.id}
+                  href={`#${section.id}`}
+                  onClick={(e) => scrollToSection(section.id, e)}
+                  className={`toc-item ${isActive ? 'active' : ''}`}
+                  style={{
+                    paddingLeft: `${12 + (section.level - 1) * 16}px`,
+                  }}
+                  aria-current={isActive ? 'location' : undefined}
+                >
+                  {section.label}
+                </a>
+              )
+            })}
+          </nav>
+        </aside>
+      </>
+    )
+  }
+
+  // Sidebar variant - original fixed sidebar
   return (
     <>
       {/* Mobile Toggle Button */}
