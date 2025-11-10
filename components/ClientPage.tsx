@@ -56,7 +56,10 @@ type TracksData = {
 
 export default function ClientPage(){
   const [selectedTrack, setSelectedTrack] = useState<string>('')
-  const [trackData, setTrackData] = useState<TracksData | null>(null)
+  // Initialize with empty object so page can render immediately
+  const [trackData, setTrackData] = useState<TracksData>({ tracks: {} })
+  const [tracksLoading, setTracksLoading] = useState<boolean>(true)
+  const [tracksError, setTracksError] = useState<string | null>(null)
   const [selectedDrivers, setSelectedDrivers] = useState<string[]>(['VER','NOR'])
   const [selectedSession, setSelectedSession] = useState<string>('Q')
   const [sessionData, setSessionData] = useState<SessionPayload | null>(null)
@@ -65,7 +68,83 @@ export default function ClientPage(){
   const [showOutliers, setShowOutliers] = useState<boolean>(true)
 
   useEffect(() => {
-    fetch('/data/tracks.json').then(r => r.json()).then(setTrackData)
+    let cancelled = false
+    const controller = new AbortController()
+    let timeoutCleared = false
+    
+    // Safety timeout - ensure page always renders after max 3 seconds
+    const safetyTimeoutId = setTimeout(() => {
+      if (!cancelled && !timeoutCleared) {
+        console.warn('Safety timeout: Forcing page render after 3 seconds')
+        setTracksLoading(false)
+        timeoutCleared = true
+      }
+    }, 3000)
+    
+    // Fetch timeout for error reporting
+    const fetchTimeoutId = setTimeout(() => {
+      if (!cancelled && !timeoutCleared) {
+        console.warn('Tracks fetch taking longer than expected (>3s)')
+        setTracksError('Loading is taking longer than expected')
+      }
+    }, 3000)
+    
+    console.log('[ClientPage] Starting tracks fetch...')
+    const startTime = Date.now()
+    
+    fetch('/data/tracks.json', { signal: controller.signal })
+      .then(r => {
+        const elapsed = Date.now() - startTime
+        console.log(`[ClientPage] Fetch response received after ${elapsed}ms, status:`, r.status)
+        
+        if (cancelled) return null
+        if (!r.ok) {
+          throw new Error(`Failed to load tracks: ${r.status} ${r.statusText}`)
+        }
+        return r.json()
+      })
+      .then((data) => {
+        if (cancelled) return
+        if (!data) return
+        
+        const elapsed = Date.now() - startTime
+        console.log(`[ClientPage] Tracks loaded after ${elapsed}ms:`, Object.keys(data?.tracks || {}).length, 'tracks')
+        
+        if (typeof data !== 'object' || !data.tracks) {
+          throw new Error('Invalid tracks data format')
+        }
+        
+        clearTimeout(safetyTimeoutId)
+        clearTimeout(fetchTimeoutId)
+        timeoutCleared = true
+        
+        setTrackData(data as TracksData)
+        setTracksLoading(false)
+        setTracksError(null)
+      })
+      .catch((error) => {
+        const elapsed = Date.now() - startTime
+        if (cancelled || error.name === 'AbortError') {
+          console.log(`[ClientPage] Fetch cancelled/aborted after ${elapsed}ms`)
+          return
+        }
+        
+        console.error(`[ClientPage] Error loading tracks after ${elapsed}ms:`, error)
+        clearTimeout(safetyTimeoutId)
+        clearTimeout(fetchTimeoutId)
+        timeoutCleared = true
+        
+        setTracksError(error instanceof Error ? error.message : 'Failed to load tracks')
+        setTracksLoading(false)
+      })
+    
+    return () => {
+      console.log('[ClientPage] Cleanup: cancelling fetch')
+      cancelled = true
+      clearTimeout(safetyTimeoutId)
+      clearTimeout(fetchTimeoutId)
+      controller.abort()
+    }
   }, [])
 
   const [selectedYear, setSelectedYear] = useState<number>(new Date().getFullYear())
@@ -73,14 +152,22 @@ export default function ClientPage(){
   const [availableRoundsByYear, setAvailableRoundsByYear] = useState<Record<string, string[]>>({})
   const [sessionsByRound, setSessionsByRound] = useState<Record<string, Record<string, string[]>>>({})
   const [calendarData, setCalendarData] = useState<Calendar | null>(null)
+  const [sessionsLoadError, setSessionsLoadError] = useState<string | null>(null)
 
   useEffect(() => {
     // Discover available sessions (years/rounds) via server-side index
     fetch('/api/sessions/index')
-      .then(r => r.json())
+      .then(r => {
+        if (!r.ok) throw new Error(`Failed to load sessions index: ${r.statusText}`)
+        return r.json()
+      })
       .then((idx) => {
+        if (idx?.error) {
+          throw new Error(idx.error)
+        }
         const years = Object.keys(idx?.years ?? {}).map(Number).sort((a,b) => a - b)
         setAvailableYears(years)
+        setSessionsLoadError(null)
         if (years.length) {
           const latest = years[years.length - 1]
           setSelectedYear(latest)
@@ -105,8 +192,13 @@ export default function ClientPage(){
         setAvailableRoundsByYear(map)
         setSessionsByRound(sessionsMap)
       })
-      .catch(() => {
-        // leave empty on failure
+      .catch((error) => {
+        console.error('Error loading sessions index:', error)
+        setSessionsLoadError(error instanceof Error ? error.message : 'Failed to load sessions')
+        // Set empty arrays so page can still render, just without session data
+        setAvailableYears([])
+        setAvailableRoundsByYear({})
+        setSessionsByRound({})
       })
   }, [])
 
@@ -258,7 +350,7 @@ export default function ClientPage(){
   }, [calendarData])
 
   const trackList = useMemo(() => {
-    if (!trackData) return []
+    if (!trackData?.tracks) return []
     const tracks = roundIds
       .filter(id => !!trackData.tracks[id])
       .map(id => {
@@ -292,15 +384,43 @@ export default function ClientPage(){
     ]
   }, [currentTrack])
 
-  if(!trackData || !availableYears.length) return <div>Loading...</div>
+  // Show loading screen only while tracks are initially loading
+  if (tracksLoading && Object.keys(trackData.tracks).length === 0) {
+    return (
+      <div className="min-h-screen flex items-center justify-center">
+        <div className="flex flex-col items-center gap-6">
+          {/* Logo with subtle animation */}
+          <div className="relative">
+            <div className="absolute inset-[-12px] bg-accent/10 rounded-full blur-xl animate-pulse-slow" />
+            <div className="relative flex h-24 w-24 md:h-32 md:w-32 items-center justify-center rounded-full border border-accent/40 bg-transparent">
+              <Image
+                src="/logos/logo-transparent.png"
+                alt="F1 Corner Analysis logo"
+                width={128}
+                height={128}
+                className="object-contain p-3 animate-logo-enter"
+                priority
+              />
+            </div>
+          </div>
+          
+          {/* Loading spinner */}
+          <div className="flex flex-col items-center gap-3">
+            <div className="relative">
+              <div className="w-12 h-12 border-4 border-accent/20 rounded-full"></div>
+              <div className="w-12 h-12 border-4 border-accent border-t-transparent rounded-full animate-spin absolute top-0 left-0"></div>
+            </div>
+            <p className="text-subtext-clr text-sm font-medium animate-pulse">
+              Loading tracks...
+            </p>
+          </div>
+        </div>
+      </div>
+    )
+  }
 
   return (
     <main className="max-w-6xl mx-auto px-4">
-      {/* Table of Contents */}
-      <TableOfContents 
-        sections={tocSections} 
-        isVisible={!!currentTrack}
-      />
       <header className="relative mb-8 overflow-visible">
         {/* Animated gradient background - behind text/logo, text will obscure edges */}
         <div className="absolute inset-0 bg-gradient-radial-header animate-pulse-slow pointer-events-none" style={{ zIndex: 0 }} />
@@ -309,28 +429,30 @@ export default function ClientPage(){
         <div className="absolute -bottom-8 left-0 right-0 h-24 bg-gradient-to-b from-transparent via-[var(--page-bg)]/80 to-[var(--page-bg)] pointer-events-none" style={{ zIndex: 1 }} />
         
         {/* Content container - positioned above gradient */}
-        <div className="relative flex flex-col md:flex-row items-center md:items-end justify-center md:justify-start gap-5 md:gap-10 py-10 md:py-12 px-6 md:px-12" style={{ zIndex: 2 }}>
+        <div className="relative flex flex-col md:flex-row items-center md:items-end justify-between gap-5 md:gap-10 py-10 md:py-12 px-6 md:px-12" style={{ zIndex: 2 }}>
           
-          {/* Logo container - clean and minimal */}
-          <div className="relative group flex-shrink-0" style={{ zIndex: 2 }}>
-            {/* Subtle glow - minimal and clean */}
-            <div className="absolute inset-[-8px] bg-accent/10 rounded-full blur-xl group-hover:bg-accent/15 transition-all duration-300" style={{ zIndex: -1 }} />
-            
-            {/* Logo container - clean, no glass effects */}
-            <div className="relative flex h-24 w-24 md:h-36 md:w-36 items-center justify-center rounded-full border border-accent/40 bg-transparent group-hover:scale-105 group-hover:border-accent/60 transition-all duration-300">
-              <Image
-                src="/logos/logo-transparent.png"
-                alt="F1 Corner Analysis logo"
-                width={160}
-                height={160}
-                className="object-contain p-1.5 md:p-2.5 animate-logo-enter"
-                priority
-              />
+          {/* Left side: Logo and text */}
+          <div className="flex flex-col md:flex-row items-center md:items-end justify-center md:justify-start gap-5 md:gap-10 flex-1 min-w-0">
+            {/* Logo container - clean and minimal */}
+            <div className="relative group flex-shrink-0" style={{ zIndex: 2 }}>
+              {/* Subtle glow - minimal and clean */}
+              <div className="absolute inset-[-8px] bg-accent/10 rounded-full blur-xl group-hover:bg-accent/15 transition-all duration-300" style={{ zIndex: -1 }} />
+              
+              {/* Logo container - clean, no glass effects */}
+              <div className="relative flex h-24 w-24 md:h-36 md:w-36 items-center justify-center rounded-full border border-accent/40 bg-transparent group-hover:scale-105 group-hover:border-accent/60 transition-all duration-300">
+                <Image
+                  src="/logos/logo-transparent.png"
+                  alt="F1 Corner Analysis logo"
+                  width={160}
+                  height={160}
+                  className="object-contain p-1.5 md:p-2.5 animate-logo-enter"
+                  priority
+                />
+              </div>
             </div>
-          </div>
-          
-          {/* Text content - clean and clear, no gradient interference */}
-          <div className="flex flex-col items-center md:items-start text-center md:text-left space-y-2.5 md:space-y-3 min-w-0 flex-1 w-full relative" style={{ zIndex: 2 }}>
+            
+            {/* Text content - clean and clear, no gradient interference */}
+            <div className="flex flex-col items-center md:items-start text-center md:text-left space-y-2.5 md:space-y-3 min-w-0 flex-1 w-full relative" style={{ zIndex: 2 }}>
             <h1 className="text-5xl md:text-7xl font-bold tracking-[-0.02em] animate-text-enter leading-tight break-words px-2 md:px-0 relative">
               <span className="text-[#7cc7ff] drop-shadow-[0_0_20px_rgba(124,199,255,0.4),0_2px_8px_rgba(0,0,0,0.5)]">
                 F1 Corner
@@ -402,14 +524,42 @@ export default function ClientPage(){
               </a>
             </div>
           </div>
+          </div>
+          
+          {/* Right side: Table of Contents - Header integrated */}
+          {currentTrack && tocSections.length > 0 && (
+            <div className="flex items-center justify-end flex-shrink-0" style={{ zIndex: 2 }}>
+              <TableOfContents 
+                sections={tocSections} 
+                isVisible={!!currentTrack}
+                variant="header"
+              />
+            </div>
+          )}
         </div>
       </header>
+
+      {tracksError && (
+        <div className="mb-4 rounded border border-red-500/40 bg-red-500/10 px-4 py-3 text-sm text-red-300">
+          <div className="font-semibold mb-1">Error: Could not load track data</div>
+          <div className="text-red-400/80">{tracksError}</div>
+          <div className="text-red-400/60 text-xs mt-1">The page may have limited functionality.</div>
+        </div>
+      )}
+
+      {sessionsLoadError && (
+        <div className="mb-4 rounded border border-yellow-500/40 bg-yellow-500/10 px-4 py-3 text-sm text-yellow-300">
+          <div className="font-semibold mb-1">Warning: Could not load session data</div>
+          <div className="text-yellow-400/80">{sessionsLoadError}</div>
+          <div className="text-yellow-400/60 text-xs mt-1">The page will still function, but you may not see available tracks and sessions.</div>
+        </div>
+      )}
 
       <Toolbar 
         tracks={trackList}
         selectedTrack={selectedTrack}
         onTrackChangeAction={setSelectedTrack}
-        years={availableYears}
+        years={availableYears.length > 0 ? availableYears : [selectedYear]}
         selectedYear={selectedYear}
         onYearChangeAction={(y) => {
           setSelectedYear(y)
@@ -434,7 +584,7 @@ export default function ClientPage(){
               />
             </div>
             <div id="track-information" className="panel p-4">
-              <div className="text-lg font-bold">{trackData.tracks[selectedTrack]?.name}</div>
+              <div className="text-lg font-bold">{currentTrack.name}</div>
               <div className="text-gray-600">{selectedYear}</div>
               <div className="mt-2 text-sm text-gray-400">
                 Session: {sessionLabel}
