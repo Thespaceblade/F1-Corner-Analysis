@@ -40,10 +40,10 @@ This guide explains how to use the TODO and FIXME tracking system in this projec
 - When verifying functionality - update status
 - Before releases - review all items
 
-### 3. docs/remaining-tasks.md
+### 3. docs/implementation/plans/remaining-tasks.md
 **Purpose**: Detailed task list with comprehensive breakdown.
 
-**Location**: `docs/remaining-tasks.md`
+**Location**: `docs/implementation/plans/remaining-tasks.md`
 
 **Contents**:
 - Detailed task descriptions
@@ -276,7 +276,7 @@ grep -r "FIXME:" --include="*.ts" --include="*.tsx" . | wc -l
 
 - [TODO.md](../TODO.md) - Main TODO file
 - [FIXME.md](../FIXME.md) - Known bugs and issues
-- [docs/remaining-tasks.md](./remaining-tasks.md) - Detailed tasks
+- [docs/implementation/plans/remaining-tasks.md](../implementation/plans/remaining-tasks.md) - Detailed tasks
 - [README.md](../README.md) - Project overview with TODO references
 
 ---

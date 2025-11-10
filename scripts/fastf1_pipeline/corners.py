@@ -461,14 +461,18 @@ def match_corners_to_track(
     detected_corners: List[Dict[str, Any]],
     track_corners: List[Dict[str, Any]],
     tolerance_meters: float = 50.0,
+    track_corners_for_types: List[Dict[str, Any]] | None = None,
 ) -> List[Dict[str, Any]]:
     """
     Match detected corners to track corner definitions.
+    Improved to handle corner clusters with overlapping distance ranges.
+    Supports both FastF1 CircuitInfo format (distance) and tracks.json format (expectedDistanceRange).
 
     Args:
         detected_corners: List of corner metrics with apexDistance
-        track_corners: List of track corner definitions from tracks.json
+        track_corners: List of track corner definitions (FastF1 CircuitInfo or tracks.json)
         tolerance_meters: Maximum distance difference for matching
+        track_corners_for_types: Optional tracks.json corners for corner types (if track_corners is FastF1 format)
 
     Returns:
         List of matched corners with cornerNumber assigned
@@ -482,23 +486,80 @@ def match_corners_to_track(
     # Sort detected corners by apex distance
     sorted_detected = sorted(detected_corners, key=lambda c: c.get("apexDistance", 0))
 
-    # If we have track corner distance ranges, use those
-    # Otherwise, use simple sequential matching
+    # Detect corner clusters (corners within 100m of each other)
+    # For clusters, we use stricter matching and sequential ordering
+    track_corner_distances = []
+    is_fastf1_format = False
+    
+    for track_corner in track_corners:
+        # Check if this is FastF1 format (has "distance" key) or tracks.json format (has "expectedDistanceRange")
+        if "distance" in track_corner:
+            # FastF1 CircuitInfo format - single distance value
+            is_fastf1_format = True
+            track_corner_distances.append(float(track_corner["distance"]))
+        elif "expectedDistanceRange" in track_corner:
+            # tracks.json format - distance range
+            range_center = (
+                track_corner["expectedDistanceRange"]["min"] + 
+                track_corner["expectedDistanceRange"]["max"]
+            ) / 2.0
+            track_corner_distances.append(range_center)
+        else:
+            track_corner_distances.append(0)
+    
+    # Find clusters in track corners (corners within 100m of each other)
+    clusters = []
+    current_cluster = []
+    for i, dist in enumerate(track_corner_distances):
+        if not current_cluster:
+            current_cluster = [i]
+        elif dist - track_corner_distances[current_cluster[0]] < 100:
+            current_cluster.append(i)
+        else:
+            if len(current_cluster) > 1:
+                clusters.append(current_cluster)
+            current_cluster = [i]
+    if len(current_cluster) > 1:
+        clusters.append(current_cluster)
+
+    # Create a map of track corner index to cluster
+    track_to_cluster = {}
+    for cluster_idx, cluster in enumerate(clusters):
+        for track_idx in cluster:
+            track_to_cluster[track_idx] = cluster_idx
+
+    # Match detected corners to track corners
     for detected in sorted_detected:
         apex_dist = detected.get("apexDistance", 0)
         best_match = None
         best_diff = float("inf")
+        best_is_in_range = False
 
+        # First pass: Find best match considering all track corners
         for track_idx, track_corner in enumerate(track_corners):
             if track_idx in used_track_corners:
                 continue
 
-            # Check if track corner has expected distance range
-            if "expectedDistanceRange" in track_corner:
+            # Check if track corner has distance data (FastF1 format) or distance range (tracks.json format)
+            dist_from_range = None
+            is_in_range = False
+            
+            if "distance" in track_corner:
+                # FastF1 CircuitInfo format - single distance value
+                corner_distance = float(track_corner["distance"])
+                # For FastF1, use a small tolerance window around the distance (e.g., ±25m)
+                tolerance_window = 25.0
+                expected_min = corner_distance - tolerance_window
+                expected_max = corner_distance + tolerance_window
+                is_in_range = expected_min <= apex_dist <= expected_max
+                dist_from_range = abs(apex_dist - corner_distance)
+            elif "expectedDistanceRange" in track_corner:
+                # tracks.json format - distance range
                 expected_min = track_corner["expectedDistanceRange"]["min"]
                 expected_max = track_corner["expectedDistanceRange"]["max"]
+                is_in_range = expected_min <= apex_dist <= expected_max
 
-                # Calculate distance from range (0 if inside, distance to nearest bound if outside)
+                # Calculate distance from range
                 if apex_dist < expected_min:
                     dist_from_range = expected_min - apex_dist
                 elif apex_dist > expected_max:
@@ -507,30 +568,64 @@ def match_corners_to_track(
                     # Inside range - use distance from center for ranking
                     range_center = (expected_min + expected_max) / 2.0
                     dist_from_range = abs(apex_dist - range_center)
-                
-                # Consider this corner if it's within tolerance of the range
-                if dist_from_range <= tolerance_meters:
-                    if dist_from_range < best_diff:
-                        best_match = track_idx
-                        best_diff = dist_from_range
             else:
-                # Fallback: sequential matching (assumes corners are in order)
-                # This is less accurate but works if we don't have distance data
-                if best_match is None:
+                # No distance data - skip this corner
+                continue
+            
+            # For corners in clusters, use stricter tolerance (15m instead of 50m)
+            # and prioritize corners that are in range
+            is_in_cluster = track_idx in track_to_cluster
+            cluster_tolerance = 15.0 if is_in_cluster else tolerance_meters
+            
+            # Consider this corner if it's within tolerance
+            if dist_from_range is not None and dist_from_range <= cluster_tolerance:
+                # Prioritize: 1) corners in range, 2) corners in clusters (sequential), 3) closest distance
+                score = dist_from_range
+                if is_in_range:
+                    score -= 1000  # Strongly prefer corners in range
+                if is_in_cluster and best_match is not None and best_match in track_to_cluster:
+                    # Within same cluster, prefer sequential ordering
+                    cluster = track_to_cluster[track_idx]
+                    if cluster == track_to_cluster[best_match]:
+                        # Same cluster - check if this is the next corner in sequence
+                        if track_idx > best_match:
+                            score -= 500  # Prefer next corner in sequence
+                
+                if score < best_diff or (is_in_range and not best_is_in_range):
                     best_match = track_idx
-                    best_diff = 0
+                    best_diff = dist_from_range
+                    best_is_in_range = is_in_range
+            # Note: Removed else clause for fallback sequential matching as it's not needed with distance-based matching
 
-        # If we found a match, accept it
-        if best_match is not None and best_diff <= tolerance_meters:
-            track_corner = track_corners[best_match]
-            matched_corner = {
-                **detected,
-                "cornerNumber": track_corner.get("number", len(matched) + 1),
-                "cornerType": track_corner.get("type", "medium"),
-            }
-            matched.append(matched_corner)
-            used_track_corners.add(best_match)
-            continue
+        # If we found a match, accept it (check tolerance for non-cluster corners)
+        if best_match is not None:
+            is_in_cluster = best_match in track_to_cluster
+            cluster_tolerance = 15.0 if is_in_cluster else tolerance_meters
+            
+            if best_diff <= cluster_tolerance or best_is_in_range:
+                track_corner = track_corners[best_match]
+                
+                # Get corner type from track_corners_for_types if available (tracks.json has types)
+                corner_type = "medium"  # Default
+                if track_corners_for_types:
+                    # Find matching corner in tracks.json by number
+                    corner_number = track_corner.get("number", len(matched) + 1)
+                    for tc in track_corners_for_types:
+                        if tc.get("number") == corner_number:
+                            corner_type = tc.get("type", "medium")
+                            break
+                else:
+                    # Use type from track_corner if available
+                    corner_type = track_corner.get("type", "medium")
+                
+                matched_corner = {
+                    **detected,
+                    "cornerNumber": track_corner.get("number", len(matched) + 1),
+                    "cornerType": corner_type,
+                }
+                matched.append(matched_corner)
+                used_track_corners.add(best_match)
+                continue
         
         # No match found - assign sequential number
         matched_corner = {

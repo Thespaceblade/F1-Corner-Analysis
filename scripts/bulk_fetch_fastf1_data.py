@@ -11,9 +11,18 @@ from __future__ import annotations
 
 import argparse
 import json
+import logging
+import os
+import sys
 from dataclasses import dataclass
 from pathlib import Path
 from typing import Iterable, List, Sequence
+
+# Suppress FastF1 verbose logging
+logging.getLogger('fastf1').setLevel(logging.WARNING)
+logging.getLogger('fastf1.core').setLevel(logging.WARNING)
+logging.getLogger('fastf1.req').setLevel(logging.WARNING)
+logging.getLogger('fastf1.api').setLevel(logging.WARNING)
 
 from fastf1_pipeline import PipelineConfig, SessionIdentifier, build_session_payload, fetch_session
 
@@ -126,36 +135,106 @@ def main(argv: Sequence[str] | None = None) -> int:
     sessions = [normalize_session_code(code) for code in args.sessions]
     tracks_filter = set(args.tracks) if args.tracks else None
 
+    # Filter rounds to process
+    rounds_to_process = [
+        r for r in rounds 
+        if should_include_round(r, tracks_filter)
+    ]
+    
+    total_sessions = len(rounds_to_process) * len(sessions)
+    current_session = 0
+    
+    print(f"\n{'='*60}")
+    print(f"Fetching session data for {len(rounds_to_process)} tracks")
+    print(f"Total sessions to fetch: {total_sessions}")
+    print(f"{'='*60}\n")
+
     summaries: List[FetchSummary] = []
 
-    for round_entry in rounds:
-        if not should_include_round(round_entry, tracks_filter):
-            continue
-
-        round_results = fetch_round_sessions(
-            year=args.year,
-            round_entry=round_entry,
-            session_codes=sessions,
-            config=config,
-        )
-
-        summaries.extend(round_results)
+    # Use a null device to suppress FastF1 output
+    devnull = open(os.devnull, 'w')
+    
+    for round_entry in rounds_to_process:
+        round_id = round_entry.get("id", "unknown")
+        round_number = round_entry.get("round", 0)
+        round_name = round_entry.get("name", round_id)
+        
+        # Process each session for this round
+        for session_code in sessions:
+            current_session += 1
+            progress_pct = (current_session / total_sessions) * 100
+            
+            # Show progress bar
+            bar_length = 40
+            filled = int(bar_length * current_session / total_sessions)
+            bar = "█" * filled + "░" * (bar_length - filled)
+            
+            # Show progress before fetch
+            print(
+                f"[{bar}] {progress_pct:5.1f}% | "
+                f"Fetching {round_number:02d} {round_id} / {session_code}...",
+                end="",
+                flush=True
+            )
+            
+            # Fetch the session while suppressing stdout/stderr from FastF1
+            identifier = SessionIdentifier(
+                year=args.year,
+                round_slug=round_id,
+                session_code=normalize_session_code(session_code),
+            )
+            
+            # Suppress FastF1 output during fetch
+            old_stdout = sys.stdout
+            old_stderr = sys.stderr
+            try:
+                sys.stdout = devnull
+                sys.stderr = devnull
+                cache_dir = config.resolve_cache(args.year, round_id, identifier.session_code)
+                fetch_result = fetch_session(identifier, cache_dir)
+                payload = build_session_payload(fetch_result)
+            finally:
+                sys.stdout = old_stdout
+                sys.stderr = old_stderr
+            
+            output_dir = config.resolve_output(args.year, round_id, identifier.session_code)
+            output_dir.mkdir(parents=True, exist_ok=True)
+            output_path = output_dir / "session.json"
+            output_path.write_text(json.dumps(payload, indent=2))
+            
+            result = FetchSummary(
+                round_id=round_id,
+                round_number=round_number,
+                session_code=identifier.session_code,
+                status=fetch_result.status,
+                message=fetch_result.message,
+                output_path=output_path,
+            )
+            
+            # Update progress bar with result (overwrite the "Fetching..." line)
+            status_icon = "✅" if result.status == "ok" else "⚠️"
+            print(
+                f"\r[{bar}] {progress_pct:5.1f}% | "
+                f"{status_icon} {round_number:02d} {round_id} / {result.session_code} -> {result.status}",
+                end="\n",
+                flush=True
+            )
+            
+            summaries.append(result)
+    
+    devnull.close()
 
     success = 0
     failures = []
 
     for summary in summaries:
-        status_icon = "✅" if summary.status == "ok" else "⚠️"
-        print(
-            f"{status_icon} {summary.round_number:02d} {summary.round_id} / {summary.session_code} "
-            f"-> {summary.status}"
-        )
         if summary.status == "ok":
             success += 1
         else:
             failures.append(summary)
 
-    print(f"\nCompleted {len(summaries)} fetches ({success} ok, {len(failures)} warnings).")
+    print(f"\n{'='*60}")
+    print(f"Completed {len(summaries)} fetches ({success} ok, {len(failures)} warnings).")
     if failures:
         print("Warnings:")
         for summary in failures:

@@ -4,6 +4,9 @@ import React, { useMemo } from 'react'
 import { SessionPayload, CornerMetrics } from '../../lib/sessionDataClient'
 import { CornerPerformance } from '../../lib/cornerPerformanceAggregator'
 import { BarChart, Bar, XAxis, YAxis, Tooltip, ResponsiveContainer, Legend, CartesianGrid } from 'recharts'
+import CornerBadge from '../formatting/CornerBadge'
+import SpeedDisplay from '../formatting/SpeedDisplay'
+import DriverBadge from '../formatting/DriverBadge'
 
 type CornerEntryExitAnalysisProps = {
   sessionData: SessionPayload
@@ -143,19 +146,19 @@ export default function CornerEntryExitAnalysis({
                         </div>
                         <div className="space-y-1 text-xs">
                           <div className="text-blue-400">
-                            Entry: {data.entry} km/h
+                            Entry: <SpeedDisplay value={data.entry} rounded variant="default" className="text-blue-400" />
                           </div>
                           <div className="text-red-400">
-                            Apex: {data.apex} km/h
+                            Apex: <SpeedDisplay value={data.apex} rounded variant="default" className="text-red-400" />
                           </div>
                           <div className="text-green-400">
-                            Exit: {data.exit} km/h
+                            Exit: <SpeedDisplay value={data.exit} rounded variant="default" className="text-green-400" />
                           </div>
                           <div className="text-gray-400 mt-2">
-                            Speed Drop: {data.entry - data.apex} km/h
+                            Speed Drop: <SpeedDisplay value={data.entry - data.apex} rounded variant="default" className="text-gray-400" />
                           </div>
                           <div className="text-gray-400">
-                            Speed Recovery: {data.exit - data.apex} km/h
+                            Speed Recovery: <SpeedDisplay value={data.exit - data.apex} rounded variant="default" className="text-gray-400" />
                           </div>
                         </div>
                       </div>
@@ -210,26 +213,29 @@ export default function CornerEntryExitAnalysis({
                           <td className="py-2 px-3">
                             <div className="flex items-center gap-2">
                               <span className="font-medium text-gray-200">
-                                C{cornerNum} ({driver})
+                                C{cornerNum}
                               </span>
+                              <DriverBadge code={driver} size="sm" variant="chip" />
                               {cornerInfoItem && (
-                                <span 
-                                  className={`text-xs px-1.5 py-0.5 rounded ${
-                                    cornerInfoItem.type === 'slow' ? 'bg-red-500/20 text-red-400' :
-                                    cornerInfoItem.type === 'medium' ? 'bg-yellow-500/20 text-yellow-400' :
-                                    'bg-green-500/20 text-green-400'
-                                  }`}
-                                >
-                                  {cornerInfoItem.type}
-                                </span>
+                                <CornerBadge type={cornerInfoItem.type} showLabel={false} size="sm" />
                               )}
                             </div>
                           </td>
-                          <td className="text-right py-2 px-3 text-gray-300">{data.entrySpeed}</td>
-                          <td className="text-right py-2 px-3 text-gray-300">{data.apexSpeed}</td>
-                          <td className="text-right py-2 px-3 text-gray-300">{data.exitSpeed}</td>
-                          <td className="text-right py-2 px-3 text-red-400">{speedDrop}</td>
-                          <td className="text-right py-2 px-3 text-green-400">{speedRecovery}</td>
+                          <td className="text-right py-2 px-3">
+                            <SpeedDisplay value={data.entrySpeed} rounded variant="default" />
+                          </td>
+                          <td className="text-right py-2 px-3">
+                            <SpeedDisplay value={data.apexSpeed} rounded variant="default" />
+                          </td>
+                          <td className="text-right py-2 px-3">
+                            <SpeedDisplay value={data.exitSpeed} rounded variant="default" />
+                          </td>
+                          <td className="text-right py-2 px-3 text-red-400">
+                            <SpeedDisplay value={speedDrop} rounded variant="default" className="text-red-400" />
+                          </td>
+                          <td className="text-right py-2 px-3 text-green-400">
+                            <SpeedDisplay value={speedRecovery} rounded variant="default" className="text-green-400" />
+                          </td>
                           <td className="text-right py-2 px-3 text-gray-400">{data.brakingDistance}</td>
                           <td className="text-right py-2 px-3 text-gray-400">{data.accelerationDistance}</td>
                         </tr>

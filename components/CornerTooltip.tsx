@@ -2,6 +2,8 @@
 
 import React, { useEffect, useRef, useState } from 'react'
 import { CornerPerformance } from '../lib/cornerPerformanceAggregator'
+import TimeDisplay from './formatting/TimeDisplay'
+import DeltaBadge from './formatting/DeltaBadge'
 
 type CornerTooltipProps = {
   cornerPerformance: CornerPerformance
@@ -234,20 +236,28 @@ export default function CornerTooltip({
                 </div>
                 <div className="flex items-center gap-1">
                   {isFastest ? (
-                    <span className="font-mono font-bold text-white text-[11px]">
-                      {item.time.toFixed(3)}s
-                    </span>
+                    <TimeDisplay 
+                      value={item.time} 
+                      type="corner" 
+                      variant="bold"
+                      showUnit
+                      className="text-[11px] text-white"
+                    />
                   ) : (
                     <>
-                      <span className="font-mono text-gray-400 text-[9px]">
-                        {item.time.toFixed(3)}s
-                      </span>
-                      <span
-                        className="font-mono font-bold text-[11px]"
-                        style={{ color: deltaColor }}
-                      >
-                        +{item.delta.toFixed(3)}s
-                      </span>
+                      <TimeDisplay 
+                        value={item.time} 
+                        type="corner" 
+                        variant="mono"
+                        showUnit
+                        className="text-[9px] text-gray-400"
+                      />
+                      <DeltaBadge 
+                        value={item.delta} 
+                        unit="s" 
+                        variant="text"
+                        className="text-[11px]"
+                      />
                     </>
                   )}
                 </div>

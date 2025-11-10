@@ -601,8 +601,8 @@
 
 ### Documentation
 - Feature Analysis: `docs/feature-analysis-and-suggestions.md`
-- Next Steps: `docs/NEXT_STEPS.md`
-- Remaining Tasks: `docs/remaining-tasks.md`
+- Next Steps: `docs/implementation/plans/next-steps.md`
+- Remaining Tasks: `docs/implementation/plans/remaining-tasks.md`
 - Event Labels: `docs/event-label-organization-plan.md`
 
 ### Code References

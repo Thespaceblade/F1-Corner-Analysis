@@ -1,0 +1,205 @@
+{
+  "tracks": {
+    "australia": {
+      "id": "australia",
+      "name": "Australian Grand Prix",
+      "svgFile": "australia.svg",
+      "corners": [
+        {
+          "number": 1,
+          "type": "fast",
+          "expectedDistanceRange": {
+            "min": 253.0,
+            "max": 415.0
+          }
+        },
+        {
+          "number": 2,
+          "type": "slow",
+          "expectedDistanceRange": {
+            "min": 981.0,
+            "max": 1121.0
+          }
+        },
+        {
+          "number": 3,
+          "type": "fast",
+          "expectedDistanceRange": {
+            "min": 1791.0,
+            "max": 1925.0
+          }
+        },
+        {
+          "number": 4,
+          "type": "fast",
+          "expectedDistanceRange": {
+            "min": 3223.0,
+            "max": 3377.0
+          }
+        },
+        {
+          "number": 5,
+          "type": "slow",
+          "expectedDistanceRange": {
+            "min": 4039.0,
+            "max": 4141.0
+          }
+        },
+        {
+          "number": 6,
+          "type": "medium",
+          "expectedDistanceRange": {
+            "min": 4331.0,
+            "max": 4433.0
+          }
+        },
+        {
+          "number": 7,
+          "type": "slow",
+          "expectedDistanceRange": {
+            "min": 4515.0,
+            "max": 4657.0
+          }
+        }
+      ]
+    },
+    "china": {
+      "id": "china",
+      "name": "Chinese Grand Prix",
+      "svgFile": "china.svg",
+      "corners": []
+    },
+    "japan": {
+      "id": "japan",
+      "name": "Japanese Grand Prix",
+      "svgFile": "japan.svg",
+      "corners": []
+    },
+    "bahrain": {
+      "id": "bahrain",
+      "name": "Bahrain Grand Prix",
+      "svgFile": "bahrain.svg",
+      "corners": []
+    },
+    "saudi-arabia": {
+      "id": "saudi-arabia",
+      "name": "Saudi Arabian Grand Prix",
+      "svgFile": "saudi_arabia.svg",
+      "corners": []
+    },
+    "miami": {
+      "id": "miami",
+      "name": "Miami Grand Prix",
+      "svgFile": "miami.svg",
+      "corners": []
+    },
+    "emilia-romagna": {
+      "id": "emilia-romagna",
+      "name": "Emilia Romagna Grand Prix",
+      "svgFile": "imola.svg",
+      "corners": []
+    },
+    "monaco": {
+      "id": "monaco",
+      "name": "Monaco Grand Prix",
+      "svgFile": "monaco.svg",
+      "corners": []
+    },
+    "spain": {
+      "id": "spain",
+      "name": "Spanish Grand Prix",
+      "svgFile": "spain.svg",
+      "corners": []
+    },
+    "canada": {
+      "id": "canada",
+      "name": "Canadian Grand Prix",
+      "svgFile": "canada.svg",
+      "corners": []
+    },
+    "austria": {
+      "id": "austria",
+      "name": "Austrian Grand Prix",
+      "svgFile": "austria.svg",
+      "corners": []
+    },
+    "great-britain": {
+      "id": "great-britain",
+      "name": "British Grand Prix",
+      "svgFile": "silverstone.svg",
+      "corners": []
+    },
+    "belgium": {
+      "id": "belgium",
+      "name": "Belgian Grand Prix",
+      "svgFile": "spa.svg",
+      "corners": []
+    },
+    "hungary": {
+      "id": "hungary",
+      "name": "Hungarian Grand Prix",
+      "svgFile": "hungary.svg",
+      "corners": []
+    },
+    "netherlands": {
+      "id": "netherlands",
+      "name": "Dutch Grand Prix",
+      "svgFile": "netherlands.svg",
+      "corners": []
+    },
+    "italy": {
+      "id": "italy",
+      "name": "Italian Grand Prix",
+      "svgFile": "monza.svg",
+      "corners": []
+    },
+    "azerbaijan": {
+      "id": "azerbaijan",
+      "name": "Azerbaijan Grand Prix",
+      "svgFile": "azerbaijan.svg",
+      "corners": []
+    },
+    "singapore": {
+      "id": "singapore",
+      "name": "Singapore Grand Prix",
+      "svgFile": "singapore.svg",
+      "corners": []
+    },
+    "united-states": {
+      "id": "united-states",
+      "name": "United States Grand Prix",
+      "svgFile": "usa.svg",
+      "corners": []
+    },
+    "mexico": {
+      "id": "mexico",
+      "name": "Mexican Grand Prix",
+      "svgFile": "mexico.svg",
+      "corners": []
+    },
+    "brazil": {
+      "id": "brazil",
+      "name": "Brazilian Grand Prix",
+      "svgFile": "brazil.svg",
+      "corners": []
+    },
+    "las-vegas": {
+      "id": "las-vegas",
+      "name": "Las Vegas Grand Prix",
+      "svgFile": "las_vegas.svg",
+      "corners": []
+    },
+    "qatar": {
+      "id": "qatar",
+      "name": "Qatar Grand Prix",
+      "svgFile": "qatar.svg",
+      "corners": []
+    },
+    "abu-dhabi": {
+      "id": "abu-dhabi",
+      "name": "Abu Dhabi Grand Prix",
+      "svgFile": "abudhabi.svg",
+      "corners": []
+    }
+  }
+}

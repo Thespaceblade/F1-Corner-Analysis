@@ -4,7 +4,7 @@ A web application for analyzing Formula 1 corner telemetry data. This project pr
 
 ## Features
 
-- **Interactive 3D Globe Track Selector**: Navigate F1 circuits on an interactive 3D Earth globe with smooth animations
+- **Track Selection**: Intuitive track selector with year and session filtering
 - **Corner-by-Corner Telemetry Analysis**: Automatic corner detection with detailed metrics:
   - Entry, apex, and exit speeds
   - Corner times and distances
@@ -25,7 +25,12 @@ A web application for analyzing Formula 1 corner telemetry data. This project pr
   - Corner entry/exit speed analysis
 - **Advanced Analysis Panels**: Comprehensive analysis tools
   - **Corner Entry/Exit Analysis**: Analyze corner entry speeds, exit speeds, and braking points
+  - **Corner Performance Analysis**: Detailed corner-by-corner performance metrics and comparisons
   - **Stint Analysis**: Analyze performance across stints and tyre life
+  - **Tyre Compound Analysis**: Compare performance across different tyre compounds
+  - **Sector Time Analysis**: Sector-by-sector time breakdown and comparisons
+  - **Consistency Analysis**: Driver consistency metrics and variance analysis
+  - **Session Overview**: Comprehensive session statistics and summaries
   - **Corner Difficulty Analysis**: Identify the most challenging corners based on speed variance
   - **Data Export**: Export analysis data for further processing
 - **Lap Time Visualization**: Interactive charts for race and qualifying sessions
@@ -88,7 +93,7 @@ If not using a database, the application will use file-based data from `public/d
 GEMINI_API_KEY=your_google_gemini_api_key
 ```
 
-The chatbot feature requires a Google Gemini API key. You can get one from [Google AI Studio](https://makersuite.google.com/app/apikey). If not configured, the chatbot will display an error message when used.
+The chatbot feature requires a Google Gemini API key. You can get one from [Google AI Studio](https://aistudio.google.com/app/apikey). If not configured, the chatbot will display an error message when used.
 
 ## Usage
 
@@ -182,9 +187,15 @@ F1-Corner-Analysis/
 │   ├── analyses/          # Analysis components
 │   │   ├── CornerDifficultyAnalysis.tsx  # Corner difficulty metrics
 │   │   ├── CornerEntryExitAnalysis.tsx   # Entry/exit speed analysis
+│   │   ├── CornerPerformanceAnalysis.tsx # Corner performance analysis
+│   │   ├── ConsistencyAnalysis.tsx       # Consistency metrics
+│   │   ├── SectorTimeAnalysis.tsx        # Sector time analysis
+│   │   ├── SessionOverview.tsx           # Session overview statistics
 │   │   ├── StintAnalysis.tsx             # Stint and tyre analysis
-│   │   ├── ExportAnalysis.tsx            # Data export functionality
-│   │   └── ... (additional analysis components)
+│   │   ├── TyreCompoundAnalysis.tsx      # Tyre compound analysis
+│   │   └── ExportAnalysis.tsx            # Data export functionality
+│   ├── chatbot/           # Chatbot-specific components
+│   ├── formatting/        # Formatting and display components
 │   └── ...
 ├── lib/                   # Utility libraries
 │   ├── db.ts             # Database client (Neon)
@@ -193,12 +204,19 @@ F1-Corner-Analysis/
 │   ├── cornerFilter.ts   # Corner filtering utilities
 │   ├── trackSvgLoader.ts # Track SVG loading utilities
 │   ├── teamData.ts       # Team and driver data utilities
+│   ├── trackInfo.ts      # Track information utilities
 │   ├── chatbot/          # Chatbot utilities
 │   │   ├── queryClassifier.ts  # Query classification
 │   │   ├── queryExecutor.ts    # Query execution
 │   │   ├── responseGenerator.ts # Response generation
+│   │   ├── insightGenerator.ts  # Insight generation
 │   │   ├── prompts.ts          # AI prompts
 │   │   └── types.ts            # TypeScript types
+│   ├── formatting/       # Formatting utilities
+│   │   ├── formatTime.ts      # Time formatting
+│   │   ├── formatDelta.ts     # Delta formatting
+│   │   ├── formatSpeed.ts     # Speed formatting
+│   │   └── formatNumber.ts    # Number formatting
 │   └── ...
 ├── scripts/               # Python data processing scripts
 │   ├── fastf1_pipeline/  # Core pipeline modules
@@ -208,12 +226,39 @@ F1-Corner-Analysis/
 │   ├── fetch_fastf1_data.py      # Single session fetcher
 │   ├── bulk_fetch_fastf1_data.py # Bulk fetcher
 │   ├── edit_corner_coordinates.py # Interactive corner coordinate editor
-│   └── README-corner-editor.md    # Corner editor documentation
+│   ├── docs/             # Script-specific documentation
+│   │   ├── README-corner-editor.md    # Corner editor documentation
+│   │   └── QUICK_START.md             # Quick start guide
+│   ├── legacy/           # Legacy scripts
+│   └── sql/              # SQL scripts
+├── tests/                 # Test files and scripts
+│   ├── scripts/          # Test scripts
+│   ├── unit/             # Unit tests (future)
+│   ├── integration/      # Integration tests (future)
+│   └── e2e/              # E2E tests (future)
+├── docs/                  # Project documentation
+│   ├── README.md         # Documentation index
+│   ├── guides/           # User and developer guides
+│   ├── architecture/     # Architecture and design docs
+│   ├── features/         # Feature documentation
+│   ├── implementation/   # Implementation notes and plans
+│   ├── testing/          # Test documentation
+│   └── troubleshooting/  # Debug and fix documentation
 ├── public/                # Static assets
 │   ├── data/             # Generated session JSON files
+│   │   ├── sessions/     # Session data files
+│   │   ├── tracks.json   # Track definitions
+│   │   └── calendar*.json # Calendar data
 │   ├── Tracks/           # Track SVG files
-│   └── ...
-└── cache/                 # FastF1 cache directory
+│   ├── logos/            # Logo files
+│   └── team-logos/       # Team logo files
+├── cache/                 # FastF1 cache directory (gitignored)
+├── output/                # Generated output files (gitignored)
+├── README.md             # Main project documentation
+├── TODO.md               # Active todo items
+├── FIXME.md              # Known bugs and issues
+├── LICENSE               # License file
+└── [config files]        # package.json, tsconfig.json, etc.
 ```
 
 ## Data Pipeline
@@ -393,7 +438,12 @@ The application provides detailed corner-by-corner analysis:
   - Fixed corner hover detection for all corners
 - **Advanced Analysis Tools**:
   - **Corner Entry/Exit Analysis**: Visualize entry and exit speeds across corners
+  - **Corner Performance Analysis**: Detailed corner-by-corner performance metrics
   - **Stint Analysis**: Analyze performance degradation and tyre life
+  - **Tyre Compound Analysis**: Analyze performance by tyre compound
+  - **Sector Time Analysis**: Sector-by-sector time analysis
+  - **Consistency Analysis**: Driver consistency metrics
+  - **Session Overview**: Comprehensive session statistics
   - **Corner Difficulty Analysis**: Identify challenging corners based on speed variance
   - **Data Export**: Export analysis results for further processing
 - **Driver Selection**: Team-based and individual driver filtering
@@ -401,7 +451,7 @@ The application provides detailed corner-by-corner analysis:
 ## Tech Stack
 
 - **Frontend**: Next.js 13, React 18, TypeScript
-- **Visualization**: Recharts, react-globe.gl
+- **Visualization**: Recharts
 - **AI/ML**: Google Gemini AI (Generative AI)
 - **Data Processing**: Python 3.8+, FastF1, Pandas, NumPy
 - **Database**: Neon (PostgreSQL) with JSON file fallback
@@ -436,8 +486,8 @@ Contributions are welcome! Please feel free to submit a Pull Request.
 ## Acknowledgments
 
 - [FastF1](https://github.com/theOehrly/Fast-F1) for F1 data access
-- [react-globe.gl](https://github.com/vasturiano/react-globe.gl) for 3D globe visualization
 - Formula 1 for providing official data through their API
+- [Google Gemini AI](https://ai.google.dev/) for natural language processing capabilities
 
 ## Recent Updates
 
@@ -454,7 +504,11 @@ Contributions are welcome! Please feel free to submit a Pull Request.
   - Fallback response generation when AI API fails
   - Enhanced query classification with better driver/track name recognition
   - Context-aware responses based on current page state
-- Advanced analysis panels with corner difficulty, entry/exit, and stint analysis
+- Advanced analysis panels with comprehensive analysis tools:
+  - Corner difficulty, entry/exit, and stint analysis
+  - Tyre compound analysis and sector time analysis
+  - Consistency analysis and session overview
+  - Corner performance analysis with detailed metrics
 - Improved corner detection using throttle/brake signals for fast corners
 - Enhanced race event visualization with smart label positioning
 - Fixed corner hover detection issues
@@ -462,23 +516,36 @@ Contributions are welcome! Please feel free to submit a Pull Request.
 - Optimized Vercel deployment configuration
 - Added Table of Contents navigation component
 - Improved TypeScript type safety in analysis components
+- Removed unused dependencies (react-globe.gl) for smaller bundle size
 
 ### Performance Improvements
 - Removed build artifacts from repository (reduced repository size)
 - Optimized build process for Vercel deployments
 - Improved error handling for missing data
 
+## Documentation
+
+Comprehensive documentation is available in the [`docs/`](./docs/) directory:
+
+- **[Documentation Index](./docs/README.md)** - Complete documentation index
+- **[Guides](./docs/guides/)** - User and developer guides
+- **[Architecture](./docs/architecture/)** - System architecture and design
+- **[Features](./docs/features/)** - Feature documentation
+- **[Implementation](./docs/implementation/)** - Implementation notes and plans
+- **[Testing](./docs/testing/)** - Test documentation and results
+- **[Troubleshooting](./docs/troubleshooting/)** - Debug and fix documentation
+
 ## Known Issues & TODO
 
 For a comprehensive list of unfinished work, known issues, and planned improvements, see:
 - **[TODO.md](TODO.md)** - Unfinished work and future improvements
 - **[FIXME.md](FIXME.md)** - Known bugs and issues that need fixing
-- **[docs/remaining-tasks.md](docs/remaining-tasks.md)** - Detailed task list
+- **[docs/implementation/plans/remaining-tasks.md](./docs/implementation/plans/remaining-tasks.md)** - Detailed task list
 
 ### Quick Summary of Outstanding Items
-- ⚠️ **Verify deleted components**: GlobeTrackSelector and cornerPositionCalculator were removed - need to verify if functionality was replaced
 - 🔧 **Corner coordinate validation**: Need to validate coordinates for all tracks
-- 🧪 **Testing**: New AnalysisPanel and TableOfContents components need thorough testing
+- 🧪 **Testing**: AnalysisPanel and TableOfContents components need thorough testing
 - 📊 **Data quality**: Improve corner detection accuracy and validation
 - 🎨 **UI enhancements**: Various UI/UX improvements planned
+- 📈 **Analysis features**: Additional analysis tools and visualizations planned
 

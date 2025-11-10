@@ -24,16 +24,9 @@ export async function POST(request: NextRequest) {
       )
     }
 
-    // Check if Gemini API key is configured
-    if (!process.env.GEMINI_API_KEY) {
-      return NextResponse.json(
-        {
-          error: 'Configuration error',
-          message: 'GEMINI_API_KEY environment variable is not set',
-        } as ChatError,
-        { status: 500 }
-      )
-    }
+    // Note: We're using insight-based responses, so Gemini API key is optional
+    // The insight generator doesn't require the API key
+    // Gemini API key is only needed if we want to re-enable Gemini-based responses
 
     // Step 1: Classify the query
     let classifiedQuery

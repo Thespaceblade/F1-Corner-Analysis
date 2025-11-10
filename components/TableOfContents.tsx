@@ -1,6 +1,6 @@
 'use client'
 
-import React, { useEffect, useState, useRef, useCallback } from 'react'
+import React, { useEffect, useState, useRef, useCallback, useLayoutEffect } from 'react'
 
 type TOCSection = {
   id: string
@@ -22,9 +22,97 @@ export default function TableOfContents({
   const [activeSection, setActiveSection] = useState<string | null>(null)
   const [isMobileOpen, setIsMobileOpen] = useState(false)
   const [isHovered, setIsHovered] = useState(false)
+  const hoverTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null)
   const sidebarRef = useRef<HTMLElement | null>(null)
   const observerRef = useRef<IntersectionObserver | null>(null)
   const sectionsRef = useRef<Map<string, IntersectionObserverEntry>>(new Map())
+  const contentRef = useRef<HTMLDivElement | null>(null)
+  const iconButtonRef = useRef<HTMLButtonElement | null>(null)
+
+  // Cleanup hover timeout on unmount
+  useEffect(() => {
+    return () => {
+      if (hoverTimeoutRef.current) {
+        clearTimeout(hoverTimeoutRef.current)
+      }
+    }
+  }, [])
+
+  // Calculate and set dropdown width based on available space
+  useLayoutEffect(() => {
+    if (variant !== 'header' || typeof window === 'undefined' || typeof document === 'undefined') return
+    
+    const updateWidth = () => {
+      if (!iconButtonRef.current || !contentRef.current) return
+      
+      if (isHovered) {
+        const buttonRect = iconButtonRef.current.getBoundingClientRect()
+        const viewportWidth = window.innerWidth
+        const viewportHeight = window.innerHeight
+        const minPadding = 16
+        const minWidth = 180
+        const maxWidth = 220
+        
+        // Calculate max width - ensure it doesn't cover the title
+        const header = iconButtonRef.current.closest('header')
+        let maxAllowedWidth = maxWidth
+        
+        if (header) {
+          const h1 = header.querySelector('h1')
+          if (h1) {
+            const h1Rect = h1.getBoundingClientRect()
+            // Calculate space available: from title's right edge to button's left edge
+            // Add buffer to ensure we don't touch or cover the title
+            const titleRight = h1Rect.right
+            const buttonLeft = buttonRect.left
+            const availableSpace = buttonLeft - titleRight - 40 // 40px buffer from title
+            maxAllowedWidth = Math.min(maxWidth, Math.max(minWidth, availableSpace))
+          }
+        }
+        
+        // Ensure dropdown doesn't go off-screen on the left
+        const maxWidthFromRight = buttonRect.right - minPadding
+        const finalWidth = Math.min(maxAllowedWidth, maxWidthFromRight - minPadding)
+        
+        // Calculate max height based on viewport
+        const dropdownTop = buttonRect.bottom + 4 // gap from button (matches CSS)
+        const maxHeight = Math.min(350, viewportHeight - dropdownTop - minPadding)
+        
+        // Set width and max height immediately without transition
+        // This prevents position jumping when width changes
+        const originalTransition = contentRef.current.style.transition
+        contentRef.current.style.transition = 'none'
+        contentRef.current.style.width = `${finalWidth}px`
+        contentRef.current.style.maxWidth = `${finalWidth}px`
+        contentRef.current.style.minWidth = `${Math.min(finalWidth, minWidth)}px`
+        contentRef.current.style.maxHeight = `${maxHeight}px`
+        
+        // Re-enable transitions after width is set
+        requestAnimationFrame(() => {
+          if (contentRef.current) {
+            contentRef.current.style.transition = originalTransition || ''
+          }
+        })
+      }
+    }
+    
+    // Update width when hover state changes
+    updateWidth()
+    
+    if (isHovered) {
+      // Add event listeners for dynamic updates
+      const handleResize = () => updateWidth()
+      const handleScroll = () => updateWidth()
+      
+      window.addEventListener('resize', handleResize, { passive: true })
+      window.addEventListener('scroll', handleScroll, { passive: true, capture: true })
+      
+      return () => {
+        window.removeEventListener('resize', handleResize)
+        window.removeEventListener('scroll', handleScroll, { capture: true })
+      }
+    }
+  }, [isHovered, variant])
 
   // Smooth scroll to section
   const scrollToSection = useCallback((sectionId: string, e?: React.MouseEvent) => {
@@ -204,11 +292,29 @@ export default function TableOfContents({
           <div
             className={`toc-header-nav ${isHovered ? 'expanded' : 'collapsed'}`}
             aria-label="Table of contents"
-            onMouseEnter={() => setIsHovered(true)}
-            onMouseLeave={() => setIsHovered(false)}
+            onMouseEnter={() => {
+              // Clear any pending close timeout
+              if (hoverTimeoutRef.current) {
+                clearTimeout(hoverTimeoutRef.current)
+                hoverTimeoutRef.current = null
+              }
+              setIsHovered(true)
+            }}
+            onMouseLeave={() => {
+              // Add a small delay before closing to prevent flickering when moving between button and dropdown
+              hoverTimeoutRef.current = setTimeout(() => {
+                setIsHovered(false)
+              }, 100)
+            }}
           >
-            {/* Icon when collapsed - always visible */}
-            <div className="toc-header-icon">
+            {/* Icon button - always visible */}
+            <button
+              ref={iconButtonRef}
+              type="button"
+              className="toc-header-icon-button"
+              aria-label="Toggle table of contents"
+              aria-expanded={isHovered}
+            >
               <svg
                 className="toc-header-icon-svg"
                 fill="none"
@@ -223,11 +329,14 @@ export default function TableOfContents({
                   d="M4 6h16M4 12h16M4 18h16"
                 />
               </svg>
-            </div>
+            </button>
             
-            {/* Expanded content */}
-            <div className="toc-header-content">
-              <nav className="toc-header-nav-list">
+            {/* Expanded content - dropdown box positioned directly below button */}
+            <div 
+              ref={contentRef}
+              className="toc-header-content"
+            >
+              <nav className="toc-header-nav-list" role="navigation">
                 {sections.map((section) => {
                   const isActive = activeSection === section.id
                   return (

@@ -3,30 +3,11 @@
 import React from 'react'
 import { TooltipProps } from 'recharts'
 import TyreCompoundIcon from './TyreCompoundIcon'
+import { formatLapTime } from '../lib/formatting'
+import TimeDisplay from './formatting/TimeDisplay'
 
 type CustomTooltipProps = TooltipProps<number, string> & {
   compoundMap?: Map<number, Map<string, string | null>>
-}
-
-const formatLapTime = (value: unknown): string => {
-  if (value == null || value === '') return '-'
-  if (Array.isArray(value)) {
-    return value.map(item => formatLapTime(item)).join(', ')
-  }
-  const numeric = typeof value === 'number' ? value : Number(value)
-  if (Number.isNaN(numeric)) return '-'
-  
-  const minutes = Math.floor(numeric / 60)
-  const seconds = numeric % 60
-  const secondsInt = Math.floor(seconds)
-  const milliseconds = Math.round((seconds - secondsInt) * 1000)
-  
-  if (minutes > 0) {
-    // Format: M:SS.mmm
-    return `${minutes}:${secondsInt.toString().padStart(2, '0')}.${milliseconds.toString().padStart(3, '0')}`
-  }
-  // Format: SS.mmm (no minutes)
-  return `${secondsInt}.${milliseconds.toString().padStart(3, '0')}`
 }
 
 export default function ChartTooltip({ active, payload, label, compoundMap }: CustomTooltipProps) {
@@ -53,7 +34,11 @@ export default function ChartTooltip({ active, payload, label, compoundMap }: Cu
               >
                 {driverCode}:
               </span>
-              <span className="text-gray-200">{formatLapTime(lapTime)}</span>
+              <TimeDisplay 
+                value={typeof lapTime === 'number' ? lapTime : undefined} 
+                type="lap" 
+                variant="default"
+              />
               {compound && (
                 <TyreCompoundIcon compound={compound} size={16} />
               )}

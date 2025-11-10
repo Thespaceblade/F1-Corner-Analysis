@@ -33,3 +33,15 @@ ACTIONABLE_COMMIT_SUMMARY.md
 CHANGES_SUMMARY.md
 COMMIT_MESSAGE.md
 PRE_COMMIT_CHECKLIST.md
+ADDITIONAL_SEARCH_REPORT.md
+DEBUG_LOADING_REPORT.md
+DEBUG_FIXES_SUMMARY.md
+FEATURE_VIABILITY_REPORT.md
+NEXT_STEPS_CLEANUP.md
+
+# Generated output files
+output/
+
+# Temporary test files (keep in tests/ but ignore temporary outputs)
+*.test.output
+*.test.log

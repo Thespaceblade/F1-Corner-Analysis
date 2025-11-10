@@ -4,6 +4,8 @@ import React, { useMemo } from 'react'
 import { SessionPayload } from '../../lib/sessionDataClient'
 import { BarChart, Bar, XAxis, YAxis, Tooltip, ResponsiveContainer, Legend, CartesianGrid, LineChart, Line } from 'recharts'
 import { driverColorMap } from '../../lib/teamData'
+import TimeDisplay from '../formatting/TimeDisplay'
+import DriverBadge from '../formatting/DriverBadge'
 
 type TyreCompoundAnalysisProps = {
   sessionData: SessionPayload
@@ -210,7 +212,9 @@ export default function TyreCompoundAnalysis({
                 const driverCompounds = compoundData[driver] || {}
                 return Object.values(driverCompounds).map((stats, idx) => (
                   <tr key={`${driver}-${stats.compound}-${idx}`} className="border-b border-gray-800 hover:bg-gray-800/30">
-                    <td className="py-2 px-3 font-medium text-gray-200">{driver}</td>
+                    <td className="py-2 px-3">
+                      <DriverBadge code={driver} size="sm" variant="badge" />
+                    </td>
                     <td className="py-2 px-3">
                       <span 
                         className="px-2 py-1 rounded text-xs font-medium"
@@ -223,14 +227,31 @@ export default function TyreCompoundAnalysis({
                       </span>
                     </td>
                     <td className="text-right py-2 px-3 text-gray-300">{stats.sampleCount}</td>
-                    <td className="text-right py-2 px-3 text-gray-300">
-                      {stats.avgLapTime !== null ? stats.avgLapTime.toFixed(3) : 'N/A'}s
+                    <td className="text-right py-2 px-3">
+                      <TimeDisplay 
+                        value={stats.avgLapTime ?? null} 
+                        type="lap" 
+                        variant="mono"
+                        showUnit
+                      />
                     </td>
-                    <td className="text-right py-2 px-3 text-green-400">
-                      {stats.bestLapTime !== null ? stats.bestLapTime.toFixed(3) : 'N/A'}s
+                    <td className="text-right py-2 px-3">
+                      <TimeDisplay 
+                        value={stats.bestLapTime ?? null} 
+                        type="lap" 
+                        variant="mono"
+                        showUnit
+                        className="text-green-400"
+                      />
                     </td>
-                    <td className="text-right py-2 px-3 text-red-400">
-                      {stats.worstLapTime !== null ? stats.worstLapTime.toFixed(3) : 'N/A'}s
+                    <td className="text-right py-2 px-3">
+                      <TimeDisplay 
+                        value={stats.worstLapTime ?? null} 
+                        type="lap" 
+                        variant="mono"
+                        showUnit
+                        className="text-red-400"
+                      />
                     </td>
                     <td className="text-right py-2 px-3 text-gray-300">
                       {stats.avgTyreLife !== null ? stats.avgTyreLife.toFixed(1) : 'N/A'} laps

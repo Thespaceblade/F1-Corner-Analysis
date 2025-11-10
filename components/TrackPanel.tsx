@@ -200,34 +200,17 @@ export default function TrackPanel({
       <div className="mt-2 flex gap-2 justify-center text-sm">
         <div className="flex items-center gap-1">
           <div className="w-3 h-3 rounded-full bg-red-500 opacity-75" />
-          Slow
+          Sector 1
+        </div>
+        <div className="flex items-center gap-1">
+          <div className="w-3 h-3 rounded-full bg-blue-500 opacity-75" />
+          Sector 2
         </div>
         <div className="flex items-center gap-1">
           <div className="w-3 h-3 rounded-full bg-yellow-500 opacity-75" />
-          Medium
-        </div>
-        <div className="flex items-center gap-1">
-          <div className="w-3 h-3 rounded-full bg-green-500 opacity-75" />
-          Fast
+          Sector 3
         </div>
       </div>
-      
-      {/* Corner coordinates info */}
-      {corners.length > 0 && (
-        <div className="mt-3 p-2 bg-gray-800/50 rounded text-xs text-gray-400">
-          <p className="font-semibold mb-1">Corner Coordinates:</p>
-          <p className="text-xs">
-            To update corner positions, edit <code className="text-gray-300">public/data/tracks.json</code>
-          </p>
-          <div className="mt-2 max-h-32 overflow-y-auto">
-            {corners.map(corner => (
-              <div key={corner.number} className="text-xs font-mono">
-                Corner {corner.number}: ({corner.x}, {corner.y})
-              </div>
-            ))}
-          </div>
-        </div>
-      )}
     </div>
   )
 }

@@ -1,11 +1,9 @@
 'use client'
 
-// TODO: Verify AnalysisPanel and TableOfContents are fully functional
-// FIXME: Check if GlobeTrackSelector deletion was intentional - update README if 3D globe is no longer a feature
 // TODO: Add error boundaries for better error handling
 // TODO: Add loading states for all async operations
 
-import React, { useEffect, useMemo, useState } from 'react'
+import React, { useEffect, useMemo, useRef, useState, useCallback } from 'react'
 import Image from 'next/image'
 import Toolbar, { sessionOptions } from './Toolbar'
 import TrackPanel from './TrackPanel'
@@ -15,6 +13,7 @@ import TableOfContents from './TableOfContents'
 import Chatbot from './Chatbot'
 import { loadSessionData, SessionPayload } from '../lib/sessionDataClient'
 import { aggregateCornerPerformance } from '../lib/cornerPerformanceAggregator'
+import { trackInfo } from '../lib/trackInfo'
 
 type CalendarTrack = {
   id: string
@@ -60,6 +59,8 @@ export default function ClientPage(){
   const [trackData, setTrackData] = useState<TracksData>({ tracks: {} })
   const [tracksLoading, setTracksLoading] = useState<boolean>(true)
   const [tracksError, setTracksError] = useState<string | null>(null)
+  const [showLoadingScreen, setShowLoadingScreen] = useState<boolean>(true)
+  const [pageContentVisible, setPageContentVisible] = useState<boolean>(false)
   const [selectedDrivers, setSelectedDrivers] = useState<string[]>(['VER','NOR'])
   const [selectedSession, setSelectedSession] = useState<string>('Q')
   const [sessionData, setSessionData] = useState<SessionPayload | null>(null)
@@ -78,6 +79,14 @@ export default function ClientPage(){
         console.warn('Safety timeout: Forcing page render after 3 seconds')
         setTracksLoading(false)
         timeoutCleared = true
+        
+        // Smooth transition on timeout
+        setTimeout(() => {
+          setShowLoadingScreen(false)
+          setTimeout(() => {
+            setPageContentVisible(true)
+          }, 150)
+        }, 300)
       }
     }, 3000)
     
@@ -121,6 +130,15 @@ export default function ClientPage(){
         setTrackData(data as TracksData)
         setTracksLoading(false)
         setTracksError(null)
+        
+        // Smooth transition: fade out loading, fade in content
+        setTimeout(() => {
+          setShowLoadingScreen(false)
+          // Small delay before showing content for smooth transition
+          setTimeout(() => {
+            setPageContentVisible(true)
+          }, 150)
+        }, 300)
       })
       .catch((error) => {
         const elapsed = Date.now() - startTime
@@ -136,6 +154,14 @@ export default function ClientPage(){
         
         setTracksError(error instanceof Error ? error.message : 'Failed to load tracks')
         setTracksLoading(false)
+        
+        // Smooth transition even on error
+        setTimeout(() => {
+          setShowLoadingScreen(false)
+          setTimeout(() => {
+            setPageContentVisible(true)
+          }, 150)
+        }, 300)
       })
     
     return () => {
@@ -222,31 +248,63 @@ export default function ClientPage(){
     }
 
     const controller = new AbortController()
+    let timeoutId: ReturnType<typeof setTimeout> | null = null
+    let isCancelled = false
+    
     setSessionLoading(true)
     setSessionError(null)
 
+    // Set a timeout to abort the request if it takes too long (60 seconds)
+    timeoutId = setTimeout(() => {
+      if (!isCancelled) {
+        console.warn(`[ClientPage] Session data load timeout after 60s for ${selectedYear}/${selectedTrack}/${selectedSession}`)
+        controller.abort()
+        setSessionError('Request timed out. The session data may be very large. Please try selecting fewer drivers.')
+        setSessionLoading(false)
+        isCancelled = true
+      }
+    }, 60000)
+
+    const startTime = Date.now()
     loadSessionData(
       {
         year: selectedYear,
         round: selectedTrack,
         session: selectedSession,
-        drivers: selectedDrivers
+        drivers: selectedDrivers.length > 0 ? selectedDrivers : undefined // Pass undefined to load all drivers
       },
       { signal: controller.signal }
     )
       .then(data => {
-        if (controller.signal.aborted) return
+        if (isCancelled || controller.signal.aborted) return
+        
+        const elapsed = Date.now() - startTime
+        console.log(`[ClientPage] Session data loaded in ${elapsed}ms for ${selectedYear}/${selectedTrack}/${selectedSession}: ${Object.keys(data?.drivers ?? {}).length} drivers, ${data?.laps?.length ?? 0} laps`)
+        
+        if (timeoutId) clearTimeout(timeoutId)
         setSessionData(data)
         setSessionLoading(false)
       })
       .catch(error => {
-        if (controller.signal.aborted) return
+        if (isCancelled || controller.signal.aborted) {
+          console.log('[ClientPage] Session data load cancelled')
+          return
+        }
+        
+        const elapsed = Date.now() - startTime
+        console.error(`[ClientPage] Error loading session data after ${elapsed}ms:`, error)
+        
+        if (timeoutId) clearTimeout(timeoutId)
         setSessionData(null)
         setSessionError(error instanceof Error ? error.message : String(error))
         setSessionLoading(false)
       })
 
-    return () => controller.abort()
+    return () => {
+      isCancelled = true
+      if (timeoutId) clearTimeout(timeoutId)
+      controller.abort()
+    }
   }, [selectedTrack, selectedSession, selectedDrivers, selectedYear])
 
   const currentTrack = trackData?.tracks[selectedTrack]
@@ -304,9 +362,13 @@ export default function ClientPage(){
   }, [cornerFilter, sessionData])
   
   // Aggregate corner performance data
+  // When selectedDrivers is empty, we want to show all drivers (pass undefined to aggregateCornerPerformance)
   const cornerPerformance = useMemo(() => {
-    if (!sessionData?.corners || !selectedDrivers.length) return undefined
-    return aggregateCornerPerformance(sessionData.corners, selectedDrivers)
+    if (!sessionData?.corners) return undefined
+    // If selectedDrivers is empty, process all drivers (pass undefined)
+    // Otherwise, pass the selected drivers
+    const driversToUse = selectedDrivers.length > 0 ? selectedDrivers : undefined
+    return aggregateCornerPerformance(sessionData.corners, driversToUse)
   }, [sessionData?.corners, selectedDrivers])
   
   // Get available sessions for the selected track
@@ -318,19 +380,32 @@ export default function ClientPage(){
   }, [selectedTrack, selectedYear, sessionsByRound])
 
   // Reset selected session if it's not available for the selected track
+  // Use a ref to track the current session to avoid stale closures
+  const selectedSessionRef = useRef(selectedSession)
   useEffect(() => {
-    if (selectedTrack && availableSessions.length > 0) {
-      if (!availableSessions.includes(selectedSession)) {
-        // Reset to first available session (prefer Q, then R, then first available)
-        const preferredOrder = ['Q', 'R', 'SQ', 'S']
-        const preferred = preferredOrder.find(s => availableSessions.includes(s))
-        const newSession = preferred || availableSessions[0]
-        if (newSession !== selectedSession) {
-          setSelectedSession(newSession)
-        }
+    selectedSessionRef.current = selectedSession
+  }, [selectedSession])
+
+  useEffect(() => {
+    // Only run this effect when track or available sessions change
+    // Use ref to get current session value to avoid dependency issues
+    if (!selectedTrack || availableSessions.length === 0) {
+      return
+    }
+
+    const currentSession = selectedSessionRef.current
+    // Check if current session is available
+    if (!availableSessions.includes(currentSession)) {
+      // Reset to first available session (prefer Q, then R, then first available)
+      const preferredOrder = ['Q', 'R', 'SQ', 'S']
+      const preferred = preferredOrder.find(s => availableSessions.includes(s))
+      const newSession = preferred || availableSessions[0]
+      if (newSession && newSession !== currentSession) {
+        console.log(`[ClientPage] Session ${currentSession} not available for ${selectedTrack}, switching to ${newSession}`)
+        setSelectedSession(newSession)
       }
     }
-  }, [selectedTrack, availableSessions, selectedSession])
+  }, [selectedTrack, availableSessions]) // Removed selectedSession from deps to prevent loops
 
   const sessionLabel = useMemo(() => {
     const found = sessionOptions.find(option => option.value === selectedSession)
@@ -384,44 +459,81 @@ export default function ClientPage(){
     ]
   }, [currentTrack])
 
-  // Show loading screen only while tracks are initially loading
-  if (tracksLoading && Object.keys(trackData.tracks).length === 0) {
-    return (
-      <div className="min-h-screen flex items-center justify-center">
-        <div className="flex flex-col items-center gap-6">
-          {/* Logo with subtle animation */}
-          <div className="relative">
-            <div className="absolute inset-[-12px] bg-accent/10 rounded-full blur-xl animate-pulse-slow" />
-            <div className="relative flex h-24 w-24 md:h-32 md:w-32 items-center justify-center rounded-full border border-accent/40 bg-transparent">
-              <Image
-                src="/logos/logo-transparent.png"
-                alt="F1 Corner Analysis logo"
-                width={128}
-                height={128}
-                className="object-contain p-3 animate-logo-enter"
-                priority
-              />
+  // Always render page content, loading screen overlays it
+  const isLoading = showLoadingScreen && (tracksLoading || Object.keys(trackData.tracks).length === 0)
+  
+  return (
+    <div className="relative">
+      {/* Loading screen overlay with smooth fade transition */}
+      {showLoadingScreen && (
+        <div className={`loading-screen-wrapper ${isLoading ? 'opacity-100' : 'opacity-0'}`}>
+          <div className="min-h-screen flex items-center justify-center bg-[var(--page-bg)]">
+            <div className="flex flex-col items-center gap-6">
+              {/* Logo with rotating spinner around it */}
+              <div className="relative flex items-center justify-center w-32 h-32 md:w-40 md:w-40 loading-spinner-container">
+                {/* Outer glow effect */}
+                <div className="absolute inset-[-24px] bg-accent/6 rounded-full blur-2xl animate-pulse-slow" />
+                
+                {/* Optimized rotating spinner - single clean arc */}
+                <div className="absolute inset-[-8px] spinner-wrapper">
+                  <svg 
+                    className="w-full h-full spinner-svg" 
+                    viewBox="0 0 100 100" 
+                    xmlns="http://www.w3.org/2000/svg"
+                    preserveAspectRatio="xMidYMid meet"
+                  >
+                    {/* Subtle static background track */}
+                    <circle
+                      cx="50"
+                      cy="50"
+                      r="45"
+                      fill="none"
+                      stroke="rgba(124, 199, 255, 0.08)"
+                      strokeWidth="2"
+                      vectorEffect="non-scaling-stroke"
+                    />
+                    {/* Smooth animated progress arc */}
+                    <circle
+                      cx="50"
+                      cy="50"
+                      r="45"
+                      fill="none"
+                      stroke="rgba(124, 199, 255, 0.85)"
+                      strokeWidth="2.5"
+                      strokeLinecap="round"
+                      strokeDasharray="65 283"
+                      strokeDashoffset="0"
+                      className="spinner-ring"
+                      vectorEffect="non-scaling-stroke"
+                    />
+                  </svg>
+                </div>
+                
+                {/* Logo container */}
+                <div className="relative flex h-24 w-24 md:h-32 md:w-32 items-center justify-center rounded-full border border-accent/30 bg-transparent z-10 loading-logo">
+                  <Image
+                    src="/logos/logo-transparent.png"
+                    alt="F1 Corner Analysis logo"
+                    width={128}
+                    height={128}
+                    className="object-contain p-3 animate-logo-enter"
+                    priority
+                  />
+                </div>
+              </div>
+              
+              {/* Loading text */}
+              <p className="text-subtext-clr text-sm font-medium animate-pulse mt-2 loading-text">
+                Loading tracks...
+              </p>
             </div>
-          </div>
-          
-          {/* Loading spinner */}
-          <div className="flex flex-col items-center gap-3">
-            <div className="relative">
-              <div className="w-12 h-12 border-4 border-accent/20 rounded-full"></div>
-              <div className="w-12 h-12 border-4 border-accent border-t-transparent rounded-full animate-spin absolute top-0 left-0"></div>
-            </div>
-            <p className="text-subtext-clr text-sm font-medium animate-pulse">
-              Loading tracks...
-            </p>
           </div>
         </div>
-      </div>
-    )
-  }
+      )}
 
-  return (
-    <main className="max-w-6xl mx-auto px-4">
-      <header className="relative mb-8 overflow-visible">
+      {/* Page content - rendered behind loading screen for smooth transition */}
+      <main className={`max-w-6xl mx-auto px-4 page-content ${pageContentVisible ? 'page-content-visible' : 'page-content-hidden'}`}>
+      <header className="relative mb-8 overflow-visible page-header" style={{ zIndex: 10 }}>
         {/* Animated gradient background - behind text/logo, text will obscure edges */}
         <div className="absolute inset-0 bg-gradient-radial-header animate-pulse-slow pointer-events-none" style={{ zIndex: 0 }} />
         
@@ -526,21 +638,25 @@ export default function ClientPage(){
           </div>
           </div>
           
-          {/* Right side: Table of Contents - Header integrated */}
-          {currentTrack && tocSections.length > 0 && (
-            <div className="flex items-center justify-end flex-shrink-0" style={{ zIndex: 2 }}>
-              <TableOfContents 
-                sections={tocSections} 
-                isVisible={!!currentTrack}
-                variant="header"
-              />
-            </div>
-          )}
         </div>
+        
+        {/* Table of Contents - Header integrated - positioned absolutely over header */}
+        {currentTrack && tocSections.length > 0 && (
+          <div 
+            className="absolute top-4 right-4 md:top-6 md:right-6 hidden lg:block" 
+            style={{ zIndex: 200, overflow: 'visible' }}
+          >
+            <TableOfContents 
+              sections={tocSections} 
+              isVisible={!!currentTrack}
+              variant="header"
+            />
+          </div>
+        )}
       </header>
 
       {tracksError && (
-        <div className="mb-4 rounded border border-red-500/40 bg-red-500/10 px-4 py-3 text-sm text-red-300">
+        <div className="mb-4 rounded border border-red-500/40 bg-red-500/10 px-4 py-3 text-sm text-red-300 page-section page-section-1">
           <div className="font-semibold mb-1">Error: Could not load track data</div>
           <div className="text-red-400/80">{tracksError}</div>
           <div className="text-red-400/60 text-xs mt-1">The page may have limited functionality.</div>
@@ -548,33 +664,35 @@ export default function ClientPage(){
       )}
 
       {sessionsLoadError && (
-        <div className="mb-4 rounded border border-yellow-500/40 bg-yellow-500/10 px-4 py-3 text-sm text-yellow-300">
+        <div className="mb-4 rounded border border-yellow-500/40 bg-yellow-500/10 px-4 py-3 text-sm text-yellow-300 page-section page-section-1">
           <div className="font-semibold mb-1">Warning: Could not load session data</div>
           <div className="text-yellow-400/80">{sessionsLoadError}</div>
           <div className="text-yellow-400/60 text-xs mt-1">The page will still function, but you may not see available tracks and sessions.</div>
         </div>
       )}
 
-      <Toolbar 
-        tracks={trackList}
-        selectedTrack={selectedTrack}
-        onTrackChangeAction={setSelectedTrack}
-        years={availableYears.length > 0 ? availableYears : [selectedYear]}
-        selectedYear={selectedYear}
-        onYearChangeAction={(y) => {
-          setSelectedYear(y)
-          setSelectedTrack('')
-        }}
-        selectedDrivers={selectedDrivers}
-        onDriversChangeAction={setSelectedDrivers}
-        selectedSession={selectedSession}
-        onSessionChangeAction={setSelectedSession}
-        availableSessions={availableSessions}
-      />
+      <div className="page-section page-section-2">
+        <Toolbar 
+          tracks={trackList}
+          selectedTrack={selectedTrack}
+          onTrackChangeAction={setSelectedTrack}
+          years={availableYears.length > 0 ? availableYears : [selectedYear]}
+          selectedYear={selectedYear}
+          onYearChangeAction={(y) => {
+            setSelectedYear(y)
+            setSelectedTrack('')
+          }}
+          selectedDrivers={selectedDrivers}
+          onDriversChangeAction={setSelectedDrivers}
+          selectedSession={selectedSession}
+          onSessionChangeAction={setSelectedSession}
+          availableSessions={availableSessions}
+        />
+      </div>
 
       {currentTrack && (
         <>
-          <section id="track-visualization" className="mt-6 grid lg:grid-cols-2 gap-6">
+          <section id="track-visualization" className="mt-6 grid lg:grid-cols-2 gap-6 page-section page-section-3">
             <div className="panel p-4">
               <TrackPanel 
                 svgFile={currentTrack.svgFile}
@@ -589,11 +707,67 @@ export default function ClientPage(){
               <div className="mt-2 text-sm text-gray-400">
                 Session: {sessionLabel}
               </div>
-              <div className="mt-4 text-sm text-gray-300">
-                <div className="font-semibold uppercase tracking-wide text-xs text-gray-400">
+              
+              {/* Track Information Section */}
+              {trackInfo[selectedTrack] && (
+                <div className="mt-4 space-y-3 text-sm">
+                  <div>
+                    <div className="font-semibold uppercase tracking-wide text-xs text-gray-400 mb-1">
+                      Location
+                    </div>
+                    <div className="text-gray-300">{trackInfo[selectedTrack].location}</div>
+                  </div>
+                  
+                  {trackInfo[selectedTrack].trackLength && (
+                    <div>
+                      <div className="font-semibold uppercase tracking-wide text-xs text-gray-400 mb-1">
+                        Track Length
+                      </div>
+                      <div className="text-gray-300">{trackInfo[selectedTrack].trackLength}</div>
+                    </div>
+                  )}
+                  
+                  {trackInfo[selectedTrack].elevationChange && (
+                    <div>
+                      <div className="font-semibold uppercase tracking-wide text-xs text-gray-400 mb-1">
+                        Elevation Change
+                      </div>
+                      <div className="text-gray-300">{trackInfo[selectedTrack].elevationChange}</div>
+                    </div>
+                  )}
+                  
+                  {trackInfo[selectedTrack].firstGrandPrix && (
+                    <div>
+                      <div className="font-semibold uppercase tracking-wide text-xs text-gray-400 mb-1">
+                        First Grand Prix
+                      </div>
+                      <div className="text-gray-300">{trackInfo[selectedTrack].firstGrandPrix}</div>
+                    </div>
+                  )}
+                  
+                  {trackInfo[selectedTrack].funFacts && trackInfo[selectedTrack].funFacts!.length > 0 && (
+                    <div>
+                      <div className="font-semibold uppercase tracking-wide text-xs text-gray-400 mb-2">
+                        Fun Facts
+                      </div>
+                      <ul className="space-y-1.5 text-gray-300">
+                        {trackInfo[selectedTrack].funFacts!.map((fact, idx) => (
+                          <li key={idx} className="flex items-start gap-2">
+                            <span className="text-accent mt-0.5">•</span>
+                            <span className="text-xs leading-relaxed">{fact}</span>
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+                  )}
+                </div>
+              )}
+              
+              <div className="mt-6 pt-4 border-t border-gray-700 text-sm text-gray-300">
+                <div className="font-semibold uppercase tracking-wide text-xs text-gray-400 mb-2">
                   Selected Drivers
                 </div>
-                <div className="mt-1 flex flex-wrap gap-2">
+                <div className="flex flex-wrap gap-2">
                   {selectedDrivers.length
                     ? selectedDrivers.map(code => (
                         <span
@@ -653,7 +827,7 @@ export default function ClientPage(){
             </div>
           </section>
 
-          <section id="lap-time-comparison">
+          <section id="lap-time-comparison" className="page-section page-section-4">
             <ChartPanel 
               sessionData={sessionData}
               selectedDrivers={selectedDrivers}
@@ -666,7 +840,7 @@ export default function ClientPage(){
             />
           </section>
 
-          <section id="analysis-panel">
+          <section id="analysis-panel" className="page-section page-section-5">
             <AnalysisPanel
             sessionData={sessionData}
             cornerPerformance={cornerPerformance}
@@ -677,6 +851,7 @@ export default function ClientPage(){
           </section>
         </>
       )}
+      </main>
       <Chatbot 
         context={{
           track: selectedTrack,
@@ -685,6 +860,6 @@ export default function ClientPage(){
           drivers: selectedDrivers,
         }}
       />
-    </main>
+    </div>
   )
 }

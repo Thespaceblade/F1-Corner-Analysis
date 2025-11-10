@@ -4,6 +4,9 @@ import React, { useMemo } from 'react'
 import { SessionPayload } from '../../lib/sessionDataClient'
 import { BarChart, Bar, XAxis, YAxis, Tooltip, ResponsiveContainer, Legend, CartesianGrid, Cell, ReferenceLine } from 'recharts'
 import { driverColorMap } from '../../lib/teamData'
+import TimeDisplay from '../formatting/TimeDisplay'
+import DriverBadge from '../formatting/DriverBadge'
+import DeltaBadge from '../formatting/DeltaBadge'
 
 type SectorTimeAnalysisProps = {
   sessionData: SessionPayload
@@ -236,39 +239,84 @@ export default function SectorTimeAnalysis({
                 
                 return (
                   <tr key={driverCode} className="border-b border-gray-800 hover:bg-gray-800/30">
-                    <td className="py-2 px-3 font-medium text-gray-200">{driverCode}</td>
-                    <td className="text-right py-2 px-3 text-gray-300">
-                      {driverItem.avgSector1 !== null ? driverItem.avgSector1.toFixed(3) : 'N/A'}
-                      {isBestS1 && (
-                        <span className="ml-1 text-green-400 text-xs">⭐</span>
-                      )}
+                    <td className="py-2 px-3">
+                      <DriverBadge code={driverCode} size="sm" variant="badge" />
                     </td>
-                    <td className="text-right py-2 px-3 text-gray-300">
-                      {driverItem.bestSector1 !== null ? driverItem.bestSector1.toFixed(3) : 'N/A'}
+                    <td className="text-right py-2 px-3">
+                      <div className="flex items-center justify-end gap-1">
+                        <TimeDisplay 
+                          value={driverItem.avgSector1 ?? null} 
+                          type="sector" 
+                          variant="mono"
+                          showUnit
+                        />
+                        {isBestS1 && (
+                          <span className="text-green-400 text-xs">⭐</span>
+                        )}
+                      </div>
                     </td>
-                    <td className="text-right py-2 px-3 text-gray-300">
-                      {driverItem.avgSector2 !== null ? driverItem.avgSector2.toFixed(3) : 'N/A'}
-                      {isBestS2 && (
-                        <span className="ml-1 text-green-400 text-xs">⭐</span>
-                      )}
+                    <td className="text-right py-2 px-3">
+                      <TimeDisplay 
+                        value={driverItem.bestSector1 ?? null} 
+                        type="sector" 
+                        variant="mono"
+                        showUnit
+                      />
                     </td>
-                    <td className="text-right py-2 px-3 text-gray-300">
-                      {driverItem.bestSector2 !== null ? driverItem.bestSector2.toFixed(3) : 'N/A'}
+                    <td className="text-right py-2 px-3">
+                      <div className="flex items-center justify-end gap-1">
+                        <TimeDisplay 
+                          value={driverItem.avgSector2 ?? null} 
+                          type="sector" 
+                          variant="mono"
+                          showUnit
+                        />
+                        {isBestS2 && (
+                          <span className="text-green-400 text-xs">⭐</span>
+                        )}
+                      </div>
                     </td>
-                    <td className="text-right py-2 px-3 text-gray-300">
-                      {driverItem.avgSector3 !== null ? driverItem.avgSector3.toFixed(3) : 'N/A'}
-                      {isBestS3 && (
-                        <span className="ml-1 text-green-400 text-xs">⭐</span>
-                      )}
+                    <td className="text-right py-2 px-3">
+                      <TimeDisplay 
+                        value={driverItem.bestSector2 ?? null} 
+                        type="sector" 
+                        variant="mono"
+                        showUnit
+                      />
                     </td>
-                    <td className="text-right py-2 px-3 text-gray-300">
-                      {driverItem.bestSector3 !== null ? driverItem.bestSector3.toFixed(3) : 'N/A'}
+                    <td className="text-right py-2 px-3">
+                      <div className="flex items-center justify-end gap-1">
+                        <TimeDisplay 
+                          value={driverItem.avgSector3 ?? null} 
+                          type="sector" 
+                          variant="mono"
+                          showUnit
+                        />
+                        {isBestS3 && (
+                          <span className="text-green-400 text-xs">⭐</span>
+                        )}
+                      </div>
                     </td>
-                    <td className="text-right py-2 px-3 text-gray-300">
-                      {driverItem.bestLap !== null ? driverItem.bestLap.toFixed(3) : 'N/A'}
-                      {driverItem.bestLapNumber && (
-                        <span className="ml-1 text-xs text-gray-500">(Lap {driverItem.bestLapNumber})</span>
-                      )}
+                    <td className="text-right py-2 px-3">
+                      <TimeDisplay 
+                        value={driverItem.bestSector3 ?? null} 
+                        type="sector" 
+                        variant="mono"
+                        showUnit
+                      />
+                    </td>
+                    <td className="text-right py-2 px-3">
+                      <div className="flex flex-col items-end">
+                        <TimeDisplay 
+                          value={driverItem.bestLap ?? null} 
+                          type="lap" 
+                          variant="mono"
+                          showUnit
+                        />
+                        {driverItem.bestLapNumber && (
+                          <span className="text-xs text-gray-500">L{driverItem.bestLapNumber}</span>
+                        )}
+                      </div>
                     </td>
                     <td className="text-right py-2 px-3 text-gray-400">{driverItem.sampleCount}</td>
                   </tr>
@@ -357,11 +405,23 @@ export default function SectorTimeAnalysis({
                         <div className="text-xs font-semibold text-gray-300 mb-1">
                           Sector {data.sector}
                         </div>
-                        <div className="text-xs text-gray-200">
-                          <div>{selectedDrivers[0]}: {data.driver1Time?.toFixed(3)}s</div>
-                          <div>{selectedDrivers[1]}: {data.driver2Time?.toFixed(3)}s</div>
-                          <div className="mt-1 font-mono">
-                            Δ: {data.delta !== null ? (data.delta > 0 ? '+' : '') + data.delta.toFixed(3) : 'N/A'}s
+                        <div className="text-xs text-gray-200 space-y-1">
+                          <div className="flex items-center gap-2">
+                            <DriverBadge code={selectedDrivers[0]} size="sm" variant="chip" />
+                            <TimeDisplay value={data.driver1Time ?? null} type="sector" variant="mono" showUnit />
+                          </div>
+                          <div className="flex items-center gap-2">
+                            <DriverBadge code={selectedDrivers[1]} size="sm" variant="chip" />
+                            <TimeDisplay value={data.driver2Time ?? null} type="sector" variant="mono" showUnit />
+                          </div>
+                          <div className="mt-1 flex items-center gap-2">
+                            <span>Δ:</span>
+                            <DeltaBadge 
+                              value={data.delta} 
+                              unit="s" 
+                              variant="inline" 
+                              inverted={false}
+                            />
                           </div>
                         </div>
                       </div>

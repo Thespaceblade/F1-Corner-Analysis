@@ -2,6 +2,9 @@
 
 import React, { useMemo } from 'react'
 import { CornerMetrics } from '../lib/sessionDataClient'
+import CornerBadge from './formatting/CornerBadge'
+import TimeDisplay from './formatting/TimeDisplay'
+import SpeedDisplay from './formatting/SpeedDisplay'
 
 type CornerInfo = {
   number: number
@@ -24,12 +27,6 @@ type AggregatedCornerData = {
   bestCornerTime: number | null
   bestLapNumber: number | null
   lapCount: number
-}
-
-const typeColors: Record<CornerInfo['type'], string> = {
-  slow: '#ef4444',
-  medium: '#eab308',
-  fast: '#22c55e'
 }
 
 export default function CornerTable({ corners, cornerInfo, selectedDrivers }: CornerTableProps) {
@@ -143,11 +140,7 @@ export default function CornerTable({ corners, cornerInfo, selectedDrivers }: Co
                 <tr key={corner.cornerNumber} className="border-t border-[var(--border-clr)]">
                   <td className="py-2 font-medium text-gray-200">{corner.cornerNumber}</td>
                   <td className="py-2">
-                    <span
-                      className="mr-2 inline-block h-2 w-2 rounded-full"
-                      style={{ backgroundColor: typeColors[corner.cornerType] }}
-                    />
-                    <span className="uppercase tracking-wide text-xs text-gray-400">{corner.cornerType}</span>
+                    <CornerBadge type={corner.cornerType} showLabel size="sm" />
                   </td>
                   {selectedDrivers.map((code) => {
                     const data = corner.driverData[code]
@@ -163,9 +156,14 @@ export default function CornerTable({ corners, cornerInfo, selectedDrivers }: Co
                       <td key={code} className="py-2 text-gray-300">
                         <div className="text-xs space-y-1">
                           {data.avgCornerTime !== null && (
-                            <div className="font-mono text-center">
+                            <div className="text-center">
                               <span className={data.bestCornerTime !== null && data.bestCornerTime < data.avgCornerTime ? 'text-yellow-400' : ''}>
-                                {data.avgCornerTime.toFixed(3)}s
+                                <TimeDisplay 
+                                  value={data.avgCornerTime} 
+                                  type="corner" 
+                                  variant="mono"
+                                  showUnit
+                                />
                               </span>
                               {data.bestCornerTime !== null && data.bestCornerTime < data.avgCornerTime && (
                                 <span className="ml-1 text-yellow-400 text-[10px]" title={`Best: ${data.bestCornerTime.toFixed(3)}s (Lap ${data.bestLapNumber})`}>
@@ -175,9 +173,15 @@ export default function CornerTable({ corners, cornerInfo, selectedDrivers }: Co
                             </div>
                           )}
                           <div className="text-[10px] text-gray-500 text-center space-y-0.5">
-                            <div>Entry: {data.avgEntrySpeed.toFixed(0)} km/h</div>
-                            <div>Apex: {data.avgApexSpeed.toFixed(0)} km/h</div>
-                            <div>Exit: {data.avgExitSpeed.toFixed(0)} km/h</div>
+                            <div>
+                              Entry: <SpeedDisplay value={data.avgEntrySpeed} rounded variant="default" className="text-[10px]" />
+                            </div>
+                            <div>
+                              Apex: <SpeedDisplay value={data.avgApexSpeed} rounded variant="default" className="text-[10px]" />
+                            </div>
+                            <div>
+                              Exit: <SpeedDisplay value={data.avgExitSpeed} rounded variant="default" className="text-[10px]" />
+                            </div>
                             <div className="text-[9px] text-gray-600 mt-1">
                               {data.lapCount} lap{data.lapCount !== 1 ? 's' : ''}
                             </div>

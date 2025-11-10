@@ -13,11 +13,16 @@ type CornerDelta = {
 }
 
 type DriverCornerStats = {
+  driverCode: string
   cornerNumber: number
   avgTime: number | null
   bestTime: number | null
+  worstTime: number | null
+  avgEntrySpeed: number
   avgApexSpeed: number
-  cornerType?: 'slow' | 'medium' | 'fast'
+  avgExitSpeed: number
+  sampleCount: number
+  cornerType?: 'slow' | 'medium' | 'fast' | 'unknown'
 }
 
 type CornerPerformanceData = {
@@ -57,8 +62,9 @@ export function generateComparisonInsights(
   const slowerDriver = overallDelta > 0 ? driver1Code : driver2Code
   const delta = Math.abs(overallDelta)
 
-  // Overall comparison
-  insights.push(`${fasterDriver} faster by ${delta.toFixed(3)}s overall`)
+  // Overall comparison (use driver names)
+  const fasterDriverName = getDriverName(fasterDriver)
+  insights.push(`**${fasterDriverName} (${fasterDriver})** faster by \`${delta.toFixed(3)}s\` overall`)
 
   // Find significant corners (deltas > 0.05s)
   const SIGNIFICANT_THRESHOLD = 0.05
@@ -75,18 +81,20 @@ export function generateComparisonInsights(
     .filter(d => d.timeDelta! < -SIGNIFICANT_THRESHOLD)
     .slice(0, 5) // Top 5 most significant
 
-  // Driver 1 lost time at specific corners
+  // Driver 1 lost time at specific corners (use driver names)
   if (driver1LostCorners.length > 0) {
     const corners = driver1LostCorners.map(d => d.cornerNumber).join(', ')
     const totalLoss = driver1LostCorners.reduce((sum, d) => sum + d.timeDelta!, 0)
-    insights.push(`${driver1Code} lost time at corners ${corners} (+${totalLoss.toFixed(3)}s total)`)
+    const driver1Name = getDriverName(driver1Code)
+    insights.push(`**${driver1Name} (${driver1Code})** lost time at corners ${corners} (+${totalLoss.toFixed(3)}s total)`)
   }
 
-  // Driver 2 lost time at specific corners
+  // Driver 2 lost time at specific corners (use driver names)
   if (driver2LostCorners.length > 0) {
     const corners = driver2LostCorners.map(d => d.cornerNumber).join(', ')
     const totalLoss = driver2LostCorners.reduce((sum, d) => sum + Math.abs(d.timeDelta!), 0)
-    insights.push(`${driver2Code} lost time at corners ${corners} (+${totalLoss.toFixed(3)}s total)`)
+    const driver2Name = getDriverName(driver2Code)
+    insights.push(`**${driver2Name} (${driver2Code})** lost time at corners ${corners} (+${totalLoss.toFixed(3)}s total)`)
   }
 
   // Find patterns by corner type (if corner type data is available)
@@ -95,18 +103,24 @@ export function generateComparisonInsights(
     const cornerTypePatterns = findCornerTypePatterns(deltasWithType, driver1Code, driver2Code)
     cornerTypePatterns.forEach(pattern => {
       const advantage = pattern.avgDelta > 0 ? pattern.driver2 : pattern.driver1
+      const advantageName = getDriverName(advantage)
       const delta = Math.abs(pattern.avgDelta)
       if (delta > 0.03) {
-        insights.push(`${advantage} stronger in ${pattern.type} corners (avg ${pattern.avgDelta > 0 ? '+' : ''}${delta.toFixed(3)}s advantage)`)
+        insights.push(`**${advantageName} (${advantage})** stronger in **${pattern.type}** corners (avg \`${pattern.avgDelta > 0 ? '+' : ''}${delta.toFixed(3)}s\` advantage)`)
       }
     })
   }
 
-  // Detect anomalies (outliers)
+  // Detect anomalies (outliers) - use driver names
   const anomalies = detectAnomalies(deltas, driver1Code, driver2Code)
   anomalies.forEach(anomaly => {
-    insights.push(`${anomaly.driver} unusually slow at corner ${anomaly.cornerNumber} (+${anomaly.delta.toFixed(3)}s)`)
+    const driverName = getDriverName(anomaly.driver)
+    insights.push(`**${driverName} (${anomaly.driver})** unusually slow at corner ${anomaly.cornerNumber} (+${anomaly.delta.toFixed(3)}s)`)
   })
+
+  // TODO: Add tyre compound insights if available
+  // TODO: Add lap trend insights if available
+  // TODO: Add qualifying segment insights if available
 
   return insights.slice(0, 7) // Max 7 insights
 }
@@ -186,8 +200,9 @@ export function generateCornerPerformanceInsights(
   // Find fastest (by best time)
   driverAverages.sort((a, b) => a.bestTime - b.bestTime)
   const fastest = driverAverages[0]
+  const fastestName = getDriverName(fastest.driverCode)
 
-  insights.push(`${fastest.driverCode} fastest: ${fastest.bestTime.toFixed(3)}s`)
+  insights.push(`🏆 **${fastestName} (${fastest.driverCode})** fastest: \`${fastest.bestTime.toFixed(3)}s\``)
 
   // Find other drivers with significant differences
   const otherDrivers = driverAverages
@@ -202,7 +217,8 @@ export function generateCornerPerformanceInsights(
     .slice(0, 3) // Top 3 closest
 
   otherDrivers.forEach(driver => {
-    insights.push(`${driver.driverCode} +${driver.delta.toFixed(3)}s`)
+    const driverName = getDriverName(driver.driverCode)
+    insights.push(`**${driverName} (${driver.driverCode})** +\`${driver.delta.toFixed(3)}s\``)
   })
 
   // Speed insights if available
@@ -213,7 +229,7 @@ export function generateCornerPerformanceInsights(
 
     const speedDiff = fastest.avgSpeed - avgSpeed
     if (Math.abs(speedDiff) > 2) {
-      insights.push(`${fastest.driverCode} carried ${Math.abs(speedDiff).toFixed(0)} km/h more speed through apex`)
+      insights.push(`**${fastestName} (${fastest.driverCode})** carried \`${Math.abs(speedDiff).toFixed(0)} km/h\` more speed through apex`)
     }
   }
 
@@ -252,8 +268,8 @@ export function generateDriverPerformanceInsights(
     return current.avgTime > worst.avgTime ? current : worst
   })
 
-  insights.push(`Strongest: Corner ${strongest.cornerNumber} (${strongest.avgTime!.toFixed(3)}s)`)
-  insights.push(`Weakest: Corner ${weakest.cornerNumber} (${weakest.avgTime!.toFixed(3)}s)`)
+  insights.push(`✅ **Strongest:** Corner ${strongest.cornerNumber} (\`${strongest.avgTime!.toFixed(3)}s\`)`)
+  insights.push(`⚠️ **Weakest:** Corner ${weakest.cornerNumber} (\`${weakest.avgTime!.toFixed(3)}s\`)`)
 
   // Find patterns by corner type
   const cornerTypeStats = groupByCornerType(validStats)
@@ -261,9 +277,12 @@ export function generateDriverPerformanceInsights(
   Object.entries(cornerTypeStats).forEach(([type, typeStats]) => {
     if (typeStats.length > 0) {
       const avgTime = typeStats.reduce((sum, s) => sum + s.avgTime!, 0) / typeStats.length
-      insights.push(`Avg ${type} corners: ${avgTime.toFixed(3)}s`)
+      insights.push(`Avg **${type}** corners: \`${avgTime.toFixed(3)}s\``)
     }
   })
+
+  // TODO: Add lap trend insights if available
+  // TODO: Add qualifying segment insights if available
 
   return insights.slice(0, 5) // Max 5 insights
 }
@@ -369,10 +388,10 @@ function getDriverName(driverCode: string): string {
 }
 
 /**
- * Format insights as bullet points
+ * Format insights as markdown bullet points
  */
 export function formatInsightsAsBullets(insights: string[], header?: string): string {
-  const bullets = insights.map(insight => `• ${insight}`).join('\n')
-  return header ? `${header}\n\n${bullets}` : bullets
+  const bullets = insights.map(insight => `- ${insight}`).join('\n')
+  return header ? `**${header}**\n\n${bullets}` : bullets
 }
 

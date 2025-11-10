@@ -1,6 +1,8 @@
 'use client'
 
 import React, { useState, useRef, useEffect } from 'react'
+import MarkdownMessage from './chatbot/MarkdownMessage'
+import ChatbotStructuredData from './chatbot/ChatbotStructuredData'
 
 type Message = {
   role: 'user' | 'assistant'
@@ -134,7 +136,7 @@ export default function Chatbot({ context }: ChatbotProps = {}) {
 
   return (
     <>
-      {/* Chatbot Toggle Button */}
+      {/* Chatbot Toggle Button - fixed in bottom right corner, stays on screen */}
       <button
         onClick={() => setIsOpen(!isOpen)}
         className="fixed bottom-6 right-6 z-50 w-14 h-14 rounded-full bg-[var(--accent-clr)] text-white shadow-lg hover:shadow-xl transition-all duration-200 flex items-center justify-center hover:scale-110"
@@ -285,29 +287,13 @@ export default function Chatbot({ context }: ChatbotProps = {}) {
                       : 'bg-[var(--surface-bg)] text-[var(--text-clr)] border border-[var(--border-clr)]'
                   }`}
                 >
-                  <p className="text-sm whitespace-pre-wrap">{message.content}</p>
-                  {message.data && (
-                    <div className="mt-2 pt-2 border-t border-[var(--border-clr)] text-xs text-[var(--subtext-clr)]">
-                      {message.data.cornerNumber && (
-                        <div>Corner: {message.data.cornerNumber}</div>
-                      )}
-                      {message.data.driverCode && (
-                        <div>Driver: {message.data.driverCode}</div>
-                      )}
-                      {message.data.track && (
-                        <div>Track: {message.data.track}</div>
-                      )}
-                      {message.data.metrics && (
-                        <div>
-                          {message.data.metrics.cornerTime && (
-                            <div>Time: {message.data.metrics.cornerTime.toFixed(3)}s</div>
-                          )}
-                          {message.data.metrics.delta && (
-                            <div>Delta: {message.data.metrics.delta > 0 ? '+' : ''}{message.data.metrics.delta.toFixed(3)}s</div>
-                          )}
-                        </div>
-                      )}
-                    </div>
+                  {message.role === 'user' ? (
+                    <p className="text-sm whitespace-pre-wrap">{message.content}</p>
+                  ) : (
+                    <>
+                      <MarkdownMessage content={message.content} />
+                      {message.data && <ChatbotStructuredData data={message.data} />}
+                    </>
                   )}
                 </div>
               </div>

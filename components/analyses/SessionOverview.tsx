@@ -4,6 +4,10 @@ import React, { useMemo, useState } from 'react'
 import { SessionPayload } from '../../lib/sessionDataClient'
 import { BarChart, Bar, XAxis, YAxis, Tooltip, ResponsiveContainer, Legend, CartesianGrid, LineChart, Line } from 'recharts'
 import { driverColorMap } from '../../lib/teamData'
+import TimeDisplay from '../formatting/TimeDisplay'
+import DriverBadge from '../formatting/DriverBadge'
+import DeltaBadge from '../formatting/DeltaBadge'
+import { formatLapTime } from '../../lib/formatting'
 
 type SessionOverviewProps = {
   sessionData: SessionPayload
@@ -299,21 +303,43 @@ export default function SessionOverview({
                 <tbody>
                   {bestLapBreakdown.map((lap) => (
                     <tr key={lap.driver} className="border-b border-gray-800 hover:bg-gray-800/30">
-                      <td className="py-2 px-3 font-medium text-gray-200">{lap.driver}</td>
-                      <td className="text-right py-2 px-3 text-gray-300 font-mono">
-                        {lap.bestLapTime !== null ? lap.bestLapTime.toFixed(3) : 'N/A'}s
+                      <td className="py-2 px-3">
+                        <DriverBadge code={lap.driver} size="sm" variant="badge" />
+                      </td>
+                      <td className="text-right py-2 px-3">
+                        <TimeDisplay 
+                          value={lap.bestLapTime ?? null} 
+                          type="lap" 
+                          variant="mono"
+                          showUnit
+                        />
                       </td>
                       <td className="text-right py-2 px-3 text-gray-400">
                         {lap.bestLapNumber || 'N/A'}
                       </td>
-                      <td className="text-right py-2 px-3 text-gray-300 font-mono">
-                        {lap.sectors[0] !== null ? lap.sectors[0].toFixed(3) : 'N/A'}s
+                      <td className="text-right py-2 px-3">
+                        <TimeDisplay 
+                          value={lap.sectors[0] ?? null} 
+                          type="sector" 
+                          variant="mono"
+                          showUnit
+                        />
                       </td>
-                      <td className="text-right py-2 px-3 text-gray-300 font-mono">
-                        {lap.sectors[1] !== null ? lap.sectors[1].toFixed(3) : 'N/A'}s
+                      <td className="text-right py-2 px-3">
+                        <TimeDisplay 
+                          value={lap.sectors[1] ?? null} 
+                          type="sector" 
+                          variant="mono"
+                          showUnit
+                        />
                       </td>
-                      <td className="text-right py-2 px-3 text-gray-300 font-mono">
-                        {lap.sectors[2] !== null ? lap.sectors[2].toFixed(3) : 'N/A'}s
+                      <td className="text-right py-2 px-3">
+                        <TimeDisplay 
+                          value={lap.sectors[2] ?? null} 
+                          type="sector" 
+                          variant="mono"
+                          showUnit
+                        />
                       </td>
                     </tr>
                   ))}
@@ -358,25 +384,59 @@ export default function SessionOverview({
                     <tbody>
                       {qualifyingProgression.map((prog) => (
                         <tr key={prog.driver} className="border-b border-gray-800 hover:bg-gray-800/30">
-                          <td className="py-2 px-3 font-medium text-gray-200">{prog.driver}</td>
-                          <td className="text-right py-2 px-3 text-gray-300 font-mono">
-                            {prog.q1.time !== null ? `${prog.q1.time.toFixed(3)}s` : 'N/A'}
-                            {prog.q1.lapNumber && <span className="text-xs text-gray-500 ml-1">(L{prog.q1.lapNumber})</span>}
+                          <td className="py-2 px-3">
+                            <DriverBadge code={prog.driver} size="sm" variant="badge" />
                           </td>
-                          <td className="text-right py-2 px-3 text-gray-300 font-mono">
-                            {prog.q2.time !== null ? `${prog.q2.time.toFixed(3)}s` : 'N/A'}
-                            {prog.q2.lapNumber && <span className="text-xs text-gray-500 ml-1">(L{prog.q2.lapNumber})</span>}
+                          <td className="text-right py-2 px-3">
+                            <div className="flex flex-col items-end">
+                              <TimeDisplay 
+                                value={prog.q1.time ?? null} 
+                                type="lap" 
+                                variant="mono"
+                                showUnit
+                              />
+                              {prog.q1.lapNumber && (
+                                <span className="text-xs text-gray-500">L{prog.q1.lapNumber}</span>
+                              )}
+                            </div>
                           </td>
-                          <td className="text-right py-2 px-3 text-gray-300 font-mono">
-                            {prog.q3.time !== null ? `${prog.q3.time.toFixed(3)}s` : 'N/A'}
-                            {prog.q3.lapNumber && <span className="text-xs text-gray-500 ml-1">(L{prog.q3.lapNumber})</span>}
+                          <td className="text-right py-2 px-3">
+                            <div className="flex flex-col items-end">
+                              <TimeDisplay 
+                                value={prog.q2.time ?? null} 
+                                type="lap" 
+                                variant="mono"
+                                showUnit
+                              />
+                              {prog.q2.lapNumber && (
+                                <span className="text-xs text-gray-500">L{prog.q2.lapNumber}</span>
+                              )}
+                            </div>
+                          </td>
+                          <td className="text-right py-2 px-3">
+                            <div className="flex flex-col items-end">
+                              <TimeDisplay 
+                                value={prog.q3.time ?? null} 
+                                type="lap" 
+                                variant="mono"
+                                showUnit
+                              />
+                              {prog.q3.lapNumber && (
+                                <span className="text-xs text-gray-500">L{prog.q3.lapNumber}</span>
+                              )}
+                            </div>
                           </td>
                           <td className="text-right py-2 px-3">
                             {prog.progression !== null ? (
-                              <span className={prog.progression < 0 ? 'text-green-400' : 'text-red-400'}>
-                                {prog.progression > 0 ? '+' : ''}{prog.progression.toFixed(3)}s
-                              </span>
-                            ) : 'N/A'}
+                              <DeltaBadge 
+                                value={prog.progression} 
+                                unit="s" 
+                                variant="inline"
+                                inverted={true}
+                              />
+                            ) : (
+                              <span className="text-gray-500">N/A</span>
+                            )}
                           </td>
                         </tr>
                       ))}
@@ -454,29 +514,44 @@ export default function SessionOverview({
               {personalBestTracking.map((driver) => (
                 <div key={driver.driver} className="border border-gray-800 rounded p-3">
                   <div className="flex items-center justify-between mb-2">
-                    <span className="font-medium text-gray-200">{driver.driver}</span>
-                    <span className="text-sm text-gray-400">
-                      Current PB: {driver.currentPB !== null ? driver.currentPB.toFixed(3) : 'N/A'}s
-                      {driver.pbLapNumber && <span className="ml-2 text-xs">(Lap {driver.pbLapNumber})</span>}
-                    </span>
+                    <DriverBadge code={driver.driver} size="sm" variant="badge" />
+                    <div className="text-sm text-gray-400 flex items-center gap-2">
+                      <span>Current PB:</span>
+                      <TimeDisplay 
+                        value={driver.currentPB ?? null} 
+                        type="lap" 
+                        variant="mono"
+                        showUnit
+                      />
+                      {driver.pbLapNumber && (
+                        <span className="text-xs">(Lap {driver.pbLapNumber})</span>
+                      )}
+                    </div>
                   </div>
                   {driver.personalBests.length > 0 && (
                     <div className="text-xs text-gray-400 space-y-1">
                       <div className="flex justify-between">
                         <span>PB Improvements: {driver.personalBests.length}</span>
-                        <span>
-                          First: L{driver.personalBests[0].lapNumber} ({driver.personalBests[0].lapTime.toFixed(3)}s)
+                        <span className="flex items-center gap-1">
+                          First: L{driver.personalBests[0].lapNumber} (
+                          <TimeDisplay 
+                            value={driver.personalBests[0].lapTime} 
+                            type="lap" 
+                            variant="mono"
+                            showUnit
+                          />
+                          )
                         </span>
                       </div>
                       {driver.personalBests.length > 1 && (
-                        <div className="flex justify-between">
+                        <div className="flex justify-between items-center">
                           <span>Best Improvement:</span>
-                          <span className="text-green-400">
-                            {(
-                              driver.personalBests[0].lapTime - 
-                              driver.personalBests[driver.personalBests.length - 1].lapTime
-                            ).toFixed(3)}s
-                          </span>
+                          <DeltaBadge 
+                            value={driver.personalBests[0].lapTime - driver.personalBests[driver.personalBests.length - 1].lapTime}
+                            unit="s"
+                            variant="inline"
+                            inverted={true}
+                          />
                         </div>
                       )}
                     </div>

@@ -14,6 +14,12 @@ import {
 } from 'recharts'
 import { CornerMetrics, SessionPayload } from '../../lib/sessionDataClient'
 import { filterCorners, CornerFilter } from '../../lib/cornerFilter'
+import CornerBadge from '../formatting/CornerBadge'
+import TimeDisplay from '../formatting/TimeDisplay'
+import SpeedDisplay from '../formatting/SpeedDisplay'
+import DeltaBadge from '../formatting/DeltaBadge'
+import DriverBadge from '../formatting/DriverBadge'
+import { formatDelta, getDeltaColor } from '../../lib/formatting'
 
 type CornerPerformanceAnalysisProps = {
   corners: Record<string, CornerMetrics[]>
@@ -44,12 +50,6 @@ type CornerDeltaData = {
   delta: number | null
   driver1Time: number | null
   driver2Time: number | null
-}
-
-const typeColors: Record<'slow' | 'medium' | 'fast', string> = {
-  slow: '#ef4444',
-  medium: '#eab308',
-  fast: '#22c55e'
 }
 
 export default function CornerPerformanceAnalysis({
@@ -262,7 +262,7 @@ export default function CornerPerformanceAnalysis({
                 <th className="pb-2">Type</th>
                 {selectedDrivers.map((code) => (
                   <th key={code} className="pb-2 text-center">
-                    {code}
+                    <DriverBadge code={code} size="sm" variant="chip" />
                   </th>
                 ))}
               </tr>
@@ -272,11 +272,7 @@ export default function CornerPerformanceAnalysis({
                 <tr key={corner.cornerNumber} className="border-t border-gray-800 hover:bg-gray-800/30">
                   <td className="py-2 font-medium text-gray-200">{corner.cornerNumber}</td>
                   <td className="py-2">
-                    <span
-                      className="mr-2 inline-block h-2 w-2 rounded-full"
-                      style={{ backgroundColor: typeColors[corner.cornerType] }}
-                    />
-                    <span className="uppercase tracking-wide text-xs text-gray-400">{corner.cornerType}</span>
+                    <CornerBadge type={corner.cornerType} showLabel size="sm" />
                   </td>
                   {selectedDrivers.map((code) => {
                     const data = corner.driverData[code]
@@ -292,9 +288,14 @@ export default function CornerPerformanceAnalysis({
                       <td key={code} className="py-2 text-gray-300">
                         <div className="text-xs space-y-1">
                           {data.avgCornerTime !== null && (
-                            <div className="font-mono text-center">
+                            <div className="text-center">
                               <span className={data.bestCornerTime !== null && data.bestCornerTime < data.avgCornerTime ? 'text-yellow-400' : ''}>
-                                {data.avgCornerTime.toFixed(3)}s
+                                <TimeDisplay 
+                                  value={data.avgCornerTime} 
+                                  type="corner" 
+                                  variant="mono"
+                                  showUnit
+                                />
                               </span>
                               {data.bestCornerTime !== null && data.bestCornerTime < data.avgCornerTime && (
                                 <span className="ml-1 text-yellow-400 text-[10px]" title={`Best: ${data.bestCornerTime.toFixed(3)}s (Lap ${data.bestLapNumber})`}>
@@ -304,9 +305,15 @@ export default function CornerPerformanceAnalysis({
                             </div>
                           )}
                           <div className="text-[10px] text-gray-500 text-center space-y-0.5">
-                            <div>Entry: {data.avgEntrySpeed.toFixed(0)} km/h</div>
-                            <div>Apex: {data.avgApexSpeed.toFixed(0)} km/h</div>
-                            <div>Exit: {data.avgExitSpeed.toFixed(0)} km/h</div>
+                            <div>
+                              Entry: <SpeedDisplay value={data.avgEntrySpeed} rounded variant="default" className="text-[10px]" />
+                            </div>
+                            <div>
+                              Apex: <SpeedDisplay value={data.avgApexSpeed} rounded variant="default" className="text-[10px]" />
+                            </div>
+                            <div>
+                              Exit: <SpeedDisplay value={data.avgExitSpeed} rounded variant="default" className="text-[10px]" />
+                            </div>
                             <div className="text-[9px] text-gray-600 mt-1">
                               {data.lapCount} lap{data.lapCount !== 1 ? 's' : ''}
                             </div>
@@ -354,11 +361,23 @@ export default function CornerPerformanceAnalysis({
                         <div className="text-xs font-semibold text-gray-300 mb-1">
                           Corner {data.cornerNumber} ({data.cornerType})
                         </div>
-                        <div className="text-xs text-gray-200">
-                          <div>{driver1}: {data.driver1Time?.toFixed(3)}s</div>
-                          <div>{driver2}: {data.driver2Time?.toFixed(3)}s</div>
-                          <div className="mt-1 font-mono">
-                            Δ: {data.delta !== null ? (data.delta > 0 ? '+' : '') + data.delta.toFixed(3) : 'N/A'}s
+                        <div className="text-xs text-gray-200 space-y-1">
+                          <div className="flex items-center gap-2">
+                            <DriverBadge code={driver1} size="sm" variant="chip" />
+                            <TimeDisplay value={data.driver1Time ?? null} type="corner" variant="mono" showUnit />
+                          </div>
+                          <div className="flex items-center gap-2">
+                            <DriverBadge code={driver2} size="sm" variant="chip" />
+                            <TimeDisplay value={data.driver2Time ?? null} type="corner" variant="mono" showUnit />
+                          </div>
+                          <div className="mt-1 flex items-center gap-2">
+                            <span>Δ:</span>
+                            <DeltaBadge 
+                              value={data.delta} 
+                              unit="s" 
+                              variant="inline" 
+                              inverted={false}
+                            />
                           </div>
                         </div>
                       </div>

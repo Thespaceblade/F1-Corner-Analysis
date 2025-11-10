@@ -4,6 +4,9 @@ import React, { useMemo } from 'react'
 import { SessionPayload } from '../../lib/sessionDataClient'
 import { CornerPerformance } from '../../lib/cornerPerformanceAggregator'
 import { BarChart, Bar, XAxis, YAxis, Tooltip, ResponsiveContainer, Legend, CartesianGrid } from 'recharts'
+import CornerBadge from '../formatting/CornerBadge'
+import TimeDisplay from '../formatting/TimeDisplay'
+import SpeedDisplay from '../formatting/SpeedDisplay'
 
 type CornerDifficultyAnalysisProps = {
   sessionData: SessionPayload
@@ -228,25 +231,32 @@ export default function CornerDifficultyAnalysis({
                     </td>
                     <td className="py-2 px-3">
                       {cornerInfoItem && (
-                        <span 
-                          className={`text-xs px-1.5 py-0.5 rounded ${
-                            cornerInfoItem.type === 'slow' ? 'bg-red-500/20 text-red-400' :
-                            cornerInfoItem.type === 'medium' ? 'bg-yellow-500/20 text-yellow-400' :
-                            'bg-green-500/20 text-green-400'
-                          }`}
-                        >
-                          {cornerInfoItem.type}
-                        </span>
+                        <CornerBadge type={cornerInfoItem.type} showLabel size="sm" />
                       )}
                     </td>
-                    <td className="text-right py-2 px-3 text-red-400">
-                      {corner.timeVariance.toFixed(3)}s
+                    <td className="text-right py-2 px-3">
+                      <TimeDisplay 
+                        value={corner.timeVariance} 
+                        type="corner" 
+                        variant="mono"
+                        showUnit
+                        className="text-red-400"
+                      />
                     </td>
-                    <td className="text-right py-2 px-3 text-gray-300">
-                      {corner.speedLoss} km/h
+                    <td className="text-right py-2 px-3">
+                      <SpeedDisplay 
+                        value={corner.speedLoss} 
+                        rounded
+                        variant="default"
+                      />
                     </td>
-                    <td className="text-right py-2 px-3 text-gray-300">
-                      {corner.avgTime.toFixed(3)}s
+                    <td className="text-right py-2 px-3">
+                      <TimeDisplay 
+                        value={corner.avgTime} 
+                        type="corner" 
+                        variant="mono"
+                        showUnit
+                      />
                     </td>
                     <td className="text-right py-2 px-3 text-accent">
                       {corner.importanceScore.toFixed(2)}

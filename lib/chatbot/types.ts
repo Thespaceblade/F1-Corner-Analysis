@@ -65,6 +65,7 @@ export type DriverCornerStats = {
   avgApexSpeed: number
   avgExitSpeed: number
   sampleCount: number
+  cornerType?: 'slow' | 'medium' | 'fast' | 'unknown'
 }
 
 export type QueryResult = {
@@ -75,6 +76,15 @@ export type QueryResult = {
     year?: number
     session?: string
     timestamp: string
+    laps?: any[] // Lap data for tyre/trend analysis
+    qualifyingBoundaries?: {
+      q1Start: number
+      q1End: number | null
+      q2Start: number | null
+      q2End: number | null
+      q3Start: number | null
+      q3End: number | null
+    }
   }
 }
 

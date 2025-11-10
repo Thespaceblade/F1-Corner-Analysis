@@ -228,13 +228,22 @@ export async function getCornerPerformance(
 
     for (const driver of driversToProcess) {
       const driverCorners = sessionData.corners[driver] || []
+      // Use cornerNumber if available, otherwise fall back to detectedCornerIndex
       const cornerData = driverCorners.filter(
-        (c: any) => c.cornerNumber === cornerNumber
+        (c: any) => 
+          (c.cornerNumber === cornerNumber) || 
+          (c.cornerNumber === undefined && c.detectedCornerIndex === cornerNumber)
       )
 
       for (const corner of cornerData) {
+        // Use cornerNumber if available, otherwise use detectedCornerIndex
+        const num = corner.cornerNumber ?? corner.detectedCornerIndex
+        if (num === undefined || num === null) {
+          continue // Skip corners without a number
+        }
+        
         results.push({
-          cornerNumber: corner.cornerNumber,
+          cornerNumber: num,
           driverCode: driver,
           cornerTime: corner.cornerTime,
           entrySpeed: corner.entrySpeed,
@@ -271,14 +280,23 @@ export async function getDriverCornerStats(
 
   if (sessionData.corners && sessionData.corners[driverCode]) {
     const driverCorners = sessionData.corners[driverCode] || []
+    
+    // Use cornerNumber if available, otherwise fall back to detectedCornerIndex
     const cornersToProcess = cornerNumber
-      ? driverCorners.filter((c: any) => c.cornerNumber === cornerNumber)
+      ? driverCorners.filter((c: any) => 
+          (c.cornerNumber === cornerNumber) || 
+          (c.cornerNumber === undefined && c.detectedCornerIndex === cornerNumber)
+        )
       : driverCorners
 
-    // Group by corner number
+    // Group by corner number (use cornerNumber if available, otherwise detectedCornerIndex)
     const cornersByNumber: Record<number, any[]> = {}
     for (const corner of cornersToProcess) {
-      const num = corner.cornerNumber
+      // Use cornerNumber if available, otherwise fall back to detectedCornerIndex
+      const num = corner.cornerNumber ?? corner.detectedCornerIndex
+      if (num === undefined || num === null) {
+        continue // Skip corners without a number
+      }
       if (!cornersByNumber[num]) {
         cornersByNumber[num] = []
       }
@@ -295,6 +313,16 @@ export async function getDriverCornerStats(
       const entrySpeeds = corners.map((c) => c.entrySpeed).filter((s) => s > 0)
       const apexSpeeds = corners.map((c) => c.apexSpeed).filter((s) => s > 0)
       const exitSpeeds = corners.map((c) => c.exitSpeed).filter((s) => s > 0)
+
+      // Determine corner type (use most common type, or first non-unknown type)
+      const cornerTypes = corners
+        .map((c) => c.cornerType)
+        .filter((t): t is 'slow' | 'medium' | 'fast' => 
+          t !== undefined && t !== 'unknown'
+        )
+      const cornerType = cornerTypes.length > 0 
+        ? cornerTypes[0] // Use first non-unknown type (usually consistent)
+        : corners[0]?.cornerType || 'unknown'
 
       results.push({
         driverCode,
@@ -318,6 +346,7 @@ export async function getDriverCornerStats(
             ? exitSpeeds.reduce((a, b) => a + b, 0) / exitSpeeds.length
             : 0,
         sampleCount: corners.length,
+        cornerType: cornerType !== 'unknown' ? cornerType : undefined,
       })
     }
   }
@@ -342,6 +371,7 @@ export async function compareDrivers(
     cornerNumber: number
     timeDelta: number | null
     speedDelta: number
+    cornerType?: 'slow' | 'medium' | 'fast'
   }>
 }> {
   const [stats1, stats2] = await Promise.all([
@@ -354,6 +384,7 @@ export async function compareDrivers(
     cornerNumber: number
     timeDelta: number | null
     speedDelta: number
+    cornerType?: 'slow' | 'medium' | 'fast'
   }> = []
 
   const stats1Map = new Map(stats1.map((s) => [s.cornerNumber, s]))
@@ -368,10 +399,19 @@ export async function compareDrivers(
           : null
       const speedDelta = stat1.avgApexSpeed - stat2.avgApexSpeed
 
+      // Use corner type from either stat (they should match)
+      // Filter out 'unknown' type
+      const cornerType = (stat1.cornerType && stat1.cornerType !== 'unknown') 
+        ? stat1.cornerType 
+        : (stat2.cornerType && stat2.cornerType !== 'unknown') 
+          ? stat2.cornerType 
+          : undefined
+
       deltas.push({
         cornerNumber: cornerNum,
         timeDelta,
         speedDelta,
+        cornerType,
       })
     }
   }
@@ -471,6 +511,7 @@ export async function executeQuery(
       if (!track) {
         throw new Error('Track/round slug is required for corner performance queries')
       }
+      const sessionData = await getSessionData(track, year, session, parameters.driverCode ? [parameters.driverCode] : undefined)
       const data = await getCornerPerformance(
         parameters.cornerNumber,
         track,
@@ -486,6 +527,8 @@ export async function executeQuery(
           year,
           session,
           timestamp: new Date().toISOString(),
+          laps: sessionData.laps || [],
+          qualifyingBoundaries: sessionData.qualifyingBoundaries,
         },
       }
     }
@@ -497,6 +540,7 @@ export async function executeQuery(
       if (!track) {
         throw new Error('Track/round slug is required for driver performance queries')
       }
+      const sessionData = await getSessionData(track, year, session, [parameters.driverCode])
       const data = await getDriverCornerStats(
         parameters.driverCode,
         track,
@@ -512,6 +556,8 @@ export async function executeQuery(
           year,
           session,
           timestamp: new Date().toISOString(),
+          laps: sessionData.laps || [],
+          qualifyingBoundaries: sessionData.qualifyingBoundaries,
         },
       }
     }
@@ -523,6 +569,7 @@ export async function executeQuery(
       if (!track) {
         throw new Error('Track/round slug is required for comparison queries')
       }
+      const sessionData = await getSessionData(track, year, session, parameters.driverCodes)
       const data = await compareDrivers(
         parameters.driverCodes[0],
         parameters.driverCodes[1],
@@ -539,6 +586,8 @@ export async function executeQuery(
           year,
           session,
           timestamp: new Date().toISOString(),
+          laps: sessionData.laps || [],
+          qualifyingBoundaries: sessionData.qualifyingBoundaries,
         },
       }
     }

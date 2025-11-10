@@ -1,8 +1,16 @@
 from __future__ import annotations
 
+import logging
 from dataclasses import dataclass
 from pathlib import Path
 from typing import Any, Literal, Optional
+
+# Suppress FastF1 verbose logging by default
+# Users can enable it by setting logging level if needed
+logging.getLogger('fastf1').setLevel(logging.WARNING)
+logging.getLogger('fastf1.core').setLevel(logging.WARNING)
+logging.getLogger('fastf1.req').setLevel(logging.WARNING)
+logging.getLogger('fastf1.api').setLevel(logging.WARNING)
 
 try:
     import fastf1  # type: ignore

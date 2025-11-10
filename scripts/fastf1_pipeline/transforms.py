@@ -101,7 +101,31 @@ def process_session_corners(
     if pd is None:
         return corners_by_driver
 
-    # Load track corner definitions (if available)
+    # Try to get FastF1 CircuitInfo corner data (official F1 data)
+    fastf1_corners = None
+    try:
+        if hasattr(session, 'get_circuit_info'):
+            circuit_info = session.get_circuit_info()
+            if hasattr(circuit_info, 'corners') and not circuit_info.corners.empty:
+                # Convert FastF1 corners to our format
+                fastf1_corners = []
+                for _, row in circuit_info.corners.iterrows():
+                    fastf1_corners.append({
+                        "number": int(row['Number']),
+                        "distance": float(row['Distance']),
+                        "x": float(row['X']),
+                        "y": float(row['Y']),
+                        "angle": float(row['Angle']) if pd.notna(row.get('Angle')) else None,
+                        "source": "fastf1"  # Mark as FastF1 data
+                    })
+                # Sort by corner number
+                fastf1_corners.sort(key=lambda c: c['number'])
+                print(f"[process_session_corners] Loaded {len(fastf1_corners)} corners from FastF1 CircuitInfo")
+    except Exception as e:
+        print(f"[process_session_corners] Warning: Could not load FastF1 CircuitInfo: {e}")
+        fastf1_corners = None
+
+    # Load track corner definitions from tracks.json (for corner types and SVG positions)
     track_corners = None
     try:
         config = PipelineConfig()
@@ -196,7 +220,17 @@ def process_session_corners(
                 continue
 
             # Match to track corners if available
-            if track_corners:
+            # Prefer FastF1 CircuitInfo corners (official F1 data) over tracks.json
+            if fastf1_corners:
+                # Use FastF1 corners for matching (more accurate distances)
+                corner_metrics = match_corners_to_track(
+                    corner_metrics,
+                    fastf1_corners,
+                    tolerance_meters=50.0,
+                    track_corners_for_types=track_corners,  # Use tracks.json for corner types
+                )
+            elif track_corners:
+                # Fall back to tracks.json if FastF1 corners not available
                 corner_metrics = match_corners_to_track(
                     corner_metrics,
                     track_corners,

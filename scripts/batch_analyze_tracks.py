@@ -131,26 +131,42 @@ def main() -> int:
         print("No tracks found with corner data", file=sys.stderr)
         return 1
 
-    print(f"Analyzing {len(tracks)} tracks...", file=sys.stderr)
+    print(f"\n{'='*60}", file=sys.stderr)
+    print(f"Analyzing {len(tracks)} tracks for session {args.session}", file=sys.stderr)
     print(f"Output directory: {args.output_dir}", file=sys.stderr)
+    print(f"{'='*60}\n", file=sys.stderr)
 
     # Analyze each track
     results = {}
     successful = 0
     failed = 0
+    total_tracks = len(tracks)
 
-    for track in tracks:
-        print(f"\nAnalyzing {track}...", file=sys.stderr)
+    for idx, track in enumerate(tracks, 1):
+        progress_pct = (idx / total_tracks) * 100
+        
+        # Show progress bar
+        bar_length = 40
+        filled = int(bar_length * idx / total_tracks)
+        bar = "█" * filled + "░" * (bar_length - filled)
+        
+        print(
+            f"[{bar}] {progress_pct:5.1f}% | Analyzing {track}...",
+            end=" ",
+            file=sys.stderr,
+            flush=True
+        )
+        
         result = analyze_track(track, args.year, args.session, args.output_dir, args.tolerance)
         
         if result:
             results[track] = result
             successful += 1
             corners_count = len(result.get("corners", []))
-            print(f"  ✓ {track}: {corners_count} corners detected", file=sys.stderr)
+            print(f"✓ {corners_count} corners", file=sys.stderr, flush=True)
         else:
             failed += 1
-            print(f"  ✗ {track}: Failed", file=sys.stderr)
+            print(f"✗ Failed", file=sys.stderr, flush=True)
 
     # Generate summary
     summary = {
