@@ -48,7 +48,7 @@ For production deployment, add the API key to Vercel:
 2. Navigate to **Settings → Environment Variables**
 3. Add:
    - **Key**: `GEMINI_API_KEY`
-   - **Value**: `AIzaSyBHdgoTranuOCDaIPUfVuucFmYmU3ADeZs`
+   - **Value**: `your_google_gemini_api_key`
    - **Environments**: Production, Preview, Development (check all)
 4. Save and redeploy
 
