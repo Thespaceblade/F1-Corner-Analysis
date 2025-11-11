@@ -297,3 +297,4 @@ cache/                           # FastF1 cache (already gitignored)
 **Last Updated:** 2025-01-XX
 **Status:** Proposal - Pending Review
 
+

@@ -552,3 +552,4 @@ export default function MetricCard({
 **Status**: Quick Reference
 **See Also**: `output-formatting-plan.md` for detailed plan
 
+

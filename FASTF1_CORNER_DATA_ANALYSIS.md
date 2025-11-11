@@ -165,3 +165,4 @@ corner_distances = {
 ✅ **Automatic updates** - FastF1 updates if tracks change
 ✅ **Validation** - Can validate our detection against official corners
 
+

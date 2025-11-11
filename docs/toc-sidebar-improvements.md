@@ -113,3 +113,4 @@ const [isSidebarExpanded, setIsSidebarExpanded] = useState(false)
 4. **Animation Preferences**: Respect `prefers-reduced-motion`
 5. **Accessibility**: Improve keyboard navigation and screen reader support
 
+
