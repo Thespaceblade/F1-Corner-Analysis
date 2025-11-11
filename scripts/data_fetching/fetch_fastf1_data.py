@@ -3,15 +3,19 @@
 Command line entry point for fetching FastF1 telemetry.
 
 Usage:
-  python scripts/fetch_fastf1_data.py --year 2025 --round bahrain --session Q --drivers VER PER
+  python scripts/data_fetching/fetch_fastf1_data.py --year 2025 --round bahrain --session Q --drivers VER PER
 """
 
 from __future__ import annotations
 
 import argparse
 import json
+import sys
 from pathlib import Path
 from typing import List, Sequence
+
+# Add parent directory to path to import fastf1_pipeline
+sys.path.insert(0, str(Path(__file__).parent.parent))
 
 from fastf1_pipeline import PipelineConfig, SessionIdentifier, build_session_payload, fetch_session
 

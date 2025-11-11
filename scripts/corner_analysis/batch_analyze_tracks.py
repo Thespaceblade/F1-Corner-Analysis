@@ -3,7 +3,7 @@
 Batch analyze all tracks to generate corner definitions.
 
 Usage:
-    python scripts/batch_analyze_tracks.py --year 2025 --session Q --output-dir output/corners
+    python scripts/corner_analysis/batch_analyze_tracks.py --year 2025 --session Q --output-dir output/corners
 """
 
 from __future__ import annotations

@@ -3,8 +3,8 @@
 Bulk fetch FastF1 telemetry for multiple rounds/sessions.
 
 Examples:
-  python scripts/bulk_fetch_fastf1_data.py --year 2024 --sessions Q R
-  python scripts/bulk_fetch_fastf1_data.py --year 2024 --sessions Q --tracks australia monaco
+  python scripts/data_fetching/bulk_fetch_fastf1_data.py --year 2024 --sessions Q R
+  python scripts/data_fetching/bulk_fetch_fastf1_data.py --year 2024 --sessions Q --tracks australia monaco
 """
 
 from __future__ import annotations
@@ -23,6 +23,12 @@ logging.getLogger('fastf1').setLevel(logging.WARNING)
 logging.getLogger('fastf1.core').setLevel(logging.WARNING)
 logging.getLogger('fastf1.req').setLevel(logging.WARNING)
 logging.getLogger('fastf1.api').setLevel(logging.WARNING)
+
+import sys
+from pathlib import Path
+
+# Add parent directory to path to import fastf1_pipeline
+sys.path.insert(0, str(Path(__file__).parent.parent))
 
 from fastf1_pipeline import PipelineConfig, SessionIdentifier, build_session_payload, fetch_session
 

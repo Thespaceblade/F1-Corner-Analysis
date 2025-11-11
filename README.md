@@ -123,13 +123,13 @@ Before using the application, you need to fetch F1 session data using the Python
 Fetch data for a specific session:
 
 ```bash
-python scripts/fetch_fastf1_data.py --year 2025 --round bahrain --session Q
+python scripts/data_fetching/fetch_fastf1_data.py --year 2025 --round bahrain --session Q
 ```
 
 Optional: Filter by specific drivers:
 
 ```bash
-python scripts/fetch_fastf1_data.py --year 2025 --round bahrain --session Q --drivers VER PER
+python scripts/data_fetching/fetch_fastf1_data.py --year 2025 --round bahrain --session Q --drivers VER PER
 ```
 
 #### Bulk Fetch
@@ -137,13 +137,13 @@ python scripts/fetch_fastf1_data.py --year 2025 --round bahrain --session Q --dr
 Fetch data for multiple sessions across multiple rounds:
 
 ```bash
-python scripts/bulk_fetch_fastf1_data.py --year 2025 --sessions Q R
+python scripts/data_fetching/bulk_fetch_fastf1_data.py --year 2025 --sessions Q R
 ```
 
 Fetch specific tracks only:
 
 ```bash
-python scripts/bulk_fetch_fastf1_data.py --year 2025 --sessions Q --tracks monaco bahrain
+python scripts/data_fetching/bulk_fetch_fastf1_data.py --year 2025 --sessions Q --tracks monaco bahrain
 ```
 
 ### Building for Production
@@ -230,12 +230,22 @@ F1-Corner-Analysis/
 │   │   ├── fetch.py      # FastF1 data fetching
 │   │   ├── transforms.py # Data transformation
 │   │   └── corners.py    # Corner detection and analysis
-│   ├── fetch_fastf1_data.py      # Single session fetcher
-│   ├── bulk_fetch_fastf1_data.py # Bulk fetcher
-│   ├── edit_corner_coordinates.py # Interactive corner coordinate editor
+│   ├── data_fetching/    # Data fetching scripts
+│   │   ├── fetch_fastf1_data.py      # Single session fetcher
+│   │   └── bulk_fetch_fastf1_data.py # Bulk fetcher
+│   ├── corner_analysis/  # Corner analysis scripts
+│   │   ├── analyze_track_corners.py
+│   │   ├── batch_analyze_tracks.py
+│   │   └── update_tracks_json.py
+│   ├── corner_editing/   # Corner editing scripts
+│   │   ├── edit_corner_coordinates.py # Interactive corner coordinate editor
+│   │   └── populate_all_tracks.py
+│   ├── testing/          # Test and debug scripts
+│   ├── validation/       # Validation scripts
 │   ├── docs/             # Script-specific documentation
 │   │   ├── README-corner-editor.md    # Corner editor documentation
 │   │   └── QUICK_START.md             # Quick start guide
+│   ├── requirements/     # Requirements files
 │   ├── legacy/           # Legacy scripts
 │   └── sql/              # SQL scripts
 ├── tests/                 # Test files and scripts
@@ -364,7 +374,7 @@ The Python pipeline follows PEP 8 conventions. Consider using a formatter like `
 Use the interactive corner coordinate editor to visually position corners on track maps:
 
 ```bash
-python scripts/edit_corner_coordinates.py
+python scripts/corner_editing/edit_corner_coordinates.py
 ```
 
 **Features**:

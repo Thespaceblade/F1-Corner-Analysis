@@ -6,7 +6,7 @@ This script provides a GUI for editing corner coordinates on track SVG maps.
 You can drag corners to their correct positions and save them to tracks.json.
 
 Usage:
-    python scripts/edit_corner_coordinates.py
+    python scripts/corner_editing/edit_corner_coordinates.py
 
 Features:
     - Loads all tracks from tracks.json

@@ -8,8 +8,8 @@ This script orchestrates the complete workflow:
 3. Update tracks.json with corner definitions
 
 Usage:
-    python scripts/populate_all_tracks.py --year 2025 --sessions Q R
-    python scripts/populate_all_tracks.py --year 2025 --sessions Q --tracks monaco bahrain
+    python scripts/corner_editing/populate_all_tracks.py --year 2025 --sessions Q R
+    python scripts/corner_editing/populate_all_tracks.py --year 2025 --sessions Q --tracks monaco bahrain
 """
 
 from __future__ import annotations
@@ -112,7 +112,7 @@ def main(argv: Sequence[str] | None = None) -> int:
     
     args = parser.parse_args(argv)
     
-    script_dir = Path(__file__).parent
+    script_dir = Path(__file__).parent.parent
     errors = []
     
     # Print header
@@ -130,7 +130,7 @@ def main(argv: Sequence[str] | None = None) -> int:
     if not args.skip_fetch:
         fetch_cmd = [
             sys.executable,
-            str(script_dir / "bulk_fetch_fastf1_data.py"),
+            str(script_dir / "data_fetching" / "bulk_fetch_fastf1_data.py"),
             "--year",
             str(args.year),
             "--sessions",
@@ -156,7 +156,7 @@ def main(argv: Sequence[str] | None = None) -> int:
         for session in args.sessions:
             analyze_cmd = [
                 sys.executable,
-                str(script_dir / "batch_analyze_tracks.py"),
+                str(script_dir / "corner_analysis" / "batch_analyze_tracks.py"),
                 "--year",
                 str(args.year),
                 "--session",
@@ -181,7 +181,7 @@ def main(argv: Sequence[str] | None = None) -> int:
     if not args.skip_update:
         update_cmd = [
             sys.executable,
-            str(script_dir / "update_tracks_json.py"),
+            str(script_dir / "corner_analysis" / "update_tracks_json.py"),
             "--input-dir",
             str(args.output_dir),
             "--tracks-json",
