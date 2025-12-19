@@ -256,12 +256,47 @@ export default function SessionOverview({
     return trendData
   }, [sessionData, selectedDrivers])
 
+  // Calculate Y-axis domain for lap time charts (within 1 second of fastest/slowest)
+  const lapTimeYDomain = useMemo(() => {
+    const allLapTimes: number[] = []
+    
+    // Collect all lap times from trend data
+    lapTimeTrends.forEach(dataPoint => {
+      selectedDrivers.forEach(driver => {
+        const time = dataPoint[driver]
+        if (time !== null && typeof time === 'number') {
+          allLapTimes.push(time)
+        }
+      })
+    })
+
+    // Also collect from qualifying progression if available
+    if (qualifyingProgression) {
+      qualifyingProgression.forEach(prog => {
+        if (prog.q1.time !== null) allLapTimes.push(prog.q1.time)
+        if (prog.q2.time !== null) allLapTimes.push(prog.q2.time)
+        if (prog.q3.time !== null) allLapTimes.push(prog.q3.time)
+      })
+    }
+
+    if (allLapTimes.length === 0) return undefined
+
+    const minTime = Math.min(...allLapTimes)
+    const maxTime = Math.max(...allLapTimes)
+    
+    // Add 1 second padding on each side
+    return [minTime - 1, maxTime + 1]
+  }, [lapTimeTrends, qualifyingProgression, selectedDrivers])
+
   const toggleSection = (section: string) => {
     setExpandedSection(expandedSection === section ? null : section)
   }
 
   return (
-    <div className="space-y-4">
+    <div className="space-y-4 relative">
+      {/* Translucent background element */}
+      <div className="absolute inset-0 bg-gradient-to-br from-accent/5 via-transparent to-transparent rounded-lg pointer-events-none -z-10" />
+      
       <div>
         <h3 className="text-lg font-semibold text-gray-100 mb-2">
           Session Overview
@@ -272,11 +307,11 @@ export default function SessionOverview({
       </div>
 
       {/* Best Lap Breakdown - Collapsible */}
-      <div className="border border-gray-700 rounded-lg">
+      <div className="border border-gray-700 rounded-lg backdrop-blur-sm bg-gray-800/30">
         <button
           type="button"
           onClick={() => toggleSection('best-lap')}
-          className="w-full px-4 py-3 flex items-center justify-between text-left hover:bg-gray-800/30 transition-colors"
+          className="w-full px-4 py-3 flex items-center justify-between text-left hover:bg-gray-800/40 transition-colors"
         >
           <div>
             <h4 className="text-sm font-semibold text-gray-200">Best Lap Breakdown</h4>
@@ -352,11 +387,11 @@ export default function SessionOverview({
 
       {/* Qualifying Progression - Collapsible (only for qualifying) */}
       {isQualifying && qualifyingProgression && (
-        <div className="border border-gray-700 rounded-lg">
+        <div className="border border-gray-700 rounded-lg backdrop-blur-sm bg-gray-800/30">
           <button
             type="button"
             onClick={() => toggleSection('qualifying')}
-            className="w-full px-4 py-3 flex items-center justify-between text-left hover:bg-gray-800/30 transition-colors"
+            className="w-full px-4 py-3 flex items-center justify-between text-left hover:bg-gray-800/40 transition-colors"
           >
             <div>
               <h4 className="text-sm font-semibold text-gray-200">Qualifying Progression</h4>
@@ -455,16 +490,23 @@ export default function SessionOverview({
                         Q3: p.q3.time,
                       }))}>
                         <CartesianGrid strokeDasharray="3 3" className="chart-grid" />
-                        <XAxis dataKey="driver" stroke="#9aa4b2" />
+                        <XAxis 
+                          dataKey="driver" 
+                          stroke="#9aa4b2"
+                          tick={{ fill: '#9aa4b2', fontSize: 12 }}
+                          label={{ value: 'Driver', position: 'insideBottom', offset: -5, fill: '#9aa4b2', fontSize: 12 }}
+                        />
                         <YAxis 
                           stroke="#9aa4b2"
-                          label={{ value: 'Lap Time (s)', angle: -90, position: 'insideLeft' }}
+                          domain={lapTimeYDomain}
+                          tick={{ fill: '#9aa4b2', fontSize: 12 }}
+                          label={{ value: 'Lap Time (s)', angle: -90, position: 'insideLeft', fill: '#9aa4b2', fontSize: 12 }}
                         />
                         <Tooltip 
                           content={({ active, payload }) => {
                             if (!active || !payload) return null
                             return (
-                              <div className="panel p-3 min-w-[140px]">
+                              <div className="panel p-3 min-w-[140px] backdrop-blur-sm bg-gray-900/95">
                                 <div className="text-xs font-semibold text-gray-300 mb-2">
                                   {payload[0]?.payload.driver}
                                 </div>
@@ -477,7 +519,10 @@ export default function SessionOverview({
                             )
                           }}
                         />
-                        <Legend />
+                        <Legend 
+                          wrapperStyle={{ fontSize: '12px', paddingTop: '8px' }}
+                          iconType="line"
+                        />
                         <Line type="monotone" dataKey="Q1" stroke="#ef4444" strokeWidth={2} dot={{ r: 4 }} />
                         <Line type="monotone" dataKey="Q2" stroke="#eab308" strokeWidth={2} dot={{ r: 4 }} />
                         <Line type="monotone" dataKey="Q3" stroke="#22c55e" strokeWidth={2} dot={{ r: 4 }} />
@@ -492,11 +537,11 @@ export default function SessionOverview({
       )}
 
       {/* Personal Best Tracking - Collapsible */}
-      <div className="border border-gray-700 rounded-lg">
+      <div className="border border-gray-700 rounded-lg backdrop-blur-sm bg-gray-800/30">
         <button
           type="button"
           onClick={() => toggleSection('personal-best')}
-          className="w-full px-4 py-3 flex items-center justify-between text-left hover:bg-gray-800/30 transition-colors"
+          className="w-full px-4 py-3 flex items-center justify-between text-left hover:bg-gray-800/40 transition-colors"
         >
           <div>
             <h4 className="text-sm font-semibold text-gray-200">Personal Best Tracking</h4>
@@ -565,7 +610,7 @@ export default function SessionOverview({
 
       {/* Lap Time Trends - Always visible but compact */}
       {lapTimeTrends.length > 0 && (
-        <div className="border border-gray-700 rounded-lg p-4">
+        <div className="border border-gray-700 rounded-lg p-4 backdrop-blur-sm bg-gray-800/30">
           <h4 className="text-sm font-semibold text-gray-200 mb-3">Lap Time Trends</h4>
           <div className="h-48">
             <ResponsiveContainer width="100%" height="100%">
@@ -574,17 +619,20 @@ export default function SessionOverview({
                 <XAxis 
                   dataKey="lapNumber" 
                   stroke="#9aa4b2"
-                  label={{ value: 'Lap Number', position: 'insideBottom', offset: -5 }}
+                  tick={{ fill: '#9aa4b2', fontSize: 12 }}
+                  label={{ value: 'Lap Number', position: 'insideBottom', offset: -5, fill: '#9aa4b2', fontSize: 12 }}
                 />
                 <YAxis 
                   stroke="#9aa4b2"
-                  label={{ value: 'Lap Time (s)', angle: -90, position: 'insideLeft' }}
+                  domain={lapTimeYDomain}
+                  tick={{ fill: '#9aa4b2', fontSize: 12 }}
+                  label={{ value: 'Lap Time (s)', angle: -90, position: 'insideLeft', fill: '#9aa4b2', fontSize: 12 }}
                 />
                 <Tooltip 
                   content={({ active, payload }) => {
                     if (!active || !payload) return null
                     return (
-                      <div className="panel p-3 min-w-[140px]">
+                      <div className="panel p-3 min-w-[140px] backdrop-blur-sm bg-gray-900/95">
                         <div className="text-xs font-semibold text-gray-300 mb-2">
                           Lap {payload[0]?.payload.lapNumber}
                         </div>
@@ -597,7 +645,10 @@ export default function SessionOverview({
                     )
                   }}
                 />
-                <Legend />
+                <Legend 
+                  wrapperStyle={{ fontSize: '12px', paddingTop: '8px' }}
+                  iconType="line"
+                />
                 {selectedDrivers.map((driver, index) => (
                   <Line
                     key={driver}

@@ -152,28 +152,40 @@ def detect_corners(
     corners = []
     i = 1
 
-    # Primary detection: speed-based corners (slow/medium corners)
+    # Primary detection: speed-based corners (optimized)
+    # Use vectorized operations where possible for better performance
+    i = 1
     while i < n - 2:
-        # Look for start of braking - negative gradient region
+        # Quick check: skip if speed is increasing (not braking)
         if sp[i - 1] - sp[i] < 0.5:
             i += 1
             continue
 
-        # Potential braking window
+        # Find braking window (speed drop)
         j = i
         drop = 0.0
-        while j < n - 1 and sp[j] - sp[j + 1] > 0:  # Descending
+        # Limit search window to prevent excessive iteration
+        max_search = min(i + 100, n - 1)
+        while j < max_search and sp[j] > sp[j + 1]:  # Descending
             drop += sp[j] - sp[j + 1]
             j += 1
+            # Early exit if we've found enough drop
+            if drop >= min_drop_kmh:
+                break
 
         if drop >= min_drop_kmh:
             # j is at the apex index approx
             apex_idx = j
 
-            # Now find recovery
+            # Find recovery (limit search window)
             k = apex_idx
             recover = 0.0
-            while k < n - 1 and recover < min_recovery_kmh and sp[k + 1] - sp[k] >= -0.2:
+            max_recovery_search = min(apex_idx + 100, n - 1)
+            while k < max_recovery_search and recover < min_recovery_kmh:
+                if k + 1 >= n:
+                    break
+                if sp[k + 1] - sp[k] < -0.2:  # Speed dropping again, stop
+                    break
                 recover += max(0.0, sp[k + 1] - sp[k])
                 k += 1
 

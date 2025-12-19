@@ -345,11 +345,13 @@ export default function CornerPerformanceAnalysis({
                 <XAxis
                   dataKey="cornerNumber"
                   stroke="#9aa4b2"
-                  label={{ value: 'Corner', position: 'insideBottomRight', offset: -4 }}
+                  tick={{ fill: '#9aa4b2', fontSize: 12 }}
+                  label={{ value: 'Corner', position: 'insideBottomRight', offset: -4, fill: '#9aa4b2', fontSize: 12 }}
                 />
                 <YAxis
                   stroke="#9aa4b2"
-                  label={{ value: 'Delta (s)', angle: -90, position: 'insideLeft' }}
+                  tick={{ fill: '#9aa4b2', fontSize: 12 }}
+                  label={{ value: 'Delta (s)', angle: -90, position: 'insideLeft', fill: '#9aa4b2', fontSize: 12 }}
                   tickFormatter={(value: number) => value.toFixed(3)}
                 />
                 <Tooltip
@@ -357,7 +359,7 @@ export default function CornerPerformanceAnalysis({
                     if (!active || !payload || !payload[0]) return null
                     const data = payload[0].payload as CornerDeltaData
                     return (
-                      <div className="panel p-2 min-w-[140px]">
+                      <div className="panel p-2 min-w-[140px] backdrop-blur-sm bg-gray-900/95">
                         <div className="text-xs font-semibold text-gray-300 mb-1">
                           Corner {data.cornerNumber} ({data.cornerType})
                         </div>

@@ -340,17 +340,19 @@ export default function SectorTimeAnalysis({
                 <XAxis 
                   dataKey="driver" 
                   stroke="#9aa4b2"
-                  label={{ value: 'Driver', position: 'insideBottom', offset: -5 }}
+                  tick={{ fill: '#9aa4b2', fontSize: 12 }}
+                  label={{ value: 'Driver', position: 'insideBottom', offset: -5, fill: '#9aa4b2', fontSize: 12 }}
                 />
                 <YAxis 
                   stroke="#9aa4b2"
-                  label={{ value: 'Sector Time (s)', angle: -90, position: 'insideLeft' }}
+                  tick={{ fill: '#9aa4b2', fontSize: 12 }}
+                  label={{ value: 'Sector Time (s)', angle: -90, position: 'insideLeft', fill: '#9aa4b2', fontSize: 12 }}
                 />
                 <Tooltip 
                   content={({ active, payload }) => {
                     if (!active || !payload) return null
                     return (
-                      <div className="panel p-3 min-w-[140px]">
+                      <div className="panel p-3 min-w-[140px] backdrop-blur-sm bg-gray-900/95">
                         <div className="text-xs font-semibold text-gray-300 mb-2">
                           {payload[0]?.payload.driver}
                         </div>
@@ -363,7 +365,9 @@ export default function SectorTimeAnalysis({
                     )
                   }}
                 />
-                <Legend />
+                <Legend 
+                  wrapperStyle={{ fontSize: '12px', paddingTop: '8px' }}
+                />
                 <Bar dataKey="Sector 1" fill={SECTOR_COLORS.S1} />
                 <Bar dataKey="Sector 2" fill={SECTOR_COLORS.S2} />
                 <Bar dataKey="Sector 3" fill={SECTOR_COLORS.S3} />
@@ -389,11 +393,13 @@ export default function SectorTimeAnalysis({
                 <XAxis
                   dataKey="sector"
                   stroke="#9aa4b2"
-                  label={{ value: 'Sector', position: 'insideBottom', offset: -4 }}
+                  tick={{ fill: '#9aa4b2', fontSize: 12 }}
+                  label={{ value: 'Sector', position: 'insideBottom', offset: -4, fill: '#9aa4b2', fontSize: 12 }}
                 />
                 <YAxis
                   stroke="#9aa4b2"
-                  label={{ value: 'Delta (s)', angle: -90, position: 'insideLeft' }}
+                  tick={{ fill: '#9aa4b2', fontSize: 12 }}
+                  label={{ value: 'Delta (s)', angle: -90, position: 'insideLeft', fill: '#9aa4b2', fontSize: 12 }}
                   tickFormatter={(value: number) => value.toFixed(3)}
                 />
                 <Tooltip
@@ -401,7 +407,7 @@ export default function SectorTimeAnalysis({
                     if (!active || !payload || !payload[0]) return null
                     const data = payload[0].payload
                     return (
-                      <div className="panel p-2 min-w-[140px]">
+                      <div className="panel p-2 min-w-[140px] backdrop-blur-sm bg-gray-900/95">
                         <div className="text-xs font-semibold text-gray-300 mb-1">
                           Sector {data.sector}
                         </div>

@@ -129,18 +129,20 @@ export default function CornerEntryExitAnalysis({
                 <XAxis 
                   dataKey="name" 
                   stroke="#9aa4b2"
-                  label={{ value: 'Corner', position: 'insideBottom', offset: -5 }}
+                  tick={{ fill: '#9aa4b2', fontSize: 12 }}
+                  label={{ value: 'Corner', position: 'insideBottom', offset: -5, fill: '#9aa4b2', fontSize: 12 }}
                 />
                 <YAxis 
                   stroke="#9aa4b2"
-                  label={{ value: 'Speed (km/h)', angle: -90, position: 'insideLeft' }}
+                  tick={{ fill: '#9aa4b2', fontSize: 12 }}
+                  label={{ value: 'Speed (km/h)', angle: -90, position: 'insideLeft', fill: '#9aa4b2', fontSize: 12 }}
                 />
                 <Tooltip 
                   content={({ active, payload }) => {
                     if (!active || !payload || !payload[0]) return null
                     const data = payload[0].payload
                     return (
-                      <div className="panel p-3 min-w-[180px]">
+                      <div className="panel p-3 min-w-[180px] backdrop-blur-sm bg-gray-900/95">
                         <div className="text-xs font-semibold text-gray-300 mb-2">
                           Corner {data.cornerNumber}
                         </div>
@@ -165,7 +167,9 @@ export default function CornerEntryExitAnalysis({
                     )
                   }}
                 />
-                <Legend />
+                <Legend 
+                  wrapperStyle={{ fontSize: '12px', paddingTop: '8px' }}
+                />
                 <Bar dataKey="entry" fill="#60a5fa" name="Entry Speed" />
                 <Bar dataKey="apex" fill="#f87171" name="Apex Speed" />
                 <Bar dataKey="exit" fill="#4ade80" name="Exit Speed" />

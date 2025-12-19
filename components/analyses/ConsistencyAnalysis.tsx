@@ -236,18 +236,20 @@ export default function ConsistencyAnalysis({
                 <XAxis 
                   dataKey="driver" 
                   stroke="#9aa4b2"
-                  label={{ value: 'Driver', position: 'insideBottom', offset: -5 }}
+                  tick={{ fill: '#9aa4b2', fontSize: 12 }}
+                  label={{ value: 'Driver', position: 'insideBottom', offset: -5, fill: '#9aa4b2', fontSize: 12 }}
                 />
                 <YAxis 
                   stroke="#9aa4b2"
-                  label={{ value: 'Standard Deviation (s)', angle: -90, position: 'insideLeft' }}
+                  tick={{ fill: '#9aa4b2', fontSize: 12 }}
+                  label={{ value: 'Standard Deviation (s)', angle: -90, position: 'insideLeft', fill: '#9aa4b2', fontSize: 12 }}
                 />
                 <Tooltip 
                   content={({ active, payload }) => {
                     if (!active || !payload || !payload[0]) return null
                     const data = payload[0].payload
                     return (
-                      <div className="panel p-3 min-w-[180px]">
+                      <div className="panel p-3 min-w-[180px] backdrop-blur-sm bg-gray-900/95">
                         <div className="text-xs font-semibold text-gray-300 mb-2">
                           {data.driver}
                         </div>
@@ -261,7 +263,9 @@ export default function ConsistencyAnalysis({
                     )
                   }}
                 />
-                <Legend />
+                <Legend 
+                  wrapperStyle={{ fontSize: '12px', paddingTop: '8px' }}
+                />
                 <Bar dataKey="stdDev" fill="#7cc7ff" name="Standard Deviation" />
               </BarChart>
             </ResponsiveContainer>
@@ -285,18 +289,20 @@ export default function ConsistencyAnalysis({
                 <XAxis 
                   dataKey="timeBin" 
                   stroke="#9aa4b2"
-                  label={{ value: 'Lap Time (s)', position: 'insideBottom', offset: -5 }}
+                  tick={{ fill: '#9aa4b2', fontSize: 12 }}
+                  label={{ value: 'Lap Time (s)', position: 'insideBottom', offset: -5, fill: '#9aa4b2', fontSize: 12 }}
                   tickFormatter={(value: number) => value.toFixed(1)}
                 />
                 <YAxis 
                   stroke="#9aa4b2"
-                  label={{ value: 'Frequency', angle: -90, position: 'insideLeft' }}
+                  tick={{ fill: '#9aa4b2', fontSize: 12 }}
+                  label={{ value: 'Frequency', angle: -90, position: 'insideLeft', fill: '#9aa4b2', fontSize: 12 }}
                 />
                 <Tooltip 
                   content={({ active, payload }) => {
                     if (!active || !payload) return null
                     return (
-                      <div className="panel p-3 min-w-[140px]">
+                      <div className="panel p-3 min-w-[140px] backdrop-blur-sm bg-gray-900/95">
                         <div className="text-xs font-semibold text-gray-300 mb-2">
                           Time: {payload[0]?.payload.timeBin.toFixed(1)}s
                         </div>
@@ -309,7 +315,9 @@ export default function ConsistencyAnalysis({
                     )
                   }}
                 />
-                <Legend />
+                <Legend 
+                  wrapperStyle={{ fontSize: '12px', paddingTop: '8px' }}
+                />
                 {selectedDrivers.map((driver, index) => (
                   <Bar 
                     key={driver}

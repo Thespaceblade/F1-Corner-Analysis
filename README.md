@@ -584,9 +584,9 @@ For a comprehensive list of unfinished work, known issues, and planned improveme
 - **[docs/implementation/plans/remaining-tasks.md](./docs/implementation/plans/remaining-tasks.md)** - Detailed task list
 
 ### Quick Summary of Outstanding Items
-- 🔧 **Corner coordinate validation**: Need to validate coordinates for all tracks
-- 🧪 **Testing**: AnalysisPanel and TableOfContents components need thorough testing
-- 📊 **Data quality**: Improve corner detection accuracy and validation
-- 🎨 **UI enhancements**: Various UI/UX improvements planned
-- 📈 **Analysis features**: Additional analysis tools and visualizations planned
+- **Corner coordinate validation**: Need to validate coordinates for all tracks
+- **Testing**: AnalysisPanel and TableOfContents components need thorough testing
+- **Data quality**: Improve corner detection accuracy and validation
+- **UI enhancements**: Various UI/UX improvements planned
+- **Analysis features**: Additional analysis tools and visualizations planned
 

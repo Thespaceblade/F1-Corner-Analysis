@@ -1,6 +1,7 @@
 'use client'
 
 import React, { useState, useRef, useEffect } from 'react'
+import { createPortal } from 'react-dom'
 
 type Option = {
   value: string | number
@@ -27,14 +28,55 @@ export default function CustomSelect({
   const [isOpen, setIsOpen] = useState(false)
   const [hoveredIndex, setHoveredIndex] = useState<number | null>(null)
   const containerRef = useRef<HTMLDivElement>(null)
+  const buttonRef = useRef<HTMLButtonElement>(null)
   const listRef = useRef<HTMLUListElement>(null)
+  const [dropdownPosition, setDropdownPosition] = useState<{ top: number; left: number; width: number } | null>(null)
 
   const selectedOption = options.find(opt => opt.value === value)
+
+  // Calculate dropdown position when opening - use requestAnimationFrame to ensure DOM is ready
+  useEffect(() => {
+    if (isOpen && buttonRef.current) {
+      const updatePosition = () => {
+        if (buttonRef.current) {
+          const rect = buttonRef.current.getBoundingClientRect()
+          // Use the exact button width - getBoundingClientRect includes borders
+          // Since dropdown also has border and uses border-box, widths will match
+          const buttonWidth = rect.width
+          
+          setDropdownPosition({
+            top: rect.bottom + 6, // mt-1.5 = 6px (fixed positioning, no scroll offset needed)
+            left: rect.left,
+            width: buttonWidth, // Exact match including borders
+          })
+        }
+      }
+      
+      // Use requestAnimationFrame to ensure button is rendered and positioned
+      requestAnimationFrame(() => {
+        requestAnimationFrame(updatePosition)
+      })
+      
+      // Update position on scroll or resize
+      window.addEventListener('scroll', updatePosition, true)
+      window.addEventListener('resize', updatePosition)
+      
+      return () => {
+        window.removeEventListener('scroll', updatePosition, true)
+        window.removeEventListener('resize', updatePosition)
+      }
+    } else {
+      setDropdownPosition(null)
+    }
+  }, [isOpen])
 
   // Close dropdown when clicking outside
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
       if (containerRef.current && !containerRef.current.contains(event.target as Node)) {
+        if (listRef.current && listRef.current.contains(event.target as Node)) {
+          return // Don't close if clicking inside dropdown
+        }
         setIsOpen(false)
       }
     }
@@ -97,11 +139,12 @@ export default function CustomSelect({
   return (
     <div 
       ref={containerRef}
-      className={`relative ${className}`}
+      className={`relative overflow-visible ${className}`}
       style={{ minWidth }}
     >
       {/* Select Button */}
       <button
+        ref={buttonRef}
         type="button"
         onClick={() => setIsOpen(!isOpen)}
         className={`
@@ -131,13 +174,14 @@ export default function CustomSelect({
         </svg>
       </button>
 
-      {/* Dropdown Menu */}
-      {isOpen && (
+      {/* Dropdown Menu - Rendered in portal to avoid z-index issues */}
+      {/* Only render when position is calculated to avoid flash of wrong position */}
+      {isOpen && dropdownPosition && typeof window !== 'undefined' && createPortal(
         <ul
           ref={listRef}
           role="listbox"
           className={`
-            absolute z-50 w-full mt-1.5
+            fixed z-[9999]
             bg-gray-900/98 backdrop-blur-md
             border border-gray-700/70
             rounded-lg shadow-2xl
@@ -145,9 +189,20 @@ export default function CustomSelect({
             py-1.5
             animate-in fade-in slide-in-from-top-2 duration-200
             scrollbar-thin scrollbar-thumb-gray-600 scrollbar-track-transparent
+            m-0
           `}
           style={{
-            boxShadow: '0 10px 40px rgba(0, 0, 0, 0.5), 0 0 0 1px rgba(255, 255, 255, 0.05) inset'
+            top: `${dropdownPosition.top}px`,
+            left: `${dropdownPosition.left}px`,
+            width: `${dropdownPosition.width}px`,
+            minWidth: `${dropdownPosition.width}px`,
+            maxWidth: `${dropdownPosition.width}px`,
+            boxSizing: 'border-box',
+            boxShadow: '0 10px 40px rgba(0, 0, 0, 0.5), 0 0 0 1px rgba(255, 255, 255, 0.05) inset',
+            // Ensure no extra spacing that could make it appear wider
+            margin: 0,
+            paddingLeft: 0,
+            paddingRight: 0
           }}
         >
           {options.map((option, index) => {
@@ -193,9 +248,9 @@ export default function CustomSelect({
               </li>
             )
           })}
-        </ul>
+        </ul>,
+        document.body
       )}
     </div>
   )
 }
-

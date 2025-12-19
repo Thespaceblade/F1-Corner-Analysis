@@ -159,11 +159,16 @@ export default function CornerDifficultyAnalysis({
             <ResponsiveContainer width="100%" height="100%">
               <BarChart data={difficultyChartData} layout="vertical">
                 <CartesianGrid strokeDasharray="3 3" className="chart-grid" />
-                <XAxis type="number" stroke="#9aa4b2" />
+                <XAxis 
+                  type="number" 
+                  stroke="#9aa4b2"
+                  tick={{ fill: '#9aa4b2', fontSize: 12 }}
+                />
                 <YAxis 
                   dataKey="name" 
                   type="category" 
                   stroke="#9aa4b2"
+                  tick={{ fill: '#9aa4b2', fontSize: 12 }}
                   width={60}
                 />
                 <Tooltip 
@@ -171,7 +176,7 @@ export default function CornerDifficultyAnalysis({
                     if (!active || !payload || !payload[0]) return null
                     const data = payload[0].payload
                     return (
-                      <div className="panel p-3 min-w-[180px]">
+                      <div className="panel p-3 min-w-[180px] backdrop-blur-sm bg-gray-900/95">
                         <div className="text-xs font-semibold text-gray-300 mb-2">
                           Corner {data.cornerNumber}
                         </div>
@@ -190,7 +195,9 @@ export default function CornerDifficultyAnalysis({
                     )
                   }}
                 />
-                <Legend />
+                <Legend 
+                  wrapperStyle={{ fontSize: '12px', paddingTop: '8px' }}
+                />
                 <Bar dataKey="variance" fill="#ef4444" name="Time Variance (s)" />
               </BarChart>
             </ResponsiveContainer>

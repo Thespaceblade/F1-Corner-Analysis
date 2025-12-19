@@ -3,6 +3,17 @@
 import React, { useState } from 'react'
 import { SessionPayload } from '../lib/sessionDataClient'
 import { CornerPerformance } from '../lib/cornerPerformanceAggregator'
+import { 
+  ClipboardList, 
+  TrendingUp, 
+  ArrowUpRight, 
+  BarChart3, 
+  Flag, 
+  Zap, 
+  Car, 
+  Activity, 
+  Upload 
+} from 'lucide-react'
 import CornerEntryExitAnalysis from './analyses/CornerEntryExitAnalysis'
 import StintAnalysis from './analyses/StintAnalysis'
 import CornerDifficultyAnalysis from './analyses/CornerDifficultyAnalysis'
@@ -50,70 +61,70 @@ const analysisTabs: Array<{
   label: string
   shortLabel: string
   description: string
-  icon: string
+  icon: React.ComponentType<{ className?: string }>
 }> = [
   {
     id: 'overview',
     label: 'Overview',
     shortLabel: 'Overview',
     description: 'Quick insights and key session metrics',
-    icon: '📋',
+    icon: ClipboardList,
   },
   {
     id: 'corner-performance',
     label: 'Corner Performance',
     shortLabel: 'Corners',
     description: 'Corner performance table and delta comparison',
-    icon: '📈',
+    icon: TrendingUp,
   },
   {
     id: 'corner-entry-exit',
     label: 'Corner Entry/Exit',
     shortLabel: 'Entry/Exit',
     description: 'Analyze corner entry speeds, exit speeds, and braking points',
-    icon: '↗️',
+    icon: ArrowUpRight,
   },
   {
     id: 'stint',
     label: 'Stint Analysis',
     shortLabel: 'Stints',
     description: 'Analyze performance across stints and tyre life',
-    icon: '📊',
+    icon: BarChart3,
   },
   {
     id: 'corner-difficulty',
     label: 'Corner Difficulty',
     shortLabel: 'Difficulty',
     description: 'Rank corners by difficulty and importance',
-    icon: '🏁',
+    icon: Flag,
   },
   {
     id: 'sector-times',
     label: 'Sector Times',
     shortLabel: 'Sectors',
     description: 'Sector-by-sector analysis and comparison',
-    icon: '⚡',
+    icon: Zap,
   },
   {
     id: 'tyre-compounds',
     label: 'Tyre Compounds',
     shortLabel: 'Tyres',
     description: 'Performance analysis by tyre compound',
-    icon: '🏎️',
+    icon: Car,
   },
   {
     id: 'consistency',
     label: 'Consistency',
     shortLabel: 'Consistency',
     description: 'Lap time consistency and distribution analysis',
-    icon: '📊',
+    icon: Activity,
   },
   {
     id: 'export',
     label: 'Export & Share',
     shortLabel: 'Export',
     description: 'Export data and charts, generate shareable links',
-    icon: '📤',
+    icon: Upload,
   },
 ]
 
@@ -164,9 +175,7 @@ export default function AnalysisPanel({
                     : 'text-gray-400 hover:text-gray-200 hover:bg-gray-800/40 border-b-2 border-transparent'
                 }`}
               >
-                <span className={`text-[10px] sm:text-sm flex-shrink-0 leading-none transition-transform duration-200 ${isSelected ? 'scale-110' : 'group-hover:scale-105'}`}>
-                  {tab.icon}
-                </span>
+                <tab.icon className={`w-3 h-3 sm:w-4 sm:h-4 flex-shrink-0 transition-all duration-200 ${isSelected ? 'scale-110 text-accent' : 'group-hover:scale-105 text-gray-400 group-hover:text-gray-200'}`} />
                 <span className="hidden sm:inline text-[10px] sm:text-xs leading-tight font-medium">
                   {tab.shortLabel}
                 </span>

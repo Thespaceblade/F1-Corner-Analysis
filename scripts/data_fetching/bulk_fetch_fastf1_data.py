@@ -81,7 +81,7 @@ def fetch_round_sessions(
         )
 
         cache_dir = config.resolve_cache(year, round_id, identifier.session_code)
-        fetch_result = fetch_session(identifier, cache_dir)
+        fetch_result = fetch_session(identifier, cache_dir, round_number=round_number)
         payload = build_session_payload(fetch_result)
 
         output_dir = config.resolve_output(year, round_id, identifier.session_code)
@@ -197,7 +197,7 @@ def main(argv: Sequence[str] | None = None) -> int:
                 sys.stdout = devnull
                 sys.stderr = devnull
                 cache_dir = config.resolve_cache(args.year, round_id, identifier.session_code)
-                fetch_result = fetch_session(identifier, cache_dir)
+                fetch_result = fetch_session(identifier, cache_dir, round_number=round_number)
                 payload = build_session_payload(fetch_result)
             finally:
                 sys.stdout = old_stdout

@@ -234,17 +234,19 @@ export default function StintAnalysis({
                 <XAxis 
                   dataKey="lapNumber" 
                   stroke="#9aa4b2"
-                  label={{ value: 'Lap Number', position: 'insideBottom', offset: -5 }}
+                  tick={{ fill: '#9aa4b2', fontSize: 12 }}
+                  label={{ value: 'Lap Number', position: 'insideBottom', offset: -5, fill: '#9aa4b2', fontSize: 12 }}
                 />
                 <YAxis 
                   stroke="#9aa4b2"
-                  label={{ value: 'Lap Time (s)', angle: -90, position: 'insideLeft' }}
+                  tick={{ fill: '#9aa4b2', fontSize: 12 }}
+                  label={{ value: 'Lap Time (s)', angle: -90, position: 'insideLeft', fill: '#9aa4b2', fontSize: 12 }}
                 />
                 <Tooltip 
                   content={({ active, payload }) => {
                     if (!active || !payload) return null
                     return (
-                      <div className="panel p-3 min-w-[140px]">
+                      <div className="panel p-3 min-w-[140px] backdrop-blur-sm bg-gray-900/95">
                         <div className="text-xs font-semibold text-gray-300 mb-2">
                           Lap {payload[0]?.payload.lapNumber}
                         </div>
@@ -257,7 +259,10 @@ export default function StintAnalysis({
                     )
                   }}
                 />
-                <Legend />
+                <Legend 
+                  wrapperStyle={{ fontSize: '12px', paddingTop: '8px' }}
+                  iconType="line"
+                />
                 {selectedDrivers.map((driver, index) => (
                   <Line
                     key={driver}
@@ -288,17 +293,19 @@ export default function StintAnalysis({
                 <XAxis 
                   dataKey="lapNumber" 
                   stroke="#9aa4b2"
-                  label={{ value: 'Lap Number', position: 'insideBottom', offset: -5 }}
+                  tick={{ fill: '#9aa4b2', fontSize: 12 }}
+                  label={{ value: 'Lap Number', position: 'insideBottom', offset: -5, fill: '#9aa4b2', fontSize: 12 }}
                 />
                 <YAxis 
                   stroke="#9aa4b2"
-                  label={{ value: 'Tyre Life (laps)', angle: -90, position: 'insideLeft' }}
+                  tick={{ fill: '#9aa4b2', fontSize: 12 }}
+                  label={{ value: 'Tyre Life (laps)', angle: -90, position: 'insideLeft', fill: '#9aa4b2', fontSize: 12 }}
                 />
                 <Tooltip 
                   content={({ active, payload }) => {
                     if (!active || !payload) return null
                     return (
-                      <div className="panel p-3 min-w-[140px]">
+                      <div className="panel p-3 min-w-[140px] backdrop-blur-sm bg-gray-900/95">
                         <div className="text-xs font-semibold text-gray-300 mb-2">
                           Lap {payload[0]?.payload.lapNumber}
                         </div>
@@ -311,7 +318,10 @@ export default function StintAnalysis({
                     )
                   }}
                 />
-                <Legend />
+                <Legend 
+                  wrapperStyle={{ fontSize: '12px', paddingTop: '8px' }}
+                  iconType="line"
+                />
                 {selectedDrivers.map((driver, index) => (
                   <Line
                     key={driver}
