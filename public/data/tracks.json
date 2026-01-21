@@ -7,20 +7,20 @@
       "corners": [
         {
           "number": 1,
-          "type": "medium",
+          "type": "slow",
           "expectedDistanceRange": {
-            "min": 253,
-            "max": 415
+            "min": 137.0,
+            "max": 399.0
           },
           "x": 152.7,
           "y": 421.5
         },
         {
           "number": 2,
-          "type": "fast",
+          "type": "medium",
           "expectedDistanceRange": {
-            "min": 981,
-            "max": 1121
+            "min": 857.0,
+            "max": 1123.0
           },
           "x": 157.9,
           "y": 377.4
@@ -29,8 +29,8 @@
           "number": 3,
           "type": "slow",
           "expectedDistanceRange": {
-            "min": 1791,
-            "max": 1925
+            "min": 1163.0,
+            "max": 1253.0
           },
           "x": 27.5,
           "y": 196.3
@@ -39,8 +39,8 @@
           "number": 4,
           "type": "medium",
           "expectedDistanceRange": {
-            "min": 3223,
-            "max": 3377
+            "min": 1355.0,
+            "max": 1509.0
           },
           "x": 75.7,
           "y": 178
@@ -49,18 +49,18 @@
           "number": 5,
           "type": "fast",
           "expectedDistanceRange": {
-            "min": 4039,
-            "max": 4141
+            "min": 3851.0,
+            "max": 4175.0
           },
           "x": 75.7,
           "y": 97.4
         },
         {
           "number": 6,
-          "type": "medium",
+          "type": "fast",
           "expectedDistanceRange": {
-            "min": 4320,
-            "max": 4440
+            "min": 4251.0,
+            "max": 4681.0
           },
           "x": 199.2,
           "y": 27.4
@@ -77,7 +77,7 @@
         },
         {
           "number": 8,
-          "type": "fast",
+          "type": "medium",
           "expectedDistanceRange": {
             "min": 4600,
             "max": 4625
@@ -87,17 +87,17 @@
         },
         {
           "number": 9,
-          "type": "slow",
+          "type": "fast",
           "expectedDistanceRange": {
-            "min": 4540,
-            "max": 4630
+            "min": 4689.0,
+            "max": 4781.0
           },
           "x": 395.5,
           "y": 436.7
         },
         {
           "number": 10,
-          "type": "slow",
+          "type": "fast",
           "expectedDistanceRange": {
             "min": 4605,
             "max": 4625
@@ -127,7 +127,7 @@
         },
         {
           "number": 13,
-          "type": "slow",
+          "type": "medium",
           "expectedDistanceRange": {
             "min": 4630,
             "max": 4645
@@ -166,18 +166,18 @@
           "number": 2,
           "type": "fast",
           "expectedDistanceRange": {
-            "min": 225.0,
-            "max": 375.0
+            "min": 219.0,
+            "max": 305.0
           },
           "x": 120.52525252525253,
           "y": 468.2525252525253
         },
         {
           "number": 3,
-          "type": "slow",
+          "type": "fast",
           "expectedDistanceRange": {
-            "min": 560.0,
-            "max": 640.0
+            "min": 367.0,
+            "max": 921.0
           },
           "x": 141.1986531986532,
           "y": 515.8013468013468
@@ -204,10 +204,10 @@
         },
         {
           "number": 6,
-          "type": "slow",
+          "type": "medium",
           "expectedDistanceRange": {
-            "min": 1460.0,
-            "max": 1540.0
+            "min": 1329.0,
+            "max": 1593.0
           },
           "x": 24.3939393939394,
           "y": 216.03703703703707
@@ -226,18 +226,28 @@
           "number": 8,
           "type": "fast",
           "expectedDistanceRange": {
-            "min": 2025.0,
-            "max": 2175.0
+            "min": 1887.0,
+            "max": 2115.0
+          },
+          "x": 302.4511784511784,
+          "y": 275.989898989899
+        },
+        {
+          "number": 8,
+          "type": "fast",
+          "expectedDistanceRange": {
+            "min": 4959.0,
+            "max": 5163.0
           },
           "x": 302.4511784511784,
           "y": 275.989898989899
         },
         {
           "number": 9,
-          "type": "slow",
+          "type": "medium",
           "expectedDistanceRange": {
-            "min": 2360.0,
-            "max": 2440.0
+            "min": 2155.0,
+            "max": 2559.0
           },
           "x": 376.87542087542084,
           "y": 335.94276094276097
@@ -254,10 +264,10 @@
         },
         {
           "number": 11,
-          "type": "fast",
+          "type": "medium",
           "expectedDistanceRange": {
-            "min": 2925.0,
-            "max": 3075.0
+            "min": 2889.0,
+            "max": 3209.0
           },
           "x": 282.8114478114478,
           "y": 82.69360269360274
@@ -304,10 +314,10 @@
         },
         {
           "number": 16,
-          "type": "medium",
+          "type": "fast",
           "expectedDistanceRange": {
-            "min": 4440.0,
-            "max": 4560.0
+            "min": 4399.0,
+            "max": 4773.0
           },
           "x": 550.6158697249354,
           "y": 457.27611424504965
@@ -331,7 +341,7 @@
         },
         {
           "number": 2,
-          "type": "fast",
+          "type": "medium",
           "expectedDistanceRange": {
             "min": 225.0,
             "max": 375.0
@@ -341,17 +351,17 @@
         },
         {
           "number": 3,
-          "type": "slow",
+          "type": "fast",
           "expectedDistanceRange": {
-            "min": 560.0,
-            "max": 640.0
+            "min": 495.0,
+            "max": 877.0
           },
           "x": 597.1064814814814,
           "y": 277.0833333333333
         },
         {
           "number": 4,
-          "type": "medium",
+          "type": "fast",
           "expectedDistanceRange": {
             "min": 840.0,
             "max": 960.0
@@ -363,35 +373,35 @@
           "number": 5,
           "type": "fast",
           "expectedDistanceRange": {
-            "min": 1125.0,
-            "max": 1275.0
+            "min": 1041.0,
+            "max": 1261.0
           },
           "x": 539.5833333333333,
           "y": 224.42129629629628
         },
         {
           "number": 6,
-          "type": "slow",
+          "type": "fast",
           "expectedDistanceRange": {
-            "min": 1460.0,
-            "max": 1540.0
+            "min": 1453.0,
+            "max": 1595.0
           },
           "x": 488.54166666666663,
           "y": 209.02777777777774
         },
         {
           "number": 7,
-          "type": "medium",
+          "type": "fast",
           "expectedDistanceRange": {
-            "min": 1740.0,
-            "max": 1860.0
+            "min": 1665.0,
+            "max": 1775.0
           },
           "x": 481.24999999999994,
           "y": 142.5925925925926
         },
         {
           "number": 8,
-          "type": "fast",
+          "type": "medium",
           "expectedDistanceRange": {
             "min": 2025.0,
             "max": 2175.0
@@ -401,10 +411,10 @@
         },
         {
           "number": 9,
-          "type": "slow",
+          "type": "medium",
           "expectedDistanceRange": {
-            "min": 2360.0,
-            "max": 2440.0
+            "min": 2145.0,
+            "max": 2473.0
           },
           "x": 298.14814814814815,
           "y": 194.44444444444446
@@ -413,15 +423,15 @@
           "number": 10,
           "type": "medium",
           "expectedDistanceRange": {
-            "min": 2640.0,
-            "max": 2760.0
+            "min": 2719.0,
+            "max": 2927.0
           },
           "x": 273.8425925925926,
           "y": 93.9814814814815
         },
         {
           "number": 11,
-          "type": "fast",
+          "type": "medium",
           "expectedDistanceRange": {
             "min": 2925.0,
             "max": 3075.0
@@ -431,7 +441,7 @@
         },
         {
           "number": 12,
-          "type": "slow",
+          "type": "fast",
           "expectedDistanceRange": {
             "min": 3260.0000000000005,
             "max": 3340.0000000000005
@@ -441,7 +451,7 @@
         },
         {
           "number": 13,
-          "type": "medium",
+          "type": "slow",
           "expectedDistanceRange": {
             "min": 3540.0,
             "max": 3660.0
@@ -451,17 +461,17 @@
         },
         {
           "number": 14,
-          "type": "fast",
+          "type": "medium",
           "expectedDistanceRange": {
-            "min": 3825.0,
-            "max": 3975.0
+            "min": 3623.0,
+            "max": 3987.0
           },
           "x": 25.115740740740783,
           "y": 41.319444444444464
         },
         {
           "number": 15,
-          "type": "slow",
+          "type": "fast",
           "expectedDistanceRange": {
             "min": 4160.0,
             "max": 4240.0
@@ -471,7 +481,7 @@
         },
         {
           "number": 16,
-          "type": "medium",
+          "type": "slow",
           "expectedDistanceRange": {
             "min": 4440.0,
             "max": 4560.0
@@ -481,7 +491,7 @@
         },
         {
           "number": 17,
-          "type": "fast",
+          "type": "slow",
           "expectedDistanceRange": {
             "min": 4725.0,
             "max": 4875.0
@@ -491,7 +501,7 @@
         },
         {
           "number": 18,
-          "type": "slow",
+          "type": "medium",
           "expectedDistanceRange": {
             "min": 5060.0,
             "max": 5140.0
@@ -528,10 +538,10 @@
         },
         {
           "number": 3,
-          "type": "slow",
+          "type": "medium",
           "expectedDistanceRange": {
-            "min": 560.0,
-            "max": 640.0
+            "min": 461.0,
+            "max": 761.0
           },
           "x": 152.15151515151516,
           "y": 31.81818181818182
@@ -558,40 +568,50 @@
         },
         {
           "number": 6,
-          "type": "slow",
+          "type": "fast",
           "expectedDistanceRange": {
-            "min": 1460.0,
-            "max": 1540.0
+            "min": 1295.0,
+            "max": 1559.0
           },
           "x": 335.989898989899,
           "y": 247.4747474747475
         },
         {
           "number": 7,
-          "type": "medium",
+          "type": "fast",
           "expectedDistanceRange": {
-            "min": 1740.0,
-            "max": 1860.0
+            "min": 1707.0,
+            "max": 1911.0
+          },
+          "x": 274.7104377104377,
+          "y": 253.36700336700338
+        },
+        {
+          "number": 7,
+          "type": "fast",
+          "expectedDistanceRange": {
+            "min": 3657.0,
+            "max": 3817.0
           },
           "x": 274.7104377104377,
           "y": 253.36700336700338
         },
         {
           "number": 8,
-          "type": "fast",
+          "type": "medium",
           "expectedDistanceRange": {
-            "min": 2025.0,
-            "max": 2175.0
+            "min": 1921.0,
+            "max": 2261.0
           },
           "x": 178.07744107744108,
           "y": 344.1077441077441
         },
         {
           "number": 9,
-          "type": "slow",
+          "type": "fast",
           "expectedDistanceRange": {
-            "min": 2360.0,
-            "max": 2440.0
+            "min": 4481.0,
+            "max": 4623.0
           },
           "x": 196.93265993265996,
           "y": 152.02020202020202
@@ -600,8 +620,18 @@
           "number": 10,
           "type": "medium",
           "expectedDistanceRange": {
-            "min": 2640.0,
-            "max": 2760.0
+            "min": 2487.0,
+            "max": 2795.0
+          },
+          "x": 155.6868686868687,
+          "y": 117.84511784511785
+        },
+        {
+          "number": 10,
+          "type": "fast",
+          "expectedDistanceRange": {
+            "min": 4659.0,
+            "max": 4915.0
           },
           "x": 155.6868686868687,
           "y": 117.84511784511785
@@ -610,18 +640,18 @@
           "number": 11,
           "type": "fast",
           "expectedDistanceRange": {
-            "min": 2925.0,
-            "max": 3075.0
+            "min": 5279.0,
+            "max": 5399.0
           },
           "x": 166.2929292929293,
           "y": 520.8754208754209
         },
         {
           "number": 12,
-          "type": "slow",
+          "type": "fast",
           "expectedDistanceRange": {
-            "min": 3259.9999999999995,
-            "max": 3339.9999999999995
+            "min": 3093.0,
+            "max": 3473.0
           },
           "x": 284.13804713804717,
           "y": 399.49494949494954
@@ -640,8 +670,8 @@
           "number": 14,
           "type": "fast",
           "expectedDistanceRange": {
-            "min": 3825.0,
-            "max": 3975.0
+            "min": 3815.0,
+            "max": 4111.0
           },
           "x": 43.73400673400674,
           "y": 683.5016835016835
@@ -677,8 +707,8 @@
           "number": 2,
           "type": "fast",
           "expectedDistanceRange": {
-            "min": 225.0,
-            "max": 375.0
+            "min": 249.0,
+            "max": 573.0
           },
           "x": 60.98377526595611,
           "y": 419.95570514752836
@@ -695,10 +725,10 @@
         },
         {
           "number": 4,
-          "type": "medium",
+          "type": "fast",
           "expectedDistanceRange": {
-            "min": 840.0,
-            "max": 960.0
+            "min": 815.0,
+            "max": 1035.0
           },
           "x": 56.952620773221916,
           "y": 321.8148661756992
@@ -715,20 +745,20 @@
         },
         {
           "number": 6,
-          "type": "slow",
+          "type": "fast",
           "expectedDistanceRange": {
-            "min": 1460.0,
-            "max": 1540.0
+            "min": 1291.0,
+            "max": 1657.0
           },
           "x": 47.64742378370784,
           "y": 270.9941749252762
         },
         {
           "number": 7,
-          "type": "medium",
+          "type": "fast",
           "expectedDistanceRange": {
-            "min": 1740.0,
-            "max": 1860.0
+            "min": 5123.0,
+            "max": 5209.0
           },
           "x": 42.63693309704642,
           "y": 248.0890746433954
@@ -745,10 +775,10 @@
         },
         {
           "number": 9,
-          "type": "slow",
+          "type": "fast",
           "expectedDistanceRange": {
-            "min": 2360.0,
-            "max": 2440.0
+            "min": 2153.0,
+            "max": 2465.0
           },
           "x": 34.047520491341125,
           "y": 200.13152092820752
@@ -767,8 +797,8 @@
           "number": 11,
           "type": "fast",
           "expectedDistanceRange": {
-            "min": 2925.0,
-            "max": 3075.0
+            "min": 2889.0,
+            "max": 3107.0
           },
           "x": 56.23683638941314,
           "y": 167.20543927300386
@@ -805,10 +835,10 @@
         },
         {
           "number": 15,
-          "type": "slow",
+          "type": "fast",
           "expectedDistanceRange": {
-            "min": 4160.0,
-            "max": 4240.0
+            "min": 3969.0,
+            "max": 4309.0
           },
           "x": 47.8442883137361,
           "y": 123.47803252344374
@@ -845,10 +875,10 @@
         },
         {
           "number": 19,
-          "type": "medium",
+          "type": "fast",
           "expectedDistanceRange": {
-            "min": 5340.0,
-            "max": 5460.0
+            "min": 5239.0,
+            "max": 5563.0
           },
           "x": 26.646671142707124,
           "y": 263.1521185092597
@@ -954,8 +984,8 @@
           "number": 2,
           "type": "fast",
           "expectedDistanceRange": {
-            "min": 225.0,
-            "max": 375.0
+            "min": 193.0,
+            "max": 427.0
           },
           "x": 412.38425925925924,
           "y": 171.71759259259258
@@ -984,8 +1014,8 @@
           "number": 5,
           "type": "fast",
           "expectedDistanceRange": {
-            "min": 1125.0,
-            "max": 1275.0
+            "min": 1007.0,
+            "max": 1661.0
           },
           "x": 124.76851851851855,
           "y": 191.97222222222223
@@ -1044,8 +1074,8 @@
           "number": 11,
           "type": "fast",
           "expectedDistanceRange": {
-            "min": 2925.0,
-            "max": 3075.0
+            "min": 2775.0,
+            "max": 3257.0
           },
           "x": 640.8564814814814,
           "y": 163.61574074074073
@@ -1054,8 +1084,8 @@
           "number": 12,
           "type": "slow",
           "expectedDistanceRange": {
-            "min": 3260.0,
-            "max": 3340.0
+            "min": 3297.0,
+            "max": 3561.0
           },
           "x": 616.5509259259259,
           "y": 126.34722222222223
@@ -1092,10 +1122,10 @@
         },
         {
           "number": 16,
-          "type": "medium",
+          "type": "fast",
           "expectedDistanceRange": {
-            "min": 4440.0,
-            "max": 4560.0
+            "min": 4429.0,
+            "max": 4879.0
           },
           "x": 675.6944444444443,
           "y": 33.98611111111113
@@ -1169,10 +1199,10 @@
         },
         {
           "number": 4,
-          "type": "medium",
+          "type": "fast",
           "expectedDistanceRange": {
-            "min": 840.0,
-            "max": 960.0
+            "min": 655.0,
+            "max": 945.0
           },
           "x": 147.45370370370372,
           "y": 99.36111111111111
@@ -1189,10 +1219,10 @@
         },
         {
           "number": 6,
-          "type": "slow",
+          "type": "fast",
           "expectedDistanceRange": {
-            "min": 1460.0,
-            "max": 1540.0
+            "min": 1391.0,
+            "max": 1651.0
           },
           "x": 92.36111111111114,
           "y": 271.1203703703703
@@ -1201,8 +1231,8 @@
           "number": 7,
           "type": "medium",
           "expectedDistanceRange": {
-            "min": 1740.0,
-            "max": 1860.0
+            "min": 1759.0,
+            "max": 1953.0
           },
           "x": 25.92592592592597,
           "y": 338.3657407407407
@@ -1219,10 +1249,10 @@
         },
         {
           "number": 9,
-          "type": "slow",
+          "type": "fast",
           "expectedDistanceRange": {
-            "min": 2360.0,
-            "max": 2440.0
+            "min": 2355.0,
+            "max": 2583.0
           },
           "x": 237.38425925925927,
           "y": 344.8472222222222
@@ -1241,8 +1271,8 @@
           "number": 11,
           "type": "fast",
           "expectedDistanceRange": {
-            "min": 2925.0,
-            "max": 3075.0
+            "min": 2829.0,
+            "max": 3087.0
           },
           "x": 250.34722222222223,
           "y": 212.787037037037
@@ -1261,8 +1291,8 @@
           "number": 13,
           "type": "medium",
           "expectedDistanceRange": {
-            "min": 3540.0,
-            "max": 3660.0
+            "min": 3371.0,
+            "max": 3609.0
           },
           "x": 291.6666666666667,
           "y": 186.86111111111111
@@ -1279,10 +1309,10 @@
         },
         {
           "number": 15,
-          "type": "slow",
+          "type": "fast",
           "expectedDistanceRange": {
-            "min": 4160.0,
-            "max": 4240.0
+            "min": 4111.0,
+            "max": 4359.0
           },
           "x": 459.37499999999994,
           "y": 193.34259259259258
@@ -1291,8 +1321,8 @@
           "number": 16,
           "type": "medium",
           "expectedDistanceRange": {
-            "min": 4440.0,
-            "max": 4560.0
+            "min": 4361.0,
+            "max": 4481.0
           },
           "x": 620.6018518518517,
           "y": 87.20833333333333
@@ -1336,10 +1366,10 @@
       "corners": [
         {
           "number": 1,
-          "type": "medium",
+          "type": "fast",
           "expectedDistanceRange": {
             "min": 0,
-            "max": 60.0
+            "max": 223.0
           },
           "x": 30.060606060606062,
           "y": 332.32323232323233
@@ -1356,10 +1386,20 @@
         },
         {
           "number": 3,
-          "type": "slow",
+          "type": "fast",
           "expectedDistanceRange": {
-            "min": 560.0,
-            "max": 640.0
+            "min": 445.0,
+            "max": 913.0
+          },
+          "x": 388.3097643097643,
+          "y": 222.72727272727275
+        },
+        {
+          "number": 3,
+          "type": "medium",
+          "expectedDistanceRange": {
+            "min": 945.0,
+            "max": 1139.0
           },
           "x": 388.3097643097643,
           "y": 222.72727272727275
@@ -1376,20 +1416,20 @@
         },
         {
           "number": 5,
-          "type": "fast",
+          "type": "slow",
           "expectedDistanceRange": {
-            "min": 1125.0,
-            "max": 1275.0
+            "min": 1143.0,
+            "max": 1425.0
           },
           "x": 448.4107744107744,
           "y": 17.67676767676768
         },
         {
           "number": 6,
-          "type": "slow",
+          "type": "fast",
           "expectedDistanceRange": {
-            "min": 1460.0,
-            "max": 1540.0
+            "min": 2221.0,
+            "max": 2369.0
           },
           "x": 495.5488215488216,
           "y": 94.27609427609428
@@ -1406,10 +1446,10 @@
         },
         {
           "number": 8,
-          "type": "fast",
+          "type": "medium",
           "expectedDistanceRange": {
-            "min": 2025.0,
-            "max": 2175.0
+            "min": 1801.0,
+            "max": 2107.0
           },
           "x": 528.5454545454546,
           "y": 23.56902356902357
@@ -1428,28 +1468,28 @@
           "number": 10,
           "type": "medium",
           "expectedDistanceRange": {
-            "min": 2640.0,
-            "max": 2760.0
+            "min": 2441.0,
+            "max": 2717.0
           },
           "x": 266.92929292929296,
           "y": 313.4680134680135
         },
         {
           "number": 11,
-          "type": "fast",
+          "type": "slow",
           "expectedDistanceRange": {
-            "min": 2925.0,
-            "max": 3075.0
+            "min": 2747.0,
+            "max": 2985.0
           },
           "x": 246.89562289562292,
           "y": 328.7878787878788
         },
         {
           "number": 12,
-          "type": "slow",
+          "type": "fast",
           "expectedDistanceRange": {
-            "min": 3260.0,
-            "max": 3340.0
+            "min": 3185.0,
+            "max": 3297.0
           },
           "x": 71.30639730639732,
           "y": 346.4646464646465
@@ -1545,18 +1585,18 @@
           "number": 2,
           "type": "fast",
           "expectedDistanceRange": {
-            "min": 225.0,
-            "max": 375.0
+            "min": 1001.0,
+            "max": 1165.0
           },
           "x": 177.69023569023568,
           "y": 642.2558922558923
         },
         {
           "number": 3,
-          "type": "slow",
+          "type": "fast",
           "expectedDistanceRange": {
-            "min": 560.0,
-            "max": 640.0
+            "min": 577.0,
+            "max": 877.0
           },
           "x": 49.23905723905722,
           "y": 670.5387205387206
@@ -1583,10 +1623,20 @@
         },
         {
           "number": 6,
-          "type": "slow",
+          "type": "fast",
           "expectedDistanceRange": {
-            "min": 1460.0,
-            "max": 1540.0
+            "min": 1465.0,
+            "max": 1751.0
+          },
+          "x": 241.3265993265993,
+          "y": 552.6936026936028
+        },
+        {
+          "number": 6,
+          "type": "fast",
+          "expectedDistanceRange": {
+            "min": 2741.0,
+            "max": 2915.0
           },
           "x": 241.3265993265993,
           "y": 552.6936026936028
@@ -1603,20 +1653,30 @@
         },
         {
           "number": 8,
-          "type": "fast",
+          "type": "medium",
           "expectedDistanceRange": {
-            "min": 2025.0,
-            "max": 2175.0
+            "min": 1891.0,
+            "max": 2141.0
           },
           "x": 249.57575757575756,
           "y": 446.63299663299665
         },
         {
           "number": 9,
-          "type": "slow",
+          "type": "fast",
           "expectedDistanceRange": {
-            "min": 2360.0,
-            "max": 2440.0
+            "min": 2361.0,
+            "max": 2563.0
+          },
+          "x": 204.7946127946128,
+          "y": 304.04040404040404
+        },
+        {
+          "number": 9,
+          "type": "fast",
+          "expectedDistanceRange": {
+            "min": 4167.0,
+            "max": 4369.0
           },
           "x": 204.7946127946128,
           "y": 304.04040404040404
@@ -1643,10 +1703,10 @@
         },
         {
           "number": 12,
-          "type": "slow",
+          "type": "fast",
           "expectedDistanceRange": {
-            "min": 3260.0,
-            "max": 3340.0
+            "min": 3241.0,
+            "max": 3517.0
           },
           "x": 347.38720538720537,
           "y": 122.55892255892256
@@ -1655,8 +1715,8 @@
           "number": 13,
           "type": "medium",
           "expectedDistanceRange": {
-            "min": 3540.0,
-            "max": 3660.0
+            "min": 3591.0,
+            "max": 3795.0
           },
           "x": 439.3063973063973,
           "y": 18.855218855218855
@@ -1690,20 +1750,20 @@
         },
         {
           "number": 2,
-          "type": "fast",
+          "type": "medium",
           "expectedDistanceRange": {
-            "min": 225.0,
-            "max": 375.0
+            "min": 51.0,
+            "max": 343.0
           },
           "x": 217.52525252525254,
           "y": 670.5387205387206
         },
         {
           "number": 3,
-          "type": "slow",
+          "type": "fast",
           "expectedDistanceRange": {
-            "min": 560.0,
-            "max": 640.0
+            "min": 559.0,
+            "max": 757.0
           },
           "x": 111.74561441576857,
           "y": 618.2731512713966
@@ -1720,9 +1780,9 @@
         },
         {
           "number": 5,
-          "type": "fast",
+          "type": "medium",
           "expectedDistanceRange": {
-            "min": 1125.0,
+            "min": 1025.0,
             "max": 1275.0
           },
           "x": 61.8781913742883,
@@ -1740,10 +1800,10 @@
         },
         {
           "number": 7,
-          "type": "medium",
+          "type": "fast",
           "expectedDistanceRange": {
-            "min": 1740.0,
-            "max": 1860.0
+            "min": 1615.0,
+            "max": 2041.0
           },
           "x": 24.62671316198515,
           "y": 451.8723804572839
@@ -1752,18 +1812,18 @@
           "number": 8,
           "type": "fast",
           "expectedDistanceRange": {
-            "min": 2025.0,
-            "max": 2175.0
+            "min": 4115.0,
+            "max": 4323.0
           },
           "x": 28.88740905516228,
           "y": 241.1887787753173
         },
         {
           "number": 9,
-          "type": "slow",
+          "type": "medium",
           "expectedDistanceRange": {
-            "min": 2360.0,
-            "max": 2440.0
+            "min": 2333.0,
+            "max": 2705.0
           },
           "x": 51.99621720003652,
           "y": 233.64985974612804
@@ -1790,10 +1850,10 @@
         },
         {
           "number": 12,
-          "type": "slow",
+          "type": "fast",
           "expectedDistanceRange": {
-            "min": 3260.0,
-            "max": 3340.0
+            "min": 3261.0,
+            "max": 3381.0
           },
           "x": 131.71848653321595,
           "y": 179.5750007245339
@@ -1812,8 +1872,8 @@
           "number": 14,
           "type": "fast",
           "expectedDistanceRange": {
-            "min": 3825.0,
-            "max": 3975.0
+            "min": 3597.0,
+            "max": 3905.0
           },
           "x": 172.55165450495284,
           "y": 419.15179743402376
@@ -1839,8 +1899,8 @@
           "number": 2,
           "type": "fast",
           "expectedDistanceRange": {
-            "min": 225.0,
-            "max": 375.0
+            "min": 237.0,
+            "max": 471.0
           },
           "x": 115.85648148148151,
           "y": 131.3101851851852
@@ -1867,20 +1927,30 @@
         },
         {
           "number": 5,
+          "type": "medium",
+          "expectedDistanceRange": {
+            "min": 949.0,
+            "max": 1411.0
+          },
+          "x": 378.35648148148147,
+          "y": 120.77777777777779
+        },
+        {
+          "number": 5,
           "type": "fast",
           "expectedDistanceRange": {
-            "min": 1125.0,
-            "max": 1275.0
+            "min": 2869.0,
+            "max": 3067.0
           },
           "x": 378.35648148148147,
           "y": 120.77777777777779
         },
         {
           "number": 6,
-          "type": "slow",
+          "type": "fast",
           "expectedDistanceRange": {
-            "min": 1460.0,
-            "max": 1540.0
+            "min": 3513.0,
+            "max": 4009.0
           },
           "x": 211.45833333333334,
           "y": 128.87962962962962
@@ -1899,8 +1969,8 @@
           "number": 8,
           "type": "fast",
           "expectedDistanceRange": {
-            "min": 2025.0,
-            "max": 2175.0
+            "min": 1857.0,
+            "max": 2257.0
           },
           "x": 371.875,
           "y": 202.60648148148147
@@ -1917,10 +1987,10 @@
         },
         {
           "number": 10,
-          "type": "medium",
+          "type": "fast",
           "expectedDistanceRange": {
-            "min": 2640.0,
-            "max": 2760.0
+            "min": 2465.0,
+            "max": 2751.0
           },
           "x": 678.9351851851851,
           "y": 301.4490740740741
@@ -1946,8 +2016,8 @@
           "number": 2,
           "type": "fast",
           "expectedDistanceRange": {
-            "min": 225.0,
-            "max": 375.0
+            "min": 237.0,
+            "max": 471.0
           },
           "x": 212.2138047138047,
           "y": 353.5353535353536
@@ -1974,10 +2044,10 @@
         },
         {
           "number": 5,
-          "type": "fast",
+          "type": "medium",
           "expectedDistanceRange": {
-            "min": 1125.0,
-            "max": 1275.0
+            "min": 949.0,
+            "max": 1411.0
           },
           "x": 339.486531986532,
           "y": 278.1144781144781
@@ -2006,8 +2076,8 @@
           "number": 8,
           "type": "fast",
           "expectedDistanceRange": {
-            "min": 2025.0,
-            "max": 2175.0
+            "min": 1857.0,
+            "max": 2257.0
           },
           "x": 125.00841750841751,
           "y": 57.744107744107744
@@ -2024,10 +2094,10 @@
         },
         {
           "number": 10,
-          "type": "medium",
+          "type": "fast",
           "expectedDistanceRange": {
-            "min": 2640.0,
-            "max": 2760.0
+            "min": 2465.0,
+            "max": 2751.0
           },
           "x": 373.66161616161617,
           "y": 208.5858585858586
@@ -2036,8 +2106,8 @@
           "number": 11,
           "type": "fast",
           "expectedDistanceRange": {
-            "min": 2925.0,
-            "max": 3075.0
+            "min": 2869.0,
+            "max": 3067.0
           },
           "x": 390.1599326599327,
           "y": 254.54545454545456
@@ -2054,10 +2124,10 @@
         },
         {
           "number": 13,
-          "type": "medium",
+          "type": "fast",
           "expectedDistanceRange": {
-            "min": 3540.0,
-            "max": 3660.0
+            "min": 3513.0,
+            "max": 4009.0
           },
           "x": 398.40909090909093,
           "y": 360.6060606060606
@@ -2131,10 +2201,10 @@
         },
         {
           "number": 2,
-          "type": "fast",
+          "type": "medium",
           "expectedDistanceRange": {
-            "min": 225.0,
-            "max": 375.0
+            "min": 145.0,
+            "max": 413.0
           },
           "x": 242.3745484355433,
           "y": 154.54418060505003
@@ -2163,8 +2233,8 @@
           "number": 5,
           "type": "fast",
           "expectedDistanceRange": {
-            "min": 1125.0,
-            "max": 1275.0
+            "min": 1007.0,
+            "max": 1235.0
           },
           "x": 417.43018354159875,
           "y": 536.244437603216
@@ -2201,10 +2271,10 @@
         },
         {
           "number": 9,
-          "type": "slow",
+          "type": "fast",
           "expectedDistanceRange": {
-            "min": 2360.0,
-            "max": 2440.0
+            "min": 2105.0,
+            "max": 2535.0
           },
           "x": 346.3549632729747,
           "y": 616.5331123511061
@@ -2213,8 +2283,18 @@
           "number": 10,
           "type": "medium",
           "expectedDistanceRange": {
-            "min": 2640.0,
-            "max": 2760.0
+            "min": 2567.0,
+            "max": 2679.0
+          },
+          "x": 298.97148309389206,
+          "y": 453.32334728982136
+        },
+        {
+          "number": 10,
+          "type": "fast",
+          "expectedDistanceRange": {
+            "min": 6353.0,
+            "max": 6797.0
           },
           "x": 298.97148309389206,
           "y": 453.32334728982136
@@ -2223,18 +2303,18 @@
           "number": 11,
           "type": "fast",
           "expectedDistanceRange": {
-            "min": 2925.0,
-            "max": 3075.0
+            "min": 2827.0,
+            "max": 3077.0
           },
           "x": 230.52867839077263,
           "y": 461.22059398633513
         },
         {
           "number": 12,
-          "type": "slow",
+          "type": "medium",
           "expectedDistanceRange": {
-            "min": 3260.0,
-            "max": 3340.0
+            "min": 3149.0,
+            "max": 3313.0
           },
           "x": 176.56415929792846,
           "y": 578.3630866512896
@@ -2253,8 +2333,8 @@
           "number": 14,
           "type": "fast",
           "expectedDistanceRange": {
-            "min": 3825.0,
-            "max": 3975.0
+            "min": 3637.0,
+            "max": 3899.0
           },
           "x": 77.84857559150622,
           "y": 644.1734757889043
@@ -2271,10 +2351,10 @@
         },
         {
           "number": 16,
-          "type": "medium",
+          "type": "fast",
           "expectedDistanceRange": {
-            "min": 4440.0,
-            "max": 4560.0
+            "min": 4247.0,
+            "max": 4669.0
           },
           "x": 162.0858736876532,
           "y": 445.4261005933076
@@ -2283,8 +2363,8 @@
           "number": 17,
           "type": "fast",
           "expectedDistanceRange": {
-            "min": 4725.0,
-            "max": 4875.0
+            "min": 4751.0,
+            "max": 4981.0
           },
           "x": 200.25589938746978,
           "y": 358.556386931656
@@ -2338,10 +2418,10 @@
         },
         {
           "number": 3,
-          "type": "slow",
+          "type": "fast",
           "expectedDistanceRange": {
-            "min": 560.0,
-            "max": 640.0
+            "min": 395.0,
+            "max": 663.0
           },
           "x": 236.9360269360269,
           "y": 380.63973063973066
@@ -2360,28 +2440,38 @@
           "number": 5,
           "type": "fast",
           "expectedDistanceRange": {
-            "min": 1125.0,
-            "max": 1275.0
+            "min": 943.0,
+            "max": 1183.0
           },
           "x": 358.31649831649827,
           "y": 22.39057239057239
         },
         {
           "number": 6,
-          "type": "slow",
+          "type": "fast",
           "expectedDistanceRange": {
-            "min": 1460.0,
-            "max": 1540.0
+            "min": 1475.0,
+            "max": 1613.0
           },
           "x": 487.94612794612794,
           "y": 119.02356902356902
         },
         {
           "number": 7,
+          "type": "fast",
+          "expectedDistanceRange": {
+            "min": 1611.0,
+            "max": 1885.0
+          },
+          "x": 476.16161616161617,
+          "y": 136.70033670033672
+        },
+        {
+          "number": 7,
           "type": "medium",
           "expectedDistanceRange": {
-            "min": 1740.0,
-            "max": 1860.0
+            "min": 2483.0,
+            "max": 2627.0
           },
           "x": 476.16161616161617,
           "y": 136.70033670033672
@@ -2390,18 +2480,18 @@
           "number": 8,
           "type": "fast",
           "expectedDistanceRange": {
-            "min": 2025.0,
-            "max": 2175.0
+            "min": 1897.0,
+            "max": 2097.0
           },
           "x": 499.7306397306397,
           "y": 226.26262626262627
         },
         {
           "number": 9,
-          "type": "slow",
+          "type": "medium",
           "expectedDistanceRange": {
-            "min": 2360.0,
-            "max": 2440.0
+            "min": 2239.0,
+            "max": 2423.0
           },
           "x": 568.0808080808081,
           "y": 251.010101010101
@@ -2410,8 +2500,18 @@
           "number": 10,
           "type": "medium",
           "expectedDistanceRange": {
-            "min": 2640.0,
-            "max": 2760.0
+            "min": 2623.0,
+            "max": 2761.0
+          },
+          "x": 563.3670033670033,
+          "y": 352.35690235690237
+        },
+        {
+          "number": 10,
+          "type": "fast",
+          "expectedDistanceRange": {
+            "min": 3327.0,
+            "max": 3555.0
           },
           "x": 563.3670033670033,
           "y": 352.35690235690237
@@ -2420,8 +2520,8 @@
           "number": 11,
           "type": "fast",
           "expectedDistanceRange": {
-            "min": 2925.0,
-            "max": 3075.0
+            "min": 2967.0,
+            "max": 3169.0
           },
           "x": 603.4343434343434,
           "y": 439.5622895622896
@@ -2440,18 +2540,18 @@
           "number": 13,
           "type": "medium",
           "expectedDistanceRange": {
-            "min": 3540.0,
-            "max": 3660.0
+            "min": 3589.0,
+            "max": 3817.0
           },
           "x": 344.1750841750841,
           "y": 550.3367003367003
         },
         {
           "number": 14,
-          "type": "fast",
+          "type": "medium",
           "expectedDistanceRange": {
-            "min": 3825.0,
-            "max": 3975.0
+            "min": 3903.0,
+            "max": 4107.0
           },
           "x": 398.38383838383834,
           "y": 671.7171717171717
@@ -2477,28 +2577,28 @@
           "number": 2,
           "type": "fast",
           "expectedDistanceRange": {
-            "min": 225.0,
-            "max": 375.0
+            "min": 117.0,
+            "max": 391.0
           },
           "x": 199.75757575757575,
           "y": 221.3030303030303
         },
         {
           "number": 3,
-          "type": "slow",
+          "type": "medium",
           "expectedDistanceRange": {
-            "min": 560.0,
-            "max": 640.0
+            "min": 559.0,
+            "max": 877.0
           },
           "x": 129.7121212121212,
           "y": 282.21212121212125
         },
         {
           "number": 4,
-          "type": "medium",
+          "type": "fast",
           "expectedDistanceRange": {
-            "min": 840.0,
-            "max": 960.0
+            "min": 1877.0,
+            "max": 2067.0
           },
           "x": 260.66666666666663,
           "y": 270.03030303030306
@@ -2515,10 +2615,10 @@
         },
         {
           "number": 6,
-          "type": "slow",
+          "type": "fast",
           "expectedDistanceRange": {
-            "min": 1460.0,
-            "max": 1540.0
+            "min": 1371.0,
+            "max": 1729.0
           },
           "x": 505.3181818181818,
           "y": 234.5
@@ -2535,20 +2635,30 @@
         },
         {
           "number": 8,
+          "type": "medium",
+          "expectedDistanceRange": {
+            "min": 2087.0,
+            "max": 2289.0
+          },
+          "x": 601.7575757575758,
+          "y": 462.90909090909093
+        },
+        {
+          "number": 8,
           "type": "fast",
           "expectedDistanceRange": {
-            "min": 2025.0,
-            "max": 2175.0
+            "min": 3335.0,
+            "max": 3521.0
           },
           "x": 601.7575757575758,
           "y": 462.90909090909093
         },
         {
           "number": 9,
-          "type": "slow",
+          "type": "medium",
           "expectedDistanceRange": {
-            "min": 2360.0,
-            "max": 2440.0
+            "min": 2335.0,
+            "max": 2543.0
           },
           "x": 464.7121212121212,
           "y": 413.1666666666667
@@ -2567,8 +2677,8 @@
           "number": 11,
           "type": "fast",
           "expectedDistanceRange": {
-            "min": 2925.0,
-            "max": 3075.0
+            "min": 2895.0,
+            "max": 3191.0
           },
           "x": 224.1212121212121,
           "y": 373.57575757575756
@@ -2632,20 +2742,20 @@
         },
         {
           "number": 3,
-          "type": "slow",
+          "type": "fast",
           "expectedDistanceRange": {
-            "min": 560.0,
-            "max": 640.0
+            "min": 2189.0,
+            "max": 2323.0
           },
           "x": 84.3469551887696,
           "y": 100.64974607731956
         },
         {
           "number": 4,
-          "type": "medium",
+          "type": "fast",
           "expectedDistanceRange": {
-            "min": 839.9999999999999,
-            "max": 959.9999999999999
+            "min": 641.0,
+            "max": 1131.0
           },
           "x": 262.8319240652189,
           "y": 65.90103030779419
@@ -2662,20 +2772,20 @@
         },
         {
           "number": 6,
-          "type": "slow",
+          "type": "fast",
           "expectedDistanceRange": {
-            "min": 1460.0,
-            "max": 1540.0
+            "min": 3691.0,
+            "max": 3957.0
           },
           "x": 368.52454240623035,
           "y": 30.128144100067214
         },
         {
           "number": 7,
-          "type": "medium",
+          "type": "fast",
           "expectedDistanceRange": {
-            "min": 1739.9999999999998,
-            "max": 1859.9999999999998
+            "min": 4881.0,
+            "max": 5177.0
           },
           "x": 383.158904945755,
           "y": 121.18639990155411
@@ -2684,28 +2794,28 @@
           "number": 8,
           "type": "fast",
           "expectedDistanceRange": {
-            "min": 2025.0,
-            "max": 2175.0
+            "min": 1849.0,
+            "max": 2165.0
           },
           "x": 139.25286262034373,
           "y": 308.1810323510361
         },
         {
           "number": 9,
-          "type": "slow",
+          "type": "fast",
           "expectedDistanceRange": {
-            "min": 2360.0,
-            "max": 2440.0
+            "min": 2359.0,
+            "max": 2559.0
           },
           "x": 135.51218612562084,
           "y": 344.00753832467984
         },
         {
           "number": 10,
-          "type": "medium",
+          "type": "fast",
           "expectedDistanceRange": {
-            "min": 2640.0,
-            "max": 2760.0
+            "min": 2705.0,
+            "max": 2889.0
           },
           "x": 117.89656360454184,
           "y": 363.17748047997173
@@ -2741,18 +2851,18 @@
           "number": 2,
           "type": "fast",
           "expectedDistanceRange": {
-            "min": 225.0,
-            "max": 375.0
+            "min": 17.0,
+            "max": 357.0
           },
           "x": 633.1144781144781,
           "y": 21.127946127946128
         },
         {
           "number": 3,
-          "type": "slow",
+          "type": "medium",
           "expectedDistanceRange": {
-            "min": 560.0,
-            "max": 640.0
+            "min": 477.0,
+            "max": 663.0
           },
           "x": 383.8047138047138,
           "y": 121.69696969696969
@@ -2761,8 +2871,8 @@
           "number": 4,
           "type": "medium",
           "expectedDistanceRange": {
-            "min": 840.0,
-            "max": 960.0
+            "min": 1573.0,
+            "max": 1765.0
           },
           "x": 404.0875420875421,
           "y": 188.46127946127945
@@ -2779,10 +2889,10 @@
         },
         {
           "number": 6,
-          "type": "slow",
+          "type": "fast",
           "expectedDistanceRange": {
-            "min": 1460.0,
-            "max": 1540.0
+            "min": 1241.0,
+            "max": 1529.0
           },
           "x": 318.9298557654645,
           "y": 256.47509940262813
@@ -2799,20 +2909,20 @@
         },
         {
           "number": 8,
-          "type": "fast",
+          "type": "medium",
           "expectedDistanceRange": {
-            "min": 2025.0,
-            "max": 2175.0
+            "min": 1899.0,
+            "max": 2143.0
           },
           "x": 198.30166931750185,
           "y": 271.5931749013267
         },
         {
           "number": 9,
-          "type": "slow",
+          "type": "medium",
           "expectedDistanceRange": {
-            "min": 2360.0,
-            "max": 2440.0
+            "min": 2307.0,
+            "max": 2541.0
           },
           "x": 191.18019916737916,
           "y": 268.0324398262653
@@ -2821,8 +2931,8 @@
           "number": 10,
           "type": "medium",
           "expectedDistanceRange": {
-            "min": 2640.0,
-            "max": 2760.0
+            "min": 2577.0,
+            "max": 2897.0
           },
           "x": 184.77429511944644,
           "y": 264.60572075754413
@@ -2831,8 +2941,8 @@
           "number": 11,
           "type": "fast",
           "expectedDistanceRange": {
-            "min": 2925.0,
-            "max": 3075.0
+            "min": 5793.0,
+            "max": 5955.0
           },
           "x": 169.81578871701115,
           "y": 262.46879127148196
@@ -2849,20 +2959,20 @@
         },
         {
           "number": 13,
-          "type": "medium",
+          "type": "fast",
           "expectedDistanceRange": {
-            "min": 3540.0,
-            "max": 3660.0
+            "min": 3393.0,
+            "max": 3739.0
           },
           "x": 49.19389197395193,
           "y": 295.07005444752787
         },
         {
           "number": 14,
-          "type": "fast",
+          "type": "medium",
           "expectedDistanceRange": {
-            "min": 3825.0,
-            "max": 3975.0
+            "min": 3861.0,
+            "max": 4093.0
           },
           "x": 27.038548627785627,
           "y": 357.1050158167935
@@ -2921,8 +3031,8 @@
           "number": 20,
           "type": "fast",
           "expectedDistanceRange": {
-            "min": 5625.0,
-            "max": 5775.0
+            "min": 5691.0,
+            "max": 5797.0
           },
           "x": 316.9298557654645,
           "y": 265.3750994026281
@@ -2936,7 +3046,7 @@
       "corners": [
         {
           "number": 1,
-          "type": "medium",
+          "type": "slow",
           "expectedDistanceRange": {
             "min": 0,
             "max": 60.0
@@ -2946,10 +3056,10 @@
         },
         {
           "number": 2,
-          "type": "fast",
+          "type": "slow",
           "expectedDistanceRange": {
-            "min": 225.0,
-            "max": 375.0
+            "min": 217.0,
+            "max": 465.0
           },
           "x": 412.0,
           "y": 83.6
@@ -2958,8 +3068,8 @@
           "number": 3,
           "type": "slow",
           "expectedDistanceRange": {
-            "min": 560.0,
-            "max": 640.0
+            "min": 465.0,
+            "max": 593.0
           },
           "x": 470.6,
           "y": 95.2
@@ -2968,15 +3078,15 @@
           "number": 4,
           "type": "medium",
           "expectedDistanceRange": {
-            "min": 840.0,
-            "max": 960.0
+            "min": 791.0,
+            "max": 995.0
           },
           "x": 522.6,
           "y": 113.6
         },
         {
           "number": 5,
-          "type": "fast",
+          "type": "medium",
           "expectedDistanceRange": {
             "min": 1125.0,
             "max": 1275.0
@@ -2986,17 +3096,17 @@
         },
         {
           "number": 6,
-          "type": "slow",
+          "type": "fast",
           "expectedDistanceRange": {
-            "min": 1460.0,
-            "max": 1540.0
+            "min": 1459.0,
+            "max": 1821.0
           },
           "x": 595.6,
           "y": 167.1
         },
         {
           "number": 7,
-          "type": "medium",
+          "type": "slow",
           "expectedDistanceRange": {
             "min": 1740.0,
             "max": 1860.0
@@ -3006,17 +3116,17 @@
         },
         {
           "number": 8,
-          "type": "fast",
+          "type": "slow",
           "expectedDistanceRange": {
-            "min": 2025.0,
-            "max": 2175.0
+            "min": 2073.0,
+            "max": 2215.0
           },
           "x": 615.2,
           "y": 232.3
         },
         {
           "number": 9,
-          "type": "slow",
+          "type": "medium",
           "expectedDistanceRange": {
             "min": 2360.0,
             "max": 2440.0
@@ -3028,25 +3138,25 @@
           "number": 10,
           "type": "medium",
           "expectedDistanceRange": {
-            "min": 2640.0,
-            "max": 2760.0
+            "min": 2455.0,
+            "max": 2797.0
           },
           "x": 577.2,
           "y": 295.2
         },
         {
           "number": 11,
-          "type": "fast",
+          "type": "medium",
           "expectedDistanceRange": {
-            "min": 2925.0,
-            "max": 3075.0
+            "min": 2875.0,
+            "max": 3065.0
           },
           "x": 538.6,
           "y": 321.4
         },
         {
           "number": 12,
-          "type": "slow",
+          "type": "medium",
           "expectedDistanceRange": {
             "min": 3260.0,
             "max": 3340.0
@@ -3056,17 +3166,17 @@
         },
         {
           "number": 13,
-          "type": "medium",
+          "type": "slow",
           "expectedDistanceRange": {
-            "min": 3540.0,
-            "max": 3660.0
+            "min": 3351.0,
+            "max": 3593.0
           },
           "x": 433.1,
           "y": 356.2
         },
         {
           "number": 14,
-          "type": "fast",
+          "type": "slow",
           "expectedDistanceRange": {
             "min": 3824.9999999999995,
             "max": 3974.9999999999995
@@ -3076,10 +3186,10 @@
         },
         {
           "number": 15,
-          "type": "slow",
+          "type": "fast",
           "expectedDistanceRange": {
-            "min": 4160.0,
-            "max": 4240.0
+            "min": 4023.0,
+            "max": 4345.0
           },
           "x": 309.5,
           "y": 361.6
@@ -3088,15 +3198,15 @@
           "number": 16,
           "type": "medium",
           "expectedDistanceRange": {
-            "min": 4440.0,
-            "max": 4560.0
+            "min": 4491.0,
+            "max": 4721.0
           },
           "x": 249.3,
           "y": 352.7
         },
         {
           "number": 17,
-          "type": "fast",
+          "type": "medium",
           "expectedDistanceRange": {
             "min": 4725.0,
             "max": 4875.0
@@ -3106,7 +3216,7 @@
         },
         {
           "number": 18,
-          "type": "slow",
+          "type": "fast",
           "expectedDistanceRange": {
             "min": 5060.0,
             "max": 5140.0
@@ -3116,7 +3226,7 @@
         },
         {
           "number": 19,
-          "type": "medium",
+          "type": "fast",
           "expectedDistanceRange": {
             "min": 5340.0,
             "max": 5460.0
@@ -3193,10 +3303,20 @@
         },
         {
           "number": 3,
-          "type": "slow",
+          "type": "medium",
           "expectedDistanceRange": {
-            "min": 560.0,
-            "max": 640.0
+            "min": 455.0,
+            "max": 695.0
+          },
+          "x": 311.9212962962963,
+          "y": 254.80092592592592
+        },
+        {
+          "number": 3,
+          "type": "fast",
+          "expectedDistanceRange": {
+            "min": 1597.0,
+            "max": 1749.0
           },
           "x": 311.9212962962963,
           "y": 254.80092592592592
@@ -3215,8 +3335,8 @@
           "number": 5,
           "type": "fast",
           "expectedDistanceRange": {
-            "min": 1125.0,
-            "max": 1275.0
+            "min": 1045.0,
+            "max": 1583.0
           },
           "x": 353.24074074074076,
           "y": 208.62037037037035
@@ -3235,8 +3355,8 @@
           "number": 7,
           "type": "medium",
           "expectedDistanceRange": {
-            "min": 1740.0,
-            "max": 1860.0
+            "min": 1755.0,
+            "max": 1911.0
           },
           "x": 446.412037037037,
           "y": 165.68055555555554
@@ -3253,10 +3373,10 @@
         },
         {
           "number": 9,
-          "type": "slow",
+          "type": "medium",
           "expectedDistanceRange": {
-            "min": 2360.0,
-            "max": 2440.0
+            "min": 2357.0,
+            "max": 2585.0
           },
           "x": 520.1388888888888,
           "y": 147.0462962962963
@@ -3293,40 +3413,40 @@
         },
         {
           "number": 13,
-          "type": "medium",
+          "type": "fast",
           "expectedDistanceRange": {
-            "min": 3540.0,
-            "max": 3660.0
+            "min": 3395.0,
+            "max": 3777.0
           },
           "x": 297.337962962963,
           "y": 177.02314814814815
         },
         {
           "number": 14,
-          "type": "fast",
+          "type": "medium",
           "expectedDistanceRange": {
-            "min": 3825.0,
-            "max": 3975.0
+            "min": 3821.0,
+            "max": 4005.0
           },
           "x": 267.36111111111114,
           "y": 177.02314814814815
         },
         {
           "number": 15,
-          "type": "slow",
+          "type": "medium",
           "expectedDistanceRange": {
-            "min": 4160.0,
-            "max": 4240.0
+            "min": 4061.0,
+            "max": 4283.0
           },
           "x": 221.18055555555557,
           "y": 142.1851851851852
         },
         {
           "number": 16,
-          "type": "medium",
+          "type": "fast",
           "expectedDistanceRange": {
-            "min": 4440.0,
-            "max": 4560.0
+            "min": 4443.0,
+            "max": 4555.0
           },
           "x": 255.20833333333334,
           "y": 211.05092592592592
@@ -3343,10 +3463,10 @@
         },
         {
           "number": 18,
-          "type": "slow",
+          "type": "fast",
           "expectedDistanceRange": {
-            "min": 5060.0,
-            "max": 5140.0
+            "min": 4753.0,
+            "max": 5329.0
           },
           "x": 187.962962962963,
           "y": 253.18055555555554
@@ -3400,10 +3520,10 @@
         },
         {
           "number": 3,
-          "type": "slow",
+          "type": "fast",
           "expectedDistanceRange": {
-            "min": 560.0,
-            "max": 640.0
+            "min": 2421.0,
+            "max": 2617.0
           },
           "x": 677.4099014839755,
           "y": 156.3786008230453
@@ -3422,8 +3542,8 @@
           "number": 5,
           "type": "fast",
           "expectedDistanceRange": {
-            "min": 1125.0,
-            "max": 1275.0
+            "min": 901.0,
+            "max": 1305.0
           },
           "x": 551.6668745063806,
           "y": 449.43259758074566
@@ -3450,10 +3570,10 @@
         },
         {
           "number": 8,
-          "type": "fast",
+          "type": "medium",
           "expectedDistanceRange": {
-            "min": 2025.0,
-            "max": 2175.0
+            "min": 1803.0,
+            "max": 2265.0
           },
           "x": 476.84457746186143,
           "y": 308.1015920522093
@@ -3470,10 +3590,10 @@
         },
         {
           "number": 10,
-          "type": "medium",
+          "type": "fast",
           "expectedDistanceRange": {
-            "min": 2640.0,
-            "max": 2760.0
+            "min": 2705.0,
+            "max": 2801.0
           },
           "x": 373.96391902564744,
           "y": 251.9848692688199
@@ -3482,8 +3602,8 @@
           "number": 11,
           "type": "fast",
           "expectedDistanceRange": {
-            "min": 2925.0,
-            "max": 3075.0
+            "min": 2807.0,
+            "max": 2987.0
           },
           "x": 354.2191461944548,
           "y": 214.57372074656027
@@ -3502,18 +3622,18 @@
           "number": 13,
           "type": "medium",
           "expectedDistanceRange": {
-            "min": 3540.0000000000005,
-            "max": 3660.0000000000005
+            "min": 3389.0,
+            "max": 3825.0
           },
           "x": 93.38030510870018,
           "y": 68.04672236771006
         },
         {
           "number": 14,
-          "type": "fast",
+          "type": "slow",
           "expectedDistanceRange": {
-            "min": 3824.9999999999995,
-            "max": 3974.9999999999995
+            "min": 3835.0,
+            "max": 3999.0
           },
           "x": 78.83152512782145,
           "y": 79.4779066384005
@@ -3569,8 +3689,8 @@
           "number": 2,
           "type": "fast",
           "expectedDistanceRange": {
-            "min": 225.0,
-            "max": 375.0
+            "min": 121.0,
+            "max": 479.0
           },
           "x": 175.26683142435257,
           "y": 654.8071336953554
@@ -3589,8 +3709,8 @@
           "number": 4,
           "type": "medium",
           "expectedDistanceRange": {
-            "min": 840.0,
-            "max": 960.0
+            "min": 2173.0,
+            "max": 2373.0
           },
           "x": 432.7644209989202,
           "y": 206.3685349023586
@@ -3599,8 +3719,8 @@
           "number": 5,
           "type": "fast",
           "expectedDistanceRange": {
-            "min": 1125.0,
-            "max": 1275.0
+            "min": 1195.0,
+            "max": 1465.0
           },
           "x": 323.6552728741034,
           "y": 191.09325416488426
@@ -3619,8 +3739,8 @@
           "number": 7,
           "type": "medium",
           "expectedDistanceRange": {
-            "min": 1740.0,
-            "max": 1860.0
+            "min": 3057.0,
+            "max": 3279.0
           },
           "x": 74.88641514952117,
           "y": 379.85208042081723
@@ -3629,7 +3749,7 @@
           "number": 8,
           "type": "fast",
           "expectedDistanceRange": {
-            "min": 2025.0,
+            "min": 1865.0,
             "max": 2175.0
           },
           "x": 57.42895144955048,
@@ -3639,8 +3759,8 @@
           "number": 9,
           "type": "slow",
           "expectedDistanceRange": {
-            "min": 2360.0,
-            "max": 2440.0
+            "min": 2379.0,
+            "max": 2503.0
           },
           "x": 132.71426365567405,
           "y": 271.83402377724866
@@ -3649,8 +3769,8 @@
           "number": 10,
           "type": "medium",
           "expectedDistanceRange": {
-            "min": 2640.0,
-            "max": 2760.0
+            "min": 2579.0,
+            "max": 2781.0
           },
           "x": 82.52405551825834,
           "y": 119.08121640250519
@@ -3726,8 +3846,18 @@
           "number": 2,
           "type": "fast",
           "expectedDistanceRange": {
-            "min": 225.0,
-            "max": 375.0
+            "min": 59.0,
+            "max": 353.0
+          },
+          "x": 368.73400673400675,
+          "y": 557.4074074074074
+        },
+        {
+          "number": 2,
+          "type": "fast",
+          "expectedDistanceRange": {
+            "min": 467.0,
+            "max": 583.0
           },
           "x": 368.73400673400675,
           "y": 557.4074074074074
@@ -3744,10 +3874,10 @@
         },
         {
           "number": 4,
-          "type": "medium",
+          "type": "fast",
           "expectedDistanceRange": {
-            "min": 840.0000000000001,
-            "max": 960.0000000000001
+            "min": 893.0,
+            "max": 1003.0
           },
           "x": 301.56228956228955,
           "y": 564.4781144781145
@@ -3764,10 +3894,10 @@
         },
         {
           "number": 6,
-          "type": "slow",
+          "type": "fast",
           "expectedDistanceRange": {
-            "min": 1460.0,
-            "max": 1540.0
+            "min": 1277.0,
+            "max": 1585.0
           },
           "x": 384.05387205387206,
           "y": 252.1885521885522
@@ -3784,10 +3914,20 @@
         },
         {
           "number": 8,
+          "type": "medium",
+          "expectedDistanceRange": {
+            "min": 1843.0,
+            "max": 2257.0
+          },
+          "x": 388.0929912605627,
+          "y": 184.8402752462016
+        },
+        {
+          "number": 8,
           "type": "fast",
           "expectedDistanceRange": {
-            "min": 2025.0,
-            "max": 2175.0
+            "min": 5891.0,
+            "max": 6065.0
           },
           "x": 388.0929912605627,
           "y": 184.8402752462016
@@ -3816,8 +3956,8 @@
           "number": 11,
           "type": "fast",
           "expectedDistanceRange": {
-            "min": 2925.0,
-            "max": 3075.0
+            "min": 2893.0,
+            "max": 3259.0
           },
           "x": 184.4624851909549,
           "y": 37.71456929014988
@@ -3876,8 +4016,8 @@
           "number": 17,
           "type": "fast",
           "expectedDistanceRange": {
-            "min": 4725.0,
-            "max": 4875.0
+            "min": 4815.0,
+            "max": 5197.0
           },
           "x": 323.5167125742473,
           "y": 667.8056470010615
@@ -3903,18 +4043,28 @@
           "number": 2,
           "type": "fast",
           "expectedDistanceRange": {
-            "min": 225.0,
-            "max": 375.0
+            "min": 927.0,
+            "max": 1119.0
           },
           "x": 146.3013468013468,
           "y": 246.2962962962963
         },
         {
           "number": 3,
-          "type": "slow",
+          "type": "fast",
           "expectedDistanceRange": {
-            "min": 560.0,
-            "max": 640.0
+            "min": 499.0,
+            "max": 813.0
+          },
+          "x": 167.513468013468,
+          "y": 147.30639730639732
+        },
+        {
+          "number": 3,
+          "type": "fast",
+          "expectedDistanceRange": {
+            "min": 1551.0,
+            "max": 1763.0
           },
           "x": 167.513468013468,
           "y": 147.30639730639732
@@ -3941,30 +4091,40 @@
         },
         {
           "number": 6,
-          "type": "slow",
+          "type": "fast",
           "expectedDistanceRange": {
-            "min": 1460.0,
-            "max": 1540.0
+            "min": 2417.0,
+            "max": 2631.0
           },
           "x": 273.5740740740741,
           "y": 175.5892255892256
         },
         {
           "number": 7,
-          "type": "medium",
+          "type": "fast",
           "expectedDistanceRange": {
-            "min": 1740.0,
-            "max": 1860.0
+            "min": 1789.0,
+            "max": 1931.0
           },
           "x": 432.6649831649832,
           "y": 141.41414141414143
         },
         {
           "number": 8,
+          "type": "medium",
+          "expectedDistanceRange": {
+            "min": 2019.0,
+            "max": 2217.0
+          },
+          "x": 407.91750841750843,
+          "y": 207.40740740740742
+        },
+        {
+          "number": 8,
           "type": "fast",
           "expectedDistanceRange": {
-            "min": 2025.0,
-            "max": 2175.0
+            "min": 3643.0,
+            "max": 3827.0
           },
           "x": 407.91750841750843,
           "y": 207.40740740740742
@@ -3993,18 +4153,18 @@
           "number": 11,
           "type": "fast",
           "expectedDistanceRange": {
-            "min": 2925.0,
-            "max": 3075.0
+            "min": 2839.0,
+            "max": 3173.0
           },
           "x": 369.0286195286195,
           "y": 379.4612794612795
         },
         {
           "number": 12,
-          "type": "slow",
+          "type": "fast",
           "expectedDistanceRange": {
-            "min": 3260.0,
-            "max": 3340.0
+            "min": 4693.0,
+            "max": 4987.0
           },
           "x": 530.476430976431,
           "y": 377.10437710437714
@@ -4023,28 +4183,28 @@
           "number": 14,
           "type": "fast",
           "expectedDistanceRange": {
-            "min": 3825.0,
-            "max": 3975.0
+            "min": 3845.0,
+            "max": 4027.0
           },
           "x": 531.6548821548822,
           "y": 525.5892255892256
         },
         {
           "number": 15,
-          "type": "slow",
+          "type": "fast",
           "expectedDistanceRange": {
-            "min": 4160.0,
-            "max": 4240.0
+            "min": 4025.0,
+            "max": 4229.0
           },
           "x": 390.24074074074076,
           "y": 506.73400673400675
         },
         {
           "number": 16,
-          "type": "medium",
+          "type": "fast",
           "expectedDistanceRange": {
-            "min": 4440.0,
-            "max": 4560.0
+            "min": 4279.0,
+            "max": 4539.0
           },
           "x": 282.1815234713759,
           "y": 677.5639452094599
@@ -4070,8 +4230,8 @@
           "number": 2,
           "type": "fast",
           "expectedDistanceRange": {
-            "min": 225.0,
-            "max": 375.0
+            "min": 229.0,
+            "max": 433.0
           },
           "x": 433.23902606310014,
           "y": 208.2767489711934
@@ -4100,18 +4260,18 @@
           "number": 5,
           "type": "fast",
           "expectedDistanceRange": {
-            "min": 1125.0,
-            "max": 1275.0
+            "min": 1091.0,
+            "max": 1207.0
           },
           "x": 677.6770902539736,
           "y": 30.914594376799602
         },
         {
           "number": 6,
-          "type": "slow",
+          "type": "fast",
           "expectedDistanceRange": {
-            "min": 1460.0,
-            "max": 1540.0
+            "min": 1225.0,
+            "max": 1517.0
           },
           "x": 163.52789638556627,
           "y": 19.110148599208618
@@ -4120,8 +4280,8 @@
           "number": 7,
           "type": "medium",
           "expectedDistanceRange": {
-            "min": 1740.0,
-            "max": 1860.0
+            "min": 4657.0,
+            "max": 4739.0
           },
           "x": 167.46271164476326,
           "y": 49.277065586385575
@@ -4130,18 +4290,28 @@
           "number": 8,
           "type": "fast",
           "expectedDistanceRange": {
-            "min": 2025.0,
-            "max": 2175.0
+            "min": 4737.0,
+            "max": 4875.0
           },
           "x": 109.75208784320733,
           "y": 97.80645378314851
         },
         {
           "number": 9,
-          "type": "slow",
+          "type": "fast",
           "expectedDistanceRange": {
-            "min": 2360.0,
-            "max": 2440.0
+            "min": 2307.0,
+            "max": 2767.0
+          },
+          "x": 50.72985895525241,
+          "y": 427.01933046929713
+        },
+        {
+          "number": 9,
+          "type": "fast",
+          "expectedDistanceRange": {
+            "min": 4875.0,
+            "max": 5311.0
           },
           "x": 50.72985895525241,
           "y": 427.01933046929713
@@ -4178,10 +4348,10 @@
         },
         {
           "number": 13,
-          "type": "medium",
+          "type": "fast",
           "expectedDistanceRange": {
-            "min": 3540.0,
-            "max": 3660.0
+            "min": 3389.0,
+            "max": 3901.0
           },
           "x": 150.41184552157628,
           "y": 249.95264380543233
@@ -4198,10 +4368,10 @@
         },
         {
           "number": 15,
-          "type": "slow",
+          "type": "fast",
           "expectedDistanceRange": {
-            "min": 4160.0,
-            "max": 4240.0
+            "min": 4075.0,
+            "max": 4611.0
           },
           "x": 158.28147603997027,
           "y": 114.85731990633549

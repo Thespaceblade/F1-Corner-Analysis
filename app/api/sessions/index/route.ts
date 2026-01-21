@@ -41,9 +41,41 @@ export async function GET() {
           round.sessions.push(row.session_code)
         }
       }
-      // sort rounds and sessions
+      // sort rounds by round number from calendar if available, otherwise alphabetically
       for (const y of Object.keys(index.years)) {
-        index.years[y].rounds.sort((a, b) => a.id.localeCompare(b.id))
+        // Try to load calendar data for this year to get round numbers
+        const calendarPath = path.join(process.cwd(), 'public', 'data', `calendar${y}.json`)
+        let roundNumberMap: Map<string, number> | null = null
+        
+        try {
+          if (await exists(calendarPath)) {
+            const calendarData = JSON.parse(await fs.readFile(calendarPath, 'utf-8'))
+            roundNumberMap = new Map()
+            if (calendarData?.rounds) {
+              for (const round of calendarData.rounds) {
+                if (round.id && typeof round.round === 'number') {
+                  roundNumberMap.set(round.id, round.round)
+                }
+              }
+            }
+          }
+        } catch {
+          // Calendar file doesn't exist or is invalid, continue without it
+        }
+        
+        // Sort rounds by round number if available, otherwise alphabetically
+        index.years[y].rounds.sort((a, b) => {
+          if (roundNumberMap) {
+            const roundA = roundNumberMap.get(a.id)
+            const roundB = roundNumberMap.get(b.id)
+            if (roundA !== undefined && roundB !== undefined) {
+              return roundA - roundB
+            }
+          }
+          // Fallback to alphabetical
+          return a.id.localeCompare(b.id)
+        })
+        
         index.years[y].rounds.forEach(r => r.sessions.sort())
       }
       return NextResponse.json(index)
@@ -87,7 +119,40 @@ export async function GET() {
       }
 
       if (rounds.length) {
-        index.years[year] = { rounds: rounds.sort((a, b) => a.id.localeCompare(b.id)) }
+        // Try to load calendar data for this year to get round numbers
+        const calendarPath = path.join(process.cwd(), 'public', 'data', `calendar${year}.json`)
+        let roundNumberMap: Map<string, number> | null = null
+        
+        try {
+          if (await exists(calendarPath)) {
+            const calendarData = JSON.parse(await fs.readFile(calendarPath, 'utf-8'))
+            roundNumberMap = new Map()
+            if (calendarData?.rounds) {
+              for (const round of calendarData.rounds) {
+                if (round.id && typeof round.round === 'number') {
+                  roundNumberMap.set(round.id, round.round)
+                }
+              }
+            }
+          }
+        } catch {
+          // Calendar file doesn't exist or is invalid, continue without it
+        }
+        
+        // Sort rounds by round number if available, otherwise alphabetically
+        rounds.sort((a, b) => {
+          if (roundNumberMap) {
+            const roundA = roundNumberMap.get(a.id)
+            const roundB = roundNumberMap.get(b.id)
+            if (roundA !== undefined && roundB !== undefined) {
+              return roundA - roundB
+            }
+          }
+          // Fallback to alphabetical
+          return a.id.localeCompare(b.id)
+        })
+        
+        index.years[year] = { rounds }
       }
     }
 

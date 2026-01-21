@@ -41,11 +41,13 @@ export type CornerPerformance = {
  * 
  * @param corners - Corner metrics by driver code
  * @param selectedDrivers - Optional filter for specific drivers
+ * @param cornerInfo - Optional corner definitions from tracks.json (authoritative source for corner types)
  * @returns Aggregated performance data by corner number
  */
 export function aggregateCornerPerformance(
   corners: Record<string, CornerMetrics[]>,
-  selectedDrivers?: string[]
+  selectedDrivers?: string[],
+  cornerInfo?: Array<{ number: number; type: 'slow' | 'medium' | 'fast' }>
 ): Record<number, CornerPerformance> {
   const result: Record<number, CornerPerformance> = {}
   
@@ -56,6 +58,14 @@ export function aggregateCornerPerformance(
   
   if (driversToProcess.length === 0) {
     return result
+  }
+  
+  // Build a map of corner types from cornerInfo (authoritative source)
+  const cornerTypeMap = new Map<number, 'slow' | 'medium' | 'fast'>()
+  if (cornerInfo) {
+    for (const corner of cornerInfo) {
+      cornerTypeMap.set(corner.number, corner.type)
+    }
   }
   
   // Group corners by corner number
@@ -74,17 +84,20 @@ export function aggregateCornerPerformance(
       if (!cornerNumber) continue
       
       if (!cornersByNumber[cornerNumber]) {
+        // Use cornerInfo type if available, otherwise use detected type from session data
+        const authoritativeType = cornerTypeMap.get(cornerNumber)
+        const detectedType = corner.cornerType || 'unknown'
         cornersByNumber[cornerNumber] = {
           metrics: [],
           drivers: new Set(),
-          cornerType: corner.cornerType || 'unknown',
+          cornerType: authoritativeType || (detectedType !== 'unknown' ? detectedType : 'unknown'),
         }
       }
       
       cornersByNumber[cornerNumber].metrics.push(corner)
       cornersByNumber[cornerNumber].drivers.add(driver)
-      // Use the most common corner type
-      if (corner.cornerType && corner.cornerType !== 'unknown') {
+      // Only update type if we don't have authoritative type and detected type is not unknown
+      if (!cornerTypeMap.has(cornerNumber) && corner.cornerType && corner.cornerType !== 'unknown') {
         cornersByNumber[cornerNumber].cornerType = corner.cornerType
       }
     }

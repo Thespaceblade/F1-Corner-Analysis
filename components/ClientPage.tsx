@@ -14,6 +14,7 @@ import Chatbot from './Chatbot'
 import { loadSessionData, SessionPayload } from '../lib/sessionDataClient'
 import { aggregateCornerPerformance } from '../lib/cornerPerformanceAggregator'
 import { trackInfo } from '../lib/trackInfo'
+import { filterDriversForTrack } from '../lib/trackDrivers'
 
 type CalendarTrack = {
   id: string
@@ -368,8 +369,10 @@ export default function ClientPage(){
     // If selectedDrivers is empty, process all drivers (pass undefined)
     // Otherwise, pass the selected drivers
     const driversToUse = selectedDrivers.length > 0 ? selectedDrivers : undefined
-    return aggregateCornerPerformance(sessionData.corners, driversToUse)
-  }, [sessionData?.corners, selectedDrivers])
+    // Pass cornerInfo from currentTrack to use authoritative corner types from tracks.json
+    const cornerInfo = currentTrack?.corners?.map(c => ({ number: c.number, type: c.type }))
+    return aggregateCornerPerformance(sessionData.corners, driversToUse, cornerInfo)
+  }, [sessionData?.corners, selectedDrivers, currentTrack])
   
   // Get available sessions for the selected track
   const availableSessions = useMemo(() => {
@@ -407,6 +410,41 @@ export default function ClientPage(){
     }
   }, [selectedTrack, availableSessions]) // Removed selectedSession from deps to prevent loops
 
+  // Get round number for the selected track
+  const selectedRoundNumber = useMemo(() => {
+    if (!calendarData?.rounds || !selectedTrack) return null
+    const round = calendarData.rounds.find(r => r.id === selectedTrack)
+    return round?.round ?? null
+  }, [calendarData, selectedTrack])
+
+  // Filter selected drivers when track changes - only keep drivers who raced at this track
+  useEffect(() => {
+    if (!selectedTrack || !selectedYear || selectedRoundNumber === null) {
+      return
+    }
+
+    // Filter drivers based on assignments and session data
+    const filtered = filterDriversForTrack(
+      selectedYear,
+      selectedRoundNumber,
+      selectedDrivers,
+      sessionData
+    )
+
+    // Only update if the list actually changed (to avoid infinite loops)
+    if (filtered.length !== selectedDrivers.length || 
+        !filtered.every((d, i) => d.toUpperCase() === selectedDrivers[i]?.toUpperCase())) {
+      console.log(`[ClientPage] Filtering drivers for track ${selectedTrack} (round ${selectedRoundNumber}): ${selectedDrivers.length} -> ${filtered.length}`)
+      if (filtered.length > 0) {
+        setSelectedDrivers(filtered)
+      } else {
+        // If no selected drivers are available, clear selection
+        // User can select new drivers from the toolbar
+        setSelectedDrivers([])
+      }
+    }
+  }, [selectedTrack, selectedYear, selectedRoundNumber]) // Note: intentionally not including selectedDrivers or sessionData to avoid loops
+
   const sessionLabel = useMemo(() => {
     const found = sessionOptions.find(option => option.value === selectedSession)
     return found?.label ?? selectedSession
@@ -436,14 +474,29 @@ export default function ClientPage(){
         }
       })
     
-    // Sort by round number if calendar data is available, otherwise keep original order
-    if (roundNumberMap.size > 0) {
-      tracks.sort((a, b) => {
-        const roundA = roundNumberMap.get(a.id) ?? 999
-        const roundB = roundNumberMap.get(b.id) ?? 999
+    // Always sort by round number (race order: Australia to Abu Dhabi)
+    // Use calendar data if available, otherwise fall back to roundIds order
+    tracks.sort((a, b) => {
+      // First try to get round number from calendar data
+      const roundA = roundNumberMap.get(a.id)
+      const roundB = roundNumberMap.get(b.id)
+      
+      if (roundA !== undefined && roundB !== undefined) {
         return roundA - roundB
-      })
-    }
+      }
+      
+      // If calendar data not available, use position in roundIds array
+      // This maintains the order from the API which should be sorted
+      const indexA = roundIds.indexOf(a.id)
+      const indexB = roundIds.indexOf(b.id)
+      
+      if (indexA !== -1 && indexB !== -1) {
+        return indexA - indexB
+      }
+      
+      // Fallback: sort alphabetically by name
+      return a.name.localeCompare(b.name)
+    })
     
     return tracks
   }, [roundIds, trackData, roundNumberMap])
@@ -687,6 +740,8 @@ export default function ClientPage(){
           selectedSession={selectedSession}
           onSessionChangeAction={setSelectedSession}
           availableSessions={availableSessions}
+          roundNumber={selectedRoundNumber}
+          sessionData={sessionData}
         />
       </div>
 

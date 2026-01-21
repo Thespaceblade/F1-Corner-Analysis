@@ -130,7 +130,7 @@ def main(argv: Sequence[str] | None = None) -> int:
     if not args.skip_fetch:
         fetch_cmd = [
             sys.executable,
-            str(script_dir / "data_fetching" / "bulk_fetch_fastf1_data.py"),
+            str(script_dir / "data_fetching" / "fetch_with_progress.py"),
             "--year",
             str(args.year),
             "--sessions",

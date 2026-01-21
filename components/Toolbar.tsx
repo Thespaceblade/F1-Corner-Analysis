@@ -4,6 +4,8 @@ import React, { useEffect, useMemo, useRef, useState } from 'react'
 import { createPortal } from 'react-dom'
 import { f1Teams, driverColorMap } from '../lib/teamData'
 import CustomSelect from './CustomSelect'
+import { getAvailableDriversForTrack, didDriverRaceAtTrack } from '../lib/trackDrivers'
+import type { SessionPayload } from '../lib/sessionDataClient'
 
 type ToolbarProps = {
   tracks: Array<{ id: string; name: string }>
@@ -17,6 +19,8 @@ type ToolbarProps = {
   selectedSession: string
   onSessionChangeAction: (sessionCode: string) => void
   availableSessions?: string[]
+  roundNumber?: number | null
+  sessionData?: SessionPayload | null
 }
 
 export const sessionOptions = [
@@ -68,6 +72,8 @@ export default function Toolbar({
   selectedSession,
   onSessionChangeAction,
   availableSessions = [],
+  roundNumber,
+  sessionData,
 }: ToolbarProps) {
   // Driver dropdown state
   const [activeTeam, setActiveTeam] = useState<string | null>(null)
@@ -76,6 +82,119 @@ export default function Toolbar({
   const dropdownRef = useRef<HTMLDivElement | null>(null)
 
   const selectedSet = useMemo(() => new Set(selectedDrivers), [selectedDrivers])
+
+  // Get available drivers for the selected track
+  const availableDriversForTrack = useMemo(() => {
+    if (!selectedTrack || !selectedYear || roundNumber === null || roundNumber === undefined) {
+      // If no track selected, show all drivers
+      return new Set<string>()
+    }
+    
+    const drivers = getAvailableDriversForTrack(selectedYear, roundNumber, sessionData ?? null)
+    return new Set(drivers.map(d => d.driverCode.toUpperCase()))
+  }, [selectedTrack, selectedYear, roundNumber, sessionData])
+
+  // Filter teams to only show those with drivers who raced at this track
+  const filteredTeams = useMemo(() => {
+    if (availableDriversForTrack.size === 0) {
+      // If no track selected or no available drivers, show all teams
+      return f1Teams
+    }
+
+    // Get team assignments for each available driver
+    const driverTeamMap = new Map<string, string>()
+    const driverInfoMap = new Map<string, { code: string; name: string; number: number }>()
+    
+    if (selectedTrack && selectedYear && roundNumber !== null && roundNumber !== undefined) {
+      const drivers = getAvailableDriversForTrack(selectedYear, roundNumber, sessionData ?? null)
+      for (const driver of drivers) {
+        const driverCode = driver.driverCode.toUpperCase()
+        if (driver.teamId) {
+          driverTeamMap.set(driverCode, driver.teamId)
+        }
+        
+        // Get driver info from teamData (has proper names) or session data
+        let driverInfo: { code: string; name: string; number: number } | null = null
+        
+        // Try to find in teamData first (has proper names)
+        for (const team of f1Teams) {
+          const teamDriver = team.drivers.find(d => d.code.toUpperCase() === driverCode)
+          if (teamDriver) {
+            driverInfo = teamDriver
+            break
+          }
+        }
+        
+        // If not found in teamData, use session data
+        if (!driverInfo && sessionData?.drivers?.[driverCode]) {
+          const sessionDriver = sessionData.drivers[driverCode]
+          driverInfo = {
+            code: driverCode,
+            name: driverCode, // Will use code as display name
+            number: sessionDriver.number || 0
+          }
+        }
+        
+        // Fallback if still not found
+        if (!driverInfo) {
+          driverInfo = {
+            code: driverCode,
+            name: driverCode,
+            number: 0
+          }
+        }
+        
+        driverInfoMap.set(driverCode, driverInfo)
+      }
+    }
+
+    // Build teams dynamically based on actual drivers who raced
+    type TeamWithDynamicDrivers = Omit<typeof f1Teams[0], 'drivers'> & { 
+      drivers: Array<{ code: string; name: string; number: number }> 
+    }
+    const teamsByTeamId = new Map<string, TeamWithDynamicDrivers>()
+    
+    // Initialize with all teams from f1Teams (to get team metadata)
+    for (const team of f1Teams) {
+      teamsByTeamId.set(team.id, {
+        id: team.id,
+        name: team.name,
+        shortName: team.shortName,
+        color: team.color,
+        drivers: []
+      })
+    }
+    
+    // Add drivers to their assigned teams based on actual race data
+    for (const [driverCode, teamId] of driverTeamMap.entries()) {
+      if (!teamId) continue
+      
+      const team = teamsByTeamId.get(teamId)
+      if (!team) continue
+      
+      // Get driver info
+      const driverInfo = driverInfoMap.get(driverCode) || {
+        code: driverCode,
+        name: driverCode,
+        number: 0
+      }
+      
+      // Only add if not already in the list
+      if (!team.drivers.some(d => d.code.toUpperCase() === driverCode)) {
+        team.drivers.push(driverInfo)
+      }
+    }
+    
+    // Convert to array and filter out teams with no drivers
+    return Array.from(teamsByTeamId.values())
+      .filter(team => team.drivers.length > 0)
+      .sort((a, b) => {
+        // Sort teams in a consistent order (use original f1Teams order)
+        const aIndex = f1Teams.findIndex(t => t.id === a.id)
+        const bIndex = f1Teams.findIndex(t => t.id === b.id)
+        return (aIndex === -1 ? 999 : aIndex) - (bIndex === -1 ? 999 : bIndex)
+      })
+  }, [availableDriversForTrack, selectedTrack, selectedYear, roundNumber, sessionData])
 
   // Position dropdown below button
   useEffect(() => {
@@ -191,7 +310,7 @@ export default function Toolbar({
 
       {/* Team buttons */}
       <div className="flex-1 flex items-center justify-end gap-2 flex-wrap">
-        {f1Teams.map(team => {
+        {filteredTeams.map(team => {
           const codes = team.drivers.map(d => d.code)
           const allSelected = codes.every(c => selectedSet.has(c))
           const someSelected = codes.some(c => selectedSet.has(c))
@@ -235,19 +354,24 @@ export default function Toolbar({
                 >
                   {team.drivers.map(driver => {
                     const isSelected = selectedSet.has(driver.code)
+                    const isAvailable = availableDriversForTrack.size === 0 || availableDriversForTrack.has(driver.code.toUpperCase())
                     
                     return (
                       <button
                         key={driver.code}
                         type="button"
-                        onClick={() => toggleDriver(driver.code)}
+                        onClick={() => isAvailable && toggleDriver(driver.code)}
+                        disabled={!isAvailable}
                         className={`
                           w-full px-3 py-2 flex items-center gap-3 text-left transition-colors
-                          ${isSelected 
+                          ${!isAvailable 
+                            ? 'opacity-40 cursor-not-allowed text-gray-500' 
+                            : isSelected 
                             ? 'bg-accent/20 text-accent' 
                             : 'text-gray-200 hover:bg-gray-800'
                           }
                         `}
+                        title={!isAvailable ? `Driver did not race at this track` : undefined}
                       >
                         {/* Car icon */}
                         <DriverCarIcon driverCode={driver.code} />
