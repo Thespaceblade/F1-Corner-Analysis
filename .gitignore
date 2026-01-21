@@ -45,3 +45,16 @@ output/
 # Temporary test files (keep in tests/ but ignore temporary outputs)
 *.test.output
 *.test.log
+
+# Documentation and planning files (not needed in repo)
+docs/
+scripts/docs/
+scripts/ORGANIZATION_PLAN.md
+scripts/REORGANIZATION_SUMMARY.md
+
+# Root-level planning/organizational markdown files (keep README.md)
+TODO.md
+NEXT_STEPS.md
+FIXME.md
+AUSTRALIA_CORNER_ISSUE.md
+FILE_ORGANIZATION_PLAN.md
