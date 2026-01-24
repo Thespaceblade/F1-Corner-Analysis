@@ -56,6 +56,29 @@ export type QualifyingBoundaries = {
   q3End: number | null
 }
 
+export type RaceResult = {
+  position: number | null
+  driverCode: string
+  driverNumber: number | null
+  teamName: string | null
+  gridPosition: number | null
+  status: string
+  points: number
+  classifiedPosition: string | null
+  time: number | null
+  lapsCompleted: number | null
+}
+
+export type QualifyingResult = {
+  position: number | null
+  driverCode: string
+  driverNumber: number | null
+  teamName: string | null
+  q1Time: number | null
+  q2Time: number | null
+  q3Time: number | null
+}
+
 export type CornerMetrics = {
   cornerNumber: number
   detectedCornerIndex?: number
@@ -80,6 +103,8 @@ export type SessionPayload = {
   corners: Record<string, CornerMetrics[]>
   notes?: string[]
   qualifyingBoundaries?: QualifyingBoundaries
+  raceResults?: RaceResult[]        // FastF1 race classification
+  qualifyingResults?: QualifyingResult[]  // FastF1 qualifying results
 }
 
 export type DriverDataRequest = SessionIdentifier & {

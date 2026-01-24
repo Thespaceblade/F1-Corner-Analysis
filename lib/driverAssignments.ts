@@ -34,8 +34,8 @@ export const driverSwaps2025: DriverSwap[] = [
   },
   {
     teamId: 'alpine',
-    fromDriver: 'COL',
-    toDriver: 'DOO',  // Jack Doohan
+    fromDriver: 'DOO',
+    toDriver: 'COL',  // Franco Colapinto
     round: 7,
     roundName: 'Emilia-Romagna Grand Prix'
   }
@@ -69,8 +69,8 @@ const baseAssignments2025: Record<string, DriverAssignment[]> = {
   ],
   'alpine': [
     { driverCode: 'GAS', teamId: 'alpine', startRound: 1 },
-    { driverCode: 'COL', teamId: 'alpine', startRound: 1, endRound: 6 },
-    { driverCode: 'DOO', teamId: 'alpine', startRound: 7 }  // Jack Doohan replaces COL from round 7
+    { driverCode: 'DOO', teamId: 'alpine', startRound: 1, endRound: 6 },  // Jack Doohan rounds 1-6
+    { driverCode: 'COL', teamId: 'alpine', startRound: 7 }  // Franco Colapinto replaces DOO from round 7
   ],
   'williams': [
     { driverCode: 'ALB', teamId: 'williams', startRound: 1 },

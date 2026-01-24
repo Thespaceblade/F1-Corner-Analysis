@@ -6,6 +6,7 @@ import { f1Teams, driverColorMap } from '../lib/teamData'
 import CustomSelect from './CustomSelect'
 import { getAvailableDriversForTrack, didDriverRaceAtTrack } from '../lib/trackDrivers'
 import type { SessionPayload } from '../lib/sessionDataClient'
+import { getDriverPhoto } from '../lib/driverPhotos'
 
 type ToolbarProps = {
   tracks: Array<{ id: string; name: string }>
@@ -34,29 +35,55 @@ const SPRINT_WEEKEND_TRACKS = new Set([
   'china', 'miami', 'belgium', 'united-states', 'brazil', 'qatar'
 ])
 
-// Simple F1 car icon component for dropdown
-function DriverCarIcon({ driverCode }: { driverCode: string }) {
-  const color = driverColorMap[driverCode.toUpperCase()] || '#888888'
+// Map track IDs to their SVG filenames
+const getTrackIconPath = (trackId: string): string => {
+  const trackSvgMap: Record<string, string> = {
+    'australia': 'australia.svg',
+    'china': 'china.svg',
+    'japan': 'japan.svg',
+    'bahrain': 'bahrain.svg',
+    'saudi-arabia': 'saudi_arabia.svg',
+    'miami': 'miami.svg',
+    'emilia-romagna': 'imola.svg',
+    'monaco': 'monaco.svg',
+    'spain': 'spain.svg',
+    'canada': 'canada.svg',
+    'austria': 'austria.svg',
+    'great-britain': 'silverstone.svg',
+    'belgium': 'spa.svg',
+    'hungary': 'hungary.svg',
+    'netherlands': 'netherlands.svg',
+    'italy': 'monza.svg',
+    'azerbaijan': 'azerbaijan.svg',
+    'singapore': 'singapore.svg',
+    'united-states': 'usa.svg',
+    'mexico': 'mexico.svg',
+    'brazil': 'brazil.svg',
+    'las-vegas': 'las_vegas.svg',
+    'qatar': 'qatar.svg',
+    'abu-dhabi': 'abudhabi.svg',
+  }
+  
+  const svgFile = trackSvgMap[trackId]
+  return svgFile ? `/Tracks/${svgFile}` : ''
+}
+
+// Driver profile picture component for dropdown
+function DriverProfilePic({ driverCode, className = "w-8 h-8" }: { driverCode: string; className?: string }) {
+  const photoSrc = getDriverPhoto(driverCode)
   
   return (
-    <svg viewBox="0 0 24 24" className="w-4 h-4" fill="none" xmlns="http://www.w3.org/2000/svg">
-      {/* Simple F1 car silhouette */}
-      <path
-        d="M2 14h2l1-2h3l1 2h6l1-2h3l1 2h2v2H2v-2z"
-        fill={color}
-        opacity="0.9"
+    <div className={`${className} rounded-full overflow-hidden bg-gray-800 border-2 border-gray-700 flex-shrink-0`}>
+      <img
+        src={photoSrc}
+        alt={driverCode}
+        className="w-full h-full object-cover"
+        onError={(e) => {
+          // Fallback to placeholder on error
+          e.currentTarget.src = '/logos/f1 car.png'
+        }}
       />
-      <path
-        d="M5 12h4l1-3h4l1 3h4"
-        stroke={color}
-        strokeWidth="1.5"
-        strokeLinecap="round"
-        fill="none"
-      />
-      {/* Wheels */}
-      <circle cx="6" cy="16" r="1.5" fill={color} />
-      <circle cx="18" cy="16" r="1.5" fill={color} />
-    </svg>
+    </div>
   )
 }
 
@@ -247,35 +274,44 @@ export default function Toolbar({
   }
 
   // Select options
-  const yearOptions = useMemo(() => 
-    years.map(y => ({ value: y, label: String(y) })), 
-    [years]
-  )
+  const yearOptions = useMemo(() => [
+    { value: 0, label: 'Year' },
+    ...years.map(y => ({ value: y, label: String(y) }))
+  ], [years])
 
   const trackOptions = useMemo(() => [
-    { value: '', label: 'Select Track' },
-    ...tracks.map(t => ({ value: t.id, label: t.name }))
+    { value: '', label: 'Track' },
+    ...tracks.map(t => ({ 
+      value: t.id, 
+      label: t.name,
+      icon: getTrackIconPath(t.id)
+    }))
   ], [tracks])
 
   const sessionOptionsList = useMemo(() => {
+    const options = [{ value: '', label: 'Session' }]
+    
     if (!selectedTrack || availableSessions.length === 0) {
-      return sessionOptions.map(o => ({ value: o.value, label: o.label }))
+      return [...options, ...sessionOptions.map(o => ({ value: o.value, label: o.label }))]
     }
     
     if (SPRINT_WEEKEND_TRACKS.has(selectedTrack)) {
-      return sessionOptions.map(o => ({ value: o.value, label: o.label }))
+      return [...options, ...sessionOptions.map(o => ({ value: o.value, label: o.label }))]
     }
     
     const hasQR = availableSessions.some(s => s === 'Q' || s === 'R')
     const hasSprint = availableSessions.some(s => s === 'SQ' || s === 'S')
     
     if (hasQR && !hasSprint) {
-      return sessionOptions
-        .filter(o => o.value !== 'SQ' && o.value !== 'S')
-        .map(o => ({ value: o.value, label: o.label }))
+      return [
+        ...options,
+        ...sessionOptions
+          .filter(o => o.value !== 'SQ' && o.value !== 'S')
+          .map(o => ({ value: o.value, label: o.label }))
+      ]
     }
     
-    return sessionOptions.map(o => ({ value: o.value, label: o.label }))
+    return [...options, ...sessionOptions.map(o => ({ value: o.value, label: o.label }))]
   }, [availableSessions, selectedTrack])
 
   return (
@@ -286,6 +322,8 @@ export default function Toolbar({
           options={yearOptions}
           value={selectedYear}
           onChange={(v) => onYearChangeAction(Number(v))}
+          placeholder="Select Year"
+          placeholderValue={0}
           className="w-[100px]"
           minWidth="100px"
         />
@@ -295,6 +333,7 @@ export default function Toolbar({
           value={selectedTrack}
           onChange={(v) => onTrackChangeAction(String(v))}
           placeholder="Select Track"
+          placeholderValue=""
           className="flex-1"
           minWidth="240px"
         />
@@ -303,6 +342,8 @@ export default function Toolbar({
           options={sessionOptionsList}
           value={selectedSession}
           onChange={(v) => onSessionChangeAction(String(v))}
+          placeholder="Select Session"
+          placeholderValue=""
           className="flex-1"
           minWidth="180px"
         />
@@ -337,7 +378,16 @@ export default function Toolbar({
                 <img
                   src={`/team-logos/${team.id}.png`}
                   alt={team.shortName}
-                  className="relative z-10 h-full w-full object-contain"
+                  className={`relative z-10 h-full w-full object-contain ${
+                    ['aston-martin', 'visa-rb', 'stake'].includes(team.id)
+                      ? 'scale-130'
+                      : ''
+                  }`}
+                  style={
+                    ['aston-martin', 'visa-rb', 'stake'].includes(team.id)
+                      ? { transform: 'scale(1.3)' }
+                      : undefined
+                  }
                 />
               </button>
 
@@ -373,8 +423,8 @@ export default function Toolbar({
                         `}
                         title={!isAvailable ? `Driver did not race at this track` : undefined}
                       >
-                        {/* Car icon */}
-                        <DriverCarIcon driverCode={driver.code} />
+                        {/* Driver profile picture */}
+                        <DriverProfilePic driverCode={driver.code} />
                         
                         {/* Driver code */}
                         <span className="font-mono font-semibold text-sm">

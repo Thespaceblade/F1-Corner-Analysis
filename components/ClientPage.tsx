@@ -11,6 +11,7 @@ import ChartPanel from './ChartPanel'
 import AnalysisPanel from './AnalysisPanel'
 import TableOfContents from './TableOfContents'
 import Chatbot from './Chatbot'
+import SeasonReview from './SeasonReview'
 import { loadSessionData, SessionPayload } from '../lib/sessionDataClient'
 import { aggregateCornerPerformance } from '../lib/cornerPerformanceAggregator'
 import { trackInfo } from '../lib/trackInfo'
@@ -62,8 +63,8 @@ export default function ClientPage(){
   const [tracksError, setTracksError] = useState<string | null>(null)
   const [showLoadingScreen, setShowLoadingScreen] = useState<boolean>(true)
   const [pageContentVisible, setPageContentVisible] = useState<boolean>(false)
-  const [selectedDrivers, setSelectedDrivers] = useState<string[]>(['VER','NOR'])
-  const [selectedSession, setSelectedSession] = useState<string>('Q')
+  const [selectedDrivers, setSelectedDrivers] = useState<string[]>([])
+  const [selectedSession, setSelectedSession] = useState<string>('')
   const [sessionData, setSessionData] = useState<SessionPayload | null>(null)
   const [sessionLoading, setSessionLoading] = useState<boolean>(false)
   const [sessionError, setSessionError] = useState<string | null>(null)
@@ -174,7 +175,7 @@ export default function ClientPage(){
     }
   }, [])
 
-  const [selectedYear, setSelectedYear] = useState<number>(new Date().getFullYear())
+  const [selectedYear, setSelectedYear] = useState<number>(0)
   const [availableYears, setAvailableYears] = useState<number[]>([])
   const [availableRoundsByYear, setAvailableRoundsByYear] = useState<Record<string, string[]>>({})
   const [sessionsByRound, setSessionsByRound] = useState<Record<string, Record<string, string[]>>>({})
@@ -195,10 +196,7 @@ export default function ClientPage(){
         const years = Object.keys(idx?.years ?? {}).map(Number).sort((a,b) => a - b)
         setAvailableYears(years)
         setSessionsLoadError(null)
-        if (years.length) {
-          const latest = years[years.length - 1]
-          setSelectedYear(latest)
-        }
+        // Don't auto-select year - let user choose
 
         const map: Record<string, string[]> = {}
         const sessionsMap: Record<string, Record<string, string[]>> = {}
@@ -231,6 +229,11 @@ export default function ClientPage(){
 
   useEffect(() => {
     // Load calendar data for the selected year to get round ordering
+    if (selectedYear === 0) {
+      setCalendarData(null)
+      return
+    }
+    
     fetch(`/data/calendar${selectedYear}.json`)
       .then(r => r.json())
       .then(setCalendarData)
@@ -241,7 +244,7 @@ export default function ClientPage(){
   }, [selectedYear])
 
   useEffect(() => {
-    if (!selectedTrack) {
+    if (!selectedTrack || !selectedSession || selectedYear === 0) {
       setSessionData(null)
       setSessionError(null)
       setSessionLoading(false)
@@ -376,7 +379,7 @@ export default function ClientPage(){
   
   // Get available sessions for the selected track
   const availableSessions = useMemo(() => {
-    if (!selectedTrack || !selectedYear) return []
+    if (!selectedTrack || selectedYear === 0) return []
     const yearSessions = sessionsByRound[String(selectedYear)]
     if (!yearSessions) return []
     return yearSessions[selectedTrack] ?? []
@@ -419,7 +422,7 @@ export default function ClientPage(){
 
   // Filter selected drivers when track changes - only keep drivers who raced at this track
   useEffect(() => {
-    if (!selectedTrack || !selectedYear || selectedRoundNumber === null) {
+    if (!selectedTrack || selectedYear === 0 || selectedRoundNumber === null) {
       return
     }
 
@@ -450,22 +453,83 @@ export default function ClientPage(){
     return found?.label ?? selectedSession
   }, [selectedSession])
 
-  const roundIds = availableRoundsByYear[String(selectedYear)] ?? []
+  // Get round IDs for selected year
+  const roundIds = useMemo(() => {
+    if (selectedYear === 0) {
+      // When no year selected, get all unique tracks from all years
+      const allRoundIds = new Set<string>()
+      Object.values(availableRoundsByYear).forEach(rounds => {
+        rounds.forEach(id => allRoundIds.add(id))
+      })
+      // Use most recent year's order as base for sorting
+      const years = Object.keys(availableRoundsByYear).map(Number).sort((a, b) => b - a)
+      if (years.length > 0) {
+        const mostRecentRounds = availableRoundsByYear[String(years[0])] ?? []
+        // Return in order: most recent year's tracks first, then others
+        const ordered = [...mostRecentRounds]
+        Array.from(allRoundIds).forEach(id => {
+          if (!ordered.includes(id)) {
+            ordered.push(id)
+          }
+        })
+        return ordered
+      }
+      return Array.from(allRoundIds)
+    }
+    return availableRoundsByYear[String(selectedYear)] ?? []
+  }, [selectedYear, availableRoundsByYear])
+  
+  // Load calendar for most recent year when no year selected (for sorting)
+  const [defaultCalendarData, setDefaultCalendarData] = useState<Calendar | null>(null)
+  
+  useEffect(() => {
+    if (selectedYear === 0 && availableYears.length > 0 && !defaultCalendarData) {
+      // Load calendar for most recent year to use for sorting
+      const mostRecentYear = Math.max(...availableYears)
+      fetch(`/data/calendar${mostRecentYear}.json`)
+        .then(r => r.json())
+        .then(setDefaultCalendarData)
+        .catch(() => setDefaultCalendarData(null))
+    } else if (selectedYear !== 0) {
+      // Clear default calendar when year is selected (use selected year's calendar)
+      setDefaultCalendarData(null)
+    }
+  }, [selectedYear, availableYears, defaultCalendarData])
   
   // Create a map of round ID to round number from calendar data for sorting
   const roundNumberMap = useMemo(() => {
-    if (!calendarData?.rounds) return new Map<string, number>()
+    const calData = calendarData || defaultCalendarData
+    if (!calData?.rounds) return new Map<string, number>()
     const map = new Map<string, number>()
-    calendarData.rounds.forEach(round => {
+    calData.rounds.forEach(round => {
       map.set(round.id, round.round)
     })
     return map
-  }, [calendarData])
+  }, [calendarData, defaultCalendarData])
 
   const trackList = useMemo(() => {
     if (!trackData?.tracks) return []
-    const tracks = roundIds
-      .filter(id => !!trackData.tracks[id])
+    
+    // Determine which tracks to show - only tracks that exist in trackData AND in available rounds
+    let trackIdsToShow: string[]
+    
+    if (selectedYear === 0) {
+      // When no year selected, show all tracks that exist in any year
+      const allRoundIds = new Set<string>()
+      Object.values(availableRoundsByYear).forEach(rounds => {
+        rounds.forEach(id => {
+          if (trackData.tracks[id]) {
+            allRoundIds.add(id)
+          }
+        })
+      })
+      trackIdsToShow = Array.from(allRoundIds)
+    } else {
+      // When year selected, only show tracks from that year
+      trackIdsToShow = roundIds.filter(id => !!trackData.tracks[id])
+    }
+    
+    const tracks = trackIdsToShow
       .map(id => {
         const trackInfo = trackData.tracks[id]
         return {
@@ -485,6 +549,10 @@ export default function ClientPage(){
         return roundA - roundB
       }
       
+      // If one has a round number and the other doesn't, prioritize the one with round number
+      if (roundA !== undefined && roundB === undefined) return -1
+      if (roundB !== undefined && roundA === undefined) return 1
+      
       // If calendar data not available, use position in roundIds array
       // This maintains the order from the API which should be sorted
       const indexA = roundIds.indexOf(a.id)
@@ -494,12 +562,16 @@ export default function ClientPage(){
         return indexA - indexB
       }
       
+      // If one is in roundIds and the other isn't, prioritize the one in roundIds
+      if (indexA !== -1 && indexB === -1) return -1
+      if (indexB !== -1 && indexA === -1) return 1
+      
       // Fallback: sort alphabetically by name
       return a.name.localeCompare(b.name)
     })
     
     return tracks
-  }, [roundIds, trackData, roundNumberMap])
+  }, [roundIds, trackData, roundNumberMap, selectedYear, availableRoundsByYear])
 
   // Define TOC sections
   const tocSections = useMemo(() => {
@@ -906,6 +978,13 @@ export default function ClientPage(){
           </section>
         </>
       )}
+
+      {/* Season Review - Separate section, shows when year is selected */}
+      <SeasonReview 
+        year={selectedYear}
+        isVisible={selectedYear > 0}
+        selectedDrivers={selectedDrivers}
+      />
       </main>
       <Chatbot 
         context={{

@@ -642,5 +642,58 @@ def build_session_payload(
     # Add qualifying boundaries if available
     if qualifyingBoundaries is not None:
         payload["qualifyingBoundaries"] = qualifyingBoundaries
+    
+    # Extract race results/classification if this is a race session
+    if hasattr(session, 'results') and session.results is not None and not session.results.empty:
+        results_df = session.results
+        race_results = []
+        
+        for _, row in results_df.iterrows():
+            driver_code = str(row.get('Abbreviation', ''))
+            if not driver_code:
+                continue
+            
+            # Extract race classification data
+            race_results.append({
+                'position': _safe_int(row.get('Position')),
+                'driverCode': driver_code,
+                'driverNumber': _safe_int(row.get('DriverNumber')),
+                'teamName': str(row.get('TeamName', '')) or None,
+                'gridPosition': _safe_int(row.get('GridPosition')),
+                'status': str(row.get('Status', '')) or 'Unknown',
+                'points': float(row.get('Points', 0.0)) if pd.notna(row.get('Points')) else 0.0,
+                'classifiedPosition': str(row.get('ClassifiedPosition', '')) or None,
+                'time': _timedelta_to_seconds(row.get('Time')),
+                'lapsCompleted': _safe_int(row.get('LapsCompleted')) or _safe_int(row.get('Laps')),
+            })
+        
+        # Sort by finishing position
+        race_results.sort(key=lambda x: x['position'] if x['position'] is not None else 999)
+        payload['raceResults'] = race_results
+    
+    # Extract qualifying results if this is a qualifying session
+    if hasattr(session, 'results') and session.results is not None and not session.results.empty:
+        results_df = session.results
+        quali_results = []
+        
+        for _, row in results_df.iterrows():
+            driver_code = str(row.get('Abbreviation', ''))
+            if not driver_code:
+                continue
+            
+            # Extract qualifying times
+            quali_results.append({
+                'position': _safe_int(row.get('Position')),
+                'driverCode': driver_code,
+                'driverNumber': _safe_int(row.get('DriverNumber')),
+                'teamName': str(row.get('TeamName', '')) or None,
+                'q1Time': _timedelta_to_seconds(row.get('Q1')),
+                'q2Time': _timedelta_to_seconds(row.get('Q2')),
+                'q3Time': _timedelta_to_seconds(row.get('Q3')),
+            })
+        
+        # Sort by qualifying position
+        quali_results.sort(key=lambda x: x['position'] if x['position'] is not None else 999)
+        payload['qualifyingResults'] = quali_results
 
     return payload

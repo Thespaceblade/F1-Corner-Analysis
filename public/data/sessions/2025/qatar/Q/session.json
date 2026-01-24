@@ -3,7 +3,7 @@
     "year": 2025,
     "round": "qatar",
     "session": "Q",
-    "generatedAt": "2026-01-21T19:50:50.455709+00:00",
+    "generatedAt": "2026-01-21T21:25:30.630051+00:00",
     "requestedDrivers": null,
     "status": "ok",
     "totalLapCount": 358,
@@ -8105,7 +8105,7 @@
         "exitDistance": 2146.0,
         "minSpeed": 130.2,
         "cornerNumber": 6,
-        "cornerType": "slow"
+        "cornerType": "fast"
       },
       {
         "detectedCornerIndex": 26,
@@ -8233,7 +8233,7 @@
         "exitDistance": 2562.0,
         "minSpeed": 159.6,
         "cornerNumber": 7,
-        "cornerType": "medium"
+        "cornerType": "fast"
       },
       {
         "detectedCornerIndex": 34,
@@ -8377,7 +8377,7 @@
         "exitDistance": 4476.0,
         "minSpeed": 262.5,
         "cornerNumber": 15,
-        "cornerType": "slow"
+        "cornerType": "fast"
       },
       {
         "detectedCornerIndex": 43,
@@ -8441,7 +8441,7 @@
         "exitDistance": 4880.0,
         "minSpeed": 214.7,
         "cornerNumber": 16,
-        "cornerType": "medium"
+        "cornerType": "fast"
       },
       {
         "detectedCornerIndex": 47,
@@ -8857,7 +8857,7 @@
         "exitDistance": 2146.0,
         "minSpeed": 128.4,
         "cornerNumber": 6,
-        "cornerType": "slow"
+        "cornerType": "fast"
       },
       {
         "detectedCornerIndex": 24,
@@ -8969,7 +8969,7 @@
         "exitDistance": 2542.0,
         "minSpeed": 171.1,
         "cornerNumber": 7,
-        "cornerType": "medium"
+        "cornerType": "fast"
       },
       {
         "detectedCornerIndex": 31,
@@ -9129,7 +9129,7 @@
         "exitDistance": 4468.0,
         "minSpeed": 274.4,
         "cornerNumber": 15,
-        "cornerType": "slow"
+        "cornerType": "fast"
       },
       {
         "detectedCornerIndex": 41,
@@ -9209,7 +9209,7 @@
         "exitDistance": 4880.0,
         "minSpeed": 219.6,
         "cornerNumber": 16,
-        "cornerType": "medium"
+        "cornerType": "fast"
       },
       {
         "detectedCornerIndex": 46,
@@ -9673,7 +9673,7 @@
         "exitDistance": 2146.0,
         "minSpeed": 121.9,
         "cornerNumber": 6,
-        "cornerType": "slow"
+        "cornerType": "fast"
       },
       {
         "detectedCornerIndex": 27,
@@ -9785,7 +9785,7 @@
         "exitDistance": 2570.0,
         "minSpeed": 159.6,
         "cornerNumber": 7,
-        "cornerType": "medium"
+        "cornerType": "fast"
       },
       {
         "detectedCornerIndex": 34,
@@ -9913,7 +9913,7 @@
         "exitDistance": 4466.0,
         "minSpeed": 280.3,
         "cornerNumber": 15,
-        "cornerType": "slow"
+        "cornerType": "fast"
       },
       {
         "detectedCornerIndex": 42,
@@ -9993,7 +9993,7 @@
         "exitDistance": 4880.0,
         "minSpeed": 221.7,
         "cornerNumber": 16,
-        "cornerType": "medium"
+        "cornerType": "fast"
       },
       {
         "detectedCornerIndex": 47,
@@ -10393,7 +10393,7 @@
         "exitDistance": 2144.0,
         "minSpeed": 128.5,
         "cornerNumber": 6,
-        "cornerType": "slow"
+        "cornerType": "fast"
       },
       {
         "detectedCornerIndex": 23,
@@ -10505,7 +10505,7 @@
         "exitDistance": 2542.0,
         "minSpeed": 169.8,
         "cornerNumber": 7,
-        "cornerType": "medium"
+        "cornerType": "fast"
       },
       {
         "detectedCornerIndex": 30,
@@ -10649,7 +10649,7 @@
         "exitDistance": 4452.0,
         "minSpeed": 277.9,
         "cornerNumber": 15,
-        "cornerType": "slow"
+        "cornerType": "fast"
       },
       {
         "detectedCornerIndex": 39,
@@ -10729,7 +10729,7 @@
         "exitDistance": 4880.0,
         "minSpeed": 220.4,
         "cornerNumber": 16,
-        "cornerType": "medium"
+        "cornerType": "fast"
       },
       {
         "detectedCornerIndex": 44,
@@ -11161,7 +11161,7 @@
         "exitDistance": 2152.0,
         "minSpeed": 125.6,
         "cornerNumber": 6,
-        "cornerType": "slow"
+        "cornerType": "fast"
       },
       {
         "detectedCornerIndex": 25,
@@ -11273,7 +11273,7 @@
         "exitDistance": 2544.0,
         "minSpeed": 176.3,
         "cornerNumber": 7,
-        "cornerType": "medium"
+        "cornerType": "fast"
       },
       {
         "detectedCornerIndex": 32,
@@ -11417,7 +11417,7 @@
         "exitDistance": 4474.0,
         "minSpeed": 279.1,
         "cornerNumber": 15,
-        "cornerType": "slow"
+        "cornerType": "fast"
       },
       {
         "detectedCornerIndex": 41,
@@ -11481,7 +11481,7 @@
         "exitDistance": 4878.0,
         "minSpeed": 243.0,
         "cornerNumber": 16,
-        "cornerType": "medium"
+        "cornerType": "fast"
       },
       {
         "detectedCornerIndex": 45,
@@ -11897,7 +11897,7 @@
         "exitDistance": 2160.0,
         "minSpeed": 124.5,
         "cornerNumber": 6,
-        "cornerType": "slow"
+        "cornerType": "fast"
       },
       {
         "detectedCornerIndex": 23,
@@ -11993,7 +11993,7 @@
         "exitDistance": 2542.0,
         "minSpeed": 167.8,
         "cornerNumber": 7,
-        "cornerType": "medium"
+        "cornerType": "fast"
       },
       {
         "detectedCornerIndex": 29,
@@ -12121,7 +12121,7 @@
         "exitDistance": 4458.0,
         "minSpeed": 278.7,
         "cornerNumber": 15,
-        "cornerType": "slow"
+        "cornerType": "fast"
       },
       {
         "detectedCornerIndex": 37,
@@ -12185,7 +12185,7 @@
         "exitDistance": 4880.0,
         "minSpeed": 227.2,
         "cornerNumber": 16,
-        "cornerType": "medium"
+        "cornerType": "fast"
       },
       {
         "detectedCornerIndex": 41,
@@ -12683,7 +12683,7 @@
         "exitDistance": 2158.0,
         "minSpeed": 112.5,
         "cornerNumber": 6,
-        "cornerType": "slow"
+        "cornerType": "fast"
       },
       {
         "detectedCornerIndex": 29,
@@ -12779,7 +12779,7 @@
         "exitDistance": 2548.0,
         "minSpeed": 157.7,
         "cornerNumber": 7,
-        "cornerType": "medium"
+        "cornerType": "fast"
       },
       {
         "detectedCornerIndex": 35,
@@ -12923,7 +12923,7 @@
         "exitDistance": 4464.0,
         "minSpeed": 266.7,
         "cornerNumber": 15,
-        "cornerType": "slow"
+        "cornerType": "fast"
       },
       {
         "detectedCornerIndex": 44,
@@ -13035,7 +13035,7 @@
         "exitDistance": 4882.0,
         "minSpeed": 184.8,
         "cornerNumber": 16,
-        "cornerType": "medium"
+        "cornerType": "fast"
       },
       {
         "detectedCornerIndex": 51,
@@ -13403,7 +13403,7 @@
         "exitDistance": 2154.0,
         "minSpeed": 115.7,
         "cornerNumber": 6,
-        "cornerType": "slow"
+        "cornerType": "fast"
       },
       {
         "detectedCornerIndex": 23,
@@ -13515,7 +13515,7 @@
         "exitDistance": 2566.0,
         "minSpeed": 161.3,
         "cornerNumber": 7,
-        "cornerType": "medium"
+        "cornerType": "fast"
       },
       {
         "detectedCornerIndex": 30,
@@ -13643,7 +13643,7 @@
         "exitDistance": 4426.0,
         "minSpeed": 278.7,
         "cornerNumber": 15,
-        "cornerType": "slow"
+        "cornerType": "fast"
       },
       {
         "detectedCornerIndex": 38,
@@ -13723,7 +13723,7 @@
         "exitDistance": 4884.0,
         "minSpeed": 199.3,
         "cornerNumber": 16,
-        "cornerType": "medium"
+        "cornerType": "fast"
       },
       {
         "detectedCornerIndex": 43,
@@ -14123,7 +14123,7 @@
         "exitDistance": 2158.0,
         "minSpeed": 121.6,
         "cornerNumber": 6,
-        "cornerType": "slow"
+        "cornerType": "fast"
       },
       {
         "detectedCornerIndex": 25,
@@ -14219,7 +14219,7 @@
         "exitDistance": 2550.0,
         "minSpeed": 173.2,
         "cornerNumber": 7,
-        "cornerType": "medium"
+        "cornerType": "fast"
       },
       {
         "detectedCornerIndex": 31,
@@ -14347,7 +14347,7 @@
         "exitDistance": 4456.0,
         "minSpeed": 275.3,
         "cornerNumber": 15,
-        "cornerType": "slow"
+        "cornerType": "fast"
       },
       {
         "detectedCornerIndex": 39,
@@ -14427,7 +14427,7 @@
         "exitDistance": 4878.0,
         "minSpeed": 221.3,
         "cornerNumber": 16,
-        "cornerType": "medium"
+        "cornerType": "fast"
       },
       {
         "detectedCornerIndex": 44,
@@ -14891,7 +14891,7 @@
         "exitDistance": 2152.0,
         "minSpeed": 123.5,
         "cornerNumber": 6,
-        "cornerType": "slow"
+        "cornerType": "fast"
       },
       {
         "detectedCornerIndex": 27,
@@ -15003,7 +15003,7 @@
         "exitDistance": 2562.0,
         "minSpeed": 162.2,
         "cornerNumber": 7,
-        "cornerType": "medium"
+        "cornerType": "fast"
       },
       {
         "detectedCornerIndex": 34,
@@ -15147,7 +15147,7 @@
         "exitDistance": 4460.0,
         "minSpeed": 271.5,
         "cornerNumber": 15,
-        "cornerType": "slow"
+        "cornerType": "fast"
       },
       {
         "detectedCornerIndex": 43,
@@ -15211,7 +15211,7 @@
         "exitDistance": 4890.0,
         "minSpeed": 196.7,
         "cornerNumber": 16,
-        "cornerType": "medium"
+        "cornerType": "fast"
       },
       {
         "detectedCornerIndex": 47,
@@ -15611,7 +15611,7 @@
         "exitDistance": 2152.0,
         "minSpeed": 128.8,
         "cornerNumber": 6,
-        "cornerType": "slow"
+        "cornerType": "fast"
       },
       {
         "detectedCornerIndex": 24,
@@ -15723,7 +15723,7 @@
         "exitDistance": 2548.0,
         "minSpeed": 176.0,
         "cornerNumber": 7,
-        "cornerType": "medium"
+        "cornerType": "fast"
       },
       {
         "detectedCornerIndex": 31,
@@ -15851,7 +15851,7 @@
         "exitDistance": 4464.0,
         "minSpeed": 278.7,
         "cornerNumber": 15,
-        "cornerType": "slow"
+        "cornerType": "fast"
       },
       {
         "detectedCornerIndex": 39,
@@ -15931,7 +15931,7 @@
         "exitDistance": 4880.0,
         "minSpeed": 219.6,
         "cornerNumber": 16,
-        "cornerType": "medium"
+        "cornerType": "fast"
       },
       {
         "detectedCornerIndex": 44,
@@ -16429,7 +16429,7 @@
         "exitDistance": 2150.0,
         "minSpeed": 111.2,
         "cornerNumber": 6,
-        "cornerType": "slow"
+        "cornerType": "fast"
       },
       {
         "detectedCornerIndex": 29,
@@ -16541,7 +16541,7 @@
         "exitDistance": 2548.0,
         "minSpeed": 160.4,
         "cornerNumber": 7,
-        "cornerType": "medium"
+        "cornerType": "fast"
       },
       {
         "detectedCornerIndex": 36,
@@ -16685,7 +16685,7 @@
         "exitDistance": 4450.0,
         "minSpeed": 263.2,
         "cornerNumber": 15,
-        "cornerType": "slow"
+        "cornerType": "fast"
       },
       {
         "detectedCornerIndex": 45,
@@ -16797,7 +16797,7 @@
         "exitDistance": 4888.0,
         "minSpeed": 191.7,
         "cornerNumber": 16,
-        "cornerType": "medium"
+        "cornerType": "fast"
       },
       {
         "detectedCornerIndex": 52,
@@ -17245,7 +17245,7 @@
         "exitDistance": 2152.0,
         "minSpeed": 129.5,
         "cornerNumber": 6,
-        "cornerType": "slow"
+        "cornerType": "fast"
       },
       {
         "detectedCornerIndex": 28,
@@ -17357,7 +17357,7 @@
         "exitDistance": 2552.0,
         "minSpeed": 168.5,
         "cornerNumber": 7,
-        "cornerType": "medium"
+        "cornerType": "fast"
       },
       {
         "detectedCornerIndex": 35,
@@ -17501,7 +17501,7 @@
         "exitDistance": 4468.0,
         "minSpeed": 270.4,
         "cornerNumber": 15,
-        "cornerType": "slow"
+        "cornerType": "fast"
       },
       {
         "detectedCornerIndex": 44,
@@ -17581,7 +17581,7 @@
         "exitDistance": 4886.0,
         "minSpeed": 225.1,
         "cornerNumber": 16,
-        "cornerType": "medium"
+        "cornerType": "fast"
       },
       {
         "detectedCornerIndex": 49,
@@ -18109,7 +18109,7 @@
         "exitDistance": 2164.0,
         "minSpeed": 79.3,
         "cornerNumber": 6,
-        "cornerType": "slow"
+        "cornerType": "fast"
       },
       {
         "detectedCornerIndex": 31,
@@ -18173,7 +18173,7 @@
         "exitDistance": 2574.0,
         "minSpeed": 109.5,
         "cornerNumber": 7,
-        "cornerType": "medium"
+        "cornerType": "fast"
       },
       {
         "detectedCornerIndex": 35,
@@ -18397,7 +18397,7 @@
         "exitDistance": 4440.0,
         "minSpeed": 222.3,
         "cornerNumber": 15,
-        "cornerType": "slow"
+        "cornerType": "fast"
       },
       {
         "detectedCornerIndex": 49,
@@ -18493,7 +18493,7 @@
         "exitDistance": 4882.0,
         "minSpeed": 175.3,
         "cornerNumber": 16,
-        "cornerType": "medium"
+        "cornerType": "fast"
       },
       {
         "detectedCornerIndex": 55,
@@ -19037,7 +19037,7 @@
         "exitDistance": 2148.0,
         "minSpeed": 102.6,
         "cornerNumber": 6,
-        "cornerType": "slow"
+        "cornerType": "fast"
       },
       {
         "detectedCornerIndex": 25,
@@ -19309,7 +19309,7 @@
         "exitDistance": 3726.0,
         "minSpeed": 200.0,
         "cornerNumber": 12,
-        "cornerType": "slow"
+        "cornerType": "fast"
       },
       {
         "detectedCornerIndex": 42,
@@ -19325,7 +19325,7 @@
         "exitDistance": 4472.0,
         "minSpeed": 245.9,
         "cornerNumber": 15,
-        "cornerType": "slow"
+        "cornerType": "fast"
       },
       {
         "detectedCornerIndex": 43,
@@ -19405,7 +19405,7 @@
         "exitDistance": 4880.0,
         "minSpeed": 182.6,
         "cornerNumber": 16,
-        "cornerType": "medium"
+        "cornerType": "fast"
       },
       {
         "detectedCornerIndex": 48,
@@ -19821,7 +19821,7 @@
         "exitDistance": 2146.0,
         "minSpeed": 127.8,
         "cornerNumber": 6,
-        "cornerType": "slow"
+        "cornerType": "fast"
       },
       {
         "detectedCornerIndex": 26,
@@ -19949,7 +19949,7 @@
         "exitDistance": 2556.0,
         "minSpeed": 162.0,
         "cornerNumber": 7,
-        "cornerType": "medium"
+        "cornerType": "fast"
       },
       {
         "detectedCornerIndex": 34,
@@ -20061,7 +20061,7 @@
         "exitDistance": 4438.0,
         "minSpeed": 276.3,
         "cornerNumber": 15,
-        "cornerType": "slow"
+        "cornerType": "fast"
       },
       {
         "detectedCornerIndex": 41,
@@ -20157,7 +20157,7 @@
         "exitDistance": 4888.0,
         "minSpeed": 205.4,
         "cornerNumber": 16,
-        "cornerType": "medium"
+        "cornerType": "fast"
       },
       {
         "detectedCornerIndex": 47,
@@ -20637,7 +20637,7 @@
         "exitDistance": 2156.0,
         "minSpeed": 106.2,
         "cornerNumber": 6,
-        "cornerType": "slow"
+        "cornerType": "fast"
       },
       {
         "detectedCornerIndex": 29,
@@ -20765,7 +20765,7 @@
         "exitDistance": 2550.0,
         "minSpeed": 133.2,
         "cornerNumber": 7,
-        "cornerType": "medium"
+        "cornerType": "fast"
       },
       {
         "detectedCornerIndex": 37,
@@ -20957,7 +20957,7 @@
         "exitDistance": 3702.0,
         "minSpeed": 201.5,
         "cornerNumber": 12,
-        "cornerType": "slow"
+        "cornerType": "fast"
       },
       {
         "detectedCornerIndex": 49,
@@ -21165,7 +21165,7 @@
         "exitDistance": 4892.0,
         "minSpeed": 166.4,
         "cornerNumber": 16,
-        "cornerType": "medium"
+        "cornerType": "fast"
       },
       {
         "detectedCornerIndex": 1,
@@ -21565,7 +21565,7 @@
         "exitDistance": 2158.0,
         "minSpeed": 121.8,
         "cornerNumber": 6,
-        "cornerType": "slow"
+        "cornerType": "fast"
       },
       {
         "detectedCornerIndex": 26,
@@ -21661,7 +21661,7 @@
         "exitDistance": 2542.0,
         "minSpeed": 178.8,
         "cornerNumber": 7,
-        "cornerType": "medium"
+        "cornerType": "fast"
       },
       {
         "detectedCornerIndex": 32,
@@ -21837,7 +21837,7 @@
         "exitDistance": 4448.0,
         "minSpeed": 274.6,
         "cornerNumber": 15,
-        "cornerType": "slow"
+        "cornerType": "fast"
       },
       {
         "detectedCornerIndex": 43,
@@ -21917,7 +21917,7 @@
         "exitDistance": 4878.0,
         "minSpeed": 219.8,
         "cornerNumber": 16,
-        "cornerType": "medium"
+        "cornerType": "fast"
       },
       {
         "detectedCornerIndex": 48,
@@ -22429,7 +22429,7 @@
         "exitDistance": 2152.0,
         "minSpeed": 97.4,
         "cornerNumber": 6,
-        "cornerType": "slow"
+        "cornerType": "fast"
       },
       {
         "detectedCornerIndex": 30,
@@ -22701,7 +22701,7 @@
         "exitDistance": 3728.0,
         "minSpeed": 224.0,
         "cornerNumber": 12,
-        "cornerType": "slow"
+        "cornerType": "fast"
       },
       {
         "detectedCornerIndex": 47,
@@ -22845,7 +22845,7 @@
         "exitDistance": 4894.0,
         "minSpeed": 169.2,
         "cornerNumber": 16,
-        "cornerType": "medium"
+        "cornerType": "fast"
       },
       {
         "detectedCornerIndex": 56,
@@ -23437,7 +23437,7 @@
         "exitDistance": 2560.0,
         "minSpeed": 128.0,
         "cornerNumber": 7,
-        "cornerType": "medium"
+        "cornerType": "fast"
       },
       {
         "detectedCornerIndex": 29,
@@ -23645,7 +23645,7 @@
         "exitDistance": 3740.0,
         "minSpeed": 208.4,
         "cornerNumber": 12,
-        "cornerType": "slow"
+        "cornerType": "fast"
       },
       {
         "detectedCornerIndex": 42,
@@ -23709,7 +23709,7 @@
         "exitDistance": 4442.0,
         "minSpeed": 226.3,
         "cornerNumber": 15,
-        "cornerType": "slow"
+        "cornerType": "fast"
       },
       {
         "detectedCornerIndex": 46,
@@ -23789,7 +23789,7 @@
         "exitDistance": 4884.0,
         "minSpeed": 179.0,
         "cornerNumber": 16,
-        "cornerType": "medium"
+        "cornerType": "fast"
       },
       {
         "detectedCornerIndex": 51,
@@ -24189,7 +24189,7 @@
         "exitDistance": 2162.0,
         "minSpeed": 112.7,
         "cornerNumber": 6,
-        "cornerType": "slow"
+        "cornerType": "fast"
       },
       {
         "detectedCornerIndex": 25,
@@ -24285,7 +24285,7 @@
         "exitDistance": 2544.0,
         "minSpeed": 175.8,
         "cornerNumber": 7,
-        "cornerType": "medium"
+        "cornerType": "fast"
       },
       {
         "detectedCornerIndex": 31,
@@ -24429,7 +24429,7 @@
         "exitDistance": 4452.0,
         "minSpeed": 276.2,
         "cornerNumber": 15,
-        "cornerType": "slow"
+        "cornerType": "fast"
       },
       {
         "detectedCornerIndex": 40,
@@ -24509,7 +24509,7 @@
         "exitDistance": 4888.0,
         "minSpeed": 214.4,
         "cornerNumber": 16,
-        "cornerType": "medium"
+        "cornerType": "fast"
       },
       {
         "detectedCornerIndex": 45,
@@ -24973,7 +24973,7 @@
         "exitDistance": 2156.0,
         "minSpeed": 104.7,
         "cornerNumber": 6,
-        "cornerType": "slow"
+        "cornerType": "fast"
       },
       {
         "detectedCornerIndex": 27,
@@ -25101,7 +25101,7 @@
         "exitDistance": 2564.0,
         "minSpeed": 146.5,
         "cornerNumber": 7,
-        "cornerType": "medium"
+        "cornerType": "fast"
       },
       {
         "detectedCornerIndex": 35,
@@ -25325,7 +25325,7 @@
         "exitDistance": 4442.0,
         "minSpeed": 241.4,
         "cornerNumber": 15,
-        "cornerType": "slow"
+        "cornerType": "fast"
       },
       {
         "detectedCornerIndex": 49,
@@ -25405,7 +25405,7 @@
         "exitDistance": 4880.0,
         "minSpeed": 187.2,
         "cornerNumber": 16,
-        "cornerType": "medium"
+        "cornerType": "fast"
       },
       {
         "detectedCornerIndex": 54,
@@ -25821,7 +25821,7 @@
         "exitDistance": 2152.0,
         "minSpeed": 123.3,
         "cornerNumber": 6,
-        "cornerType": "slow"
+        "cornerType": "fast"
       },
       {
         "detectedCornerIndex": 25,
@@ -25917,7 +25917,7 @@
         "exitDistance": 2548.0,
         "minSpeed": 178.0,
         "cornerNumber": 7,
-        "cornerType": "medium"
+        "cornerType": "fast"
       },
       {
         "detectedCornerIndex": 31,
@@ -26093,7 +26093,7 @@
         "exitDistance": 4446.0,
         "minSpeed": 275.2,
         "cornerNumber": 15,
-        "cornerType": "slow"
+        "cornerType": "fast"
       },
       {
         "detectedCornerIndex": 42,
@@ -26189,7 +26189,7 @@
         "exitDistance": 4888.0,
         "minSpeed": 208.9,
         "cornerNumber": 16,
-        "cornerType": "medium"
+        "cornerType": "fast"
       },
       {
         "detectedCornerIndex": 48,
@@ -26621,7 +26621,7 @@
         "exitDistance": 2146.0,
         "minSpeed": 134.1,
         "cornerNumber": 6,
-        "cornerType": "slow"
+        "cornerType": "fast"
       },
       {
         "detectedCornerIndex": 26,
@@ -26749,7 +26749,7 @@
         "exitDistance": 2562.0,
         "minSpeed": 163.5,
         "cornerNumber": 7,
-        "cornerType": "medium"
+        "cornerType": "fast"
       },
       {
         "detectedCornerIndex": 34,
@@ -26893,7 +26893,7 @@
         "exitDistance": 4462.0,
         "minSpeed": 274.1,
         "cornerNumber": 15,
-        "cornerType": "slow"
+        "cornerType": "fast"
       },
       {
         "detectedCornerIndex": 43,
@@ -26973,7 +26973,7 @@
         "exitDistance": 4888.0,
         "minSpeed": 216.3,
         "cornerNumber": 16,
-        "cornerType": "medium"
+        "cornerType": "fast"
       },
       {
         "detectedCornerIndex": 48,
@@ -27471,7 +27471,7 @@
         "exitDistance": 2154.0,
         "minSpeed": 102.2,
         "cornerNumber": 6,
-        "cornerType": "slow"
+        "cornerType": "fast"
       },
       {
         "detectedCornerIndex": 29,
@@ -27631,7 +27631,7 @@
         "exitDistance": 2810.0,
         "minSpeed": 204.9,
         "cornerNumber": 8,
-        "cornerType": "fast"
+        "cornerType": "medium"
       },
       {
         "detectedCornerIndex": 39,
@@ -27871,7 +27871,7 @@
         "exitDistance": 4412.0,
         "minSpeed": 240.4,
         "cornerNumber": 15,
-        "cornerType": "slow"
+        "cornerType": "fast"
       },
       {
         "detectedCornerIndex": 54,
@@ -27983,7 +27983,7 @@
         "exitDistance": 4882.0,
         "minSpeed": 187.2,
         "cornerNumber": 16,
-        "cornerType": "medium"
+        "cornerType": "fast"
       },
       {
         "detectedCornerIndex": 61,
@@ -28367,7 +28367,7 @@
         "exitDistance": 2144.0,
         "minSpeed": 132.1,
         "cornerNumber": 6,
-        "cornerType": "slow"
+        "cornerType": "fast"
       },
       {
         "detectedCornerIndex": 24,
@@ -28479,7 +28479,7 @@
         "exitDistance": 2550.0,
         "minSpeed": 169.0,
         "cornerNumber": 7,
-        "cornerType": "medium"
+        "cornerType": "fast"
       },
       {
         "detectedCornerIndex": 31,
@@ -28655,7 +28655,7 @@
         "exitDistance": 4462.0,
         "minSpeed": 270.1,
         "cornerNumber": 15,
-        "cornerType": "slow"
+        "cornerType": "fast"
       },
       {
         "detectedCornerIndex": 42,
@@ -28735,7 +28735,7 @@
         "exitDistance": 4880.0,
         "minSpeed": 219.1,
         "cornerNumber": 16,
-        "cornerType": "medium"
+        "cornerType": "fast"
       },
       {
         "detectedCornerIndex": 47,
@@ -29231,7 +29231,7 @@
         "exitDistance": 2146.0,
         "minSpeed": 119.7,
         "cornerNumber": 6,
-        "cornerType": "slow"
+        "cornerType": "fast"
       },
       {
         "detectedCornerIndex": 29,
@@ -29471,7 +29471,7 @@
         "exitDistance": 3714.0,
         "minSpeed": 249.6,
         "cornerNumber": 12,
-        "cornerType": "slow"
+        "cornerType": "fast"
       },
       {
         "detectedCornerIndex": 44,
@@ -29519,7 +29519,7 @@
         "exitDistance": 4418.0,
         "minSpeed": 248.5,
         "cornerNumber": 15,
-        "cornerType": "slow"
+        "cornerType": "fast"
       },
       {
         "detectedCornerIndex": 47,
@@ -29615,7 +29615,7 @@
         "exitDistance": 4878.0,
         "minSpeed": 203.6,
         "cornerNumber": 16,
-        "cornerType": "medium"
+        "cornerType": "fast"
       },
       {
         "detectedCornerIndex": 53,
@@ -30015,7 +30015,7 @@
         "exitDistance": 2144.0,
         "minSpeed": 152.9,
         "cornerNumber": 6,
-        "cornerType": "slow"
+        "cornerType": "fast"
       },
       {
         "detectedCornerIndex": 24,
@@ -30143,7 +30143,7 @@
         "exitDistance": 2554.0,
         "minSpeed": 170.3,
         "cornerNumber": 7,
-        "cornerType": "medium"
+        "cornerType": "fast"
       },
       {
         "detectedCornerIndex": 32,
@@ -30271,7 +30271,7 @@
         "exitDistance": 4476.0,
         "minSpeed": 272.5,
         "cornerNumber": 15,
-        "cornerType": "slow"
+        "cornerType": "fast"
       },
       {
         "detectedCornerIndex": 40,
@@ -30335,7 +30335,7 @@
         "exitDistance": 4884.0,
         "minSpeed": 236.4,
         "cornerNumber": 16,
-        "cornerType": "medium"
+        "cornerType": "fast"
       },
       {
         "detectedCornerIndex": 44,
@@ -30895,7 +30895,7 @@
         "exitDistance": 2154.0,
         "minSpeed": 89.0,
         "cornerNumber": 6,
-        "cornerType": "slow"
+        "cornerType": "fast"
       },
       {
         "detectedCornerIndex": 32,
@@ -31183,7 +31183,7 @@
         "exitDistance": 3710.0,
         "minSpeed": 205.7,
         "cornerNumber": 12,
-        "cornerType": "slow"
+        "cornerType": "fast"
       },
       {
         "detectedCornerIndex": 50,
@@ -31359,7 +31359,7 @@
         "exitDistance": 4892.0,
         "minSpeed": 158.5,
         "cornerNumber": 16,
-        "cornerType": "medium"
+        "cornerType": "fast"
       },
       {
         "detectedCornerIndex": 61,
@@ -31807,7 +31807,7 @@
         "exitDistance": 2144.0,
         "minSpeed": 111.5,
         "cornerNumber": 6,
-        "cornerType": "slow"
+        "cornerType": "fast"
       },
       {
         "detectedCornerIndex": 21,
@@ -32015,7 +32015,7 @@
         "exitDistance": 3706.0,
         "minSpeed": 198.1,
         "cornerNumber": 12,
-        "cornerType": "slow"
+        "cornerType": "fast"
       },
       {
         "detectedCornerIndex": 34,
@@ -32031,7 +32031,7 @@
         "exitDistance": 4422.0,
         "minSpeed": 244.7,
         "cornerNumber": 15,
-        "cornerType": "slow"
+        "cornerType": "fast"
       },
       {
         "detectedCornerIndex": 35,
@@ -32095,7 +32095,7 @@
         "exitDistance": 4878.0,
         "minSpeed": 200.8,
         "cornerNumber": 16,
-        "cornerType": "medium"
+        "cornerType": "fast"
       },
       {
         "detectedCornerIndex": 39,
@@ -32495,7 +32495,7 @@
         "exitDistance": 2150.0,
         "minSpeed": 119.4,
         "cornerNumber": 6,
-        "cornerType": "slow"
+        "cornerType": "fast"
       },
       {
         "detectedCornerIndex": 25,
@@ -32591,7 +32591,7 @@
         "exitDistance": 2542.0,
         "minSpeed": 169.9,
         "cornerNumber": 7,
-        "cornerType": "medium"
+        "cornerType": "fast"
       },
       {
         "detectedCornerIndex": 31,
@@ -32735,7 +32735,7 @@
         "exitDistance": 4460.0,
         "minSpeed": 272.3,
         "cornerNumber": 15,
-        "cornerType": "slow"
+        "cornerType": "fast"
       },
       {
         "detectedCornerIndex": 40,
@@ -32831,7 +32831,7 @@
         "exitDistance": 4886.0,
         "minSpeed": 205.8,
         "cornerNumber": 16,
-        "cornerType": "medium"
+        "cornerType": "fast"
       },
       {
         "detectedCornerIndex": 46,
@@ -33263,7 +33263,7 @@
         "exitDistance": 2160.0,
         "minSpeed": 109.4,
         "cornerNumber": 6,
-        "cornerType": "slow"
+        "cornerType": "fast"
       },
       {
         "detectedCornerIndex": 26,
@@ -33375,7 +33375,7 @@
         "exitDistance": 2560.0,
         "minSpeed": 145.0,
         "cornerNumber": 7,
-        "cornerType": "medium"
+        "cornerType": "fast"
       },
       {
         "detectedCornerIndex": 33,
@@ -33519,7 +33519,7 @@
         "exitDistance": 3732.0,
         "minSpeed": 255.8,
         "cornerNumber": 12,
-        "cornerType": "slow"
+        "cornerType": "fast"
       },
       {
         "detectedCornerIndex": 42,
@@ -33583,7 +33583,7 @@
         "exitDistance": 4476.0,
         "minSpeed": 242.9,
         "cornerNumber": 15,
-        "cornerType": "slow"
+        "cornerType": "fast"
       },
       {
         "detectedCornerIndex": 46,
@@ -33679,7 +33679,7 @@
         "exitDistance": 4886.0,
         "minSpeed": 183.5,
         "cornerNumber": 16,
-        "cornerType": "medium"
+        "cornerType": "fast"
       },
       {
         "detectedCornerIndex": 52,
@@ -34079,7 +34079,7 @@
         "exitDistance": 2166.0,
         "minSpeed": 118.2,
         "cornerNumber": 6,
-        "cornerType": "slow"
+        "cornerType": "fast"
       },
       {
         "detectedCornerIndex": 24,
@@ -34175,7 +34175,7 @@
         "exitDistance": 2550.0,
         "minSpeed": 177.4,
         "cornerNumber": 7,
-        "cornerType": "medium"
+        "cornerType": "fast"
       },
       {
         "detectedCornerIndex": 30,
@@ -34335,7 +34335,7 @@
         "exitDistance": 4462.0,
         "minSpeed": 274.8,
         "cornerNumber": 15,
-        "cornerType": "slow"
+        "cornerType": "fast"
       },
       {
         "detectedCornerIndex": 40,
@@ -34415,7 +34415,7 @@
         "exitDistance": 4880.0,
         "minSpeed": 234.6,
         "cornerNumber": 16,
-        "cornerType": "medium"
+        "cornerType": "fast"
       },
       {
         "detectedCornerIndex": 45,
@@ -34975,7 +34975,7 @@
         "exitDistance": 2154.0,
         "minSpeed": 98.9,
         "cornerNumber": 6,
-        "cornerType": "slow"
+        "cornerType": "fast"
       },
       {
         "detectedCornerIndex": 32,
@@ -35103,7 +35103,7 @@
         "exitDistance": 2560.0,
         "minSpeed": 118.8,
         "cornerNumber": 7,
-        "cornerType": "medium"
+        "cornerType": "fast"
       },
       {
         "detectedCornerIndex": 40,
@@ -35263,7 +35263,7 @@
         "exitDistance": 3706.0,
         "minSpeed": 203.0,
         "cornerNumber": 12,
-        "cornerType": "slow"
+        "cornerType": "fast"
       },
       {
         "detectedCornerIndex": 50,
@@ -35359,7 +35359,7 @@
         "exitDistance": 4418.0,
         "minSpeed": 206.6,
         "cornerNumber": 15,
-        "cornerType": "slow"
+        "cornerType": "fast"
       },
       {
         "detectedCornerIndex": 56,
@@ -35487,7 +35487,7 @@
         "exitDistance": 4882.0,
         "minSpeed": 141.9,
         "cornerNumber": 16,
-        "cornerType": "medium"
+        "cornerType": "fast"
       },
       {
         "detectedCornerIndex": 64,
@@ -35983,7 +35983,7 @@
         "exitDistance": 2160.0,
         "minSpeed": 100.0,
         "cornerNumber": 6,
-        "cornerType": "slow"
+        "cornerType": "fast"
       },
       {
         "detectedCornerIndex": 22,
@@ -36095,7 +36095,7 @@
         "exitDistance": 2554.0,
         "minSpeed": 134.9,
         "cornerNumber": 7,
-        "cornerType": "medium"
+        "cornerType": "fast"
       },
       {
         "detectedCornerIndex": 29,
@@ -36159,7 +36159,7 @@
         "exitDistance": 2730.0,
         "minSpeed": 72.7,
         "cornerNumber": 8,
-        "cornerType": "fast"
+        "cornerType": "medium"
       },
       {
         "detectedCornerIndex": 33,
@@ -36287,7 +36287,7 @@
         "exitDistance": 4460.0,
         "minSpeed": 250.2,
         "cornerNumber": 15,
-        "cornerType": "slow"
+        "cornerType": "fast"
       },
       {
         "detectedCornerIndex": 41,
@@ -36415,7 +36415,7 @@
         "exitDistance": 4884.0,
         "minSpeed": 190.8,
         "cornerNumber": 16,
-        "cornerType": "medium"
+        "cornerType": "fast"
       },
       {
         "detectedCornerIndex": 49,
@@ -36847,7 +36847,7 @@
         "exitDistance": 2146.0,
         "minSpeed": 132.8,
         "cornerNumber": 6,
-        "cornerType": "slow"
+        "cornerType": "fast"
       },
       {
         "detectedCornerIndex": 26,
@@ -36959,7 +36959,7 @@
         "exitDistance": 2544.0,
         "minSpeed": 170.3,
         "cornerNumber": 7,
-        "cornerType": "medium"
+        "cornerType": "fast"
       },
       {
         "detectedCornerIndex": 33,
@@ -37119,7 +37119,7 @@
         "exitDistance": 4446.0,
         "minSpeed": 274.5,
         "cornerNumber": 15,
-        "cornerType": "slow"
+        "cornerType": "fast"
       },
       {
         "detectedCornerIndex": 43,
@@ -37199,7 +37199,7 @@
         "exitDistance": 4882.0,
         "minSpeed": 221.4,
         "cornerNumber": 16,
-        "cornerType": "medium"
+        "cornerType": "fast"
       },
       {
         "detectedCornerIndex": 48,
@@ -37727,7 +37727,7 @@
         "exitDistance": 2162.0,
         "minSpeed": 98.0,
         "cornerNumber": 6,
-        "cornerType": "slow"
+        "cornerType": "fast"
       },
       {
         "detectedCornerIndex": 31,
@@ -37823,7 +37823,7 @@
         "exitDistance": 2602.0,
         "minSpeed": 130.6,
         "cornerNumber": 7,
-        "cornerType": "medium"
+        "cornerType": "fast"
       },
       {
         "detectedCornerIndex": 37,
@@ -37935,7 +37935,7 @@
         "exitDistance": 4450.0,
         "minSpeed": 246.7,
         "cornerNumber": 15,
-        "cornerType": "slow"
+        "cornerType": "fast"
       },
       {
         "detectedCornerIndex": 44,
@@ -38031,7 +38031,7 @@
         "exitDistance": 4884.0,
         "minSpeed": 190.7,
         "cornerNumber": 16,
-        "cornerType": "medium"
+        "cornerType": "fast"
       },
       {
         "detectedCornerIndex": 50,
@@ -38415,7 +38415,7 @@
         "exitDistance": 2156.0,
         "minSpeed": 125.0,
         "cornerNumber": 6,
-        "cornerType": "slow"
+        "cornerType": "fast"
       },
       {
         "detectedCornerIndex": 24,
@@ -38511,7 +38511,7 @@
         "exitDistance": 2546.0,
         "minSpeed": 175.1,
         "cornerNumber": 7,
-        "cornerType": "medium"
+        "cornerType": "fast"
       },
       {
         "detectedCornerIndex": 30,
@@ -38671,7 +38671,7 @@
         "exitDistance": 4470.0,
         "minSpeed": 276.4,
         "cornerNumber": 15,
-        "cornerType": "slow"
+        "cornerType": "fast"
       },
       {
         "detectedCornerIndex": 40,
@@ -38751,7 +38751,7 @@
         "exitDistance": 4892.0,
         "minSpeed": 222.7,
         "cornerNumber": 16,
-        "cornerType": "medium"
+        "cornerType": "fast"
       },
       {
         "detectedCornerIndex": 45,
@@ -39215,7 +39215,7 @@
         "exitDistance": 2148.0,
         "minSpeed": 126.8,
         "cornerNumber": 6,
-        "cornerType": "slow"
+        "cornerType": "fast"
       },
       {
         "detectedCornerIndex": 28,
@@ -39647,7 +39647,7 @@
         "exitDistance": 4476.0,
         "minSpeed": 256.5,
         "cornerNumber": 15,
-        "cornerType": "slow"
+        "cornerType": "fast"
       },
       {
         "detectedCornerIndex": 55,
@@ -39711,7 +39711,7 @@
         "exitDistance": 4886.0,
         "minSpeed": 209.5,
         "cornerNumber": 16,
-        "cornerType": "medium"
+        "cornerType": "fast"
       },
       {
         "detectedCornerIndex": 59,
@@ -40095,7 +40095,7 @@
         "exitDistance": 2150.0,
         "minSpeed": 139.6,
         "cornerNumber": 6,
-        "cornerType": "slow"
+        "cornerType": "fast"
       },
       {
         "detectedCornerIndex": 23,
@@ -40207,7 +40207,7 @@
         "exitDistance": 2556.0,
         "minSpeed": 172.2,
         "cornerNumber": 7,
-        "cornerType": "medium"
+        "cornerType": "fast"
       },
       {
         "detectedCornerIndex": 30,
@@ -40351,7 +40351,7 @@
         "exitDistance": 4480.0,
         "minSpeed": 271.6,
         "cornerNumber": 15,
-        "cornerType": "slow"
+        "cornerType": "fast"
       },
       {
         "detectedCornerIndex": 39,
@@ -40415,7 +40415,7 @@
         "exitDistance": 4886.0,
         "minSpeed": 237.6,
         "cornerNumber": 16,
-        "cornerType": "medium"
+        "cornerType": "fast"
       },
       {
         "detectedCornerIndex": 43,
@@ -40913,7 +40913,7 @@
         "exitDistance": 2156.0,
         "minSpeed": 102.6,
         "cornerNumber": 6,
-        "cornerType": "slow"
+        "cornerType": "fast"
       },
       {
         "detectedCornerIndex": 28,
@@ -41009,7 +41009,7 @@
         "exitDistance": 2552.0,
         "minSpeed": 131.9,
         "cornerNumber": 7,
-        "cornerType": "medium"
+        "cornerType": "fast"
       },
       {
         "detectedCornerIndex": 34,
@@ -41169,7 +41169,7 @@
         "exitDistance": 3714.0,
         "minSpeed": 238.4,
         "cornerNumber": 12,
-        "cornerType": "slow"
+        "cornerType": "fast"
       },
       {
         "detectedCornerIndex": 44,
@@ -41249,7 +41249,7 @@
         "exitDistance": 4448.0,
         "minSpeed": 244.0,
         "cornerNumber": 15,
-        "cornerType": "slow"
+        "cornerType": "fast"
       },
       {
         "detectedCornerIndex": 49,
@@ -41345,7 +41345,7 @@
         "exitDistance": 4890.0,
         "minSpeed": 175.9,
         "cornerNumber": 16,
-        "cornerType": "medium"
+        "cornerType": "fast"
       },
       {
         "detectedCornerIndex": 55,
@@ -41793,7 +41793,7 @@
         "exitDistance": 2154.0,
         "minSpeed": 109.7,
         "cornerNumber": 6,
-        "cornerType": "slow"
+        "cornerType": "fast"
       },
       {
         "detectedCornerIndex": 28,
@@ -42017,7 +42017,7 @@
         "exitDistance": 4440.0,
         "minSpeed": 270.4,
         "cornerNumber": 15,
-        "cornerType": "slow"
+        "cornerType": "fast"
       },
       {
         "detectedCornerIndex": 42,
@@ -42113,7 +42113,7 @@
         "exitDistance": 4878.0,
         "minSpeed": 197.6,
         "cornerNumber": 16,
-        "cornerType": "medium"
+        "cornerType": "fast"
       },
       {
         "detectedCornerIndex": 48,
@@ -42513,7 +42513,7 @@
         "exitDistance": 2144.0,
         "minSpeed": 137.9,
         "cornerNumber": 6,
-        "cornerType": "slow"
+        "cornerType": "fast"
       },
       {
         "detectedCornerIndex": 24,
@@ -42641,7 +42641,7 @@
         "exitDistance": 2562.0,
         "minSpeed": 163.9,
         "cornerNumber": 7,
-        "cornerType": "medium"
+        "cornerType": "fast"
       },
       {
         "detectedCornerIndex": 32,
@@ -42769,7 +42769,7 @@
         "exitDistance": 4448.0,
         "minSpeed": 271.0,
         "cornerNumber": 15,
-        "cornerType": "slow"
+        "cornerType": "fast"
       },
       {
         "detectedCornerIndex": 40,
@@ -42865,7 +42865,7 @@
         "exitDistance": 4888.0,
         "minSpeed": 205.3,
         "cornerNumber": 16,
-        "cornerType": "medium"
+        "cornerType": "fast"
       },
       {
         "detectedCornerIndex": 46,
@@ -43377,7 +43377,7 @@
         "exitDistance": 2152.0,
         "minSpeed": 99.6,
         "cornerNumber": 6,
-        "cornerType": "slow"
+        "cornerType": "fast"
       },
       {
         "detectedCornerIndex": 31,
@@ -43457,7 +43457,7 @@
         "exitDistance": 2550.0,
         "minSpeed": 123.5,
         "cornerNumber": 7,
-        "cornerType": "medium"
+        "cornerType": "fast"
       },
       {
         "detectedCornerIndex": 36,
@@ -43585,7 +43585,7 @@
         "exitDistance": 3724.0,
         "minSpeed": 198.8,
         "cornerNumber": 12,
-        "cornerType": "slow"
+        "cornerType": "fast"
       },
       {
         "detectedCornerIndex": 44,
@@ -43649,7 +43649,7 @@
         "exitDistance": 4428.0,
         "minSpeed": 177.0,
         "cornerNumber": 15,
-        "cornerType": "slow"
+        "cornerType": "fast"
       },
       {
         "detectedCornerIndex": 48,
@@ -43729,7 +43729,7 @@
         "exitDistance": 4892.0,
         "minSpeed": 143.6,
         "cornerNumber": 16,
-        "cornerType": "medium"
+        "cornerType": "fast"
       },
       {
         "detectedCornerIndex": 53,
@@ -44065,7 +44065,7 @@
         "exitDistance": 2154.0,
         "minSpeed": 114.4,
         "cornerNumber": 6,
-        "cornerType": "slow"
+        "cornerType": "fast"
       },
       {
         "detectedCornerIndex": 16,
@@ -44193,7 +44193,7 @@
         "exitDistance": 2556.0,
         "minSpeed": 131.0,
         "cornerNumber": 7,
-        "cornerType": "medium"
+        "cornerType": "fast"
       },
       {
         "detectedCornerIndex": 24,
@@ -44321,7 +44321,7 @@
         "exitDistance": 3716.0,
         "minSpeed": 224.0,
         "cornerNumber": 12,
-        "cornerType": "slow"
+        "cornerType": "fast"
       },
       {
         "detectedCornerIndex": 32,
@@ -44417,7 +44417,7 @@
         "exitDistance": 4442.0,
         "minSpeed": 222.3,
         "cornerNumber": 15,
-        "cornerType": "slow"
+        "cornerType": "fast"
       },
       {
         "detectedCornerIndex": 38,
@@ -44481,7 +44481,7 @@
         "exitDistance": 4896.0,
         "minSpeed": 206.6,
         "cornerNumber": 16,
-        "cornerType": "medium"
+        "cornerType": "fast"
       },
       {
         "detectedCornerIndex": 42,
@@ -44865,7 +44865,7 @@
         "exitDistance": 2146.0,
         "minSpeed": 132.6,
         "cornerNumber": 6,
-        "cornerType": "slow"
+        "cornerType": "fast"
       },
       {
         "detectedCornerIndex": 24,
@@ -44977,7 +44977,7 @@
         "exitDistance": 2550.0,
         "minSpeed": 170.3,
         "cornerNumber": 7,
-        "cornerType": "medium"
+        "cornerType": "fast"
       },
       {
         "detectedCornerIndex": 31,
@@ -45137,7 +45137,7 @@
         "exitDistance": 4440.0,
         "minSpeed": 273.3,
         "cornerNumber": 15,
-        "cornerType": "slow"
+        "cornerType": "fast"
       },
       {
         "detectedCornerIndex": 41,
@@ -45233,7 +45233,7 @@
         "exitDistance": 4886.0,
         "minSpeed": 220.1,
         "cornerNumber": 16,
-        "cornerType": "medium"
+        "cornerType": "fast"
       },
       {
         "detectedCornerIndex": 47,
@@ -45665,7 +45665,7 @@
         "exitDistance": 2150.0,
         "minSpeed": 132.5,
         "cornerNumber": 6,
-        "cornerType": "slow"
+        "cornerType": "fast"
       },
       {
         "detectedCornerIndex": 25,
@@ -45761,7 +45761,7 @@
         "exitDistance": 2556.0,
         "minSpeed": 166.3,
         "cornerNumber": 7,
-        "cornerType": "medium"
+        "cornerType": "fast"
       },
       {
         "detectedCornerIndex": 31,
@@ -45905,7 +45905,7 @@
         "exitDistance": 4472.0,
         "minSpeed": 264.9,
         "cornerNumber": 15,
-        "cornerType": "slow"
+        "cornerType": "fast"
       },
       {
         "detectedCornerIndex": 40,
@@ -45969,7 +45969,7 @@
         "exitDistance": 4878.0,
         "minSpeed": 238.1,
         "cornerNumber": 16,
-        "cornerType": "medium"
+        "cornerType": "fast"
       },
       {
         "detectedCornerIndex": 44,
@@ -46449,7 +46449,7 @@
         "exitDistance": 2156.0,
         "minSpeed": 119.9,
         "cornerNumber": 6,
-        "cornerType": "slow"
+        "cornerType": "fast"
       },
       {
         "detectedCornerIndex": 27,
@@ -46561,7 +46561,7 @@
         "exitDistance": 2556.0,
         "minSpeed": 158.9,
         "cornerNumber": 7,
-        "cornerType": "medium"
+        "cornerType": "fast"
       },
       {
         "detectedCornerIndex": 34,
@@ -46705,7 +46705,7 @@
         "exitDistance": 4454.0,
         "minSpeed": 267.4,
         "cornerNumber": 15,
-        "cornerType": "slow"
+        "cornerType": "fast"
       },
       {
         "detectedCornerIndex": 43,
@@ -46801,7 +46801,7 @@
         "exitDistance": 4890.0,
         "minSpeed": 198.7,
         "cornerNumber": 16,
-        "cornerType": "medium"
+        "cornerType": "fast"
       },
       {
         "detectedCornerIndex": 49,
@@ -47217,7 +47217,7 @@
         "exitDistance": 2152.0,
         "minSpeed": 132.7,
         "cornerNumber": 6,
-        "cornerType": "slow"
+        "cornerType": "fast"
       },
       {
         "detectedCornerIndex": 25,
@@ -47329,7 +47329,7 @@
         "exitDistance": 2552.0,
         "minSpeed": 170.7,
         "cornerNumber": 7,
-        "cornerType": "medium"
+        "cornerType": "fast"
       },
       {
         "detectedCornerIndex": 32,
@@ -47457,7 +47457,7 @@
         "exitDistance": 4472.0,
         "minSpeed": 259.8,
         "cornerNumber": 15,
-        "cornerType": "slow"
+        "cornerType": "fast"
       },
       {
         "detectedCornerIndex": 40,
@@ -47505,7 +47505,7 @@
         "exitDistance": 4884.0,
         "minSpeed": 236.0,
         "cornerNumber": 16,
-        "cornerType": "medium"
+        "cornerType": "fast"
       },
       {
         "detectedCornerIndex": 43,
@@ -47921,7 +47921,7 @@
         "exitDistance": 2144.0,
         "minSpeed": 131.9,
         "cornerNumber": 6,
-        "cornerType": "slow"
+        "cornerType": "fast"
       },
       {
         "detectedCornerIndex": 23,
@@ -48049,7 +48049,7 @@
         "exitDistance": 2556.0,
         "minSpeed": 162.5,
         "cornerNumber": 7,
-        "cornerType": "medium"
+        "cornerType": "fast"
       },
       {
         "detectedCornerIndex": 31,
@@ -48161,7 +48161,7 @@
         "exitDistance": 4462.0,
         "minSpeed": 267.2,
         "cornerNumber": 15,
-        "cornerType": "slow"
+        "cornerType": "fast"
       },
       {
         "detectedCornerIndex": 38,
@@ -48241,7 +48241,7 @@
         "exitDistance": 4886.0,
         "minSpeed": 219.6,
         "cornerNumber": 16,
-        "cornerType": "medium"
+        "cornerType": "fast"
       },
       {
         "detectedCornerIndex": 43,
@@ -48659,7 +48659,7 @@
         "exitDistance": 2150.0,
         "minSpeed": 126.9,
         "cornerNumber": 6,
-        "cornerType": "slow"
+        "cornerType": "fast"
       },
       {
         "detectedCornerIndex": 26,
@@ -48787,7 +48787,7 @@
         "exitDistance": 2560.0,
         "minSpeed": 157.1,
         "cornerNumber": 7,
-        "cornerType": "medium"
+        "cornerType": "fast"
       },
       {
         "detectedCornerIndex": 34,
@@ -48899,7 +48899,7 @@
         "exitDistance": 4460.0,
         "minSpeed": 268.9,
         "cornerNumber": 15,
-        "cornerType": "slow"
+        "cornerType": "fast"
       },
       {
         "detectedCornerIndex": 41,
@@ -48979,7 +48979,7 @@
         "exitDistance": 4882.0,
         "minSpeed": 215.7,
         "cornerNumber": 16,
-        "cornerType": "medium"
+        "cornerType": "fast"
       },
       {
         "detectedCornerIndex": 46,
@@ -49379,7 +49379,7 @@
         "exitDistance": 2146.0,
         "minSpeed": 139.5,
         "cornerNumber": 6,
-        "cornerType": "slow"
+        "cornerType": "fast"
       },
       {
         "detectedCornerIndex": 23,
@@ -49491,7 +49491,7 @@
         "exitDistance": 2548.0,
         "minSpeed": 171.1,
         "cornerNumber": 7,
-        "cornerType": "medium"
+        "cornerType": "fast"
       },
       {
         "detectedCornerIndex": 30,
@@ -49651,7 +49651,7 @@
         "exitDistance": 4464.0,
         "minSpeed": 270.8,
         "cornerNumber": 15,
-        "cornerType": "slow"
+        "cornerType": "fast"
       },
       {
         "detectedCornerIndex": 40,
@@ -49715,7 +49715,7 @@
         "exitDistance": 4878.0,
         "minSpeed": 239.1,
         "cornerNumber": 16,
-        "cornerType": "medium"
+        "cornerType": "fast"
       },
       {
         "detectedCornerIndex": 44,
@@ -50179,7 +50179,7 @@
         "exitDistance": 2144.0,
         "minSpeed": 122.5,
         "cornerNumber": 6,
-        "cornerType": "slow"
+        "cornerType": "fast"
       },
       {
         "detectedCornerIndex": 26,
@@ -50291,7 +50291,7 @@
         "exitDistance": 2542.0,
         "minSpeed": 163.4,
         "cornerNumber": 7,
-        "cornerType": "medium"
+        "cornerType": "fast"
       },
       {
         "detectedCornerIndex": 33,
@@ -50435,7 +50435,7 @@
         "exitDistance": 4456.0,
         "minSpeed": 269.3,
         "cornerNumber": 15,
-        "cornerType": "slow"
+        "cornerType": "fast"
       },
       {
         "detectedCornerIndex": 42,
@@ -50515,7 +50515,7 @@
         "exitDistance": 4888.0,
         "minSpeed": 218.3,
         "cornerNumber": 16,
-        "cornerType": "medium"
+        "cornerType": "fast"
       },
       {
         "detectedCornerIndex": 47,
@@ -50915,7 +50915,7 @@
         "exitDistance": 2148.0,
         "minSpeed": 137.6,
         "cornerNumber": 6,
-        "cornerType": "slow"
+        "cornerType": "fast"
       },
       {
         "detectedCornerIndex": 23,
@@ -51043,7 +51043,7 @@
         "exitDistance": 2564.0,
         "minSpeed": 165.2,
         "cornerNumber": 7,
-        "cornerType": "medium"
+        "cornerType": "fast"
       },
       {
         "detectedCornerIndex": 31,
@@ -51187,7 +51187,7 @@
         "exitDistance": 4458.0,
         "minSpeed": 271.2,
         "cornerNumber": 15,
-        "cornerType": "slow"
+        "cornerType": "fast"
       },
       {
         "detectedCornerIndex": 40,
@@ -51251,7 +51251,7 @@
         "exitDistance": 4878.0,
         "minSpeed": 229.4,
         "cornerNumber": 16,
-        "cornerType": "medium"
+        "cornerType": "fast"
       },
       {
         "detectedCornerIndex": 44,
@@ -51715,7 +51715,7 @@
         "exitDistance": 2156.0,
         "minSpeed": 122.4,
         "cornerNumber": 6,
-        "cornerType": "slow"
+        "cornerType": "fast"
       },
       {
         "detectedCornerIndex": 27,
@@ -51827,7 +51827,7 @@
         "exitDistance": 2562.0,
         "minSpeed": 166.4,
         "cornerNumber": 7,
-        "cornerType": "medium"
+        "cornerType": "fast"
       },
       {
         "detectedCornerIndex": 34,
@@ -51971,7 +51971,7 @@
         "exitDistance": 4462.0,
         "minSpeed": 275.7,
         "cornerNumber": 15,
-        "cornerType": "slow"
+        "cornerType": "fast"
       },
       {
         "detectedCornerIndex": 43,
@@ -52051,7 +52051,7 @@
         "exitDistance": 4884.0,
         "minSpeed": 222.8,
         "cornerNumber": 16,
-        "cornerType": "medium"
+        "cornerType": "fast"
       },
       {
         "detectedCornerIndex": 48,
@@ -52451,7 +52451,7 @@
         "exitDistance": 2144.0,
         "minSpeed": 144.2,
         "cornerNumber": 6,
-        "cornerType": "slow"
+        "cornerType": "fast"
       },
       {
         "detectedCornerIndex": 23,
@@ -52579,7 +52579,7 @@
         "exitDistance": 2548.0,
         "minSpeed": 173.8,
         "cornerNumber": 7,
-        "cornerType": "medium"
+        "cornerType": "fast"
       },
       {
         "detectedCornerIndex": 31,
@@ -52739,7 +52739,7 @@
         "exitDistance": 4466.0,
         "minSpeed": 271.2,
         "cornerNumber": 15,
-        "cornerType": "slow"
+        "cornerType": "fast"
       },
       {
         "detectedCornerIndex": 41,
@@ -52819,7 +52819,7 @@
         "exitDistance": 4886.0,
         "minSpeed": 221.1,
         "cornerNumber": 16,
-        "cornerType": "medium"
+        "cornerType": "fast"
       },
       {
         "detectedCornerIndex": 46,
@@ -53253,7 +53253,7 @@
         "exitDistance": 2152.0,
         "minSpeed": 118.6,
         "cornerNumber": 6,
-        "cornerType": "slow"
+        "cornerType": "fast"
       },
       {
         "detectedCornerIndex": 25,
@@ -53365,7 +53365,7 @@
         "exitDistance": 2560.0,
         "minSpeed": 153.2,
         "cornerNumber": 7,
-        "cornerType": "medium"
+        "cornerType": "fast"
       },
       {
         "detectedCornerIndex": 32,
@@ -53493,7 +53493,7 @@
         "exitDistance": 4448.0,
         "minSpeed": 264.4,
         "cornerNumber": 15,
-        "cornerType": "slow"
+        "cornerType": "fast"
       },
       {
         "detectedCornerIndex": 40,
@@ -53605,7 +53605,7 @@
         "exitDistance": 4894.0,
         "minSpeed": 183.7,
         "cornerNumber": 16,
-        "cornerType": "medium"
+        "cornerType": "fast"
       },
       {
         "detectedCornerIndex": 47,
@@ -54069,7 +54069,7 @@
         "exitDistance": 2156.0,
         "minSpeed": 95.2,
         "cornerNumber": 6,
-        "cornerType": "slow"
+        "cornerType": "fast"
       },
       {
         "detectedCornerIndex": 29,
@@ -54405,7 +54405,7 @@
         "exitDistance": 4450.0,
         "minSpeed": 231.6,
         "cornerNumber": 15,
-        "cornerType": "slow"
+        "cornerType": "fast"
       },
       {
         "detectedCornerIndex": 50,
@@ -54533,7 +54533,7 @@
         "exitDistance": 4886.0,
         "minSpeed": 153.5,
         "cornerNumber": 16,
-        "cornerType": "medium"
+        "cornerType": "fast"
       },
       {
         "detectedCornerIndex": 1,
@@ -54949,7 +54949,7 @@
         "exitDistance": 2156.0,
         "minSpeed": 103.7,
         "cornerNumber": 6,
-        "cornerType": "slow"
+        "cornerType": "fast"
       },
       {
         "detectedCornerIndex": 27,
@@ -55045,7 +55045,7 @@
         "exitDistance": 2562.0,
         "minSpeed": 148.3,
         "cornerNumber": 7,
-        "cornerType": "medium"
+        "cornerType": "fast"
       },
       {
         "detectedCornerIndex": 33,
@@ -55189,7 +55189,7 @@
         "exitDistance": 4434.0,
         "minSpeed": 268.4,
         "cornerNumber": 15,
-        "cornerType": "slow"
+        "cornerType": "fast"
       },
       {
         "detectedCornerIndex": 42,
@@ -55301,7 +55301,7 @@
         "exitDistance": 4908.0,
         "minSpeed": 171.1,
         "cornerNumber": 16,
-        "cornerType": "medium"
+        "cornerType": "fast"
       },
       {
         "detectedCornerIndex": 1,
@@ -55653,7 +55653,7 @@
         "exitDistance": 2148.0,
         "minSpeed": 133.7,
         "cornerNumber": 6,
-        "cornerType": "slow"
+        "cornerType": "fast"
       },
       {
         "detectedCornerIndex": 23,
@@ -55765,7 +55765,7 @@
         "exitDistance": 2544.0,
         "minSpeed": 171.3,
         "cornerNumber": 7,
-        "cornerType": "medium"
+        "cornerType": "fast"
       },
       {
         "detectedCornerIndex": 30,
@@ -55941,7 +55941,7 @@
         "exitDistance": 4446.0,
         "minSpeed": 274.2,
         "cornerNumber": 15,
-        "cornerType": "slow"
+        "cornerType": "fast"
       },
       {
         "detectedCornerIndex": 41,
@@ -56037,7 +56037,7 @@
         "exitDistance": 4890.0,
         "minSpeed": 198.0,
         "cornerNumber": 16,
-        "cornerType": "medium"
+        "cornerType": "fast"
       },
       {
         "detectedCornerIndex": 47,
@@ -56533,7 +56533,7 @@
         "exitDistance": 2158.0,
         "minSpeed": 94.9,
         "cornerNumber": 6,
-        "cornerType": "slow"
+        "cornerType": "fast"
       },
       {
         "detectedCornerIndex": 30,
@@ -56629,7 +56629,7 @@
         "exitDistance": 2556.0,
         "minSpeed": 124.1,
         "cornerNumber": 7,
-        "cornerType": "medium"
+        "cornerType": "fast"
       },
       {
         "detectedCornerIndex": 36,
@@ -56725,7 +56725,7 @@
         "exitDistance": 4450.0,
         "minSpeed": 171.6,
         "cornerNumber": 15,
-        "cornerType": "slow"
+        "cornerType": "fast"
       },
       {
         "detectedCornerIndex": 42,
@@ -56789,7 +56789,7 @@
         "exitDistance": 4882.0,
         "minSpeed": 138.7,
         "cornerNumber": 16,
-        "cornerType": "medium"
+        "cornerType": "fast"
       },
       {
         "detectedCornerIndex": 46,
@@ -57301,7 +57301,7 @@
         "exitDistance": 2152.0,
         "minSpeed": 105.4,
         "cornerNumber": 6,
-        "cornerType": "slow"
+        "cornerType": "fast"
       },
       {
         "detectedCornerIndex": 27,
@@ -57429,7 +57429,7 @@
         "exitDistance": 2568.0,
         "minSpeed": 121.6,
         "cornerNumber": 7,
-        "cornerType": "medium"
+        "cornerType": "fast"
       },
       {
         "detectedCornerIndex": 35,
@@ -57701,7 +57701,7 @@
         "exitDistance": 4472.0,
         "minSpeed": 242.3,
         "cornerNumber": 15,
-        "cornerType": "slow"
+        "cornerType": "fast"
       },
       {
         "detectedCornerIndex": 52,
@@ -57829,7 +57829,7 @@
         "exitDistance": 4884.0,
         "minSpeed": 161.2,
         "cornerNumber": 16,
-        "cornerType": "medium"
+        "cornerType": "fast"
       },
       {
         "detectedCornerIndex": 1,
@@ -58197,7 +58197,7 @@
         "exitDistance": 2150.0,
         "minSpeed": 120.5,
         "cornerNumber": 6,
-        "cornerType": "slow"
+        "cornerType": "fast"
       },
       {
         "detectedCornerIndex": 24,
@@ -58293,7 +58293,7 @@
         "exitDistance": 2548.0,
         "minSpeed": 162.0,
         "cornerNumber": 7,
-        "cornerType": "medium"
+        "cornerType": "fast"
       },
       {
         "detectedCornerIndex": 30,
@@ -58421,7 +58421,7 @@
         "exitDistance": 4464.0,
         "minSpeed": 268.9,
         "cornerNumber": 15,
-        "cornerType": "slow"
+        "cornerType": "fast"
       },
       {
         "detectedCornerIndex": 38,
@@ -58501,7 +58501,7 @@
         "exitDistance": 4884.0,
         "minSpeed": 202.0,
         "cornerNumber": 16,
-        "cornerType": "medium"
+        "cornerType": "fast"
       },
       {
         "detectedCornerIndex": 43,
@@ -58917,7 +58917,7 @@
         "exitDistance": 2154.0,
         "minSpeed": 122.8,
         "cornerNumber": 6,
-        "cornerType": "slow"
+        "cornerType": "fast"
       },
       {
         "detectedCornerIndex": 25,
@@ -59013,7 +59013,7 @@
         "exitDistance": 2544.0,
         "minSpeed": 172.7,
         "cornerNumber": 7,
-        "cornerType": "medium"
+        "cornerType": "fast"
       },
       {
         "detectedCornerIndex": 31,
@@ -59141,7 +59141,7 @@
         "exitDistance": 4452.0,
         "minSpeed": 270.8,
         "cornerNumber": 15,
-        "cornerType": "slow"
+        "cornerType": "fast"
       },
       {
         "detectedCornerIndex": 39,
@@ -59237,7 +59237,7 @@
         "exitDistance": 4886.0,
         "minSpeed": 201.9,
         "cornerNumber": 16,
-        "cornerType": "medium"
+        "cornerType": "fast"
       },
       {
         "detectedCornerIndex": 45,
@@ -59573,7 +59573,7 @@
         "exitDistance": 2146.0,
         "minSpeed": 136.6,
         "cornerNumber": 6,
-        "cornerType": "slow"
+        "cornerType": "fast"
       },
       {
         "detectedCornerIndex": 20,
@@ -59685,7 +59685,7 @@
         "exitDistance": 2556.0,
         "minSpeed": 166.8,
         "cornerNumber": 7,
-        "cornerType": "medium"
+        "cornerType": "fast"
       },
       {
         "detectedCornerIndex": 27,
@@ -59797,7 +59797,7 @@
         "exitDistance": 4470.0,
         "minSpeed": 271.0,
         "cornerNumber": 15,
-        "cornerType": "slow"
+        "cornerType": "fast"
       },
       {
         "detectedCornerIndex": 34,
@@ -59861,7 +59861,7 @@
         "exitDistance": 4892.0,
         "minSpeed": 218.9,
         "cornerNumber": 16,
-        "cornerType": "medium"
+        "cornerType": "fast"
       },
       {
         "detectedCornerIndex": 38,
@@ -60229,7 +60229,7 @@
         "exitDistance": 2154.0,
         "minSpeed": 117.7,
         "cornerNumber": 6,
-        "cornerType": "slow"
+        "cornerType": "fast"
       },
       {
         "detectedCornerIndex": 23,
@@ -60341,7 +60341,7 @@
         "exitDistance": 2560.0,
         "minSpeed": 156.6,
         "cornerNumber": 7,
-        "cornerType": "medium"
+        "cornerType": "fast"
       },
       {
         "detectedCornerIndex": 30,
@@ -60469,7 +60469,7 @@
         "exitDistance": 4458.0,
         "minSpeed": 272.1,
         "cornerNumber": 15,
-        "cornerType": "slow"
+        "cornerType": "fast"
       },
       {
         "detectedCornerIndex": 38,
@@ -60565,7 +60565,7 @@
         "exitDistance": 4892.0,
         "minSpeed": 195.3,
         "cornerNumber": 16,
-        "cornerType": "medium"
+        "cornerType": "fast"
       },
       {
         "detectedCornerIndex": 44,
@@ -60949,7 +60949,7 @@
         "exitDistance": 2148.0,
         "minSpeed": 140.3,
         "cornerNumber": 6,
-        "cornerType": "slow"
+        "cornerType": "fast"
       },
       {
         "detectedCornerIndex": 24,
@@ -61061,7 +61061,7 @@
         "exitDistance": 2542.0,
         "minSpeed": 171.1,
         "cornerNumber": 7,
-        "cornerType": "medium"
+        "cornerType": "fast"
       },
       {
         "detectedCornerIndex": 31,
@@ -61189,7 +61189,7 @@
         "exitDistance": 4458.0,
         "minSpeed": 271.8,
         "cornerNumber": 15,
-        "cornerType": "slow"
+        "cornerType": "fast"
       },
       {
         "detectedCornerIndex": 39,
@@ -61253,7 +61253,7 @@
         "exitDistance": 4884.0,
         "minSpeed": 220.5,
         "cornerNumber": 16,
-        "cornerType": "medium"
+        "cornerType": "fast"
       },
       {
         "detectedCornerIndex": 43,
@@ -61703,7 +61703,7 @@
         "exitDistance": 2154.0,
         "minSpeed": 124.8,
         "cornerNumber": 6,
-        "cornerType": "slow"
+        "cornerType": "fast"
       },
       {
         "detectedCornerIndex": 26,
@@ -61815,7 +61815,7 @@
         "exitDistance": 2546.0,
         "minSpeed": 176.3,
         "cornerNumber": 7,
-        "cornerType": "medium"
+        "cornerType": "fast"
       },
       {
         "detectedCornerIndex": 33,
@@ -61991,7 +61991,7 @@
         "exitDistance": 4472.0,
         "minSpeed": 267.3,
         "cornerNumber": 15,
-        "cornerType": "slow"
+        "cornerType": "fast"
       },
       {
         "detectedCornerIndex": 44,
@@ -62055,7 +62055,7 @@
         "exitDistance": 4886.0,
         "minSpeed": 215.4,
         "cornerNumber": 16,
-        "cornerType": "medium"
+        "cornerType": "fast"
       },
       {
         "detectedCornerIndex": 48,
@@ -62679,7 +62679,7 @@
         "exitDistance": 2146.0,
         "minSpeed": 98.6,
         "cornerNumber": 6,
-        "cornerType": "slow"
+        "cornerType": "fast"
       },
       {
         "detectedCornerIndex": 37,
@@ -62807,7 +62807,7 @@
         "exitDistance": 2574.0,
         "minSpeed": 105.3,
         "cornerNumber": 7,
-        "cornerType": "medium"
+        "cornerType": "fast"
       },
       {
         "detectedCornerIndex": 45,
@@ -62919,7 +62919,7 @@
         "exitDistance": 3700.0,
         "minSpeed": 232.6,
         "cornerNumber": 12,
-        "cornerType": "slow"
+        "cornerType": "fast"
       },
       {
         "detectedCornerIndex": 52,
@@ -63031,7 +63031,7 @@
         "exitDistance": 4430.0,
         "minSpeed": 227.9,
         "cornerNumber": 15,
-        "cornerType": "slow"
+        "cornerType": "fast"
       },
       {
         "detectedCornerIndex": 59,
@@ -63159,7 +63159,7 @@
         "exitDistance": 4884.0,
         "minSpeed": 170.1,
         "cornerNumber": 16,
-        "cornerType": "medium"
+        "cornerType": "fast"
       },
       {
         "detectedCornerIndex": 1,
@@ -63543,7 +63543,7 @@
         "exitDistance": 2156.0,
         "minSpeed": 121.8,
         "cornerNumber": 6,
-        "cornerType": "slow"
+        "cornerType": "fast"
       },
       {
         "detectedCornerIndex": 25,
@@ -63607,7 +63607,7 @@
         "exitDistance": 2546.0,
         "minSpeed": 178.1,
         "cornerNumber": 7,
-        "cornerType": "medium"
+        "cornerType": "fast"
       },
       {
         "detectedCornerIndex": 29,
@@ -63767,7 +63767,7 @@
         "exitDistance": 4472.0,
         "minSpeed": 267.2,
         "cornerNumber": 15,
-        "cornerType": "slow"
+        "cornerType": "fast"
       },
       {
         "detectedCornerIndex": 39,
@@ -63799,7 +63799,7 @@
         "exitDistance": 4878.0,
         "minSpeed": 243.5,
         "cornerNumber": 16,
-        "cornerType": "medium"
+        "cornerType": "fast"
       },
       {
         "detectedCornerIndex": 41,
@@ -64231,7 +64231,7 @@
         "exitDistance": 2146.0,
         "minSpeed": 138.0,
         "cornerNumber": 6,
-        "cornerType": "slow"
+        "cornerType": "fast"
       },
       {
         "detectedCornerIndex": 23,
@@ -64343,7 +64343,7 @@
         "exitDistance": 2544.0,
         "minSpeed": 174.5,
         "cornerNumber": 7,
-        "cornerType": "medium"
+        "cornerType": "fast"
       },
       {
         "detectedCornerIndex": 30,
@@ -64503,7 +64503,7 @@
         "exitDistance": 4480.0,
         "minSpeed": 259.8,
         "cornerNumber": 15,
-        "cornerType": "slow"
+        "cornerType": "fast"
       },
       {
         "detectedCornerIndex": 40,
@@ -64567,7 +64567,7 @@
         "exitDistance": 4886.0,
         "minSpeed": 211.9,
         "cornerNumber": 16,
-        "cornerType": "medium"
+        "cornerType": "fast"
       },
       {
         "detectedCornerIndex": 44,
@@ -65207,7 +65207,7 @@
         "exitDistance": 2150.0,
         "minSpeed": 100.0,
         "cornerNumber": 6,
-        "cornerType": "slow"
+        "cornerType": "fast"
       },
       {
         "detectedCornerIndex": 37,
@@ -65319,7 +65319,7 @@
         "exitDistance": 2544.0,
         "minSpeed": 127.4,
         "cornerNumber": 7,
-        "cornerType": "medium"
+        "cornerType": "fast"
       },
       {
         "detectedCornerIndex": 44,
@@ -65559,7 +65559,7 @@
         "exitDistance": 3770.0,
         "minSpeed": 171.6,
         "cornerNumber": 12,
-        "cornerType": "slow"
+        "cornerType": "fast"
       },
       {
         "detectedCornerIndex": 59,
@@ -65735,7 +65735,7 @@
         "exitDistance": 4450.0,
         "minSpeed": 125.0,
         "cornerNumber": 15,
-        "cornerType": "slow"
+        "cornerType": "fast"
       },
       {
         "detectedCornerIndex": 70,
@@ -65815,7 +65815,7 @@
         "exitDistance": 4894.0,
         "minSpeed": 168.2,
         "cornerNumber": 16,
-        "cornerType": "medium"
+        "cornerType": "fast"
       },
       {
         "detectedCornerIndex": 1,
@@ -66199,7 +66199,7 @@
         "exitDistance": 2152.0,
         "minSpeed": 131.0,
         "cornerNumber": 6,
-        "cornerType": "slow"
+        "cornerType": "fast"
       },
       {
         "detectedCornerIndex": 25,
@@ -66311,7 +66311,7 @@
         "exitDistance": 2552.0,
         "minSpeed": 172.7,
         "cornerNumber": 7,
-        "cornerType": "medium"
+        "cornerType": "fast"
       },
       {
         "detectedCornerIndex": 32,
@@ -66471,7 +66471,7 @@
         "exitDistance": 4468.0,
         "minSpeed": 268.9,
         "cornerNumber": 15,
-        "cornerType": "slow"
+        "cornerType": "fast"
       },
       {
         "detectedCornerIndex": 42,
@@ -66535,7 +66535,7 @@
         "exitDistance": 4882.0,
         "minSpeed": 230.7,
         "cornerNumber": 16,
-        "cornerType": "medium"
+        "cornerType": "fast"
       },
       {
         "detectedCornerIndex": 46,
@@ -66919,7 +66919,7 @@
         "exitDistance": 2154.0,
         "minSpeed": 127.6,
         "cornerNumber": 6,
-        "cornerType": "slow"
+        "cornerType": "fast"
       },
       {
         "detectedCornerIndex": 21,
@@ -67031,7 +67031,7 @@
         "exitDistance": 2554.0,
         "minSpeed": 174.1,
         "cornerNumber": 7,
-        "cornerType": "medium"
+        "cornerType": "fast"
       },
       {
         "detectedCornerIndex": 28,
@@ -67143,7 +67143,7 @@
         "exitDistance": 4462.0,
         "minSpeed": 270.4,
         "cornerNumber": 15,
-        "cornerType": "slow"
+        "cornerType": "fast"
       },
       {
         "detectedCornerIndex": 35,
@@ -67207,7 +67207,7 @@
         "exitDistance": 4882.0,
         "minSpeed": 241.8,
         "cornerNumber": 16,
-        "cornerType": "medium"
+        "cornerType": "fast"
       },
       {
         "detectedCornerIndex": 39,
@@ -67623,7 +67623,7 @@
         "exitDistance": 2152.0,
         "minSpeed": 140.4,
         "cornerNumber": 6,
-        "cornerType": "slow"
+        "cornerType": "fast"
       },
       {
         "detectedCornerIndex": 23,
@@ -67735,7 +67735,7 @@
         "exitDistance": 2542.0,
         "minSpeed": 188.1,
         "cornerNumber": 7,
-        "cornerType": "medium"
+        "cornerType": "fast"
       },
       {
         "detectedCornerIndex": 30,
@@ -67895,7 +67895,7 @@
         "exitDistance": 4490.0,
         "minSpeed": 267.9,
         "cornerNumber": 15,
-        "cornerType": "slow"
+        "cornerType": "fast"
       },
       {
         "detectedCornerIndex": 40,
@@ -67927,7 +67927,7 @@
         "exitDistance": 4886.0,
         "minSpeed": 250.3,
         "cornerNumber": 16,
-        "cornerType": "medium"
+        "cornerType": "fast"
       },
       {
         "detectedCornerIndex": 42,
@@ -68375,7 +68375,7 @@
         "exitDistance": 2148.0,
         "minSpeed": 130.1,
         "cornerNumber": 6,
-        "cornerType": "slow"
+        "cornerType": "fast"
       },
       {
         "detectedCornerIndex": 24,
@@ -68487,7 +68487,7 @@
         "exitDistance": 2548.0,
         "minSpeed": 169.0,
         "cornerNumber": 7,
-        "cornerType": "medium"
+        "cornerType": "fast"
       },
       {
         "detectedCornerIndex": 31,
@@ -68615,7 +68615,7 @@
         "exitDistance": 4478.0,
         "minSpeed": 269.7,
         "cornerNumber": 15,
-        "cornerType": "slow"
+        "cornerType": "fast"
       },
       {
         "detectedCornerIndex": 39,
@@ -68679,7 +68679,7 @@
         "exitDistance": 4892.0,
         "minSpeed": 218.4,
         "cornerNumber": 16,
-        "cornerType": "medium"
+        "cornerType": "fast"
       },
       {
         "detectedCornerIndex": 43,
@@ -69113,7 +69113,7 @@
         "exitDistance": 2152.0,
         "minSpeed": 127.9,
         "cornerNumber": 6,
-        "cornerType": "slow"
+        "cornerType": "fast"
       },
       {
         "detectedCornerIndex": 25,
@@ -69241,7 +69241,7 @@
         "exitDistance": 2554.0,
         "minSpeed": 160.7,
         "cornerNumber": 7,
-        "cornerType": "medium"
+        "cornerType": "fast"
       },
       {
         "detectedCornerIndex": 33,
@@ -69385,7 +69385,7 @@
         "exitDistance": 4460.0,
         "minSpeed": 268.6,
         "cornerNumber": 15,
-        "cornerType": "slow"
+        "cornerType": "fast"
       },
       {
         "detectedCornerIndex": 42,
@@ -69449,7 +69449,7 @@
         "exitDistance": 4882.0,
         "minSpeed": 228.7,
         "cornerNumber": 16,
-        "cornerType": "medium"
+        "cornerType": "fast"
       },
       {
         "detectedCornerIndex": 46,
@@ -69897,7 +69897,7 @@
         "exitDistance": 2144.0,
         "minSpeed": 143.9,
         "cornerNumber": 6,
-        "cornerType": "slow"
+        "cornerType": "fast"
       },
       {
         "detectedCornerIndex": 25,
@@ -70009,7 +70009,7 @@
         "exitDistance": 2548.0,
         "minSpeed": 175.4,
         "cornerNumber": 7,
-        "cornerType": "medium"
+        "cornerType": "fast"
       },
       {
         "detectedCornerIndex": 32,
@@ -70121,7 +70121,7 @@
         "exitDistance": 4468.0,
         "minSpeed": 272.4,
         "cornerNumber": 15,
-        "cornerType": "slow"
+        "cornerType": "fast"
       },
       {
         "detectedCornerIndex": 39,
@@ -70201,7 +70201,7 @@
         "exitDistance": 4884.0,
         "minSpeed": 239.0,
         "cornerNumber": 16,
-        "cornerType": "medium"
+        "cornerType": "fast"
       },
       {
         "detectedCornerIndex": 44,
@@ -70665,7 +70665,7 @@
         "exitDistance": 2158.0,
         "minSpeed": 121.3,
         "cornerNumber": 6,
-        "cornerType": "slow"
+        "cornerType": "fast"
       },
       {
         "detectedCornerIndex": 26,
@@ -70761,7 +70761,7 @@
         "exitDistance": 2556.0,
         "minSpeed": 169.6,
         "cornerNumber": 7,
-        "cornerType": "medium"
+        "cornerType": "fast"
       },
       {
         "detectedCornerIndex": 32,
@@ -70905,7 +70905,7 @@
         "exitDistance": 4480.0,
         "minSpeed": 268.8,
         "cornerNumber": 15,
-        "cornerType": "slow"
+        "cornerType": "fast"
       },
       {
         "detectedCornerIndex": 41,
@@ -70953,7 +70953,7 @@
         "exitDistance": 4880.0,
         "minSpeed": 252.5,
         "cornerNumber": 16,
-        "cornerType": "medium"
+        "cornerType": "fast"
       },
       {
         "detectedCornerIndex": 44,
@@ -71369,7 +71369,7 @@
         "exitDistance": 2150.0,
         "minSpeed": 136.5,
         "cornerNumber": 6,
-        "cornerType": "slow"
+        "cornerType": "fast"
       },
       {
         "detectedCornerIndex": 24,
@@ -71481,7 +71481,7 @@
         "exitDistance": 2554.0,
         "minSpeed": 171.8,
         "cornerNumber": 7,
-        "cornerType": "medium"
+        "cornerType": "fast"
       },
       {
         "detectedCornerIndex": 31,
@@ -71641,7 +71641,7 @@
         "exitDistance": 4468.0,
         "minSpeed": 267.7,
         "cornerNumber": 15,
-        "cornerType": "slow"
+        "cornerType": "fast"
       },
       {
         "detectedCornerIndex": 41,
@@ -71705,7 +71705,7 @@
         "exitDistance": 4884.0,
         "minSpeed": 231.7,
         "cornerNumber": 16,
-        "cornerType": "medium"
+        "cornerType": "fast"
       },
       {
         "detectedCornerIndex": 45,
@@ -72137,7 +72137,7 @@
         "exitDistance": 2152.0,
         "minSpeed": 116.9,
         "cornerNumber": 6,
-        "cornerType": "slow"
+        "cornerType": "fast"
       },
       {
         "detectedCornerIndex": 25,
@@ -72249,7 +72249,7 @@
         "exitDistance": 2558.0,
         "minSpeed": 163.3,
         "cornerNumber": 7,
-        "cornerType": "medium"
+        "cornerType": "fast"
       },
       {
         "detectedCornerIndex": 32,
@@ -72393,7 +72393,7 @@
         "exitDistance": 4452.0,
         "minSpeed": 273.4,
         "cornerNumber": 15,
-        "cornerType": "slow"
+        "cornerType": "fast"
       },
       {
         "detectedCornerIndex": 41,
@@ -72473,7 +72473,7 @@
         "exitDistance": 4880.0,
         "minSpeed": 211.4,
         "cornerNumber": 16,
-        "cornerType": "medium"
+        "cornerType": "fast"
       },
       {
         "detectedCornerIndex": 46,
@@ -72921,7 +72921,7 @@
         "exitDistance": 2150.0,
         "minSpeed": 124.7,
         "cornerNumber": 6,
-        "cornerType": "slow"
+        "cornerType": "fast"
       },
       {
         "detectedCornerIndex": 26,
@@ -73033,7 +73033,7 @@
         "exitDistance": 2556.0,
         "minSpeed": 160.8,
         "cornerNumber": 7,
-        "cornerType": "medium"
+        "cornerType": "fast"
       },
       {
         "detectedCornerIndex": 33,
@@ -73177,7 +73177,7 @@
         "exitDistance": 4470.0,
         "minSpeed": 267.7,
         "cornerNumber": 15,
-        "cornerType": "slow"
+        "cornerType": "fast"
       },
       {
         "detectedCornerIndex": 42,
@@ -73273,7 +73273,7 @@
         "exitDistance": 4898.0,
         "minSpeed": 204.8,
         "cornerNumber": 16,
-        "cornerType": "medium"
+        "cornerType": "fast"
       },
       {
         "detectedCornerIndex": 48,
@@ -73673,7 +73673,7 @@
         "exitDistance": 2154.0,
         "minSpeed": 120.6,
         "cornerNumber": 6,
-        "cornerType": "slow"
+        "cornerType": "fast"
       },
       {
         "detectedCornerIndex": 24,
@@ -73785,7 +73785,7 @@
         "exitDistance": 2558.0,
         "minSpeed": 156.0,
         "cornerNumber": 7,
-        "cornerType": "medium"
+        "cornerType": "fast"
       },
       {
         "detectedCornerIndex": 31,
@@ -73897,7 +73897,7 @@
         "exitDistance": 4452.0,
         "minSpeed": 273.4,
         "cornerNumber": 15,
-        "cornerType": "slow"
+        "cornerType": "fast"
       },
       {
         "detectedCornerIndex": 38,
@@ -73977,7 +73977,7 @@
         "exitDistance": 4878.0,
         "minSpeed": 215.9,
         "cornerNumber": 16,
-        "cornerType": "medium"
+        "cornerType": "fast"
       },
       {
         "detectedCornerIndex": 43,
@@ -74443,7 +74443,7 @@
         "exitDistance": 2152.0,
         "minSpeed": 113.8,
         "cornerNumber": 6,
-        "cornerType": "slow"
+        "cornerType": "fast"
       },
       {
         "detectedCornerIndex": 27,
@@ -74555,7 +74555,7 @@
         "exitDistance": 2556.0,
         "minSpeed": 156.8,
         "cornerNumber": 7,
-        "cornerType": "medium"
+        "cornerType": "fast"
       },
       {
         "detectedCornerIndex": 34,
@@ -74683,7 +74683,7 @@
         "exitDistance": 4452.0,
         "minSpeed": 270.3,
         "cornerNumber": 15,
-        "cornerType": "slow"
+        "cornerType": "fast"
       },
       {
         "detectedCornerIndex": 42,
@@ -74779,7 +74779,7 @@
         "exitDistance": 4882.0,
         "minSpeed": 212.7,
         "cornerNumber": 16,
-        "cornerType": "medium"
+        "cornerType": "fast"
       },
       {
         "detectedCornerIndex": 48,
@@ -75163,7 +75163,7 @@
         "exitDistance": 2148.0,
         "minSpeed": 147.5,
         "cornerNumber": 6,
-        "cornerType": "slow"
+        "cornerType": "fast"
       },
       {
         "detectedCornerIndex": 22,
@@ -75291,7 +75291,7 @@
         "exitDistance": 2554.0,
         "minSpeed": 177.0,
         "cornerNumber": 7,
-        "cornerType": "medium"
+        "cornerType": "fast"
       },
       {
         "detectedCornerIndex": 30,
@@ -75451,7 +75451,7 @@
         "exitDistance": 4476.0,
         "minSpeed": 268.8,
         "cornerNumber": 15,
-        "cornerType": "slow"
+        "cornerType": "fast"
       },
       {
         "detectedCornerIndex": 40,
@@ -75467,7 +75467,7 @@
         "exitDistance": 4878.0,
         "minSpeed": 271.4,
         "cornerNumber": 16,
-        "cornerType": "medium"
+        "cornerType": "fast"
       },
       {
         "detectedCornerIndex": 41,
@@ -75915,7 +75915,7 @@
         "exitDistance": 2162.0,
         "minSpeed": 116.8,
         "cornerNumber": 6,
-        "cornerType": "slow"
+        "cornerType": "fast"
       },
       {
         "detectedCornerIndex": 23,
@@ -76011,7 +76011,7 @@
         "exitDistance": 2546.0,
         "minSpeed": 171.6,
         "cornerNumber": 7,
-        "cornerType": "medium"
+        "cornerType": "fast"
       },
       {
         "detectedCornerIndex": 29,
@@ -76155,7 +76155,7 @@
         "exitDistance": 4478.0,
         "minSpeed": 267.0,
         "cornerNumber": 15,
-        "cornerType": "slow"
+        "cornerType": "fast"
       },
       {
         "detectedCornerIndex": 38,
@@ -76203,7 +76203,7 @@
         "exitDistance": 4878.0,
         "minSpeed": 237.6,
         "cornerNumber": 16,
-        "cornerType": "medium"
+        "cornerType": "fast"
       },
       {
         "detectedCornerIndex": 41,
@@ -76635,7 +76635,7 @@
         "exitDistance": 2148.0,
         "minSpeed": 134.0,
         "cornerNumber": 6,
-        "cornerType": "slow"
+        "cornerType": "fast"
       },
       {
         "detectedCornerIndex": 24,
@@ -76747,7 +76747,7 @@
         "exitDistance": 2546.0,
         "minSpeed": 173.0,
         "cornerNumber": 7,
-        "cornerType": "medium"
+        "cornerType": "fast"
       },
       {
         "detectedCornerIndex": 31,
@@ -76891,7 +76891,7 @@
         "exitDistance": 4482.0,
         "minSpeed": 271.3,
         "cornerNumber": 15,
-        "cornerType": "slow"
+        "cornerType": "fast"
       },
       {
         "detectedCornerIndex": 40,
@@ -76939,7 +76939,7 @@
         "exitDistance": 4878.0,
         "minSpeed": 250.7,
         "cornerNumber": 16,
-        "cornerType": "medium"
+        "cornerType": "fast"
       },
       {
         "detectedCornerIndex": 43,
@@ -77403,7 +77403,7 @@
         "exitDistance": 2150.0,
         "minSpeed": 135.0,
         "cornerNumber": 6,
-        "cornerType": "slow"
+        "cornerType": "fast"
       },
       {
         "detectedCornerIndex": 25,
@@ -77515,7 +77515,7 @@
         "exitDistance": 2556.0,
         "minSpeed": 170.1,
         "cornerNumber": 7,
-        "cornerType": "medium"
+        "cornerType": "fast"
       },
       {
         "detectedCornerIndex": 32,
@@ -77675,7 +77675,7 @@
         "exitDistance": 4468.0,
         "minSpeed": 266.2,
         "cornerNumber": 15,
-        "cornerType": "slow"
+        "cornerType": "fast"
       },
       {
         "detectedCornerIndex": 42,
@@ -77723,7 +77723,7 @@
         "exitDistance": 4882.0,
         "minSpeed": 248.4,
         "cornerNumber": 16,
-        "cornerType": "medium"
+        "cornerType": "fast"
       },
       {
         "detectedCornerIndex": 45,
@@ -78123,7 +78123,7 @@
         "exitDistance": 2158.0,
         "minSpeed": 125.1,
         "cornerNumber": 6,
-        "cornerType": "slow"
+        "cornerType": "fast"
       },
       {
         "detectedCornerIndex": 22,
@@ -78235,7 +78235,7 @@
         "exitDistance": 2548.0,
         "minSpeed": 176.6,
         "cornerNumber": 7,
-        "cornerType": "medium"
+        "cornerType": "fast"
       },
       {
         "detectedCornerIndex": 29,
@@ -78395,7 +78395,7 @@
         "exitDistance": 4470.0,
         "minSpeed": 272.5,
         "cornerNumber": 15,
-        "cornerType": "slow"
+        "cornerType": "fast"
       },
       {
         "detectedCornerIndex": 39,
@@ -78443,7 +78443,7 @@
         "exitDistance": 4884.0,
         "minSpeed": 251.8,
         "cornerNumber": 16,
-        "cornerType": "medium"
+        "cornerType": "fast"
       },
       {
         "detectedCornerIndex": 42,
@@ -78859,7 +78859,7 @@
         "exitDistance": 2154.0,
         "minSpeed": 132.9,
         "cornerNumber": 6,
-        "cornerType": "slow"
+        "cornerType": "fast"
       },
       {
         "detectedCornerIndex": 24,
@@ -78987,7 +78987,7 @@
         "exitDistance": 2550.0,
         "minSpeed": 156.9,
         "cornerNumber": 7,
-        "cornerType": "medium"
+        "cornerType": "fast"
       },
       {
         "detectedCornerIndex": 32,
@@ -79099,7 +79099,7 @@
         "exitDistance": 4462.0,
         "minSpeed": 272.2,
         "cornerNumber": 15,
-        "cornerType": "slow"
+        "cornerType": "fast"
       },
       {
         "detectedCornerIndex": 39,
@@ -79163,7 +79163,7 @@
         "exitDistance": 4886.0,
         "minSpeed": 230.1,
         "cornerNumber": 16,
-        "cornerType": "medium"
+        "cornerType": "fast"
       },
       {
         "detectedCornerIndex": 43,
@@ -79661,7 +79661,7 @@
         "exitDistance": 2150.0,
         "minSpeed": 121.3,
         "cornerNumber": 6,
-        "cornerType": "slow"
+        "cornerType": "fast"
       },
       {
         "detectedCornerIndex": 29,
@@ -79773,7 +79773,7 @@
         "exitDistance": 2554.0,
         "minSpeed": 157.8,
         "cornerNumber": 7,
-        "cornerType": "medium"
+        "cornerType": "fast"
       },
       {
         "detectedCornerIndex": 36,
@@ -79885,7 +79885,7 @@
         "exitDistance": 4454.0,
         "minSpeed": 268.5,
         "cornerNumber": 15,
-        "cornerType": "slow"
+        "cornerType": "fast"
       },
       {
         "detectedCornerIndex": 43,
@@ -79981,7 +79981,7 @@
         "exitDistance": 4886.0,
         "minSpeed": 215.3,
         "cornerNumber": 16,
-        "cornerType": "medium"
+        "cornerType": "fast"
       },
       {
         "detectedCornerIndex": 49,
@@ -80557,7 +80557,7 @@
         "exitDistance": 2166.0,
         "minSpeed": 78.0,
         "cornerNumber": 6,
-        "cornerType": "slow"
+        "cornerType": "fast"
       },
       {
         "detectedCornerIndex": 34,
@@ -80941,7 +80941,7 @@
         "exitDistance": 4418.0,
         "minSpeed": 204.7,
         "cornerNumber": 15,
-        "cornerType": "slow"
+        "cornerType": "fast"
       },
       {
         "detectedCornerIndex": 58,
@@ -81485,7 +81485,7 @@
         "exitDistance": 2158.0,
         "minSpeed": 122.6,
         "cornerNumber": 6,
-        "cornerType": "slow"
+        "cornerType": "fast"
       },
       {
         "detectedCornerIndex": 27,
@@ -81597,7 +81597,7 @@
         "exitDistance": 2558.0,
         "minSpeed": 157.4,
         "cornerNumber": 7,
-        "cornerType": "medium"
+        "cornerType": "fast"
       },
       {
         "detectedCornerIndex": 34,
@@ -81725,7 +81725,7 @@
         "exitDistance": 4456.0,
         "minSpeed": 266.4,
         "cornerNumber": 15,
-        "cornerType": "slow"
+        "cornerType": "fast"
       },
       {
         "detectedCornerIndex": 42,
@@ -81789,7 +81789,7 @@
         "exitDistance": 4878.0,
         "minSpeed": 232.2,
         "cornerNumber": 16,
-        "cornerType": "medium"
+        "cornerType": "fast"
       },
       {
         "detectedCornerIndex": 46,
@@ -82189,7 +82189,7 @@
         "exitDistance": 2144.0,
         "minSpeed": 126.8,
         "cornerNumber": 6,
-        "cornerType": "slow"
+        "cornerType": "fast"
       },
       {
         "detectedCornerIndex": 24,
@@ -82317,7 +82317,7 @@
         "exitDistance": 2556.0,
         "minSpeed": 161.3,
         "cornerNumber": 7,
-        "cornerType": "medium"
+        "cornerType": "fast"
       },
       {
         "detectedCornerIndex": 32,
@@ -82477,7 +82477,7 @@
         "exitDistance": 4488.0,
         "minSpeed": 258.3,
         "cornerNumber": 15,
-        "cornerType": "slow"
+        "cornerType": "fast"
       },
       {
         "detectedCornerIndex": 42,
@@ -82525,7 +82525,7 @@
         "exitDistance": 4884.0,
         "minSpeed": 227.9,
         "cornerNumber": 16,
-        "cornerType": "medium"
+        "cornerType": "fast"
       },
       {
         "detectedCornerIndex": 45,
@@ -82941,7 +82941,7 @@
         "exitDistance": 2154.0,
         "minSpeed": 122.3,
         "cornerNumber": 6,
-        "cornerType": "slow"
+        "cornerType": "fast"
       },
       {
         "detectedCornerIndex": 24,
@@ -83037,7 +83037,7 @@
         "exitDistance": 2542.0,
         "minSpeed": 172.3,
         "cornerNumber": 7,
-        "cornerType": "medium"
+        "cornerType": "fast"
       },
       {
         "detectedCornerIndex": 30,
@@ -83197,7 +83197,7 @@
         "exitDistance": 4474.0,
         "minSpeed": 267.6,
         "cornerNumber": 15,
-        "cornerType": "slow"
+        "cornerType": "fast"
       },
       {
         "detectedCornerIndex": 40,
@@ -83245,7 +83245,7 @@
         "exitDistance": 4882.0,
         "minSpeed": 245.6,
         "cornerNumber": 16,
-        "cornerType": "medium"
+        "cornerType": "fast"
       },
       {
         "detectedCornerIndex": 43,
@@ -83661,7 +83661,7 @@
         "exitDistance": 2150.0,
         "minSpeed": 129.7,
         "cornerNumber": 6,
-        "cornerType": "slow"
+        "cornerType": "fast"
       },
       {
         "detectedCornerIndex": 23,
@@ -83741,7 +83741,7 @@
         "exitDistance": 2542.0,
         "minSpeed": 179.4,
         "cornerNumber": 7,
-        "cornerType": "medium"
+        "cornerType": "fast"
       },
       {
         "detectedCornerIndex": 28,
@@ -83901,7 +83901,7 @@
         "exitDistance": 4458.0,
         "minSpeed": 267.8,
         "cornerNumber": 15,
-        "cornerType": "slow"
+        "cornerType": "fast"
       },
       {
         "detectedCornerIndex": 38,
@@ -83965,7 +83965,7 @@
         "exitDistance": 4878.0,
         "minSpeed": 240.4,
         "cornerNumber": 16,
-        "cornerType": "medium"
+        "cornerType": "fast"
       },
       {
         "detectedCornerIndex": 42,
@@ -84381,7 +84381,7 @@
         "exitDistance": 2154.0,
         "minSpeed": 135.2,
         "cornerNumber": 6,
-        "cornerType": "slow"
+        "cornerType": "fast"
       },
       {
         "detectedCornerIndex": 23,
@@ -84493,7 +84493,7 @@
         "exitDistance": 2552.0,
         "minSpeed": 170.6,
         "cornerNumber": 7,
-        "cornerType": "medium"
+        "cornerType": "fast"
       },
       {
         "detectedCornerIndex": 30,
@@ -84653,7 +84653,7 @@
         "exitDistance": 4482.0,
         "minSpeed": 268.2,
         "cornerNumber": 15,
-        "cornerType": "slow"
+        "cornerType": "fast"
       },
       {
         "detectedCornerIndex": 40,
@@ -84701,7 +84701,7 @@
         "exitDistance": 4886.0,
         "minSpeed": 250.9,
         "cornerNumber": 16,
-        "cornerType": "medium"
+        "cornerType": "fast"
       },
       {
         "detectedCornerIndex": 43,
@@ -85149,7 +85149,7 @@
         "exitDistance": 2146.0,
         "minSpeed": 133.1,
         "cornerNumber": 6,
-        "cornerType": "slow"
+        "cornerType": "fast"
       },
       {
         "detectedCornerIndex": 25,
@@ -85261,7 +85261,7 @@
         "exitDistance": 2548.0,
         "minSpeed": 168.5,
         "cornerNumber": 7,
-        "cornerType": "medium"
+        "cornerType": "fast"
       },
       {
         "detectedCornerIndex": 32,
@@ -85405,7 +85405,7 @@
         "exitDistance": 4484.0,
         "minSpeed": 265.8,
         "cornerNumber": 15,
-        "cornerType": "slow"
+        "cornerType": "fast"
       },
       {
         "detectedCornerIndex": 41,
@@ -85453,7 +85453,7 @@
         "exitDistance": 4880.0,
         "minSpeed": 234.2,
         "cornerNumber": 16,
-        "cornerType": "medium"
+        "cornerType": "fast"
       },
       {
         "detectedCornerIndex": 44,
@@ -85903,7 +85903,7 @@
         "exitDistance": 2150.0,
         "minSpeed": 135.0,
         "cornerNumber": 6,
-        "cornerType": "slow"
+        "cornerType": "fast"
       },
       {
         "detectedCornerIndex": 26,
@@ -86031,7 +86031,7 @@
         "exitDistance": 2552.0,
         "minSpeed": 158.3,
         "cornerNumber": 7,
-        "cornerType": "medium"
+        "cornerType": "fast"
       },
       {
         "detectedCornerIndex": 34,
@@ -86191,7 +86191,7 @@
         "exitDistance": 4466.0,
         "minSpeed": 269.6,
         "cornerNumber": 15,
-        "cornerType": "slow"
+        "cornerType": "fast"
       },
       {
         "detectedCornerIndex": 44,
@@ -86271,7 +86271,7 @@
         "exitDistance": 4888.0,
         "minSpeed": 220.4,
         "cornerNumber": 16,
-        "cornerType": "medium"
+        "cornerType": "fast"
       },
       {
         "detectedCornerIndex": 49,
@@ -86703,7 +86703,7 @@
         "exitDistance": 2146.0,
         "minSpeed": 152.2,
         "cornerNumber": 6,
-        "cornerType": "slow"
+        "cornerType": "fast"
       },
       {
         "detectedCornerIndex": 25,
@@ -86815,7 +86815,7 @@
         "exitDistance": 2544.0,
         "minSpeed": 185.0,
         "cornerNumber": 7,
-        "cornerType": "medium"
+        "cornerType": "fast"
       },
       {
         "detectedCornerIndex": 32,
@@ -86991,7 +86991,7 @@
         "exitDistance": 4480.0,
         "minSpeed": 270.2,
         "cornerNumber": 15,
-        "cornerType": "slow"
+        "cornerType": "fast"
       },
       {
         "detectedCornerIndex": 43,
@@ -87039,7 +87039,7 @@
         "exitDistance": 4878.0,
         "minSpeed": 259.7,
         "cornerNumber": 16,
-        "cornerType": "medium"
+        "cornerType": "fast"
       },
       {
         "detectedCornerIndex": 46,
@@ -87487,7 +87487,7 @@
         "exitDistance": 2150.0,
         "minSpeed": 132.3,
         "cornerNumber": 6,
-        "cornerType": "slow"
+        "cornerType": "fast"
       },
       {
         "detectedCornerIndex": 24,
@@ -87599,7 +87599,7 @@
         "exitDistance": 2544.0,
         "minSpeed": 172.1,
         "cornerNumber": 7,
-        "cornerType": "medium"
+        "cornerType": "fast"
       },
       {
         "detectedCornerIndex": 31,
@@ -87743,7 +87743,7 @@
         "exitDistance": 4478.0,
         "minSpeed": 270.1,
         "cornerNumber": 15,
-        "cornerType": "slow"
+        "cornerType": "fast"
       },
       {
         "detectedCornerIndex": 40,
@@ -87791,7 +87791,7 @@
         "exitDistance": 4880.0,
         "minSpeed": 244.8,
         "cornerNumber": 16,
-        "cornerType": "medium"
+        "cornerType": "fast"
       },
       {
         "detectedCornerIndex": 43,
@@ -88223,7 +88223,7 @@
         "exitDistance": 2156.0,
         "minSpeed": 131.6,
         "cornerNumber": 6,
-        "cornerType": "slow"
+        "cornerType": "fast"
       },
       {
         "detectedCornerIndex": 23,
@@ -88335,7 +88335,7 @@
         "exitDistance": 2554.0,
         "minSpeed": 165.1,
         "cornerNumber": 7,
-        "cornerType": "medium"
+        "cornerType": "fast"
       },
       {
         "detectedCornerIndex": 30,
@@ -88463,7 +88463,7 @@
         "exitDistance": 4486.0,
         "minSpeed": 266.3,
         "cornerNumber": 15,
-        "cornerType": "slow"
+        "cornerType": "fast"
       },
       {
         "detectedCornerIndex": 38,
@@ -88495,7 +88495,7 @@
         "exitDistance": 4878.0,
         "minSpeed": 257.3,
         "cornerNumber": 16,
-        "cornerType": "medium"
+        "cornerType": "fast"
       },
       {
         "detectedCornerIndex": 40,
@@ -88959,7 +88959,7 @@
         "exitDistance": 2146.0,
         "minSpeed": 145.6,
         "cornerNumber": 6,
-        "cornerType": "slow"
+        "cornerType": "fast"
       },
       {
         "detectedCornerIndex": 25,
@@ -89087,7 +89087,7 @@
         "exitDistance": 2544.0,
         "minSpeed": 175.6,
         "cornerNumber": 7,
-        "cornerType": "medium"
+        "cornerType": "fast"
       },
       {
         "detectedCornerIndex": 33,
@@ -89231,7 +89231,7 @@
         "exitDistance": 4480.0,
         "minSpeed": 273.0,
         "cornerNumber": 15,
-        "cornerType": "slow"
+        "cornerType": "fast"
       },
       {
         "detectedCornerIndex": 42,
@@ -89279,7 +89279,7 @@
         "exitDistance": 4886.0,
         "minSpeed": 233.5,
         "cornerNumber": 16,
-        "cornerType": "medium"
+        "cornerType": "fast"
       },
       {
         "detectedCornerIndex": 45,
@@ -89713,7 +89713,7 @@
         "exitDistance": 2150.0,
         "minSpeed": 133.0,
         "cornerNumber": 6,
-        "cornerType": "slow"
+        "cornerType": "fast"
       },
       {
         "detectedCornerIndex": 25,
@@ -89825,7 +89825,7 @@
         "exitDistance": 2544.0,
         "minSpeed": 172.7,
         "cornerNumber": 7,
-        "cornerType": "medium"
+        "cornerType": "fast"
       },
       {
         "detectedCornerIndex": 32,
@@ -89985,7 +89985,7 @@
         "exitDistance": 4464.0,
         "minSpeed": 265.5,
         "cornerNumber": 15,
-        "cornerType": "slow"
+        "cornerType": "fast"
       },
       {
         "detectedCornerIndex": 42,
@@ -90049,7 +90049,7 @@
         "exitDistance": 4884.0,
         "minSpeed": 229.8,
         "cornerNumber": 16,
-        "cornerType": "medium"
+        "cornerType": "fast"
       },
       {
         "detectedCornerIndex": 46,
@@ -90609,7 +90609,7 @@
         "exitDistance": 2158.0,
         "minSpeed": 89.6,
         "cornerNumber": 6,
-        "cornerType": "slow"
+        "cornerType": "fast"
       },
       {
         "detectedCornerIndex": 33,
@@ -90865,7 +90865,7 @@
         "exitDistance": 3712.0,
         "minSpeed": 232.9,
         "cornerNumber": 12,
-        "cornerType": "slow"
+        "cornerType": "fast"
       },
       {
         "detectedCornerIndex": 49,
@@ -91057,7 +91057,7 @@
         "exitDistance": 4414.0,
         "minSpeed": 205.3,
         "cornerNumber": 15,
-        "cornerType": "slow"
+        "cornerType": "fast"
       },
       {
         "detectedCornerIndex": 61,
@@ -91537,7 +91537,7 @@
         "exitDistance": 2146.0,
         "minSpeed": 148.8,
         "cornerNumber": 6,
-        "cornerType": "slow"
+        "cornerType": "fast"
       },
       {
         "detectedCornerIndex": 20,
@@ -91617,7 +91617,7 @@
         "exitDistance": 2548.0,
         "minSpeed": 182.0,
         "cornerNumber": 7,
-        "cornerType": "medium"
+        "cornerType": "fast"
       },
       {
         "detectedCornerIndex": 25,
@@ -91777,7 +91777,7 @@
         "exitDistance": 4472.0,
         "minSpeed": 267.8,
         "cornerNumber": 15,
-        "cornerType": "slow"
+        "cornerType": "fast"
       },
       {
         "detectedCornerIndex": 35,
@@ -91841,7 +91841,7 @@
         "exitDistance": 4882.0,
         "minSpeed": 234.8,
         "cornerNumber": 16,
-        "cornerType": "medium"
+        "cornerType": "fast"
       },
       {
         "detectedCornerIndex": 39,
@@ -92273,7 +92273,7 @@
         "exitDistance": 2156.0,
         "minSpeed": 116.5,
         "cornerNumber": 6,
-        "cornerType": "slow"
+        "cornerType": "fast"
       },
       {
         "detectedCornerIndex": 24,
@@ -92385,7 +92385,7 @@
         "exitDistance": 2558.0,
         "minSpeed": 164.2,
         "cornerNumber": 7,
-        "cornerType": "medium"
+        "cornerType": "fast"
       },
       {
         "detectedCornerIndex": 31,
@@ -92529,7 +92529,7 @@
         "exitDistance": 4452.0,
         "minSpeed": 269.9,
         "cornerNumber": 15,
-        "cornerType": "slow"
+        "cornerType": "fast"
       },
       {
         "detectedCornerIndex": 40,
@@ -92593,7 +92593,7 @@
         "exitDistance": 4880.0,
         "minSpeed": 229.8,
         "cornerNumber": 16,
-        "cornerType": "medium"
+        "cornerType": "fast"
       },
       {
         "detectedCornerIndex": 44,
@@ -93169,7 +93169,7 @@
         "exitDistance": 2198.0,
         "minSpeed": 87.0,
         "cornerNumber": 6,
-        "cornerType": "slow"
+        "cornerType": "fast"
       },
       {
         "detectedCornerIndex": 33,
@@ -93489,7 +93489,7 @@
         "exitDistance": 4424.0,
         "minSpeed": 196.2,
         "cornerNumber": 15,
-        "cornerType": "slow"
+        "cornerType": "fast"
       },
       {
         "detectedCornerIndex": 53,
@@ -93633,7 +93633,7 @@
         "exitDistance": 4900.0,
         "minSpeed": 135.4,
         "cornerNumber": 16,
-        "cornerType": "medium"
+        "cornerType": "fast"
       },
       {
         "detectedCornerIndex": 62,
@@ -94065,7 +94065,7 @@
         "exitDistance": 2144.0,
         "minSpeed": 119.7,
         "cornerNumber": 6,
-        "cornerType": "slow"
+        "cornerType": "fast"
       },
       {
         "detectedCornerIndex": 19,
@@ -94193,7 +94193,7 @@
         "exitDistance": 2570.0,
         "minSpeed": 137.5,
         "cornerNumber": 7,
-        "cornerType": "medium"
+        "cornerType": "fast"
       },
       {
         "detectedCornerIndex": 27,
@@ -94337,7 +94337,7 @@
         "exitDistance": 3726.0,
         "minSpeed": 252.0,
         "cornerNumber": 12,
-        "cornerType": "slow"
+        "cornerType": "fast"
       },
       {
         "detectedCornerIndex": 36,
@@ -94497,7 +94497,7 @@
         "exitDistance": 4430.0,
         "minSpeed": 238.2,
         "cornerNumber": 15,
-        "cornerType": "slow"
+        "cornerType": "fast"
       },
       {
         "detectedCornerIndex": 46,
@@ -94577,7 +94577,7 @@
         "exitDistance": 4896.0,
         "minSpeed": 175.5,
         "cornerNumber": 16,
-        "cornerType": "medium"
+        "cornerType": "fast"
       },
       {
         "detectedCornerIndex": 51,
@@ -94929,7 +94929,7 @@
         "exitDistance": 2144.0,
         "minSpeed": 153.9,
         "cornerNumber": 6,
-        "cornerType": "slow"
+        "cornerType": "fast"
       },
       {
         "detectedCornerIndex": 22,
@@ -95057,7 +95057,7 @@
         "exitDistance": 2556.0,
         "minSpeed": 175.7,
         "cornerNumber": 7,
-        "cornerType": "medium"
+        "cornerType": "fast"
       },
       {
         "detectedCornerIndex": 30,
@@ -95217,7 +95217,7 @@
         "exitDistance": 4478.0,
         "minSpeed": 263.2,
         "cornerNumber": 15,
-        "cornerType": "slow"
+        "cornerType": "fast"
       },
       {
         "detectedCornerIndex": 40,
@@ -95249,7 +95249,7 @@
         "exitDistance": 4878.0,
         "minSpeed": 249.0,
         "cornerNumber": 16,
-        "cornerType": "medium"
+        "cornerType": "fast"
       },
       {
         "detectedCornerIndex": 42,
@@ -95729,7 +95729,7 @@
         "exitDistance": 2144.0,
         "minSpeed": 126.7,
         "cornerNumber": 6,
-        "cornerType": "slow"
+        "cornerType": "fast"
       },
       {
         "detectedCornerIndex": 26,
@@ -95841,7 +95841,7 @@
         "exitDistance": 2558.0,
         "minSpeed": 163.3,
         "cornerNumber": 7,
-        "cornerType": "medium"
+        "cornerType": "fast"
       },
       {
         "detectedCornerIndex": 33,
@@ -95985,7 +95985,7 @@
         "exitDistance": 4466.0,
         "minSpeed": 259.7,
         "cornerNumber": 15,
-        "cornerType": "slow"
+        "cornerType": "fast"
       },
       {
         "detectedCornerIndex": 42,
@@ -96033,7 +96033,7 @@
         "exitDistance": 4884.0,
         "minSpeed": 227.6,
         "cornerNumber": 16,
-        "cornerType": "medium"
+        "cornerType": "fast"
       },
       {
         "detectedCornerIndex": 45,
@@ -96449,7 +96449,7 @@
         "exitDistance": 2144.0,
         "minSpeed": 125.7,
         "cornerNumber": 6,
-        "cornerType": "slow"
+        "cornerType": "fast"
       },
       {
         "detectedCornerIndex": 25,
@@ -96577,7 +96577,7 @@
         "exitDistance": 2558.0,
         "minSpeed": 161.7,
         "cornerNumber": 7,
-        "cornerType": "medium"
+        "cornerType": "fast"
       },
       {
         "detectedCornerIndex": 33,
@@ -96689,7 +96689,7 @@
         "exitDistance": 4450.0,
         "minSpeed": 267.0,
         "cornerNumber": 15,
-        "cornerType": "slow"
+        "cornerType": "fast"
       },
       {
         "detectedCornerIndex": 40,
@@ -96769,7 +96769,7 @@
         "exitDistance": 4886.0,
         "minSpeed": 200.2,
         "cornerNumber": 16,
-        "cornerType": "medium"
+        "cornerType": "fast"
       },
       {
         "detectedCornerIndex": 45,
@@ -97313,7 +97313,7 @@
         "exitDistance": 2160.0,
         "minSpeed": 86.3,
         "cornerNumber": 6,
-        "cornerType": "slow"
+        "cornerType": "fast"
       },
       {
         "detectedCornerIndex": 32,
@@ -97553,7 +97553,7 @@
         "exitDistance": 3728.0,
         "minSpeed": 200.6,
         "cornerNumber": 12,
-        "cornerType": "slow"
+        "cornerType": "fast"
       },
       {
         "detectedCornerIndex": 47,
@@ -97665,7 +97665,7 @@
         "exitDistance": 4416.0,
         "minSpeed": 183.8,
         "cornerNumber": 15,
-        "cornerType": "slow"
+        "cornerType": "fast"
       },
       {
         "detectedCornerIndex": 54,
@@ -97793,7 +97793,7 @@
         "exitDistance": 4896.0,
         "minSpeed": 131.4,
         "cornerNumber": 16,
-        "cornerType": "medium"
+        "cornerType": "fast"
       },
       {
         "detectedCornerIndex": 62,
@@ -98193,7 +98193,7 @@
         "exitDistance": 2146.0,
         "minSpeed": 118.1,
         "cornerNumber": 6,
-        "cornerType": "slow"
+        "cornerType": "fast"
       },
       {
         "detectedCornerIndex": 18,
@@ -98305,7 +98305,7 @@
         "exitDistance": 2546.0,
         "minSpeed": 121.9,
         "cornerNumber": 7,
-        "cornerType": "medium"
+        "cornerType": "fast"
       },
       {
         "detectedCornerIndex": 25,
@@ -98481,7 +98481,7 @@
         "exitDistance": 3862.0,
         "minSpeed": 196.0,
         "cornerNumber": 12,
-        "cornerType": "slow"
+        "cornerType": "fast"
       },
       {
         "detectedCornerIndex": 36,
@@ -98641,7 +98641,7 @@
         "exitDistance": 4878.0,
         "minSpeed": 165.5,
         "cornerNumber": 16,
-        "cornerType": "medium"
+        "cornerType": "fast"
       },
       {
         "detectedCornerIndex": 1,
@@ -99025,7 +99025,7 @@
         "exitDistance": 2144.0,
         "minSpeed": 134.7,
         "cornerNumber": 6,
-        "cornerType": "slow"
+        "cornerType": "fast"
       },
       {
         "detectedCornerIndex": 25,
@@ -99137,7 +99137,7 @@
         "exitDistance": 2544.0,
         "minSpeed": 175.8,
         "cornerNumber": 7,
-        "cornerType": "medium"
+        "cornerType": "fast"
       },
       {
         "detectedCornerIndex": 32,
@@ -99313,7 +99313,7 @@
         "exitDistance": 4464.0,
         "minSpeed": 262.7,
         "cornerNumber": 15,
-        "cornerType": "slow"
+        "cornerType": "fast"
       },
       {
         "detectedCornerIndex": 43,
@@ -99377,7 +99377,7 @@
         "exitDistance": 4880.0,
         "minSpeed": 244.0,
         "cornerNumber": 16,
-        "cornerType": "medium"
+        "cornerType": "fast"
       },
       {
         "detectedCornerIndex": 47,
@@ -99811,7 +99811,7 @@
         "exitDistance": 2146.0,
         "minSpeed": 149.5,
         "cornerNumber": 6,
-        "cornerType": "slow"
+        "cornerType": "fast"
       },
       {
         "detectedCornerIndex": 24,
@@ -99955,7 +99955,7 @@
         "exitDistance": 2556.0,
         "minSpeed": 163.9,
         "cornerNumber": 7,
-        "cornerType": "medium"
+        "cornerType": "fast"
       },
       {
         "detectedCornerIndex": 33,
@@ -100099,7 +100099,7 @@
         "exitDistance": 4488.0,
         "minSpeed": 260.6,
         "cornerNumber": 15,
-        "cornerType": "slow"
+        "cornerType": "fast"
       },
       {
         "detectedCornerIndex": 42,
@@ -100131,7 +100131,7 @@
         "exitDistance": 4882.0,
         "minSpeed": 251.8,
         "cornerNumber": 16,
-        "cornerType": "medium"
+        "cornerType": "fast"
       },
       {
         "detectedCornerIndex": 44,
@@ -100931,7 +100931,7 @@
         "exitDistance": 2542.0,
         "minSpeed": 121.2,
         "cornerNumber": 7,
-        "cornerType": "medium"
+        "cornerType": "fast"
       },
       {
         "detectedCornerIndex": 46,
@@ -101091,7 +101091,7 @@
         "exitDistance": 3708.0,
         "minSpeed": 211.8,
         "cornerNumber": 12,
-        "cornerType": "slow"
+        "cornerType": "fast"
       },
       {
         "detectedCornerIndex": 56,
@@ -101171,7 +101171,7 @@
         "exitDistance": 4424.0,
         "minSpeed": 193.4,
         "cornerNumber": 15,
-        "cornerType": "slow"
+        "cornerType": "fast"
       },
       {
         "detectedCornerIndex": 61,
@@ -101651,7 +101651,7 @@
         "exitDistance": 2148.0,
         "minSpeed": 124.7,
         "cornerNumber": 6,
-        "cornerType": "slow"
+        "cornerType": "fast"
       },
       {
         "detectedCornerIndex": 24,
@@ -101779,7 +101779,7 @@
         "exitDistance": 2550.0,
         "minSpeed": 159.6,
         "cornerNumber": 7,
-        "cornerType": "medium"
+        "cornerType": "fast"
       },
       {
         "detectedCornerIndex": 32,
@@ -101923,7 +101923,7 @@
         "exitDistance": 4464.0,
         "minSpeed": 266.5,
         "cornerNumber": 15,
-        "cornerType": "slow"
+        "cornerType": "fast"
       },
       {
         "detectedCornerIndex": 41,
@@ -101971,7 +101971,7 @@
         "exitDistance": 4886.0,
         "minSpeed": 220.0,
         "cornerNumber": 16,
-        "cornerType": "medium"
+        "cornerType": "fast"
       },
       {
         "detectedCornerIndex": 44,
@@ -102403,7 +102403,7 @@
         "exitDistance": 2146.0,
         "minSpeed": 144.5,
         "cornerNumber": 6,
-        "cornerType": "slow"
+        "cornerType": "fast"
       },
       {
         "detectedCornerIndex": 25,
@@ -102531,7 +102531,7 @@
         "exitDistance": 2554.0,
         "minSpeed": 172.2,
         "cornerNumber": 7,
-        "cornerType": "medium"
+        "cornerType": "fast"
       },
       {
         "detectedCornerIndex": 33,
@@ -102675,7 +102675,7 @@
         "exitDistance": 4474.0,
         "minSpeed": 270.7,
         "cornerNumber": 15,
-        "cornerType": "slow"
+        "cornerType": "fast"
       },
       {
         "detectedCornerIndex": 42,
@@ -102707,7 +102707,7 @@
         "exitDistance": 4884.0,
         "minSpeed": 253.0,
         "cornerNumber": 16,
-        "cornerType": "medium"
+        "cornerType": "fast"
       },
       {
         "detectedCornerIndex": 44,
@@ -103139,7 +103139,7 @@
         "exitDistance": 2144.0,
         "minSpeed": 144.9,
         "cornerNumber": 6,
-        "cornerType": "slow"
+        "cornerType": "fast"
       },
       {
         "detectedCornerIndex": 23,
@@ -103267,7 +103267,7 @@
         "exitDistance": 2550.0,
         "minSpeed": 173.3,
         "cornerNumber": 7,
-        "cornerType": "medium"
+        "cornerType": "fast"
       },
       {
         "detectedCornerIndex": 31,
@@ -103443,7 +103443,7 @@
         "exitDistance": 4510.0,
         "minSpeed": 261.0,
         "cornerNumber": 15,
-        "cornerType": "slow"
+        "cornerType": "fast"
       },
       {
         "detectedCornerIndex": 42,
@@ -103475,7 +103475,7 @@
         "exitDistance": 4880.0,
         "minSpeed": 250.2,
         "cornerNumber": 16,
-        "cornerType": "medium"
+        "cornerType": "fast"
       },
       {
         "detectedCornerIndex": 44,
@@ -103907,7 +103907,7 @@
         "exitDistance": 2148.0,
         "minSpeed": 129.0,
         "cornerNumber": 6,
-        "cornerType": "slow"
+        "cornerType": "fast"
       },
       {
         "detectedCornerIndex": 23,
@@ -104035,7 +104035,7 @@
         "exitDistance": 2554.0,
         "minSpeed": 154.6,
         "cornerNumber": 7,
-        "cornerType": "medium"
+        "cornerType": "fast"
       },
       {
         "detectedCornerIndex": 31,
@@ -104179,7 +104179,7 @@
         "exitDistance": 4464.0,
         "minSpeed": 265.1,
         "cornerNumber": 15,
-        "cornerType": "slow"
+        "cornerType": "fast"
       },
       {
         "detectedCornerIndex": 40,
@@ -104259,7 +104259,7 @@
         "exitDistance": 4882.0,
         "minSpeed": 223.1,
         "cornerNumber": 16,
-        "cornerType": "medium"
+        "cornerType": "fast"
       },
       {
         "detectedCornerIndex": 45,
@@ -104675,7 +104675,7 @@
         "exitDistance": 2144.0,
         "minSpeed": 135.3,
         "cornerNumber": 6,
-        "cornerType": "slow"
+        "cornerType": "fast"
       },
       {
         "detectedCornerIndex": 24,
@@ -104787,7 +104787,7 @@
         "exitDistance": 2542.0,
         "minSpeed": 177.7,
         "cornerNumber": 7,
-        "cornerType": "medium"
+        "cornerType": "fast"
       },
       {
         "detectedCornerIndex": 31,
@@ -104963,7 +104963,7 @@
         "exitDistance": 4474.0,
         "minSpeed": 267.7,
         "cornerNumber": 15,
-        "cornerType": "slow"
+        "cornerType": "fast"
       },
       {
         "detectedCornerIndex": 42,
@@ -105011,7 +105011,7 @@
         "exitDistance": 4888.0,
         "minSpeed": 233.0,
         "cornerNumber": 16,
-        "cornerType": "medium"
+        "cornerType": "fast"
       },
       {
         "detectedCornerIndex": 45,
@@ -105395,7 +105395,7 @@
         "exitDistance": 2146.0,
         "minSpeed": 140.6,
         "cornerNumber": 6,
-        "cornerType": "slow"
+        "cornerType": "fast"
       },
       {
         "detectedCornerIndex": 22,
@@ -105507,7 +105507,7 @@
         "exitDistance": 2548.0,
         "minSpeed": 170.9,
         "cornerNumber": 7,
-        "cornerType": "medium"
+        "cornerType": "fast"
       },
       {
         "detectedCornerIndex": 29,
@@ -105635,7 +105635,7 @@
         "exitDistance": 4478.0,
         "minSpeed": 269.5,
         "cornerNumber": 15,
-        "cornerType": "slow"
+        "cornerType": "fast"
       },
       {
         "detectedCornerIndex": 37,
@@ -105683,7 +105683,7 @@
         "exitDistance": 4880.0,
         "minSpeed": 256.2,
         "cornerNumber": 16,
-        "cornerType": "medium"
+        "cornerType": "fast"
       },
       {
         "detectedCornerIndex": 40,
@@ -106133,7 +106133,7 @@
         "exitDistance": 2158.0,
         "minSpeed": 111.7,
         "cornerNumber": 6,
-        "cornerType": "slow"
+        "cornerType": "fast"
       },
       {
         "detectedCornerIndex": 24,
@@ -106229,7 +106229,7 @@
         "exitDistance": 2544.0,
         "minSpeed": 163.4,
         "cornerNumber": 7,
-        "cornerType": "medium"
+        "cornerType": "fast"
       },
       {
         "detectedCornerIndex": 30,
@@ -106389,7 +106389,7 @@
         "exitDistance": 4456.0,
         "minSpeed": 269.3,
         "cornerNumber": 15,
-        "cornerType": "slow"
+        "cornerType": "fast"
       },
       {
         "detectedCornerIndex": 40,
@@ -106485,7 +106485,7 @@
         "exitDistance": 4888.0,
         "minSpeed": 188.2,
         "cornerNumber": 16,
-        "cornerType": "medium"
+        "cornerType": "fast"
       },
       {
         "detectedCornerIndex": 46,
@@ -106981,7 +106981,7 @@
         "exitDistance": 2146.0,
         "minSpeed": 94.0,
         "cornerNumber": 6,
-        "cornerType": "slow"
+        "cornerType": "fast"
       },
       {
         "detectedCornerIndex": 30,
@@ -107221,7 +107221,7 @@
         "exitDistance": 3730.0,
         "minSpeed": 205.2,
         "cornerNumber": 12,
-        "cornerType": "slow"
+        "cornerType": "fast"
       },
       {
         "detectedCornerIndex": 45,
@@ -107317,7 +107317,7 @@
         "exitDistance": 4434.0,
         "minSpeed": 202.8,
         "cornerNumber": 15,
-        "cornerType": "slow"
+        "cornerType": "fast"
       },
       {
         "detectedCornerIndex": 51,
@@ -107845,7 +107845,7 @@
         "exitDistance": 2154.0,
         "minSpeed": 123.6,
         "cornerNumber": 6,
-        "cornerType": "slow"
+        "cornerType": "fast"
       },
       {
         "detectedCornerIndex": 26,
@@ -107973,7 +107973,7 @@
         "exitDistance": 2556.0,
         "minSpeed": 153.3,
         "cornerNumber": 7,
-        "cornerType": "medium"
+        "cornerType": "fast"
       },
       {
         "detectedCornerIndex": 34,
@@ -108101,7 +108101,7 @@
         "exitDistance": 4436.0,
         "minSpeed": 270.1,
         "cornerNumber": 15,
-        "cornerType": "slow"
+        "cornerType": "fast"
       },
       {
         "detectedCornerIndex": 42,
@@ -108181,7 +108181,7 @@
         "exitDistance": 4880.0,
         "minSpeed": 221.0,
         "cornerNumber": 16,
-        "cornerType": "medium"
+        "cornerType": "fast"
       },
       {
         "detectedCornerIndex": 47,
@@ -108613,7 +108613,7 @@
         "exitDistance": 2152.0,
         "minSpeed": 117.4,
         "cornerNumber": 6,
-        "cornerType": "slow"
+        "cornerType": "fast"
       },
       {
         "detectedCornerIndex": 25,
@@ -108725,7 +108725,7 @@
         "exitDistance": 2560.0,
         "minSpeed": 156.4,
         "cornerNumber": 7,
-        "cornerType": "medium"
+        "cornerType": "fast"
       },
       {
         "detectedCornerIndex": 32,
@@ -108853,7 +108853,7 @@
         "exitDistance": 4464.0,
         "minSpeed": 266.4,
         "cornerNumber": 15,
-        "cornerType": "slow"
+        "cornerType": "fast"
       },
       {
         "detectedCornerIndex": 40,
@@ -108917,7 +108917,7 @@
         "exitDistance": 4882.0,
         "minSpeed": 212.1,
         "cornerNumber": 16,
-        "cornerType": "medium"
+        "cornerType": "fast"
       },
       {
         "detectedCornerIndex": 44,
@@ -109397,7 +109397,7 @@
         "exitDistance": 2144.0,
         "minSpeed": 85.3,
         "cornerNumber": 6,
-        "cornerType": "slow"
+        "cornerType": "fast"
       },
       {
         "detectedCornerIndex": 29,
@@ -109701,7 +109701,7 @@
         "exitDistance": 3728.0,
         "minSpeed": 191.4,
         "cornerNumber": 12,
-        "cornerType": "slow"
+        "cornerType": "fast"
       },
       {
         "detectedCornerIndex": 48,
@@ -109893,7 +109893,7 @@
         "exitDistance": 4894.0,
         "minSpeed": 155.0,
         "cornerNumber": 16,
-        "cornerType": "medium"
+        "cornerType": "fast"
       },
       {
         "detectedCornerIndex": 1,
@@ -110597,7 +110597,7 @@
         "exitDistance": 3718.0,
         "minSpeed": 192.9,
         "cornerNumber": 12,
-        "cornerType": "slow"
+        "cornerType": "fast"
       },
       {
         "detectedCornerIndex": 45,
@@ -110661,7 +110661,7 @@
         "exitDistance": 4416.0,
         "minSpeed": 236.0,
         "cornerNumber": 15,
-        "cornerType": "slow"
+        "cornerType": "fast"
       },
       {
         "detectedCornerIndex": 49,
@@ -110773,7 +110773,7 @@
         "exitDistance": 4902.0,
         "minSpeed": 158.3,
         "cornerNumber": 16,
-        "cornerType": "medium"
+        "cornerType": "fast"
       },
       {
         "detectedCornerIndex": 1,
@@ -111157,7 +111157,7 @@
         "exitDistance": 2152.0,
         "minSpeed": 118.2,
         "cornerNumber": 6,
-        "cornerType": "slow"
+        "cornerType": "fast"
       },
       {
         "detectedCornerIndex": 25,
@@ -111269,7 +111269,7 @@
         "exitDistance": 2552.0,
         "minSpeed": 161.2,
         "cornerNumber": 7,
-        "cornerType": "medium"
+        "cornerType": "fast"
       },
       {
         "detectedCornerIndex": 32,
@@ -111413,7 +111413,7 @@
         "exitDistance": 4442.0,
         "minSpeed": 270.1,
         "cornerNumber": 15,
-        "cornerType": "slow"
+        "cornerType": "fast"
       },
       {
         "detectedCornerIndex": 41,
@@ -111509,7 +111509,7 @@
         "exitDistance": 4888.0,
         "minSpeed": 203.7,
         "cornerNumber": 16,
-        "cornerType": "medium"
+        "cornerType": "fast"
       },
       {
         "detectedCornerIndex": 47,
@@ -111925,7 +111925,7 @@
         "exitDistance": 2154.0,
         "minSpeed": 115.9,
         "cornerNumber": 6,
-        "cornerType": "slow"
+        "cornerType": "fast"
       },
       {
         "detectedCornerIndex": 25,
@@ -112037,7 +112037,7 @@
         "exitDistance": 2562.0,
         "minSpeed": 156.5,
         "cornerNumber": 7,
-        "cornerType": "medium"
+        "cornerType": "fast"
       },
       {
         "detectedCornerIndex": 32,
@@ -112149,7 +112149,7 @@
         "exitDistance": 4444.0,
         "minSpeed": 272.9,
         "cornerNumber": 15,
-        "cornerType": "slow"
+        "cornerType": "fast"
       },
       {
         "detectedCornerIndex": 39,
@@ -112229,7 +112229,7 @@
         "exitDistance": 4878.0,
         "minSpeed": 215.9,
         "cornerNumber": 16,
-        "cornerType": "medium"
+        "cornerType": "fast"
       },
       {
         "detectedCornerIndex": 44,
@@ -112645,7 +112645,7 @@
         "exitDistance": 2152.0,
         "minSpeed": 133.2,
         "cornerNumber": 6,
-        "cornerType": "slow"
+        "cornerType": "fast"
       },
       {
         "detectedCornerIndex": 24,
@@ -112757,7 +112757,7 @@
         "exitDistance": 2544.0,
         "minSpeed": 177.5,
         "cornerNumber": 7,
-        "cornerType": "medium"
+        "cornerType": "fast"
       },
       {
         "detectedCornerIndex": 31,
@@ -112901,7 +112901,7 @@
         "exitDistance": 4458.0,
         "minSpeed": 272.0,
         "cornerNumber": 15,
-        "cornerType": "slow"
+        "cornerType": "fast"
       },
       {
         "detectedCornerIndex": 40,
@@ -112965,7 +112965,7 @@
         "exitDistance": 4882.0,
         "minSpeed": 238.6,
         "cornerNumber": 16,
-        "cornerType": "medium"
+        "cornerType": "fast"
       },
       {
         "detectedCornerIndex": 44,
@@ -113447,7 +113447,7 @@
         "exitDistance": 2150.0,
         "minSpeed": 125.2,
         "cornerNumber": 6,
-        "cornerType": "slow"
+        "cornerType": "fast"
       },
       {
         "detectedCornerIndex": 27,
@@ -113575,7 +113575,7 @@
         "exitDistance": 2546.0,
         "minSpeed": 155.7,
         "cornerNumber": 7,
-        "cornerType": "medium"
+        "cornerType": "fast"
       },
       {
         "detectedCornerIndex": 35,
@@ -113751,7 +113751,7 @@
         "exitDistance": 4444.0,
         "minSpeed": 265.2,
         "cornerNumber": 15,
-        "cornerType": "slow"
+        "cornerType": "fast"
       },
       {
         "detectedCornerIndex": 46,
@@ -113847,7 +113847,7 @@
         "exitDistance": 4888.0,
         "minSpeed": 202.0,
         "cornerNumber": 16,
-        "cornerType": "medium"
+        "cornerType": "fast"
       },
       {
         "detectedCornerIndex": 52,
@@ -114231,7 +114231,7 @@
         "exitDistance": 2150.0,
         "minSpeed": 139.6,
         "cornerNumber": 6,
-        "cornerType": "slow"
+        "cornerType": "fast"
       },
       {
         "detectedCornerIndex": 23,
@@ -114359,7 +114359,7 @@
         "exitDistance": 2548.0,
         "minSpeed": 180.4,
         "cornerNumber": 7,
-        "cornerType": "medium"
+        "cornerType": "fast"
       },
       {
         "detectedCornerIndex": 31,
@@ -114535,7 +114535,7 @@
         "exitDistance": 4482.0,
         "minSpeed": 264.6,
         "cornerNumber": 15,
-        "cornerType": "slow"
+        "cornerType": "fast"
       },
       {
         "detectedCornerIndex": 42,
@@ -114567,7 +114567,7 @@
         "exitDistance": 4880.0,
         "minSpeed": 258.0,
         "cornerNumber": 16,
-        "cornerType": "medium"
+        "cornerType": "fast"
       },
       {
         "detectedCornerIndex": 44,
@@ -115079,7 +115079,7 @@
         "exitDistance": 2160.0,
         "minSpeed": 100.6,
         "cornerNumber": 6,
-        "cornerType": "slow"
+        "cornerType": "fast"
       },
       {
         "detectedCornerIndex": 28,
@@ -115143,7 +115143,7 @@
         "exitDistance": 2544.0,
         "minSpeed": 118.8,
         "cornerNumber": 7,
-        "cornerType": "medium"
+        "cornerType": "fast"
       },
       {
         "detectedCornerIndex": 32,
@@ -115319,7 +115319,7 @@
         "exitDistance": 3714.0,
         "minSpeed": 209.5,
         "cornerNumber": 12,
-        "cornerType": "slow"
+        "cornerType": "fast"
       },
       {
         "detectedCornerIndex": 43,
@@ -115383,7 +115383,7 @@
         "exitDistance": 4456.0,
         "minSpeed": 194.7,
         "cornerNumber": 15,
-        "cornerType": "slow"
+        "cornerType": "fast"
       },
       {
         "detectedCornerIndex": 47,
@@ -115495,7 +115495,7 @@
         "exitDistance": 4886.0,
         "minSpeed": 148.2,
         "cornerNumber": 16,
-        "cornerType": "medium"
+        "cornerType": "fast"
       },
       {
         "detectedCornerIndex": 54,
@@ -115879,7 +115879,7 @@
         "exitDistance": 2148.0,
         "minSpeed": 106.5,
         "cornerNumber": 6,
-        "cornerType": "slow"
+        "cornerType": "fast"
       },
       {
         "detectedCornerIndex": 19,
@@ -115975,7 +115975,7 @@
         "exitDistance": 2548.0,
         "minSpeed": 120.0,
         "cornerNumber": 7,
-        "cornerType": "medium"
+        "cornerType": "fast"
       },
       {
         "detectedCornerIndex": 25,
@@ -116327,7 +116327,7 @@
         "exitDistance": 4878.0,
         "minSpeed": 184.7,
         "cornerNumber": 16,
-        "cornerType": "medium"
+        "cornerType": "fast"
       },
       {
         "detectedCornerIndex": 47,
@@ -116743,7 +116743,7 @@
         "exitDistance": 2148.0,
         "minSpeed": 127.1,
         "cornerNumber": 6,
-        "cornerType": "slow"
+        "cornerType": "fast"
       },
       {
         "detectedCornerIndex": 26,
@@ -116855,7 +116855,7 @@
         "exitDistance": 2544.0,
         "minSpeed": 169.5,
         "cornerNumber": 7,
-        "cornerType": "medium"
+        "cornerType": "fast"
       },
       {
         "detectedCornerIndex": 33,
@@ -117015,7 +117015,7 @@
         "exitDistance": 4468.0,
         "minSpeed": 266.3,
         "cornerNumber": 15,
-        "cornerType": "slow"
+        "cornerType": "fast"
       },
       {
         "detectedCornerIndex": 43,
@@ -117079,7 +117079,7 @@
         "exitDistance": 4886.0,
         "minSpeed": 218.0,
         "cornerNumber": 16,
-        "cornerType": "medium"
+        "cornerType": "fast"
       },
       {
         "detectedCornerIndex": 47,
@@ -117545,7 +117545,7 @@
         "exitDistance": 2144.0,
         "minSpeed": 134.7,
         "cornerNumber": 6,
-        "cornerType": "slow"
+        "cornerType": "fast"
       },
       {
         "detectedCornerIndex": 27,
@@ -117673,7 +117673,7 @@
         "exitDistance": 2560.0,
         "minSpeed": 163.9,
         "cornerNumber": 7,
-        "cornerType": "medium"
+        "cornerType": "fast"
       },
       {
         "detectedCornerIndex": 35,
@@ -117833,7 +117833,7 @@
         "exitDistance": 4478.0,
         "minSpeed": 262.4,
         "cornerNumber": 15,
-        "cornerType": "slow"
+        "cornerType": "fast"
       },
       {
         "detectedCornerIndex": 45,
@@ -117897,7 +117897,7 @@
         "exitDistance": 4882.0,
         "minSpeed": 231.7,
         "cornerNumber": 16,
-        "cornerType": "medium"
+        "cornerType": "fast"
       },
       {
         "detectedCornerIndex": 49,
@@ -118569,7 +118569,7 @@
         "exitDistance": 2146.0,
         "minSpeed": 88.9,
         "cornerNumber": 6,
-        "cornerType": "slow"
+        "cornerType": "fast"
       },
       {
         "detectedCornerIndex": 40,
@@ -118985,7 +118985,7 @@
         "exitDistance": 4416.0,
         "minSpeed": 156.5,
         "cornerNumber": 15,
-        "cornerType": "slow"
+        "cornerType": "fast"
       },
       {
         "detectedCornerIndex": 66,
@@ -119561,7 +119561,7 @@
         "exitDistance": 2152.0,
         "minSpeed": 125.0,
         "cornerNumber": 6,
-        "cornerType": "slow"
+        "cornerType": "fast"
       },
       {
         "detectedCornerIndex": 28,
@@ -119673,7 +119673,7 @@
         "exitDistance": 2548.0,
         "minSpeed": 177.4,
         "cornerNumber": 7,
-        "cornerType": "medium"
+        "cornerType": "fast"
       },
       {
         "detectedCornerIndex": 35,
@@ -119833,7 +119833,7 @@
         "exitDistance": 4460.0,
         "minSpeed": 268.5,
         "cornerNumber": 15,
-        "cornerType": "slow"
+        "cornerType": "fast"
       },
       {
         "detectedCornerIndex": 45,
@@ -119913,7 +119913,7 @@
         "exitDistance": 4884.0,
         "minSpeed": 204.8,
         "cornerNumber": 16,
-        "cornerType": "medium"
+        "cornerType": "fast"
       },
       {
         "detectedCornerIndex": 50,
@@ -120377,7 +120377,7 @@
         "exitDistance": 2156.0,
         "minSpeed": 127.2,
         "cornerNumber": 6,
-        "cornerType": "slow"
+        "cornerType": "fast"
       },
       {
         "detectedCornerIndex": 27,
@@ -120489,7 +120489,7 @@
         "exitDistance": 2550.0,
         "minSpeed": 174.8,
         "cornerNumber": 7,
-        "cornerType": "medium"
+        "cornerType": "fast"
       },
       {
         "detectedCornerIndex": 34,
@@ -120617,7 +120617,7 @@
         "exitDistance": 4462.0,
         "minSpeed": 269.0,
         "cornerNumber": 15,
-        "cornerType": "slow"
+        "cornerType": "fast"
       },
       {
         "detectedCornerIndex": 42,
@@ -120681,7 +120681,7 @@
         "exitDistance": 4882.0,
         "minSpeed": 233.1,
         "cornerNumber": 16,
-        "cornerType": "medium"
+        "cornerType": "fast"
       },
       {
         "detectedCornerIndex": 46,
@@ -121321,7 +121321,7 @@
         "exitDistance": 2152.0,
         "minSpeed": 90.8,
         "cornerNumber": 6,
-        "cornerType": "slow"
+        "cornerType": "fast"
       },
       {
         "detectedCornerIndex": 37,
@@ -121545,7 +121545,7 @@
         "exitDistance": 4420.0,
         "minSpeed": 157.9,
         "cornerNumber": 15,
-        "cornerType": "slow"
+        "cornerType": "fast"
       },
       {
         "detectedCornerIndex": 51,
@@ -121641,7 +121641,7 @@
         "exitDistance": 4894.0,
         "minSpeed": 135.0,
         "cornerNumber": 16,
-        "cornerType": "medium"
+        "cornerType": "fast"
       },
       {
         "detectedCornerIndex": 57,
@@ -122137,7 +122137,7 @@
         "exitDistance": 2166.0,
         "minSpeed": 82.2,
         "cornerNumber": 6,
-        "cornerType": "slow"
+        "cornerType": "fast"
       },
       {
         "detectedCornerIndex": 31,
@@ -122233,7 +122233,7 @@
         "exitDistance": 2548.0,
         "minSpeed": 115.7,
         "cornerNumber": 7,
-        "cornerType": "medium"
+        "cornerType": "fast"
       },
       {
         "detectedCornerIndex": 37,
@@ -122377,7 +122377,7 @@
         "exitDistance": 3724.0,
         "minSpeed": 180.7,
         "cornerNumber": 12,
-        "cornerType": "slow"
+        "cornerType": "fast"
       },
       {
         "detectedCornerIndex": 46,
@@ -122441,7 +122441,7 @@
         "exitDistance": 4420.0,
         "minSpeed": 198.9,
         "cornerNumber": 15,
-        "cornerType": "slow"
+        "cornerType": "fast"
       },
       {
         "detectedCornerIndex": 50,
@@ -122537,7 +122537,7 @@
         "exitDistance": 4878.0,
         "minSpeed": 170.8,
         "cornerNumber": 16,
-        "cornerType": "medium"
+        "cornerType": "fast"
       },
       {
         "detectedCornerIndex": 56,
@@ -122921,7 +122921,7 @@
         "exitDistance": 2146.0,
         "minSpeed": 134.3,
         "cornerNumber": 6,
-        "cornerType": "slow"
+        "cornerType": "fast"
       },
       {
         "detectedCornerIndex": 24,
@@ -123033,7 +123033,7 @@
         "exitDistance": 2550.0,
         "minSpeed": 176.5,
         "cornerNumber": 7,
-        "cornerType": "medium"
+        "cornerType": "fast"
       },
       {
         "detectedCornerIndex": 31,
@@ -123209,7 +123209,7 @@
         "exitDistance": 4464.0,
         "minSpeed": 269.5,
         "cornerNumber": 15,
-        "cornerType": "slow"
+        "cornerType": "fast"
       },
       {
         "detectedCornerIndex": 42,
@@ -123273,7 +123273,7 @@
         "exitDistance": 4878.0,
         "minSpeed": 232.3,
         "cornerNumber": 16,
-        "cornerType": "medium"
+        "cornerType": "fast"
       },
       {
         "detectedCornerIndex": 46,
@@ -123707,7 +123707,7 @@
         "exitDistance": 2152.0,
         "minSpeed": 124.2,
         "cornerNumber": 6,
-        "cornerType": "slow"
+        "cornerType": "fast"
       },
       {
         "detectedCornerIndex": 25,
@@ -123803,7 +123803,7 @@
         "exitDistance": 2546.0,
         "minSpeed": 168.4,
         "cornerNumber": 7,
-        "cornerType": "medium"
+        "cornerType": "fast"
       },
       {
         "detectedCornerIndex": 31,
@@ -123963,7 +123963,7 @@
         "exitDistance": 4444.0,
         "minSpeed": 267.9,
         "cornerNumber": 15,
-        "cornerType": "slow"
+        "cornerType": "fast"
       },
       {
         "detectedCornerIndex": 41,
@@ -124059,7 +124059,7 @@
         "exitDistance": 4886.0,
         "minSpeed": 215.4,
         "cornerNumber": 16,
-        "cornerType": "medium"
+        "cornerType": "fast"
       },
       {
         "detectedCornerIndex": 47,
@@ -124491,7 +124491,7 @@
         "exitDistance": 2152.0,
         "minSpeed": 126.9,
         "cornerNumber": 6,
-        "cornerType": "slow"
+        "cornerType": "fast"
       },
       {
         "detectedCornerIndex": 25,
@@ -124603,7 +124603,7 @@
         "exitDistance": 2544.0,
         "minSpeed": 173.4,
         "cornerNumber": 7,
-        "cornerType": "medium"
+        "cornerType": "fast"
       },
       {
         "detectedCornerIndex": 32,
@@ -124747,7 +124747,7 @@
         "exitDistance": 4458.0,
         "minSpeed": 270.9,
         "cornerNumber": 15,
-        "cornerType": "slow"
+        "cornerType": "fast"
       },
       {
         "detectedCornerIndex": 41,
@@ -124811,7 +124811,7 @@
         "exitDistance": 4878.0,
         "minSpeed": 255.7,
         "cornerNumber": 16,
-        "cornerType": "medium"
+        "cornerType": "fast"
       },
       {
         "detectedCornerIndex": 45,
@@ -125291,7 +125291,7 @@
         "exitDistance": 2146.0,
         "minSpeed": 142.7,
         "cornerNumber": 6,
-        "cornerType": "slow"
+        "cornerType": "fast"
       },
       {
         "detectedCornerIndex": 26,
@@ -125403,7 +125403,7 @@
         "exitDistance": 2544.0,
         "minSpeed": 189.8,
         "cornerNumber": 7,
-        "cornerType": "medium"
+        "cornerType": "fast"
       },
       {
         "detectedCornerIndex": 33,
@@ -125595,7 +125595,7 @@
         "exitDistance": 4458.0,
         "minSpeed": 266.5,
         "cornerNumber": 15,
-        "cornerType": "slow"
+        "cornerType": "fast"
       },
       {
         "detectedCornerIndex": 45,
@@ -125659,7 +125659,7 @@
         "exitDistance": 4878.0,
         "minSpeed": 232.1,
         "cornerNumber": 16,
-        "cornerType": "medium"
+        "cornerType": "fast"
       },
       {
         "detectedCornerIndex": 49,
@@ -126141,7 +126141,7 @@
         "exitDistance": 2148.0,
         "minSpeed": 124.9,
         "cornerNumber": 6,
-        "cornerType": "slow"
+        "cornerType": "fast"
       },
       {
         "detectedCornerIndex": 27,
@@ -126237,7 +126237,7 @@
         "exitDistance": 2546.0,
         "minSpeed": 168.6,
         "cornerNumber": 7,
-        "cornerType": "medium"
+        "cornerType": "fast"
       },
       {
         "detectedCornerIndex": 33,
@@ -126413,7 +126413,7 @@
         "exitDistance": 4490.0,
         "minSpeed": 264.6,
         "cornerNumber": 15,
-        "cornerType": "slow"
+        "cornerType": "fast"
       },
       {
         "detectedCornerIndex": 44,
@@ -126493,7 +126493,7 @@
         "exitDistance": 4884.0,
         "minSpeed": 197.3,
         "cornerNumber": 16,
-        "cornerType": "medium"
+        "cornerType": "fast"
       },
       {
         "detectedCornerIndex": 49,
@@ -127101,7 +127101,7 @@
         "exitDistance": 2160.0,
         "minSpeed": 84.7,
         "cornerNumber": 6,
-        "cornerType": "slow"
+        "cornerType": "fast"
       },
       {
         "detectedCornerIndex": 37,
@@ -127213,7 +127213,7 @@
         "exitDistance": 2568.0,
         "minSpeed": 109.5,
         "cornerNumber": 7,
-        "cornerType": "medium"
+        "cornerType": "fast"
       },
       {
         "detectedCornerIndex": 44,
@@ -127357,7 +127357,7 @@
         "exitDistance": 3750.0,
         "minSpeed": 190.1,
         "cornerNumber": 12,
-        "cornerType": "slow"
+        "cornerType": "fast"
       },
       {
         "detectedCornerIndex": 53,
@@ -127549,7 +127549,7 @@
         "exitDistance": 4900.0,
         "minSpeed": 167.7,
         "cornerNumber": 16,
-        "cornerType": "medium"
+        "cornerType": "fast"
       },
       {
         "detectedCornerIndex": 1,
@@ -127885,7 +127885,7 @@
         "exitDistance": 2146.0,
         "minSpeed": 133.6,
         "cornerNumber": 6,
-        "cornerType": "slow"
+        "cornerType": "fast"
       },
       {
         "detectedCornerIndex": 22,
@@ -127997,7 +127997,7 @@
         "exitDistance": 2556.0,
         "minSpeed": 161.9,
         "cornerNumber": 7,
-        "cornerType": "medium"
+        "cornerType": "fast"
       },
       {
         "detectedCornerIndex": 29,
@@ -128141,7 +128141,7 @@
         "exitDistance": 4466.0,
         "minSpeed": 271.2,
         "cornerNumber": 15,
-        "cornerType": "slow"
+        "cornerType": "fast"
       },
       {
         "detectedCornerIndex": 38,
@@ -128205,7 +128205,7 @@
         "exitDistance": 4888.0,
         "minSpeed": 208.1,
         "cornerNumber": 16,
-        "cornerType": "medium"
+        "cornerType": "fast"
       },
       {
         "detectedCornerIndex": 42,
@@ -128573,7 +128573,7 @@
         "exitDistance": 2150.0,
         "minSpeed": 142.5,
         "cornerNumber": 6,
-        "cornerType": "slow"
+        "cornerType": "fast"
       },
       {
         "detectedCornerIndex": 21,
@@ -128669,7 +128669,7 @@
         "exitDistance": 2548.0,
         "minSpeed": 190.6,
         "cornerNumber": 7,
-        "cornerType": "medium"
+        "cornerType": "fast"
       },
       {
         "detectedCornerIndex": 27,
@@ -128813,7 +128813,7 @@
         "exitDistance": 4484.0,
         "minSpeed": 270.3,
         "cornerNumber": 15,
-        "cornerType": "slow"
+        "cornerType": "fast"
       },
       {
         "detectedCornerIndex": 36,
@@ -128861,7 +128861,7 @@
         "exitDistance": 4880.0,
         "minSpeed": 252.3,
         "cornerNumber": 16,
-        "cornerType": "medium"
+        "cornerType": "fast"
       },
       {
         "detectedCornerIndex": 39,
@@ -129469,7 +129469,7 @@
         "exitDistance": 2156.0,
         "minSpeed": 75.6,
         "cornerNumber": 6,
-        "cornerType": "slow"
+        "cornerType": "fast"
       },
       {
         "detectedCornerIndex": 34,
@@ -129549,7 +129549,7 @@
         "exitDistance": 2542.0,
         "minSpeed": 119.3,
         "cornerNumber": 7,
-        "cornerType": "medium"
+        "cornerType": "fast"
       },
       {
         "detectedCornerIndex": 39,
@@ -129821,7 +129821,7 @@
         "exitDistance": 3766.0,
         "minSpeed": 156.7,
         "cornerNumber": 12,
-        "cornerType": "slow"
+        "cornerType": "fast"
       },
       {
         "detectedCornerIndex": 56,
@@ -129933,7 +129933,7 @@
         "exitDistance": 4460.0,
         "minSpeed": 232.1,
         "cornerNumber": 15,
-        "cornerType": "slow"
+        "cornerType": "fast"
       },
       {
         "detectedCornerIndex": 63,
@@ -130029,7 +130029,7 @@
         "exitDistance": 4892.0,
         "minSpeed": 175.7,
         "cornerNumber": 16,
-        "cornerType": "medium"
+        "cornerType": "fast"
       },
       {
         "detectedCornerIndex": 69,
@@ -130397,7 +130397,7 @@
         "exitDistance": 2146.0,
         "minSpeed": 142.1,
         "cornerNumber": 6,
-        "cornerType": "slow"
+        "cornerType": "fast"
       },
       {
         "detectedCornerIndex": 23,
@@ -130509,7 +130509,7 @@
         "exitDistance": 2550.0,
         "minSpeed": 174.4,
         "cornerNumber": 7,
-        "cornerType": "medium"
+        "cornerType": "fast"
       },
       {
         "detectedCornerIndex": 30,
@@ -130669,7 +130669,7 @@
         "exitDistance": 4476.0,
         "minSpeed": 269.8,
         "cornerNumber": 15,
-        "cornerType": "slow"
+        "cornerType": "fast"
       },
       {
         "detectedCornerIndex": 40,
@@ -130733,7 +130733,7 @@
         "exitDistance": 4878.0,
         "minSpeed": 230.9,
         "cornerNumber": 16,
-        "cornerType": "medium"
+        "cornerType": "fast"
       },
       {
         "detectedCornerIndex": 44,
@@ -131183,7 +131183,7 @@
         "exitDistance": 2150.0,
         "minSpeed": 121.2,
         "cornerNumber": 6,
-        "cornerType": "slow"
+        "cornerType": "fast"
       },
       {
         "detectedCornerIndex": 25,
@@ -131295,7 +131295,7 @@
         "exitDistance": 2556.0,
         "minSpeed": 157.3,
         "cornerNumber": 7,
-        "cornerType": "medium"
+        "cornerType": "fast"
       },
       {
         "detectedCornerIndex": 32,
@@ -131439,7 +131439,7 @@
         "exitDistance": 4468.0,
         "minSpeed": 271.7,
         "cornerNumber": 15,
-        "cornerType": "slow"
+        "cornerType": "fast"
       },
       {
         "detectedCornerIndex": 41,
@@ -131535,7 +131535,7 @@
         "exitDistance": 4880.0,
         "minSpeed": 228.2,
         "cornerNumber": 16,
-        "cornerType": "medium"
+        "cornerType": "fast"
       },
       {
         "detectedCornerIndex": 47,
@@ -131967,7 +131967,7 @@
         "exitDistance": 2146.0,
         "minSpeed": 125.4,
         "cornerNumber": 6,
-        "cornerType": "slow"
+        "cornerType": "fast"
       },
       {
         "detectedCornerIndex": 25,
@@ -132095,7 +132095,7 @@
         "exitDistance": 2544.0,
         "minSpeed": 156.6,
         "cornerNumber": 7,
-        "cornerType": "medium"
+        "cornerType": "fast"
       },
       {
         "detectedCornerIndex": 33,
@@ -132255,7 +132255,7 @@
         "exitDistance": 4454.0,
         "minSpeed": 268.9,
         "cornerNumber": 15,
-        "cornerType": "slow"
+        "cornerType": "fast"
       },
       {
         "detectedCornerIndex": 43,
@@ -132319,7 +132319,7 @@
         "exitDistance": 4892.0,
         "minSpeed": 212.2,
         "cornerNumber": 16,
-        "cornerType": "medium"
+        "cornerType": "fast"
       },
       {
         "detectedCornerIndex": 47,
@@ -132767,7 +132767,7 @@
         "exitDistance": 2152.0,
         "minSpeed": 118.7,
         "cornerNumber": 6,
-        "cornerType": "slow"
+        "cornerType": "fast"
       },
       {
         "detectedCornerIndex": 26,
@@ -132879,7 +132879,7 @@
         "exitDistance": 2556.0,
         "minSpeed": 159.1,
         "cornerNumber": 7,
-        "cornerType": "medium"
+        "cornerType": "fast"
       },
       {
         "detectedCornerIndex": 33,
@@ -133007,7 +133007,7 @@
         "exitDistance": 4490.0,
         "minSpeed": 267.5,
         "cornerNumber": 15,
-        "cornerType": "slow"
+        "cornerType": "fast"
       },
       {
         "detectedCornerIndex": 41,
@@ -133071,7 +133071,7 @@
         "exitDistance": 4886.0,
         "minSpeed": 230.2,
         "cornerNumber": 16,
-        "cornerType": "medium"
+        "cornerType": "fast"
       },
       {
         "detectedCornerIndex": 45,
@@ -133149,5 +133149,429 @@
     "q2End": 2460.007,
     "q3Start": 2940.004,
     "q3End": 3927.017
-  }
+  },
+  "raceResults": [
+    {
+      "position": 1,
+      "driverCode": "PIA",
+      "driverNumber": 81,
+      "teamName": "McLaren",
+      "gridPosition": null,
+      "status": "Unknown",
+      "points": 0.0,
+      "classifiedPosition": null,
+      "time": null,
+      "lapsCompleted": null
+    },
+    {
+      "position": 2,
+      "driverCode": "NOR",
+      "driverNumber": 4,
+      "teamName": "McLaren",
+      "gridPosition": null,
+      "status": "Unknown",
+      "points": 0.0,
+      "classifiedPosition": null,
+      "time": null,
+      "lapsCompleted": null
+    },
+    {
+      "position": 3,
+      "driverCode": "VER",
+      "driverNumber": 1,
+      "teamName": "Red Bull Racing",
+      "gridPosition": null,
+      "status": "Unknown",
+      "points": 0.0,
+      "classifiedPosition": null,
+      "time": null,
+      "lapsCompleted": null
+    },
+    {
+      "position": 4,
+      "driverCode": "RUS",
+      "driverNumber": 63,
+      "teamName": "Mercedes",
+      "gridPosition": null,
+      "status": "Unknown",
+      "points": 0.0,
+      "classifiedPosition": null,
+      "time": null,
+      "lapsCompleted": null
+    },
+    {
+      "position": 5,
+      "driverCode": "ANT",
+      "driverNumber": 12,
+      "teamName": "Mercedes",
+      "gridPosition": null,
+      "status": "Unknown",
+      "points": 0.0,
+      "classifiedPosition": null,
+      "time": null,
+      "lapsCompleted": null
+    },
+    {
+      "position": 6,
+      "driverCode": "HAD",
+      "driverNumber": 6,
+      "teamName": "Racing Bulls",
+      "gridPosition": null,
+      "status": "Unknown",
+      "points": 0.0,
+      "classifiedPosition": null,
+      "time": null,
+      "lapsCompleted": null
+    },
+    {
+      "position": 7,
+      "driverCode": "SAI",
+      "driverNumber": 55,
+      "teamName": "Williams",
+      "gridPosition": null,
+      "status": "Unknown",
+      "points": 0.0,
+      "classifiedPosition": null,
+      "time": null,
+      "lapsCompleted": null
+    },
+    {
+      "position": 8,
+      "driverCode": "ALO",
+      "driverNumber": 14,
+      "teamName": "Aston Martin",
+      "gridPosition": null,
+      "status": "Unknown",
+      "points": 0.0,
+      "classifiedPosition": null,
+      "time": null,
+      "lapsCompleted": null
+    },
+    {
+      "position": 9,
+      "driverCode": "GAS",
+      "driverNumber": 10,
+      "teamName": "Alpine",
+      "gridPosition": null,
+      "status": "Unknown",
+      "points": 0.0,
+      "classifiedPosition": null,
+      "time": null,
+      "lapsCompleted": null
+    },
+    {
+      "position": 10,
+      "driverCode": "LEC",
+      "driverNumber": 16,
+      "teamName": "Ferrari",
+      "gridPosition": null,
+      "status": "Unknown",
+      "points": 0.0,
+      "classifiedPosition": null,
+      "time": null,
+      "lapsCompleted": null
+    },
+    {
+      "position": 11,
+      "driverCode": "HUL",
+      "driverNumber": 27,
+      "teamName": "Kick Sauber",
+      "gridPosition": null,
+      "status": "Unknown",
+      "points": 0.0,
+      "classifiedPosition": null,
+      "time": null,
+      "lapsCompleted": null
+    },
+    {
+      "position": 12,
+      "driverCode": "LAW",
+      "driverNumber": 30,
+      "teamName": "Racing Bulls",
+      "gridPosition": null,
+      "status": "Unknown",
+      "points": 0.0,
+      "classifiedPosition": null,
+      "time": null,
+      "lapsCompleted": null
+    },
+    {
+      "position": 13,
+      "driverCode": "BEA",
+      "driverNumber": 87,
+      "teamName": "Haas F1 Team",
+      "gridPosition": null,
+      "status": "Unknown",
+      "points": 0.0,
+      "classifiedPosition": null,
+      "time": null,
+      "lapsCompleted": null
+    },
+    {
+      "position": 14,
+      "driverCode": "BOR",
+      "driverNumber": 5,
+      "teamName": "Kick Sauber",
+      "gridPosition": null,
+      "status": "Unknown",
+      "points": 0.0,
+      "classifiedPosition": null,
+      "time": null,
+      "lapsCompleted": null
+    },
+    {
+      "position": 15,
+      "driverCode": "ALB",
+      "driverNumber": 23,
+      "teamName": "Williams",
+      "gridPosition": null,
+      "status": "Unknown",
+      "points": 0.0,
+      "classifiedPosition": null,
+      "time": null,
+      "lapsCompleted": null
+    },
+    {
+      "position": 16,
+      "driverCode": "TSU",
+      "driverNumber": 22,
+      "teamName": "Red Bull Racing",
+      "gridPosition": null,
+      "status": "Unknown",
+      "points": 0.0,
+      "classifiedPosition": null,
+      "time": null,
+      "lapsCompleted": null
+    },
+    {
+      "position": 17,
+      "driverCode": "OCO",
+      "driverNumber": 31,
+      "teamName": "Haas F1 Team",
+      "gridPosition": null,
+      "status": "Unknown",
+      "points": 0.0,
+      "classifiedPosition": null,
+      "time": null,
+      "lapsCompleted": null
+    },
+    {
+      "position": 18,
+      "driverCode": "HAM",
+      "driverNumber": 44,
+      "teamName": "Ferrari",
+      "gridPosition": null,
+      "status": "Unknown",
+      "points": 0.0,
+      "classifiedPosition": null,
+      "time": null,
+      "lapsCompleted": null
+    },
+    {
+      "position": 19,
+      "driverCode": "STR",
+      "driverNumber": 18,
+      "teamName": "Aston Martin",
+      "gridPosition": null,
+      "status": "Unknown",
+      "points": 0.0,
+      "classifiedPosition": null,
+      "time": null,
+      "lapsCompleted": null
+    },
+    {
+      "position": 20,
+      "driverCode": "COL",
+      "driverNumber": 43,
+      "teamName": "Alpine",
+      "gridPosition": null,
+      "status": "Unknown",
+      "points": 0.0,
+      "classifiedPosition": null,
+      "time": null,
+      "lapsCompleted": null
+    }
+  ],
+  "qualifyingResults": [
+    {
+      "position": 1,
+      "driverCode": "PIA",
+      "driverNumber": 81,
+      "teamName": "McLaren",
+      "q1Time": 80.234,
+      "q2Time": 79.65,
+      "q3Time": 79.387
+    },
+    {
+      "position": 2,
+      "driverCode": "NOR",
+      "driverNumber": 4,
+      "teamName": "McLaren",
+      "q1Time": 80.157,
+      "q2Time": 79.861,
+      "q3Time": 79.495
+    },
+    {
+      "position": 3,
+      "driverCode": "VER",
+      "driverNumber": 1,
+      "teamName": "Red Bull Racing",
+      "q1Time": 80.472,
+      "q2Time": 79.985,
+      "q3Time": 79.651
+    },
+    {
+      "position": 4,
+      "driverCode": "RUS",
+      "driverNumber": 63,
+      "teamName": "Mercedes",
+      "q1Time": 80.074,
+      "q2Time": 80.186,
+      "q3Time": 79.662
+    },
+    {
+      "position": 5,
+      "driverCode": "ANT",
+      "driverNumber": 12,
+      "teamName": "Mercedes",
+      "q1Time": 80.576,
+      "q2Time": 80.084,
+      "q3Time": 79.846
+    },
+    {
+      "position": 6,
+      "driverCode": "HAD",
+      "driverNumber": 6,
+      "teamName": "Racing Bulls",
+      "q1Time": 80.603,
+      "q2Time": 80.35,
+      "q3Time": 80.114
+    },
+    {
+      "position": 7,
+      "driverCode": "SAI",
+      "driverNumber": 55,
+      "teamName": "Williams",
+      "q1Time": 80.52,
+      "q2Time": 80.251,
+      "q3Time": 80.287
+    },
+    {
+      "position": 8,
+      "driverCode": "ALO",
+      "driverNumber": 14,
+      "teamName": "Aston Martin",
+      "q1Time": 80.598,
+      "q2Time": 80.219,
+      "q3Time": 80.418
+    },
+    {
+      "position": 9,
+      "driverCode": "GAS",
+      "driverNumber": 10,
+      "teamName": "Alpine",
+      "q1Time": 80.681,
+      "q2Time": 80.324,
+      "q3Time": 80.477
+    },
+    {
+      "position": 10,
+      "driverCode": "LEC",
+      "driverNumber": 16,
+      "teamName": "Ferrari",
+      "q1Time": 80.564,
+      "q2Time": 80.343,
+      "q3Time": 80.561
+    },
+    {
+      "position": 11,
+      "driverCode": "HUL",
+      "driverNumber": 27,
+      "teamName": "Kick Sauber",
+      "q1Time": 80.63,
+      "q2Time": 80.353,
+      "q3Time": null
+    },
+    {
+      "position": 12,
+      "driverCode": "LAW",
+      "driverNumber": 30,
+      "teamName": "Racing Bulls",
+      "q1Time": 80.539,
+      "q2Time": 80.433,
+      "q3Time": null
+    },
+    {
+      "position": 13,
+      "driverCode": "BEA",
+      "driverNumber": 87,
+      "teamName": "Haas F1 Team",
+      "q1Time": 80.548,
+      "q2Time": 80.438,
+      "q3Time": null
+    },
+    {
+      "position": 14,
+      "driverCode": "BOR",
+      "driverNumber": 5,
+      "teamName": "Kick Sauber",
+      "q1Time": 80.653,
+      "q2Time": 80.534,
+      "q3Time": null
+    },
+    {
+      "position": 15,
+      "driverCode": "ALB",
+      "driverNumber": 23,
+      "teamName": "Williams",
+      "q1Time": 80.629,
+      "q2Time": 80.629,
+      "q3Time": null
+    },
+    {
+      "position": 16,
+      "driverCode": "TSU",
+      "driverNumber": 22,
+      "teamName": "Red Bull Racing",
+      "q1Time": 80.761,
+      "q2Time": null,
+      "q3Time": null
+    },
+    {
+      "position": 17,
+      "driverCode": "OCO",
+      "driverNumber": 31,
+      "teamName": "Haas F1 Team",
+      "q1Time": 80.864,
+      "q2Time": null,
+      "q3Time": null
+    },
+    {
+      "position": 18,
+      "driverCode": "HAM",
+      "driverNumber": 44,
+      "teamName": "Ferrari",
+      "q1Time": 80.907,
+      "q2Time": null,
+      "q3Time": null
+    },
+    {
+      "position": 19,
+      "driverCode": "STR",
+      "driverNumber": 18,
+      "teamName": "Aston Martin",
+      "q1Time": 81.058,
+      "q2Time": null,
+      "q3Time": null
+    },
+    {
+      "position": 20,
+      "driverCode": "COL",
+      "driverNumber": 43,
+      "teamName": "Alpine",
+      "q1Time": 81.137,
+      "q2Time": null,
+      "q3Time": null
+    }
+  ]
 }

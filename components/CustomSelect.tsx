@@ -1,11 +1,12 @@
 'use client'
 
-import React, { useState, useRef, useEffect } from 'react'
+import React, { useState, useRef, useEffect, useMemo } from 'react'
 import { createPortal } from 'react-dom'
 
 type Option = {
   value: string | number
   label: string
+  icon?: string // Optional icon URL/path
 }
 
 type CustomSelectProps = {
@@ -13,6 +14,7 @@ type CustomSelectProps = {
   value: string | number
   onChange: (value: string | number) => void
   placeholder?: string
+  placeholderValue?: string | number // Value that represents "not selected" (e.g., 0, '')
   className?: string
   minWidth?: string
 }
@@ -22,6 +24,7 @@ export default function CustomSelect({
   value,
   onChange,
   placeholder = 'Select...',
+  placeholderValue,
   className = '',
   minWidth = 'auto',
 }: CustomSelectProps) {
@@ -32,7 +35,28 @@ export default function CustomSelect({
   const listRef = useRef<HTMLUListElement>(null)
   const [dropdownPosition, setDropdownPosition] = useState<{ top: number; left: number; width: number } | null>(null)
 
-  const selectedOption = options.find(opt => opt.value === value)
+  const selectedOption = options.find((opt: Option) => opt.value === value)
+  
+  // Filter out placeholder option from dropdown (but keep it for display)
+  const dropdownOptions = useMemo(() => {
+    if (placeholderValue === undefined) return options
+    return options.filter((opt: Option) => opt.value !== placeholderValue)
+  }, [options, placeholderValue])
+
+  // Set initial hover index when opening dropdown
+  useEffect(() => {
+    if (isOpen && dropdownOptions.length > 0) {
+      const currentIndex = dropdownOptions.findIndex(opt => opt.value === value)
+      if (currentIndex === -1) {
+        // Value is placeholder, start at first option
+        setHoveredIndex(0)
+      } else {
+        setHoveredIndex(currentIndex)
+      }
+    } else if (!isOpen) {
+      setHoveredIndex(null)
+    }
+  }, [isOpen, dropdownOptions, value])
 
   // Calculate dropdown position when opening - use requestAnimationFrame to ensure DOM is ready
   useEffect(() => {
@@ -99,36 +123,44 @@ export default function CustomSelect({
 
       if (e.key === 'ArrowDown' || e.key === 'ArrowUp') {
         e.preventDefault()
-        const currentIndex = options.findIndex(opt => opt.value === value)
-        let newIndex = currentIndex
+        let currentIndex = dropdownOptions.findIndex((opt: Option) => opt.value === value)
+        
+        // If current value is placeholder (not in dropdown), start at 0 or last
+        if (currentIndex === -1) {
+          currentIndex = e.key === 'ArrowDown' ? -1 : dropdownOptions.length
+        }
+        
+        let newIndex: number
 
         if (e.key === 'ArrowDown') {
-          newIndex = currentIndex < options.length - 1 ? currentIndex + 1 : 0
+          newIndex = currentIndex < dropdownOptions.length - 1 ? currentIndex + 1 : 0
         } else {
-          newIndex = currentIndex > 0 ? currentIndex - 1 : options.length - 1
+          newIndex = currentIndex > 0 ? currentIndex - 1 : dropdownOptions.length - 1
         }
 
-        onChange(options[newIndex].value)
-        setHoveredIndex(newIndex)
-        
-        // Scroll into view
-        if (listRef.current) {
-          const items = listRef.current.children
-          if (items[newIndex]) {
-            items[newIndex].scrollIntoView({ block: 'nearest', behavior: 'smooth' })
+        if (dropdownOptions[newIndex]) {
+          onChange(dropdownOptions[newIndex].value)
+          setHoveredIndex(newIndex)
+          
+          // Scroll into view
+          if (listRef.current) {
+            const items = listRef.current.children
+            if (items[newIndex]) {
+              items[newIndex].scrollIntoView({ block: 'nearest', behavior: 'smooth' })
+            }
           }
         }
       }
 
-      if (e.key === 'Enter' && hoveredIndex !== null) {
-        onChange(options[hoveredIndex].value)
+      if (e.key === 'Enter' && hoveredIndex !== null && dropdownOptions[hoveredIndex]) {
+        onChange(dropdownOptions[hoveredIndex].value)
         setIsOpen(false)
       }
     }
 
     document.addEventListener('keydown', handleKeyDown)
     return () => document.removeEventListener('keydown', handleKeyDown)
-  }, [isOpen, value, options, hoveredIndex, onChange])
+  }, [isOpen, value, dropdownOptions, hoveredIndex, onChange])
 
   const handleOptionClick = (optionValue: string | number) => {
     onChange(optionValue)
@@ -159,11 +191,20 @@ export default function CustomSelect({
         aria-expanded={isOpen}
         aria-haspopup="listbox"
       >
-        <span className={`truncate ${selectedOption ? 'text-white' : 'text-gray-400'}`}>
-          {selectedOption ? selectedOption.label : placeholder}
-        </span>
+        <div className="flex items-center gap-2 truncate">
+          {selectedOption?.icon && (
+            <img 
+              src={selectedOption.icon} 
+              alt="" 
+              className="w-3.5 h-3.5 flex-shrink-0 object-contain opacity-70"
+            />
+          )}
+          <span className={`truncate ${selectedOption ? 'text-white' : 'text-gray-400'}`}>
+            {selectedOption ? selectedOption.label : placeholder}
+          </span>
+        </div>
         <svg
-          className={`w-4 h-4 text-gray-400 transition-transform duration-200 ${
+          className={`w-4 h-4 text-gray-400 transition-transform duration-200 flex-shrink-0 ${
             isOpen ? 'rotate-180 text-accent' : ''
           }`}
           fill="none"
@@ -205,7 +246,7 @@ export default function CustomSelect({
             paddingRight: 0
           }}
         >
-          {options.map((option, index) => {
+          {dropdownOptions.map((option: Option, index: number) => {
             const isSelected = option.value === value
             const isHovered = hoveredIndex === index
 
@@ -230,7 +271,16 @@ export default function CustomSelect({
                 `}
               >
                 <div className="flex items-center justify-between">
-                  <span className="truncate">{option.label}</span>
+                  <div className="flex items-center gap-2 truncate">
+                    {option.icon && (
+                      <img 
+                        src={option.icon} 
+                        alt="" 
+                        className="w-3.5 h-3.5 flex-shrink-0 object-contain opacity-70"
+                      />
+                    )}
+                    <span className="truncate">{option.label}</span>
+                  </div>
                   {isSelected && (
                     <svg
                       className="w-4 h-4 text-accent ml-2 flex-shrink-0"

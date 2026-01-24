@@ -71,8 +71,7 @@ export const f1Teams: Team[] = [
     color: '#2293D1',
     drivers: [
       { code: 'COL', name: 'Franco Colapinto', number: 43 },
-      { code: 'GAS', name: 'Pierre Gasly', number: 10 },
-      { code: 'DOO', name: 'Jack Doohan', number: 88 }  // Replaces COL from round 7
+      { code: 'GAS', name: 'Pierre Gasly', number: 10 }
     ]
   },
   {
