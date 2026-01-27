@@ -40,6 +40,9 @@ docs/
 .DS_Store
 output/
 
-# Keep public/data/sessions/ - this is needed at runtime!
+# Exclude large session data files (exceeds Vercel 250MB limit)
+# Session data should be served from database or external storage (CDN/Blob Storage)
+public/data/sessions/
+
 # Keep all source code (app/, components/, lib/, etc.)
 

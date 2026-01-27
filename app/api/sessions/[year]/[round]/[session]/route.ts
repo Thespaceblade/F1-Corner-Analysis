@@ -124,6 +124,7 @@ export async function GET(request: Request, { params }: Params) {
   const startTime = Date.now()
 
   try {
+    // Always try database first if enabled (required for Vercel deployment)
     if (isDatabaseEnabled()) {
       const sql = getDb()
       const sessionRows = await sql`select * from sessions where year=${Number(year)} and round_slug=${round} and session_code=${session.toUpperCase()} limit 1` as SessionRow[]
@@ -228,17 +229,32 @@ export async function GET(request: Request, { params }: Params) {
       return NextResponse.json(payload)
     }
 
-    // File-based loading
-    const raw = await readFileWithTimeout(sessionPath, 30000)
-    const payload = JSON.parse(raw)
-    const filtered = filterDrivers(payload, driversFilter)
-    
-    const elapsed = Date.now() - startTime
-    const driverCount = Object.keys(filtered.drivers ?? {}).length
-    const lapCount = filtered.laps?.length ?? 0
-    console.log(`[API] Loaded session ${year}/${round}/${session} from file in ${elapsed}ms (${driverCount} drivers, ${lapCount} laps)`)
-    
-    return NextResponse.json(filtered)
+    // File-based loading (fallback for local development)
+    try {
+      const raw = await readFileWithTimeout(sessionPath, 30000)
+      const payload = JSON.parse(raw)
+      const filtered = filterDrivers(payload, driversFilter)
+      
+      const elapsed = Date.now() - startTime
+      const driverCount = Object.keys(filtered.drivers ?? {}).length
+      const lapCount = filtered.laps?.length ?? 0
+      console.log(`[API] Loaded session ${year}/${round}/${session} from file in ${elapsed}ms (${driverCount} drivers, ${lapCount} laps)`)
+      
+      return NextResponse.json(filtered)
+    } catch (fileError) {
+      // File not found - suggest using database
+      if (fileError instanceof Error && (fileError.message.includes('ENOENT') || fileError.message.includes('not found'))) {
+        return NextResponse.json(
+          {
+            error: 'Session data not found',
+            details: 'Session files are not available in this deployment. Please configure database access by setting DATA_SOURCE=database and DATABASE_URL environment variables.',
+            params: { year, round, session },
+          },
+          { status: 404 },
+        )
+      }
+      throw fileError
+    }
   } catch (error) {
     const elapsed = Date.now() - startTime
     const errorMessage = error instanceof Error ? error.message : String(error)
