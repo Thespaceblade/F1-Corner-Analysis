@@ -2,6 +2,7 @@ import { NextResponse } from 'next/server'
 import { promises as fs } from 'fs'
 import path from 'path'
 import { getDb, isDatabaseEnabled, DriverRow, LapRow, SessionRow } from '../../../../../../lib/db'
+import { isRemoteDataEnabled, fetchFromRemote } from '../../../../../../lib/remoteData'
 
 // Mark this route as dynamic to prevent static generation issues
 export const dynamic = 'force-dynamic'
@@ -124,7 +125,19 @@ export async function GET(request: Request, { params }: Params) {
   const startTime = Date.now()
 
   try {
-    // Always try database first if enabled (required for Vercel deployment)
+    // Remote data server (e.g. jason-server via Tailscale Funnel): Vercel proxies to your server
+    if (isRemoteDataEnabled()) {
+      const remotePath = `/api/sessions/${year}/${round}/${session.toUpperCase()}${driversFilter.length ? `?drivers=${driversFilter.join(',')}` : ''}`
+      const payload = await fetchFromRemote<unknown>(remotePath)
+      const elapsed = Date.now() - startTime
+      const driverCount = typeof payload === 'object' && payload !== null && 'drivers' in payload
+        ? Object.keys((payload as { drivers?: Record<string, unknown> }).drivers ?? {}).length
+        : 0
+      console.log(`[API] Proxied session ${year}/${round}/${session} from remote in ${elapsed}ms (${driverCount} drivers)`)
+      return NextResponse.json(payload)
+    }
+
+    // Database (Neon, etc.)
     if (isDatabaseEnabled()) {
       const sql = getDb()
       const sessionRows = await sql`select * from sessions where year=${Number(year)} and round_slug=${round} and session_code=${session.toUpperCase()} limit 1` as SessionRow[]
@@ -247,7 +260,7 @@ export async function GET(request: Request, { params }: Params) {
         return NextResponse.json(
           {
             error: 'Session data not found',
-            details: 'Session files are not available in this deployment. Please configure database access by setting DATA_SOURCE=database and DATABASE_URL environment variables.',
+            details: 'Session data not available. Set REMOTE_DATA_URL (your jason-server URL), or DATA_SOURCE=database and DATABASE_URL.',
             params: { year, round, session },
           },
           { status: 404 },

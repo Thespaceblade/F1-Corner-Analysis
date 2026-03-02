@@ -2,6 +2,7 @@ import { NextResponse } from 'next/server'
 import { promises as fs } from 'fs'
 import path from 'path'
 import { getDb, isDatabaseEnabled } from '../../../../lib/db'
+import { isRemoteDataEnabled, fetchFromRemote } from '../../../../lib/remoteData'
 
 // Mark this route as dynamic to prevent static generation issues
 export const dynamic = 'force-dynamic'
@@ -25,6 +26,11 @@ export async function GET() {
   const index: SessionIndex = { years: {} }
 
   try {
+    if (isRemoteDataEnabled()) {
+      const payload = await fetchFromRemote<SessionIndex>('/api/sessions/index')
+      return NextResponse.json(payload)
+    }
+
     if (isDatabaseEnabled()) {
       const sql = getDb()
       const rows = await sql`select distinct year, round_slug, session_code from sessions order by year, round_slug, session_code`
