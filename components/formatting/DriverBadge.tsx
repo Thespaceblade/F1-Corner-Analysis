@@ -1,10 +1,11 @@
 'use client'
 
 import React from 'react'
-import { driverColorMap, f1Teams } from '../../lib/teamData'
+import { getDriverColor, getDriverName } from '../../lib/teamData'
 
 type DriverBadgeProps = {
   code: string
+  year?: number
   showName?: boolean
   size?: 'sm' | 'md' | 'lg'
   variant?: 'badge' | 'chip' | 'pill'
@@ -13,28 +14,15 @@ type DriverBadgeProps = {
 
 const FALLBACK_COLOR = '#9aa4b2'
 
-function getDriverName(code: string): string | null {
-  const normalized = code.toUpperCase()
-  for (const team of f1Teams) {
-    const driver = team.drivers.find(d => d.code.toUpperCase() === normalized)
-    if (driver) return driver.name
-  }
-  return null
-}
-
-function getDriverColor(code: string): string {
-  const normalized = code.toUpperCase()
-  return driverColorMap[normalized] || FALLBACK_COLOR
-}
-
 export default function DriverBadge({
   code,
+  year,
   showName = false,
   size = 'md',
   variant = 'badge',
   className = '',
 }: DriverBadgeProps) {
-  const color = getDriverColor(code)
+  const color = getDriverColor(code, year) ?? FALLBACK_COLOR
   const driverName = showName ? getDriverName(code) : null
   const normalizedCode = code.toUpperCase()
 
@@ -69,4 +57,3 @@ export default function DriverBadge({
     </span>
   )
 }
-

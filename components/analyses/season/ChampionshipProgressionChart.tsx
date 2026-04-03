@@ -3,8 +3,7 @@
 import React, { useState, useMemo, useEffect } from 'react'
 import { SeasonData } from '../../../lib/seasonTypes'
 import { LineChart, Line, XAxis, YAxis, Tooltip, ResponsiveContainer, Legend, CartesianGrid } from 'recharts'
-import { driverColorMap, f1Teams } from '../../../lib/teamData'
-import CustomSelect from '../../CustomSelect'
+import { getDriverColor, getTeamById } from '../../../lib/teamData'
 
 type ChampionshipProgressionChartProps = {
   seasonData: SeasonData
@@ -74,12 +73,6 @@ export default function ChampionshipProgressionChart({
 
     return data
   }, [championshipType, selectedEntities, progression, seasonData.rounds])
-
-  const availableOptions = championshipType === 'drivers'
-    ? Object.keys(seasonData.drivers).sort()
-    : Object.keys(seasonData.teams).map(t => 
-        f1Teams.find(team => team.id === t)?.shortName ?? t
-      )
 
   return (
     <div className="space-y-4">
@@ -188,14 +181,14 @@ export default function ChampionshipProgressionChart({
                 }}
                 iconType="line"
               />
-              {selectedEntities.slice(0, 8).map((entity, index) => (
+              {selectedEntities.slice(0, 8).map((entity) => (
                 <Line
                   key={entity}
                   type="monotone"
                   dataKey={entity}
                   stroke={championshipType === 'drivers' 
-                    ? (driverColorMap[entity] ?? '#7cc7ff')
-                    : (f1Teams.find(t => t.id === entity)?.color ?? '#7cc7ff')
+                    ? (getDriverColor(entity, seasonData.year) ?? '#7cc7ff')
+                    : (getTeamById(entity, seasonData.year)?.color ?? '#7cc7ff')
                   }
                   strokeWidth={3}
                   dot={{ r: 4, strokeWidth: 2, fill: '#12151b' }}

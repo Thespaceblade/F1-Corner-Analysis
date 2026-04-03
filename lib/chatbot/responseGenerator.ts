@@ -1,9 +1,7 @@
 /**
- * Response generation using Gemini API
+ * Response generation using deterministic insight builders.
  */
 
-import { GoogleGenerativeAI } from '@google/generative-ai'
-import { buildResponsePrompt } from './prompts'
 import type { ChatbotResponse, QueryResult, ClassifiedQuery } from './types'
 import {
   generateComparisonInsights,
@@ -12,20 +10,14 @@ import {
   formatInsightsAsBullets,
 } from './insightGenerator'
 
-const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY || '')
-
 export async function generateResponse(
-  query: string,
+  _query: string,
   classifiedQuery: ClassifiedQuery,
   queryResult: QueryResult,
-  context?: any
+  _context?: any
 ): Promise<ChatbotResponse> {
-  // Always use concise insight-based responses for now
-  // This ensures consistent, readable responses without relying on Gemini formatting
-  const answer = generateConciseResponse(query, classifiedQuery, queryResult)
+  const answer = generateConciseResponse(classifiedQuery, queryResult)
   const data = extractResponseData(queryResult, classifiedQuery)
-
-  // Generate follow-up suggestions
   const followUpSuggestions = generateFollowUpSuggestions(
     classifiedQuery,
     queryResult
@@ -38,52 +30,6 @@ export async function generateResponse(
     followUpSuggestions,
     confidence: classifiedQuery.confidence,
   }
-
-  // NOTE: Gemini API integration can be re-enabled later if needed
-  // For now, we use insight-based responses for consistency and readability
-  /*
-  if (!process.env.GEMINI_API_KEY) {
-    return generateFallbackResponse(query, classifiedQuery, queryResult, 'No API key')
-  }
-
-  try {
-    const model = genAI.getGenerativeModel({ model: 'gemini-2.5-flash' })
-    const prompt = buildResponsePrompt(
-      query,
-      classifiedQuery.intent,
-      classifiedQuery.parameters,
-      queryResult.data
-    )
-
-    const result = await model.generateContent(prompt)
-    const response = await result.response
-    const answer = response.text()
-
-    // Extract structured data from query result
-    const data = extractResponseData(queryResult, classifiedQuery)
-
-    // Generate follow-up suggestions
-    const followUpSuggestions = generateFollowUpSuggestions(
-      classifiedQuery,
-      queryResult
-    )
-
-    return {
-      answer,
-      data,
-      sources: [`${queryResult.metadata.track} ${queryResult.metadata.year} ${queryResult.metadata.session || ''}`.trim()],
-      followUpSuggestions,
-      confidence: classifiedQuery.confidence,
-    }
-  } catch (error) {
-    console.error('Error generating response:', error)
-    const errorMessage = error instanceof Error ? error.message : String(error)
-    
-    // If Gemini API fails, provide a fallback response based on the data
-    console.warn('Gemini API failed, using fallback response generation')
-    return generateFallbackResponse(query, classifiedQuery, queryResult, errorMessage)
-  }
-  */
 }
 
 /**
@@ -91,7 +37,6 @@ export async function generateResponse(
  * Uses insight generator to create bullet-point responses instead of paragraphs
  */
 function generateConciseResponse(
-  query: string,
   classifiedQuery: ClassifiedQuery,
   queryResult: QueryResult
 ): string {
@@ -156,28 +101,6 @@ function generateConciseResponse(
 
     default:
       return `No data available for ${track || 'this track'}`
-  }
-}
-
-/**
- * Generate a fallback response when Gemini API fails
- * Uses concise insight-based responses
- */
-function generateFallbackResponse(
-  query: string,
-  classifiedQuery: ClassifiedQuery,
-  queryResult: QueryResult,
-  errorMessage: string
-): ChatbotResponse {
-  const answer = generateConciseResponse(query, classifiedQuery, queryResult)
-  const data = extractResponseData(queryResult, classifiedQuery)
-
-  return {
-    answer,
-    data,
-    sources: [`${queryResult.metadata.track} ${queryResult.metadata.year} ${queryResult.metadata.session || ''}`.trim()],
-    followUpSuggestions: generateFollowUpSuggestions(classifiedQuery, queryResult),
-    confidence: classifiedQuery.confidence || 0.7,
   }
 }
 
@@ -259,7 +182,7 @@ function extractResponseData(
 
 function generateFollowUpSuggestions(
   classifiedQuery: ClassifiedQuery,
-  queryResult: QueryResult
+  _queryResult: QueryResult
 ): string[] {
   const suggestions: string[] = []
 
@@ -292,4 +215,3 @@ function generateFollowUpSuggestions(
 
   return suggestions.slice(0, 3) // Limit to 3 suggestions
 }
-

@@ -262,7 +262,7 @@ export const POINTS_SYSTEM: Record<number, number> = {
 }
 
 // Calculate points based on position only (no fastest lap bonus)
-export function calculatePoints(position: number, fastestLap: boolean): number {
+export function calculatePoints(position: number, _fastestLap: boolean): number {
   return POINTS_SYSTEM[position] ?? 0
 }
 

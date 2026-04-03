@@ -3,10 +3,9 @@
 import React, { useState, useMemo } from 'react'
 import { SeasonData } from '../../../lib/seasonTypes'
 import { calculateHeadToHead } from '../../../lib/seasonAggregator'
-import DriverBadge from '../../formatting/DriverBadge'
 import CustomSelect from '../../CustomSelect'
-import { BarChart, Bar, XAxis, YAxis, Tooltip, ResponsiveContainer, Legend, Cell } from 'recharts'
-import { driverColorMap } from '../../../lib/teamData'
+import { BarChart, Bar, XAxis, YAxis, Tooltip, ResponsiveContainer, Cell } from 'recharts'
+import { getDriverColor } from '../../../lib/teamData'
 
 type HeadToHeadComparisonProps = {
   seasonData: SeasonData
@@ -164,7 +163,7 @@ export default function HeadToHeadComparison({ seasonData }: HeadToHeadCompariso
                       {qualiChartData.map((entry, index) => (
                         <Cell 
                           key={`cell-${index}`} 
-                          fill={driverColorMap[entry.name] ?? '#7cc7ff'}
+                          fill={getDriverColor(entry.name, seasonData.year) ?? '#7cc7ff'}
                           opacity={0.9}
                         />
                       ))}
@@ -227,7 +226,7 @@ export default function HeadToHeadComparison({ seasonData }: HeadToHeadCompariso
                       {raceChartData.map((entry, index) => (
                         <Cell 
                           key={`cell-${index}`} 
-                          fill={driverColorMap[entry.name] ?? '#7cc7ff'}
+                          fill={getDriverColor(entry.name, seasonData.year) ?? '#7cc7ff'}
                           opacity={0.9}
                         />
                       ))}

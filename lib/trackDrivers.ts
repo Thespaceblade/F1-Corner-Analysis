@@ -7,6 +7,7 @@
  */
 
 import { getDriversForRound, didDriverRaceAtRound } from './driverAssignments'
+import { getTeamIdFromName } from './seasonMetadata'
 import type { SessionPayload } from './sessionDataClient'
 
 /**
@@ -34,7 +35,7 @@ export function getAvailableDriversForTrack(
   if (sessionData?.drivers) {
     for (const [driverCode, driverInfo] of Object.entries(sessionData.drivers)) {
       // Get team ID from assignments or use team from session data
-      const teamId = getTeamIdFromSessionDriver(driverInfo.team)
+      const teamId = getTeamIdFromName(driverInfo.team, year)
       
       driverMap.set(driverCode, {
         driverCode,
@@ -46,44 +47,6 @@ export function getAvailableDriversForTrack(
   return Array.from(driverMap.values()).sort((a, b) => 
     a.driverCode.localeCompare(b.driverCode)
   )
-}
-
-/**
- * Get team ID from session driver team name
- */
-function getTeamIdFromSessionDriver(teamName: string | null | undefined): string | null {
-  if (!teamName) return null
-
-  // Map team names to team IDs
-  const teamNameMap: Record<string, string> = {
-    'Red Bull': 'red-bull',
-    'Red Bull Racing': 'red-bull',
-    'Oracle Red Bull Racing': 'red-bull',
-    'McLaren': 'mclaren',
-    'McLaren Formula 1 Team': 'mclaren',
-    'Mercedes': 'mercedes',
-    'Mercedes-AMG PETRONAS F1 Team': 'mercedes',
-    'Ferrari': 'ferrari',
-    'Scuderia Ferrari': 'ferrari',
-    'Aston Martin': 'aston-martin',
-    'Aston Martin Aramco Formula One Team': 'aston-martin',
-    'Alpine': 'alpine',
-    'BWT Alpine F1 Team': 'alpine',
-    'Williams': 'williams',
-    'Williams Racing': 'williams',
-    'RB': 'visa-rb',
-    'Racing Bulls': 'visa-rb',  // Alternative name for Visa RB
-    'Visa Cash App RB Formula One Team': 'visa-rb',
-    'Visa Cash App RB': 'visa-rb',
-    'Stake': 'stake',
-    'Stake F1 Team Kick Sauber': 'stake',
-    'Kick Sauber': 'stake',  // Alternative name
-    'Haas': 'haas',
-    'Haas F1 Team': 'haas',  // Alternative name
-    'MoneyGram Haas F1 Team': 'haas'
-  }
-
-  return teamNameMap[teamName] ?? null
 }
 
 /**

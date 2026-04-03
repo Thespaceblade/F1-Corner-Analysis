@@ -12,12 +12,11 @@ import {
   ResponsiveContainer,
   CartesianGrid,
   Legend,
-  Cell,
   ReferenceLine,
   ReferenceArea
 } from 'recharts'
 import { SessionPayload } from '../lib/sessionDataClient'
-import { driverColorMap } from '../lib/teamData'
+import { getDriverColor as getSeasonDriverColor } from '../lib/teamData'
 import ChartTooltip from './ChartTooltip'
 import F1CarIcon from './F1CarIcon'
 
@@ -69,9 +68,8 @@ const FALLBACK_COLORS = [
   '#f87171'
 ]
 
-const getDriverColor = (code: string, index: number) => {
-  const normalized = code.toUpperCase()
-  return driverColorMap[normalized] ?? FALLBACK_COLORS[index % FALLBACK_COLORS.length]
+const getDriverColor = (code: string, index: number, year?: number) => {
+  return getSeasonDriverColor(code, year) ?? FALLBACK_COLORS[index % FALLBACK_COLORS.length]
 }
 
 const buildChartData = (
@@ -104,7 +102,6 @@ const buildChartData = (
 const buildQualifyingData = (
   sessionData: SessionPayload | null,
   driverCodes: string[],
-  showOutliers: boolean,
 ): QualifyingAttempt[] => {
   if (!sessionData || !driverCodes.length) return []
 
@@ -608,8 +605,8 @@ export default function ChartPanel({
   )
 
   const qualifyingData = useMemo(
-    () => buildQualifyingData(sessionData, driversToDisplay, showOutliers),
-    [sessionData, driversToDisplay, showOutliers]
+    () => buildQualifyingData(sessionData, driversToDisplay),
+    [sessionData, driversToDisplay]
   )
 
   const compoundMap = useMemo(
@@ -917,7 +914,7 @@ export default function ChartPanel({
     
     // Get all qualifying attempts from all drivers
     const allDrivers = Object.keys(sessionData.drivers || {})
-    const allQualifyingData = buildQualifyingData(sessionData, allDrivers, showOutliers)
+    const allQualifyingData = buildQualifyingData(sessionData, allDrivers)
     
     // Assign segments to all attempts
     const attemptsWithSegments = allQualifyingData.map(attempt => {
@@ -945,7 +942,7 @@ export default function ChartPanel({
     }
     
     return fastest
-  }, [isQualifyingSession, sessionData, showOutliers, qualifyingBoundaries])
+  }, [isQualifyingSession, sessionData, qualifyingBoundaries])
 
   // Assign Q segments to attempts based on session time and group by driver
   // Also add collision detection offsets and fastest time markers
@@ -990,7 +987,7 @@ export default function ChartPanel({
     const COLLISION_THRESHOLD = 0.15 // seconds - if times are within 0.15s, offset them
     const OFFSET_STEP = 0.12 // X offset step for collision avoidance
     
-    for (const [segment, attempts] of attemptsBySegment.entries()) {
+    for (const [_segment, attempts] of attemptsBySegment.entries()) {
       // Sort by lap time
       attempts.sort((a, b) => a.lapTimeSeconds - b.lapTimeSeconds)
       
@@ -1552,7 +1549,7 @@ export default function ChartPanel({
               })()}
               {driversToDisplay.map((code, index) => {
                 const driverAttempts = filteredQualifyingByDriver[code] || []
-                const driverColor = getDriverColor(code, index)
+                const driverColor = getDriverColor(code, index, sessionData?.meta.year)
                 return (
                   <Scatter
                     key={code}
@@ -1664,7 +1661,7 @@ export default function ChartPanel({
                   name={code}
                   type="monotone"
                   dataKey={code}
-                  stroke={getDriverColor(code, index)}
+                  stroke={getDriverColor(code, index, sessionData?.meta.year)}
                   strokeWidth={2}
                   dot={false}
                   isAnimationActive={false}

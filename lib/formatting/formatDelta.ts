@@ -43,7 +43,6 @@ export function formatDelta(
     unit = 's',
     showSign = true,
     precision = 3,
-    inverted = false,
   } = options
 
   if (value === null || value === undefined || isNaN(value)) {
@@ -95,7 +94,6 @@ export function getDeltaDirection(
     return value < 0 ? 'up' : 'down'
   }
 }
-
 
 
 

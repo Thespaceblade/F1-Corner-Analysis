@@ -4,7 +4,7 @@
  * Filters corner metrics based on qualifying segments, lap numbers, or averages.
  */
 
-import { CornerMetrics, SessionPayload, QualifyingBoundaries } from './sessionDataClient'
+import { CornerMetrics, SessionPayload } from './sessionDataClient'
 
 export type CornerFilter = {
   type: 'all' | 'qualifying-segment' | 'lap' | 'average'
@@ -113,4 +113,3 @@ export function filterCorners(
 
   return corners
 }
-

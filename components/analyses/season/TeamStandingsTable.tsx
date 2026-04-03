@@ -2,7 +2,7 @@
 
 import React, { useMemo } from 'react'
 import { SeasonData } from '../../../lib/seasonTypes'
-import { f1Teams } from '../../../lib/teamData'
+import { getTeamById } from '../../../lib/teamData'
 import DriverBadge from '../../formatting/DriverBadge'
 
 type TeamStandingsTableProps = {
@@ -40,7 +40,7 @@ export default function TeamStandingsTable({ seasonData }: TeamStandingsTablePro
             </thead>
             <tbody>
               {sortedTeams.map((team) => {
-                const teamInfo = f1Teams.find(t => t.id === team.teamId)
+                const teamInfo = getTeamById(team.teamId, seasonData.year)
                 
                 return (
                   <tr
@@ -61,7 +61,7 @@ export default function TeamStandingsTable({ seasonData }: TeamStandingsTablePro
                       <div className="flex items-center gap-2">
                         <div className="relative w-8 h-8 flex items-center">
                           <img
-                            src={`/team-logos/${team.teamId}.png`}
+                            src={teamInfo?.logoPath ?? `/team-logos/${team.teamId}.png`}
                             alt={teamInfo?.shortName ?? team.teamId}
                             className="relative z-10 h-full w-full object-contain"
                             style={
@@ -78,8 +78,8 @@ export default function TeamStandingsTable({ seasonData }: TeamStandingsTablePro
                     </td>
                     <td className="py-3 px-3">
                       <div className="flex items-center gap-1.5">
-                        {team.driver1 && <DriverBadge code={team.driver1} size="sm" variant="badge" />}
-                        {team.driver2 && <DriverBadge code={team.driver2} size="sm" variant="badge" />}
+                        {team.driver1 && <DriverBadge code={team.driver1} year={seasonData.year} size="sm" variant="badge" />}
+                        {team.driver2 && <DriverBadge code={team.driver2} year={seasonData.year} size="sm" variant="badge" />}
                       </div>
                     </td>
                     <td className="text-right py-3 px-3 font-semibold text-gray-200">

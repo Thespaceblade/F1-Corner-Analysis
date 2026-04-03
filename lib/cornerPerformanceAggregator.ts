@@ -141,35 +141,21 @@ export function aggregateCornerPerformance(
       ? avgTime - bestTime
       : undefined
     
-    // Calculate driver-specific performance
+    // If we have multiple drivers, calculate per-driver metrics
     const driverPerformance: Record<string, {
       avgSpeed: number
       avgTime: number | null
       sampleCount: number
     }> = {}
-    
-    for (const driver of data.drivers) {
-      const driverCorners = metrics.filter(m => {
-        // Match by driver - we need to track which driver each corner belongs to
-        // For now, we'll aggregate all corners and note this limitation
-        return true
-      })
-      
-      // Group by driver code - we need to pass driver info with corners
-      // For now, aggregate all drivers together
-    }
-    
-    // If we have multiple drivers, calculate per-driver metrics
+
     if (driversToProcess.length > 1) {
       for (const driver of driversToProcess) {
         const driverCorners = corners[driver]?.filter(
           c => c.cornerNumber === cornerNumber
         ) || []
-        
+
         if (driverCorners.length > 0) {
-          const driverEntrySpeeds = driverCorners.map(c => c.entrySpeed).filter(s => s > 0)
           const driverApexSpeeds = driverCorners.map(c => c.apexSpeed).filter(s => s > 0)
-          const driverExitSpeeds = driverCorners.map(c => c.exitSpeed).filter(s => s > 0)
           const driverTimes = driverCorners
             .map(c => c.cornerTime)
             .filter((t): t is number => t !== null && t > 0)
@@ -237,4 +223,3 @@ export function getCornerTimeDelta(
   
   return perf1.avgTime - perf2.avgTime
 }
-

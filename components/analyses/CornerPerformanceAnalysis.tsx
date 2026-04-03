@@ -19,7 +19,6 @@ import TimeDisplay from '../formatting/TimeDisplay'
 import SpeedDisplay from '../formatting/SpeedDisplay'
 import DeltaBadge from '../formatting/DeltaBadge'
 import DriverBadge from '../formatting/DriverBadge'
-import { formatDelta, getDeltaColor } from '../../lib/formatting'
 
 type CornerPerformanceAnalysisProps = {
   corners: Record<string, CornerMetrics[]>
@@ -262,7 +261,7 @@ export default function CornerPerformanceAnalysis({
                 <th className="pb-2">Type</th>
                 {selectedDrivers.map((code) => (
                   <th key={code} className="pb-2 text-center">
-                    <DriverBadge code={code} size="sm" variant="chip" />
+                    <DriverBadge code={code} year={sessionData?.meta.year} size="sm" variant="chip" />
                   </th>
                 ))}
               </tr>
@@ -365,11 +364,11 @@ export default function CornerPerformanceAnalysis({
                         </div>
                         <div className="text-xs text-gray-200 space-y-1">
                           <div className="flex items-center gap-2">
-                            <DriverBadge code={driver1} size="sm" variant="chip" />
+                            <DriverBadge code={driver1} year={sessionData?.meta.year} size="sm" variant="chip" />
                             <TimeDisplay value={data.driver1Time ?? null} type="corner" variant="mono" showUnit />
                           </div>
                           <div className="flex items-center gap-2">
-                            <DriverBadge code={driver2} size="sm" variant="chip" />
+                            <DriverBadge code={driver2} year={sessionData?.meta.year} size="sm" variant="chip" />
                             <TimeDisplay value={data.driver2Time ?? null} type="corner" variant="mono" showUnit />
                           </div>
                           <div className="mt-1 flex items-center gap-2">
@@ -412,4 +411,3 @@ export default function CornerPerformanceAnalysis({
     </div>
   )
 }
-

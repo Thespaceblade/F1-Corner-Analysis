@@ -3,7 +3,6 @@
 import React from 'react'
 import { TooltipProps } from 'recharts'
 import TyreCompoundIcon from './TyreCompoundIcon'
-import { formatLapTime } from '../lib/formatting'
 import TimeDisplay from './formatting/TimeDisplay'
 
 type CustomTooltipProps = TooltipProps<number, string> & {
@@ -49,4 +48,3 @@ export default function ChartTooltip({ active, payload, label, compoundMap }: Cu
     </div>
   )
 }
-

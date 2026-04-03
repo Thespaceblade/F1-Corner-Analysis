@@ -47,7 +47,6 @@ export default function TableOfContents({
       
       if (isHovered) {
         const buttonRect = iconButtonRef.current.getBoundingClientRect()
-        const viewportWidth = window.innerWidth
         const viewportHeight = window.innerHeight
         const minPadding = 16
         const minWidth = 180
@@ -552,4 +551,3 @@ export default function TableOfContents({
     </>
   )
 }
-

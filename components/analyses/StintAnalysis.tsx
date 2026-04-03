@@ -3,7 +3,7 @@
 import React, { useMemo } from 'react'
 import { SessionPayload } from '../../lib/sessionDataClient'
 import { LineChart, Line, XAxis, YAxis, Tooltip, ResponsiveContainer, Legend, CartesianGrid } from 'recharts'
-import { driverColorMap } from '../../lib/teamData'
+import { getDriverColor as getSeasonDriverColor } from '../../lib/teamData'
 
 type StintAnalysisProps = {
   sessionData: SessionPayload
@@ -19,9 +19,8 @@ const FALLBACK_COLORS = [
   '#f87171'
 ]
 
-const getDriverColor = (code: string, index: number) => {
-  const normalized = code.toUpperCase()
-  return driverColorMap[normalized] ?? FALLBACK_COLORS[index % FALLBACK_COLORS.length]
+const getDriverColor = (code: string, index: number, year?: number) => {
+  return getSeasonDriverColor(code, year) ?? FALLBACK_COLORS[index % FALLBACK_COLORS.length]
 }
 
 export default function StintAnalysis({
@@ -268,7 +267,7 @@ export default function StintAnalysis({
                     key={driver}
                     type="monotone"
                     dataKey={driver}
-                    stroke={getDriverColor(driver, index)}
+                    stroke={getDriverColor(driver, index, sessionData.meta.year)}
                     strokeWidth={2}
                     dot={false}
                     connectNulls
@@ -327,7 +326,7 @@ export default function StintAnalysis({
                     key={driver}
                     type="monotone"
                     dataKey={driver}
-                    stroke={getDriverColor(driver, index)}
+                    stroke={getDriverColor(driver, index, sessionData.meta.year)}
                     strokeWidth={2}
                     dot={false}
                     connectNulls
@@ -341,4 +340,3 @@ export default function StintAnalysis({
     </div>
   )
 }
-

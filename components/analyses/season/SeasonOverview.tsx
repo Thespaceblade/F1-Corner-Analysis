@@ -8,14 +8,11 @@ import {
   Zap, 
   Flag, 
   TrendingDown,
-  Award,
-  Users,
   Building2
 } from 'lucide-react'
-import StatisticsCard, { RankingStatCard, PercentageStatCard } from './StatisticsCard'
-import DriverBadge from '../../formatting/DriverBadge'
-import { driverColorMap, f1Teams } from '../../../lib/teamData'
-import { BarChart, Bar, XAxis, YAxis, Tooltip, ResponsiveContainer, PieChart, Pie, Cell, Legend } from 'recharts'
+import StatisticsCard from './StatisticsCard'
+import { getDriverColor, getTeamById } from '../../../lib/teamData'
+import { BarChart, Bar, XAxis, YAxis, Tooltip, ResponsiveContainer, PieChart, Pie, Cell } from 'recharts'
 import { getDriverPhoto } from '../../../lib/driverPhotos'
 
 type SeasonOverviewProps = {
@@ -24,6 +21,10 @@ type SeasonOverviewProps = {
 
 export default function SeasonOverview({ seasonData }: SeasonOverviewProps) {
   const [chartView, setChartView] = useState<'wins' | 'podiums' | 'poles' | 'fastest-laps'>('wins')
+  const getSeasonDriverColor = (driverCode: string, fallback = '#7cc7ff') =>
+    getDriverColor(driverCode, seasonData.year) ?? fallback
+  const getSeasonTeam = (teamId: string | null | undefined) =>
+    teamId ? getTeamById(teamId, seasonData.year) : null
   
   // Get top drivers and teams
   const topDrivers = useMemo(() => {
@@ -80,12 +81,12 @@ export default function SeasonOverview({ seasonData }: SeasonOverviewProps) {
   const pointsDistribution = useMemo(() => {
     return topDrivers.slice(0, 8).map(driver => {
       const teamColor = driver.teamId 
-        ? f1Teams.find(t => t.id === driver.teamId)?.color 
+        ? getSeasonTeam(driver.teamId)?.color 
         : null
       return {
         name: driver.driverCode,
         value: driver.totalPoints,
-        color: teamColor ?? driverColorMap[driver.driverCode] ?? '#7cc7ff',
+        color: teamColor ?? getSeasonDriverColor(driver.driverCode),
       }
     })
   }, [topDrivers])
@@ -93,9 +94,9 @@ export default function SeasonOverview({ seasonData }: SeasonOverviewProps) {
   // Wins by team data for bar chart
   const winsByTeam = useMemo(() => {
     return topTeams.map(team => ({
-      name: f1Teams.find(t => t.id === team.teamId)?.shortName ?? team.teamId,
+      name: getSeasonTeam(team.teamId)?.shortName ?? team.teamId,
       wins: team.totalWins,
-      color: f1Teams.find(t => t.id === team.teamId)?.color ?? '#7cc7ff',
+      color: getSeasonTeam(team.teamId)?.color ?? '#7cc7ff',
     }))
   }, [topTeams])
 
@@ -108,12 +109,12 @@ export default function SeasonOverview({ seasonData }: SeasonOverviewProps) {
     
     return sorted.map(driver => {
       const teamColor = driver.teamId 
-        ? f1Teams.find(t => t.id === driver.teamId)?.color 
+        ? getSeasonTeam(driver.teamId)?.color 
         : null
       return {
         name: driver.driverCode,
         podiums: driver.podiums,
-        color: teamColor ?? driverColorMap[driver.driverCode] ?? '#7cc7ff',
+        color: teamColor ?? getSeasonDriverColor(driver.driverCode),
       }
     })
   }, [seasonData.drivers])
@@ -127,12 +128,12 @@ export default function SeasonOverview({ seasonData }: SeasonOverviewProps) {
     
     return sorted.map(driver => {
       const teamColor = driver.teamId 
-        ? f1Teams.find(t => t.id === driver.teamId)?.color 
+        ? getSeasonTeam(driver.teamId)?.color 
         : null
       return {
         name: driver.driverCode,
         value: driver.polePositions,
-        color: teamColor ?? driverColorMap[driver.driverCode] ?? '#7cc7ff',
+        color: teamColor ?? getSeasonDriverColor(driver.driverCode),
       }
     })
   }, [seasonData.drivers])
@@ -146,12 +147,12 @@ export default function SeasonOverview({ seasonData }: SeasonOverviewProps) {
     
     return sorted.map(driver => {
       const teamColor = driver.teamId 
-        ? f1Teams.find(t => t.id === driver.teamId)?.color 
+        ? getSeasonTeam(driver.teamId)?.color 
         : null
       return {
         name: driver.driverCode,
         value: driver.fastestLaps,
-        color: teamColor ?? driverColorMap[driver.driverCode] ?? '#7cc7ff',
+        color: teamColor ?? getSeasonDriverColor(driver.driverCode),
       }
     })
   }, [seasonData.drivers])
@@ -203,19 +204,19 @@ export default function SeasonOverview({ seasonData }: SeasonOverviewProps) {
         <div 
           className="border rounded-lg p-6 backdrop-blur-sm"
           style={{
-            borderColor: driverChampion ? `${driverColorMap[driverChampion.driverCode] ?? '#f59e0b'}40` : '#f59e0b40',
-            background: `linear-gradient(to bottom right, ${driverChampion ? `${driverColorMap[driverChampion.driverCode] ?? '#f59e0b'}10` : '#f59e0b10'}, transparent)`
+            borderColor: driverChampion ? `${getSeasonDriverColor(driverChampion.driverCode, '#f59e0b')}40` : '#f59e0b40',
+            background: `linear-gradient(to bottom right, ${driverChampion ? `${getSeasonDriverColor(driverChampion.driverCode, '#f59e0b')}10` : '#f59e0b10'}, transparent)`
           }}
         >
           <div className="flex items-center gap-3 mb-4">
             <Trophy 
               className="w-8 h-8"
-              style={{ color: driverChampion ? (driverColorMap[driverChampion.driverCode] ?? '#fbbf24') : '#fbbf24' }}
+              style={{ color: driverChampion ? getSeasonDriverColor(driverChampion.driverCode, '#fbbf24') : '#fbbf24' }}
             />
             <div>
               <h4 
                 className="text-lg font-bold"
-                style={{ color: driverChampion ? (driverColorMap[driverChampion.driverCode] ?? '#e7eaee') : '#e7eaee' }}
+                style={{ color: driverChampion ? getSeasonDriverColor(driverChampion.driverCode, '#e7eaee') : '#e7eaee' }}
               >
                 World Champion
               </h4>
@@ -227,7 +228,7 @@ export default function SeasonOverview({ seasonData }: SeasonOverviewProps) {
             <div className="space-y-3">
               <div className="flex items-center gap-3">
                 <div className="relative w-20 h-20 rounded-full overflow-hidden bg-gray-800 border-4 flex-shrink-0"
-                  style={{ borderColor: driverColorMap[driverChampion.driverCode] ?? '#fbbf24' }}
+                  style={{ borderColor: getSeasonDriverColor(driverChampion.driverCode, '#fbbf24') }}
                 >
                   <img
                     src={getDriverPhoto(driverChampion.driverCode)}
@@ -237,7 +238,7 @@ export default function SeasonOverview({ seasonData }: SeasonOverviewProps) {
                 </div>
                 <div 
                   className="text-3xl font-bold"
-                  style={{ color: driverColorMap[driverChampion.driverCode] ?? '#fbbf24' }}
+                  style={{ color: getSeasonDriverColor(driverChampion.driverCode, '#fbbf24') }}
                 >
                   {driverChampion.totalPoints} pts
                 </div>
@@ -266,19 +267,19 @@ export default function SeasonOverview({ seasonData }: SeasonOverviewProps) {
         <div 
           className="border rounded-lg p-6 backdrop-blur-sm"
           style={{
-            borderColor: constructorChampion ? `${f1Teams.find(t => t.id === constructorChampion.teamId)?.color ?? '#3b82f6'}40` : '#3b82f640',
-            background: `linear-gradient(to bottom right, ${constructorChampion ? `${f1Teams.find(t => t.id === constructorChampion.teamId)?.color ?? '#3b82f6'}10` : '#3b82f610'}, transparent)`
+            borderColor: constructorChampion ? `${getSeasonTeam(constructorChampion.teamId)?.color ?? '#3b82f6'}40` : '#3b82f640',
+            background: `linear-gradient(to bottom right, ${constructorChampion ? `${getSeasonTeam(constructorChampion.teamId)?.color ?? '#3b82f6'}10` : '#3b82f610'}, transparent)`
           }}
         >
           <div className="flex items-center gap-3 mb-4">
             <Building2 
               className="w-8 h-8"
-              style={{ color: constructorChampion ? (f1Teams.find(t => t.id === constructorChampion.teamId)?.color ?? '#60a5fa') : '#60a5fa' }}
+              style={{ color: constructorChampion ? (getSeasonTeam(constructorChampion.teamId)?.color ?? '#60a5fa') : '#60a5fa' }}
             />
             <div>
               <h4 
                 className="text-lg font-bold"
-                style={{ color: constructorChampion ? (f1Teams.find(t => t.id === constructorChampion.teamId)?.color ?? '#e7eaee') : '#e7eaee' }}
+                style={{ color: constructorChampion ? (getSeasonTeam(constructorChampion.teamId)?.color ?? '#e7eaee') : '#e7eaee' }}
               >
                 Constructor Champion
               </h4>
@@ -291,8 +292,8 @@ export default function SeasonOverview({ seasonData }: SeasonOverviewProps) {
               <div className="flex items-center gap-3">
                 <div className="relative w-12 h-12 flex-shrink-0">
                   <img
-                    src={`/team-logos/${constructorChampion.teamId}.png`}
-                    alt={f1Teams.find(t => t.id === constructorChampion.teamId)?.shortName ?? constructorChampion.teamId}
+                    src={getSeasonTeam(constructorChampion.teamId)?.logoPath ?? `/team-logos/${constructorChampion.teamId}.png`}
+                    alt={getSeasonTeam(constructorChampion.teamId)?.shortName ?? constructorChampion.teamId}
                     className="relative z-10 h-full w-full object-contain"
                     style={
                       ['aston-martin', 'visa-rb', 'stake'].includes(constructorChampion.teamId)
@@ -303,7 +304,7 @@ export default function SeasonOverview({ seasonData }: SeasonOverviewProps) {
                 </div>
                 <div 
                   className="text-3xl font-bold"
-                  style={{ color: f1Teams.find(t => t.id === constructorChampion.teamId)?.color ?? '#60a5fa' }}
+                  style={{ color: getSeasonTeam(constructorChampion.teamId)?.color ?? '#60a5fa' }}
                 >
                   {constructorChampion.totalPoints} pts
                 </div>
@@ -346,7 +347,7 @@ export default function SeasonOverview({ seasonData }: SeasonOverviewProps) {
               value={mostWins.raceWins}
               icon={Trophy}
               description={mostWins.driverCode}
-              color={driverColorMap[mostWins.driverCode]}
+              color={getSeasonDriverColor(mostWins.driverCode)}
             />
           )}
           
@@ -356,7 +357,7 @@ export default function SeasonOverview({ seasonData }: SeasonOverviewProps) {
               value={mostPoles.polePositions}
               icon={Target}
               description={mostPoles.driverCode}
-              color={driverColorMap[mostPoles.driverCode]}
+              color={getSeasonDriverColor(mostPoles.driverCode)}
             />
           )}
           
@@ -366,7 +367,7 @@ export default function SeasonOverview({ seasonData }: SeasonOverviewProps) {
               value={mostFastestLaps.fastestLaps}
               icon={Zap}
               description={mostFastestLaps.driverCode}
-              color={driverColorMap[mostFastestLaps.driverCode]}
+              color={getSeasonDriverColor(mostFastestLaps.driverCode)}
             />
           )}
         </div>

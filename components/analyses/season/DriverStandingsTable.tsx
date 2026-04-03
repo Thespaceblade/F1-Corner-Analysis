@@ -1,10 +1,10 @@
 'use client'
 
 import React, { useState, useMemo } from 'react'
-import { SeasonData, DriverSeasonStats } from '../../../lib/seasonTypes'
+import { SeasonData } from '../../../lib/seasonTypes'
 import DriverBadge from '../../formatting/DriverBadge'
 import { ChevronDown, ChevronUp, ChevronsUpDown } from 'lucide-react'
-import { f1Teams } from '../../../lib/teamData'
+import { getTeamById } from '../../../lib/teamData'
 
 type SeasonDataProps = {
   seasonData: SeasonData
@@ -190,7 +190,7 @@ export default function DriverStandingsTable({ seasonData }: SeasonDataProps) {
               </tr>
             </thead>
             <tbody>
-              {sortedDrivers.map((driver, idx) => (
+              {sortedDrivers.map((driver) => (
                 <React.Fragment key={driver.driverCode}>
                   {/* Main Row */}
                   <tr
@@ -210,14 +210,14 @@ export default function DriverStandingsTable({ seasonData }: SeasonDataProps) {
                       </div>
                     </td>
                     <td className="py-3 px-3">
-                      <DriverBadge code={driver.driverCode} size="sm" variant="badge" />
+                      <DriverBadge code={driver.driverCode} year={seasonData.year} size="sm" variant="badge" />
                     </td>
                     <td className="py-3 px-3">
                       {driver.teamId ? (
                         <div className="relative w-8 h-8 flex items-center">
                           <img
-                            src={`/team-logos/${driver.teamId}.png`}
-                            alt={f1Teams.find(t => t.id === driver.teamId)?.shortName ?? driver.teamId}
+                            src={getTeamById(driver.teamId, seasonData.year)?.logoPath ?? `/team-logos/${driver.teamId}.png`}
+                            alt={getTeamById(driver.teamId, seasonData.year)?.shortName ?? driver.teamId}
                             className="relative z-10 h-full w-full object-contain"
                             style={
                               ['aston-martin', 'visa-rb', 'stake'].includes(driver.teamId)

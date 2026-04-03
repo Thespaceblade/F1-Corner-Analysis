@@ -3,7 +3,7 @@
 import React, { useMemo } from 'react'
 import { SessionPayload } from '../../lib/sessionDataClient'
 import { BarChart, Bar, XAxis, YAxis, Tooltip, ResponsiveContainer, Legend, CartesianGrid, LineChart, Line } from 'recharts'
-import { driverColorMap } from '../../lib/teamData'
+import { getDriverColor as getSeasonDriverColor } from '../../lib/teamData'
 import TimeDisplay from '../formatting/TimeDisplay'
 import DriverBadge from '../formatting/DriverBadge'
 
@@ -21,9 +21,8 @@ const FALLBACK_COLORS = [
   '#f87171'
 ]
 
-const getDriverColor = (code: string, index: number) => {
-  const normalized = code.toUpperCase()
-  return driverColorMap[normalized] ?? FALLBACK_COLORS[index % FALLBACK_COLORS.length]
+const getDriverColor = (code: string, index: number, year?: number) => {
+  return getSeasonDriverColor(code, year) ?? FALLBACK_COLORS[index % FALLBACK_COLORS.length]
 }
 
 const COMPOUND_COLORS: Record<string, string> = {
@@ -213,7 +212,7 @@ export default function TyreCompoundAnalysis({
                 return Object.values(driverCompounds).map((stats, idx) => (
                   <tr key={`${driver}-${stats.compound}-${idx}`} className="border-b border-gray-800 hover:bg-gray-800/30">
                     <td className="py-2 px-3">
-                      <DriverBadge code={driver} size="sm" variant="badge" />
+                      <DriverBadge code={driver} year={sessionData.meta.year} size="sm" variant="badge" />
                     </td>
                     <td className="py-2 px-3">
                       <span 
@@ -309,7 +308,7 @@ export default function TyreCompoundAnalysis({
                   <Bar 
                     key={driver}
                     dataKey={driver} 
-                    fill={getDriverColor(driver, index)}
+                    fill={getDriverColor(driver, index, sessionData.meta.year)}
                   />
                 ))}
               </BarChart>
@@ -368,7 +367,7 @@ export default function TyreCompoundAnalysis({
                     key={driver}
                     type="monotone"
                     dataKey={driver}
-                    stroke={getDriverColor(driver, index)}
+                    stroke={getDriverColor(driver, index, sessionData.meta.year)}
                     strokeWidth={2}
                     dot={false}
                     connectNulls
@@ -382,5 +381,4 @@ export default function TyreCompoundAnalysis({
     </div>
   )
 }
-
 

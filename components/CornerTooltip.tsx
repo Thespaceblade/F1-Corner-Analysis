@@ -198,11 +198,6 @@ export default function CornerTooltip({
         <div className="px-2.5 py-1.5">
           {sortedDrivers.map((item, index) => {
             const isFastest = index === 0
-            const deltaColor = item.delta === 0 
-              ? '#22c55e' // Green for fastest
-              : item.delta < 0.1 
-                ? '#fbbf24' // Yellow for close
-                : '#ef4444' // Red for slower
 
             return (
               <div

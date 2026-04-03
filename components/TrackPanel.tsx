@@ -92,7 +92,7 @@ export default function TrackPanel({
               // Add pointer-events: none to SVG root so overlay markers can receive events
               if (/style=/i.test(adjusted)) {
                 // Append pointer-events: none to existing style
-                adjusted = adjusted.replace(/style\s*=\s*["']([^"']*)["']/i, (match: string, styles: string) => {
+                adjusted = adjusted.replace(/style\s*=\s*["']([^"']*)["']/i, (_match: string, styles: string) => {
                   const cleanStyles = styles.replace(/pointer-events\s*:\s*[^;]+;?/gi, '').trim()
                   return `style="${cleanStyles}${cleanStyles && !cleanStyles.endsWith(';') ? '; ' : ''}pointer-events: none;"`
                 })
@@ -104,7 +104,7 @@ export default function TrackPanel({
             })
             // Remove pointer-events from all child elements to ensure events pass through
             .replace(/\s+pointer-events\s*=\s*["'][^"']*["']/gi, '')
-            .replace(/style\s*=\s*["']([^"']*)pointer-events\s*:\s*[^;]+;?\s*([^"']*)["']/gi, (match, before, after) => {
+            .replace(/style\s*=\s*["']([^"']*)pointer-events\s*:\s*[^;]+;?\s*([^"']*)["']/gi, (_match, before, after) => {
               const cleaned = (before + after).trim().replace(/;\s*;/g, ';')
               return `style="${cleaned}"`
             })
@@ -175,7 +175,6 @@ export default function TrackPanel({
                     }
                   }}
                   onCornerClick={onCornerClick}
-                  svgContainerRef={svgContainerRef}
                 />
               </svg>
             )}

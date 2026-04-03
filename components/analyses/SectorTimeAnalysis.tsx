@@ -3,7 +3,6 @@
 import React, { useMemo } from 'react'
 import { SessionPayload } from '../../lib/sessionDataClient'
 import { BarChart, Bar, XAxis, YAxis, Tooltip, ResponsiveContainer, Legend, CartesianGrid, Cell, ReferenceLine } from 'recharts'
-import { driverColorMap } from '../../lib/teamData'
 import TimeDisplay from '../formatting/TimeDisplay'
 import DriverBadge from '../formatting/DriverBadge'
 import DeltaBadge from '../formatting/DeltaBadge'
@@ -27,20 +26,6 @@ type SectorStats = {
   bestLap: number | null
   bestLapNumber: number | null
   sampleCount: number
-}
-
-const FALLBACK_COLORS = [
-  '#7cc7ff',
-  '#22c55e',
-  '#facc15',
-  '#f97316',
-  '#a855f7',
-  '#f87171'
-]
-
-const getDriverColor = (code: string, index: number) => {
-  const normalized = code.toUpperCase()
-  return driverColorMap[normalized] ?? FALLBACK_COLORS[index % FALLBACK_COLORS.length]
 }
 
 const SECTOR_COLORS = {
@@ -240,7 +225,7 @@ export default function SectorTimeAnalysis({
                 return (
                   <tr key={driverCode} className="border-b border-gray-800 hover:bg-gray-800/30">
                     <td className="py-2 px-3">
-                      <DriverBadge code={driverCode} size="sm" variant="badge" />
+                      <DriverBadge code={driverCode} year={sessionData.meta.year} size="sm" variant="badge" />
                     </td>
                     <td className="text-right py-2 px-3">
                       <div className="flex items-center justify-end gap-1">
@@ -413,11 +398,11 @@ export default function SectorTimeAnalysis({
                         </div>
                         <div className="text-xs text-gray-200 space-y-1">
                           <div className="flex items-center gap-2">
-                            <DriverBadge code={selectedDrivers[0]} size="sm" variant="chip" />
+                            <DriverBadge code={selectedDrivers[0]} year={sessionData.meta.year} size="sm" variant="chip" />
                             <TimeDisplay value={data.driver1Time ?? null} type="sector" variant="mono" showUnit />
                           </div>
                           <div className="flex items-center gap-2">
-                            <DriverBadge code={selectedDrivers[1]} size="sm" variant="chip" />
+                            <DriverBadge code={selectedDrivers[1]} year={sessionData.meta.year} size="sm" variant="chip" />
                             <TimeDisplay value={data.driver2Time ?? null} type="sector" variant="mono" showUnit />
                           </div>
                           <div className="mt-1 flex items-center gap-2">
@@ -454,5 +439,3 @@ export default function SectorTimeAnalysis({
     </div>
   )
 }
-
-

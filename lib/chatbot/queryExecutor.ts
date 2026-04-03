@@ -13,17 +13,6 @@ import type {
 } from './types'
 
 /**
- * Normalize driver codes
- */
-function normalizeDriverCodes(raw: string | null): string[] {
-  if (!raw) return []
-  return raw
-    .split(',')
-    .map((code) => code.trim().toUpperCase())
-    .filter(Boolean)
-}
-
-/**
  * Get session data for a specific session
  */
 export async function getSessionData(
@@ -485,7 +474,7 @@ export async function getAvailableSessions(
 export async function executeQuery(
   intent: string,
   parameters: QueryParameters,
-  context?: any
+  _context?: any
 ): Promise<QueryResult> {
   // Default to current year and most common session if not specified
   const year = parameters.year || new Date().getFullYear()

@@ -36,7 +36,7 @@ export function generateTyreInsightsForComparison(
   laps: any[],
   driver1Code: string,
   driver2Code: string,
-  comparisonData: {
+  _comparisonData: {
     driver1: DriverCornerStats[]
     driver2: DriverCornerStats[]
     deltas: Array<{
@@ -295,7 +295,7 @@ export function generateQualifyingSegmentInsights(
 export function generateLapTrendInsightsForDriver(
   laps: any[],
   driverCode: string,
-  stats: DriverCornerStats[]
+  _stats: DriverCornerStats[]
 ): string[] {
   const insights: string[] = []
 
@@ -454,4 +454,3 @@ export function generateQualifyingSegmentInsightsForDriver(
 
   return insights.slice(0, 1) // Max 1 qualifying insight
 }
-

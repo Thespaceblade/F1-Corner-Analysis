@@ -2,12 +2,11 @@
 
 import React, { useMemo, useState } from 'react'
 import { SessionPayload } from '../../lib/sessionDataClient'
-import { BarChart, Bar, XAxis, YAxis, Tooltip, ResponsiveContainer, Legend, CartesianGrid, LineChart, Line } from 'recharts'
-import { driverColorMap } from '../../lib/teamData'
+import { XAxis, YAxis, Tooltip, ResponsiveContainer, Legend, CartesianGrid, LineChart, Line } from 'recharts'
+import { getDriverColor as getSeasonDriverColor } from '../../lib/teamData'
 import TimeDisplay from '../formatting/TimeDisplay'
 import DriverBadge from '../formatting/DriverBadge'
 import DeltaBadge from '../formatting/DeltaBadge'
-import { formatLapTime } from '../../lib/formatting'
 
 type SessionOverviewProps = {
   sessionData: SessionPayload
@@ -23,9 +22,8 @@ const FALLBACK_COLORS = [
   '#f87171'
 ]
 
-const getDriverColor = (code: string, index: number) => {
-  const normalized = code.toUpperCase()
-  return driverColorMap[normalized] ?? FALLBACK_COLORS[index % FALLBACK_COLORS.length]
+const getDriverColor = (code: string, index: number, year?: number) => {
+  return getSeasonDriverColor(code, year) ?? FALLBACK_COLORS[index % FALLBACK_COLORS.length]
 }
 
 export default function SessionOverview({
@@ -339,7 +337,7 @@ export default function SessionOverview({
                   {bestLapBreakdown.map((lap) => (
                     <tr key={lap.driver} className="border-b border-gray-800 hover:bg-gray-800/30">
                       <td className="py-2 px-3">
-                        <DriverBadge code={lap.driver} size="sm" variant="badge" />
+                        <DriverBadge code={lap.driver} year={sessionData.meta.year} size="sm" variant="badge" />
                       </td>
                       <td className="text-right py-2 px-3">
                         <TimeDisplay 
@@ -420,7 +418,7 @@ export default function SessionOverview({
                       {qualifyingProgression.map((prog) => (
                         <tr key={prog.driver} className="border-b border-gray-800 hover:bg-gray-800/30">
                           <td className="py-2 px-3">
-                            <DriverBadge code={prog.driver} size="sm" variant="badge" />
+                            <DriverBadge code={prog.driver} year={sessionData.meta.year} size="sm" variant="badge" />
                           </td>
                           <td className="text-right py-2 px-3">
                             <div className="flex flex-col items-end">
@@ -559,7 +557,7 @@ export default function SessionOverview({
               {personalBestTracking.map((driver) => (
                 <div key={driver.driver} className="border border-gray-800 rounded p-3">
                   <div className="flex items-center justify-between mb-2">
-                    <DriverBadge code={driver.driver} size="sm" variant="badge" />
+                    <DriverBadge code={driver.driver} year={sessionData.meta.year} size="sm" variant="badge" />
                     <div className="text-sm text-gray-400 flex items-center gap-2">
                       <span>Current PB:</span>
                       <TimeDisplay 
@@ -654,7 +652,7 @@ export default function SessionOverview({
                     key={driver}
                     type="monotone"
                     dataKey={driver}
-                    stroke={getDriverColor(driver, index)}
+                    stroke={getDriverColor(driver, index, sessionData.meta.year)}
                     strokeWidth={2}
                     dot={false}
                     connectNulls
@@ -668,4 +666,3 @@ export default function SessionOverview({
     </div>
   )
 }
-

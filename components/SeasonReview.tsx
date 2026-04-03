@@ -1,8 +1,7 @@
 'use client'
 
-import React, { useState, useEffect, useMemo } from 'react'
+import React, { useState, useEffect } from 'react'
 import { ChevronDown, ChevronUp } from 'lucide-react'
-import { SeasonData } from '../lib/seasonTypes'
 import SeasonReviewPanel from './analyses/SeasonReviewPanel'
 
 type SeasonReviewProps = {

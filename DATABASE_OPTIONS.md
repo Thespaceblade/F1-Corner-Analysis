@@ -6,16 +6,17 @@ The app needs a **Postgres** database when session JSON files are not deployed (
 
 ## 1. Free cloud Postgres (best for Vercel)
 
-### Neon (recommended – already integrated)
+### Neon or Supabase (recommended – already integrated)
 
 - **Free tier**: 0.5 GB storage, 1 project, serverless Postgres.
-- **Why it fits**: The app already uses `@neondatabase/serverless` and `DATABASE_URL`. No code changes.
+- **Why it fits**: The app now uses a standard Postgres pool (`pg`) and works with Neon/Supabase/any Postgres connection string.
 - **Steps**:
   1. Sign up at [neon.tech](https://neon.tech).
   2. Create a project and copy the connection string (e.g. `postgresql://user:pass@ep-xxx.us-east-2.aws.neon.tech/neondb?sslmode=require`).
   3. In Vercel: **Settings → Environment Variables**:
      - `DATA_SOURCE` = `database`
-     - `DATABASE_URL` = your Neon connection string.
+    - `DATABASE_URL` = your Neon/Supabase connection string.
+      - Optional alias supported: `SUPABASE_DB_URL` (if you prefer separate env naming).
   4. Run the schema once: open Neon’s SQL editor and paste `scripts/sql/schema.sql`, then run it.
   5. Populate data using your existing scripts (or a one-off script that reads your JSON and inserts into Neon).
 
@@ -27,12 +28,12 @@ The app needs a **Postgres** database when session JSON files are not deployed (
 
 | Service   | Free tier        | Notes |
 |----------|------------------|--------|
-| **Supabase** | 500 MB, 2 projects | Postgres. Use their connection string; you may need to use `pg` or Supabase client instead of Neon’s driver for full compatibility. |
+| **Supabase** | 500 MB, 2 projects | Postgres. Fully supported via `DATABASE_URL` (or `SUPABASE_DB_URL`). |
 | **Railway**  | $5 free credit/month | Postgres add-on; good for small usage. |
 | **Render**   | Free Postgres (sleeps) | DB sleeps after inactivity; first request can be slow. |
 | **ElephantSQL** | 20 MB free | Very small; only for minimal data. |
 
-The app is built for **Postgres + connection URL**. Easiest path is Neon; others may need a small adapter in `lib/db.ts` if you switch client.
+The app is built for **Postgres + connection URL** (`pg` pool), so Neon and Supabase are both drop-in options.
 
 ---
 

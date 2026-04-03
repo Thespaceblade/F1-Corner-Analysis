@@ -1,7 +1,6 @@
 'use client'
 
 import React, { useState, useCallback, useRef } from 'react'
-import { createPortal } from 'react-dom'
 import { CornerPerformance } from '../lib/cornerPerformanceAggregator'
 import CornerTooltip from './CornerTooltip'
 
@@ -19,7 +18,6 @@ type CornerPerformanceOverlayProps = {
   selectedDrivers?: string[]
   onCornerHover?: (cornerNumber: number | null) => void
   onCornerClick?: (cornerNumber: number) => void
-  svgContainerRef?: React.RefObject<HTMLDivElement>
 }
 
 export default function CornerPerformanceOverlay({
@@ -29,7 +27,6 @@ export default function CornerPerformanceOverlay({
   selectedDrivers = [],
   onCornerHover,
   onCornerClick,
-  svgContainerRef,
 }: CornerPerformanceOverlayProps) {
   const [hoveredCorner, setHoveredCorner] = useState<number | null>(null)
   
@@ -97,7 +94,7 @@ export default function CornerPerformanceOverlay({
   }, [onCornerClick])
 
   // Prevent hover flickering with ref-based timeout
-  const hoverTimeoutRef = React.useRef<NodeJS.Timeout | null>(null)
+  const hoverTimeoutRef = useRef<NodeJS.Timeout | null>(null)
   
   const handleMouseEnter = useCallback((cornerNumber: number) => {
     if (hoverTimeoutRef.current) {
@@ -240,4 +237,3 @@ export function CornerTooltipPortal({
     />
   )
 }
-

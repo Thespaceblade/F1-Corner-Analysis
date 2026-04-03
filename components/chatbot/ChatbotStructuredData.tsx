@@ -6,7 +6,6 @@ import SpeedDisplay from '../formatting/SpeedDisplay'
 import DeltaBadge from '../formatting/DeltaBadge'
 import DriverBadge from '../formatting/DriverBadge'
 import CornerBadge from '../formatting/CornerBadge'
-import MetricCard from '../formatting/MetricCard'
 
 type ChatbotStructuredDataProps = {
   data?: any
@@ -157,4 +156,3 @@ export default function ChatbotStructuredData({ data }: ChatbotStructuredDataPro
     </div>
   )
 }
-

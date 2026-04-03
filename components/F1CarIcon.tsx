@@ -1,8 +1,9 @@
 import React from 'react'
-import { driverColorMap } from '../lib/teamData'
+import { getDriverColor } from '../lib/teamData'
 
 type F1CarIconProps = {
   driverCode: string
+  year?: number
   color?: string // Optional team color, will be looked up if not provided
   size?: number
   className?: string
@@ -11,9 +12,9 @@ type F1CarIconProps = {
 /**
  * F1 car icon with team-colored glow
  */
-export default function F1CarIcon({ driverCode, color, size = 16, className = '' }: F1CarIconProps) {
+export default function F1CarIcon({ driverCode, year, color, size = 16, className = '' }: F1CarIconProps) {
   // Get team color from driver code
-  const teamColor = color || driverColorMap[driverCode.toUpperCase()] || '#888888'
+  const teamColor = color || getDriverColor(driverCode, year) || '#888888'
   
   // Create unique filter ID based on driver code AND color to avoid conflicts
   // Use React.useId() to ensure uniqueness per component instance
@@ -66,4 +67,3 @@ export default function F1CarIcon({ driverCode, color, size = 16, className = ''
     </g>
   )
 }
-

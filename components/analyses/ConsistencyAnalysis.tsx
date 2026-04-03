@@ -2,8 +2,8 @@
 
 import React, { useMemo } from 'react'
 import { SessionPayload } from '../../lib/sessionDataClient'
-import { BarChart, Bar, XAxis, YAxis, Tooltip, ResponsiveContainer, Legend, CartesianGrid, LineChart, Line } from 'recharts'
-import { driverColorMap } from '../../lib/teamData'
+import { BarChart, Bar, XAxis, YAxis, Tooltip, ResponsiveContainer, Legend, CartesianGrid } from 'recharts'
+import { getDriverColor as getSeasonDriverColor } from '../../lib/teamData'
 
 type ConsistencyAnalysisProps = {
   sessionData: SessionPayload
@@ -19,9 +19,8 @@ const FALLBACK_COLORS = [
   '#f87171'
 ]
 
-const getDriverColor = (code: string, index: number) => {
-  const normalized = code.toUpperCase()
-  return driverColorMap[normalized] ?? FALLBACK_COLORS[index % FALLBACK_COLORS.length]
+const getDriverColor = (code: string, index: number, year?: number) => {
+  return getSeasonDriverColor(code, year) ?? FALLBACK_COLORS[index % FALLBACK_COLORS.length]
 }
 
 export default function ConsistencyAnalysis({
@@ -322,7 +321,7 @@ export default function ConsistencyAnalysis({
                   <Bar 
                     key={driver}
                     dataKey={driver} 
-                    fill={getDriverColor(driver, index)}
+                    fill={getDriverColor(driver, index, sessionData.meta.year)}
                     opacity={0.7}
                   />
                 ))}
@@ -334,6 +333,4 @@ export default function ConsistencyAnalysis({
     </div>
   )
 }
-
-
 

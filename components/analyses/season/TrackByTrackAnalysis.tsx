@@ -2,7 +2,6 @@
 
 import React, { useState, useMemo, useEffect } from 'react'
 import { SeasonData } from '../../../lib/seasonTypes'
-import DriverBadge from '../../formatting/DriverBadge'
 import CustomSelect from '../../CustomSelect'
 
 type TrackByTrackAnalysisProps = {

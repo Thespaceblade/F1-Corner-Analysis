@@ -30,7 +30,6 @@ export default function CornerEntryExitAnalysis({
 
     return Object.values(cornerPerformance)
       .map(corner => {
-        const cornerInfoItem = cornerInfo.find(c => c.number === corner.cornerNumber)
         return {
           cornerNumber: corner.cornerNumber,
           cornerType: corner.cornerType,
@@ -46,7 +45,7 @@ export default function CornerEntryExitAnalysis({
         }
       })
       .sort((a, b) => a.cornerNumber - b.cornerNumber)
-  }, [cornerPerformance, cornerInfo])
+  }, [cornerPerformance])
 
   // Get detailed corner metrics for selected drivers
   const driverCornerDetails = useMemo(() => {
@@ -219,7 +218,7 @@ export default function CornerEntryExitAnalysis({
                               <span className="font-medium text-gray-200">
                                 C{cornerNum}
                               </span>
-                              <DriverBadge code={driver} size="sm" variant="chip" />
+                              <DriverBadge code={driver} year={sessionData.meta.year} size="sm" variant="chip" />
                               {cornerInfoItem && (
                                 <CornerBadge type={cornerInfoItem.type} showLabel={false} size="sm" />
                               )}
@@ -260,4 +259,3 @@ export default function CornerEntryExitAnalysis({
     </div>
   )
 }
-

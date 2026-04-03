@@ -91,9 +91,12 @@ For database-backed data storage, create a `.env` file in the root directory:
 ```env
 DATA_SOURCE=database
 DATABASE_URL=your_neon_database_url
+# Optional alias if you keep a Supabase-specific secret name:
+# SUPABASE_DB_URL=your_supabase_connection_string
 ```
 
-If not using a database, the application will use file-based data from `public/data/sessions/`.
+If not using a database, the application will use file-based data from `public/data/sessions/` in local development.
+On Vercel, file-backed session loading is intentionally disabled for reliability/size constraints; configure `DATA_SOURCE=database` + `DATABASE_URL` (or `SUPABASE_DB_URL`) or `REMOTE_DATA_URL`.
 
 **For Chatbot Feature** (optional):
 ```env
@@ -168,6 +171,31 @@ The application is configured for deployment on Vercel:
 - Vercel will build the application from source during deployment
 - If you encounter build issues, ensure all dependencies are in `package.json`
 - API routes use `export const dynamic = 'force-dynamic'` to prevent static generation
+
+## First-time setup: Supabase + Vercel (beginner checklist)
+
+If this is your first deployment, follow this exact order:
+
+1. **Create a Supabase project** and copy the Postgres connection string.
+2. **Create tables** by running `scripts/sql/schema.sql` in Supabase SQL editor.
+3. **Import your local JSON sessions into Supabase**:
+   ```bash
+   DATABASE_URL="your_supabase_postgres_url" npm run import:sessions
+   ```
+   (You can use `SUPABASE_DB_URL` instead of `DATABASE_URL` if preferred.)
+4. **Verify your database is ready**:
+   ```bash
+   DATABASE_URL="your_supabase_postgres_url" npm run db:verify
+   ```
+5. **In Vercel project settings → Environment Variables**, add:
+   - `DATA_SOURCE=database`
+   - `DATABASE_URL=<your_supabase_postgres_url>` (or `SUPABASE_DB_URL`)
+6. Redeploy Vercel and test:
+   - `/api/sessions/index`
+   - `/api/sessions/2025/australia/Q`
+
+If the chatbot is enabled, also set:
+- `GEMINI_API_KEY`
 
 ## Project Structure
 
@@ -589,4 +617,3 @@ For a comprehensive list of unfinished work, known issues, and planned improveme
 - **Data quality**: Improve corner detection accuracy and validation
 - **UI enhancements**: Various UI/UX improvements planned
 - **Analysis features**: Additional analysis tools and visualizations planned
-

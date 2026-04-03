@@ -59,7 +59,6 @@ export function generateComparisonInsights(
   const overallDelta = validDeltas.reduce((a, b) => a + b, 0) / validDeltas.length
 
   const fasterDriver = overallDelta > 0 ? driver2Code : driver1Code
-  const slowerDriver = overallDelta > 0 ? driver1Code : driver2Code
   const delta = Math.abs(overallDelta)
 
   // Overall comparison (use driver names)
@@ -241,7 +240,7 @@ export function generateCornerPerformanceInsights(
  */
 export function generateDriverPerformanceInsights(
   stats: DriverCornerStats[],
-  driverCode: string
+  _driverCode: string
 ): string[] {
   const insights: string[] = []
 
@@ -394,4 +393,3 @@ export function formatInsightsAsBullets(insights: string[], header?: string): st
   const bullets = insights.map(insight => `- ${insight}`).join('\n')
   return header ? `**${header}**\n\n${bullets}` : bullets
 }
-

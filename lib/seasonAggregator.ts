@@ -13,11 +13,7 @@ import {
   RoundResult,
   ChampionshipProgression,
   HeadToHeadStats,
-  PerformanceByTrackType,
   getTrackType,
-  calculatePoints,
-  RaceResultEntry,
-  QualifyingResultEntry,
   ChampionshipPoint,
 } from './seasonTypes'
 
