@@ -4,7 +4,7 @@
 
 import { promises as fs } from 'fs'
 import path from 'path'
-import { getDb, isDatabaseEnabled, DriverRow, LapRow, SessionRow } from '../db'
+import { isDatabaseEnabled, queryDb, DriverRow, LapRow, SessionRow } from '../db'
 import type {
   QueryParameters,
   QueryResult,
@@ -45,14 +45,10 @@ export async function getSessionData(
     )
 
     if (isDatabaseEnabled()) {
-      const sql = getDb()
-      const sessionRows = await sql`
-        SELECT * FROM sessions 
-        WHERE year = ${year} 
-        AND round_slug = ${roundSlug} 
-        AND session_code = ${sessionCode.toUpperCase()} 
-        LIMIT 1
-      ` as SessionRow[]
+      const sessionRows = await queryDb<SessionRow>(
+        'SELECT * FROM sessions WHERE year = $1 AND round_slug = $2 AND session_code = $3 LIMIT 1',
+        [year, roundSlug, sessionCode.toUpperCase()]
+      )
 
       if (!sessionRows.length) {
         throw new Error('Session not found in database')
@@ -60,33 +56,31 @@ export async function getSessionData(
 
       const s = sessionRows[0]
       const driversFilter = driverCodes || []
-      const lapsQuery = driversFilter.length
-        ? sql`
-          SELECT driver_code, lap_number, stint, compound, tyre_life, 
-                 lap_time_seconds, sector1_seconds, sector2_seconds, 
-                 sector3_seconds, track_status, flags, is_valid 
-          FROM laps 
-          WHERE session_id = ${s.id} 
-          AND driver_code = ANY(${driversFilter})
-        `
-        : sql`
-          SELECT driver_code, lap_number, stint, compound, tyre_life, 
-                 lap_time_seconds, sector1_seconds, sector2_seconds, 
-                 sector3_seconds, track_status, flags, is_valid 
-          FROM laps 
-          WHERE session_id = ${s.id}
-        `
-
-      const laps = (await lapsQuery) as LapRow[]
+      const laps = driversFilter.length
+        ? await queryDb<LapRow>(
+            `SELECT driver_code, lap_number, stint, compound, tyre_life,
+                    lap_time_seconds, sector1_seconds, sector2_seconds,
+                    sector3_seconds, track_status, flags, is_valid
+             FROM laps
+             WHERE session_id = $1 AND driver_code = ANY($2::text[])`,
+            [s.id, driversFilter]
+          )
+        : await queryDb<LapRow>(
+            `SELECT driver_code, lap_number, stint, compound, tyre_life,
+                    lap_time_seconds, sector1_seconds, sector2_seconds,
+                    sector3_seconds, track_status, flags, is_valid
+             FROM laps
+             WHERE session_id = $1`,
+            [s.id]
+          )
       const driverCodesList = Array.from(
         new Set(laps.map((l) => (l.driver_code || '').toUpperCase()).filter(Boolean))
       )
       const driverRows = driverCodesList.length
-        ? ((await sql`
-            SELECT code, team, number 
-            FROM drivers 
-            WHERE code = ANY(${driverCodesList})
-          `) as DriverRow[])
+        ? await queryDb<DriverRow>(
+            'SELECT code, team, number FROM drivers WHERE code = ANY($1::text[])',
+            [driverCodesList]
+          )
         : []
 
       const drivers = Object.fromEntries(
@@ -432,13 +426,13 @@ export async function getAvailableSessions(
 ): Promise<Array<{ session: string; eventName?: string; country?: string }>> {
   if (isDatabaseEnabled()) {
     try {
-      const sql = getDb()
-      const rows = await sql`
-        SELECT DISTINCT session_code, event_name, country
-        FROM sessions
-        WHERE year = ${year} AND round_slug = ${roundSlug}
-        ORDER BY session_code
-      `
+      const rows = await queryDb<{ session_code: string; event_name: string | null; country: string | null }>(
+        `SELECT DISTINCT session_code, event_name, country
+         FROM sessions
+         WHERE year = $1 AND round_slug = $2
+         ORDER BY session_code`,
+        [year, roundSlug]
+      )
       return rows.map((row: any) => ({
         session: row.session_code,
         eventName: row.event_name,
@@ -623,4 +617,3 @@ export async function executeQuery(
       throw new Error(`Unsupported query intent: ${intent}`)
   }
 }
-
