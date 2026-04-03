@@ -17,6 +17,8 @@ import {
 import { aggregateSeasonData } from './seasonAggregator'
 import { SessionPayload } from './sessionDataClient'
 import { getTeamForDriver } from './driverAssignments'
+import { isDatabaseEnabled } from './db'
+import { loadCalendarRoundsFromDatabase, loadSessionPayloadFromDatabase } from './databaseData'
 import fs from 'fs'
 import path from 'path'
 
@@ -42,6 +44,32 @@ export async function loadSeasonData(year: number): Promise<SeasonData> {
  */
 async function loadRoundResults(year: number): Promise<RoundResult[]> {
   try {
+    if (isDatabaseEnabled()) {
+      const calendarRounds = await loadCalendarRoundsFromDatabase(year)
+      const rounds: RoundResult[] = []
+
+      for (const round of calendarRounds) {
+        try {
+          const roundResult = await loadSingleRound(year, {
+            round: round.round,
+            id: round.id,
+            name: round.name ?? round.id,
+            location: round.location ?? '',
+            date: round.date ?? '',
+            officialName: round.official_name ?? round.name ?? round.id,
+          })
+          if (roundResult) {
+            rounds.push(roundResult)
+          }
+        } catch (error) {
+          console.error(`Error loading round ${round.round} (${round.id}) from database:`, error)
+        }
+      }
+
+      addStandingsToRounds(rounds)
+      return rounds
+    }
+
     // Load calendar from filesystem (server-side)
     const calendarPath = path.join(process.cwd(), 'public', 'data', `calendar${year}.json`)
     if (!fs.existsSync(calendarPath)) {
@@ -183,6 +211,14 @@ async function loadSessionData(
   session: string
 ): Promise<SessionPayload | null> {
   try {
+    if (isDatabaseEnabled()) {
+      return await loadSessionPayloadFromDatabase({
+        year,
+        round: trackId,
+        session,
+      })
+    }
+
     const sessionPath = path.join(
       process.cwd(), 
       'public', 

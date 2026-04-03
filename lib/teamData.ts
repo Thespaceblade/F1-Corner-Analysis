@@ -101,7 +101,7 @@ export const f1Teams: Team[] = [
     shortName: 'Stake',
     color: '#52E252',
     drivers: [
-      { code: 'HUL', name: 'Nico Hulkenburg', number: 27 },
+      { code: 'HUL', name: 'Nico Hulkenberg', number: 27 },
       { code: 'BOR', name: 'Gabriel Bortoleto', number: 5 }
     ]
   },

@@ -24,7 +24,6 @@ export const driverPhotoMap: Record<string, string> = {
   PIA: 'oscar-piastri.png',
   GAS: 'pierre-gasly.png',
   TSU: 'yuki-tsunoda.png',
-  DOO: 'jack-doohan.png', // Jack Doohan (replaced after round 6 in 2025)
 }
 
 /**
