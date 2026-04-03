@@ -1,23 +1,48 @@
-// Lightweight Neon client for serverless Postgres on Vercel
-// Switch on by setting process.env.DATA_SOURCE = 'database' and providing DATABASE_URL
+// Shared Postgres client for Vercel/serverless deployments.
+// Supports Neon/Supabase/any managed Postgres via DATABASE_URL (or SUPABASE_DB_URL).
+// Enable by setting DATA_SOURCE=database.
 
-import { neon } from '@neondatabase/serverless'
+import { Pool, QueryResultRow } from 'pg'
+
+let pool: Pool | null = null
+
+function getDatabaseUrl(): string | null {
+  const url = process.env.DATABASE_URL || process.env.SUPABASE_DB_URL
+  return typeof url === 'string' && url.length > 0 ? url : null
+}
 
 export function isDatabaseEnabled(): boolean {
   return (
     typeof process.env.DATA_SOURCE === 'string' &&
     process.env.DATA_SOURCE.toLowerCase() === 'database' &&
-    typeof process.env.DATABASE_URL === 'string' &&
-    !!process.env.DATABASE_URL
+    !!getDatabaseUrl()
   )
 }
 
-export function getDb() {
-  if (!isDatabaseEnabled()) {
-    throw new Error('Database not enabled. Set DATA_SOURCE=database and DATABASE_URL.')
+function getPool(): Pool {
+  if (pool) return pool
+
+  const connection = getDatabaseUrl()
+  if (!connection) {
+    throw new Error('Database not configured. Set DATABASE_URL (or SUPABASE_DB_URL).')
   }
-  const connection = process.env.DATABASE_URL as string
-  return neon(connection)
+
+  pool = new Pool({
+    connectionString: connection,
+    ssl: { rejectUnauthorized: false },
+    max: 5,
+  })
+
+  return pool
+}
+
+export async function queryDb<T extends QueryResultRow = QueryResultRow>(text: string, values: unknown[] = []): Promise<T[]> {
+  if (!isDatabaseEnabled()) {
+    throw new Error('Database not enabled. Set DATA_SOURCE=database and DATABASE_URL (or SUPABASE_DB_URL).')
+  }
+  const client = getPool()
+  const result = await client.query<T>(text, values)
+  return result.rows
 }
 
 export type SessionRow = {
@@ -51,5 +76,3 @@ export type LapRow = {
   flags: string[] | null
   is_valid: boolean | null
 }
-
-
