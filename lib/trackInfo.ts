@@ -107,6 +107,17 @@ export const trackInfo: Record<string, TrackInfo> = {
       'Combines high-speed and technical sections'
     ]
   },
+  'barcelona-catalunya': {
+    location: 'Barcelona, Spain',
+    elevationChange: '33 meters',
+    trackLength: '4.675 km',
+    firstGrandPrix: 1991,
+    funFacts: [
+      'Circuit de Barcelona-Catalunya remains on the 2026 calendar as its own standalone round',
+      'Long regarded as one of Formula 1’s benchmark circuits for car balance',
+      'Mixes long-load corners with a technical final sector'
+    ]
+  },
   'canada': {
     location: 'Montreal, Canada',
     elevationChange: 'Minimal',
@@ -209,6 +220,16 @@ export const trackInfo: Record<string, TrackInfo> = {
       'Raced around Marina Bay with stunning city views'
     ]
   },
+  'madrid': {
+    location: 'Madrid, Spain',
+    elevationChange: 'TBD',
+    firstGrandPrix: 2026,
+    funFacts: [
+      'Madrid is scheduled to host the Spanish Grand Prix from 2026',
+      'The 2026 calendar includes both Barcelona and Madrid as separate Spanish rounds',
+      'This venue remains disabled in the app until official session data exists'
+    ]
+  },
   'united-states': {
     location: 'Austin, Texas, USA',
     elevationChange: '41 meters',
@@ -282,7 +303,6 @@ export const trackInfo: Record<string, TrackInfo> = {
     ]
   }
 }
-
 
 
 

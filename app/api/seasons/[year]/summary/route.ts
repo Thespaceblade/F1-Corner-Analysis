@@ -1,5 +1,7 @@
-import { NextRequest, NextResponse } from 'next/server'
+import { NextResponse } from 'next/server'
 import { loadSeasonData } from '../../../../../lib/mockSeasonData'
+
+export const dynamic = 'force-dynamic'
 
 /**
  * GET /api/seasons/:year/summary
@@ -15,11 +17,11 @@ import { loadSeasonData } from '../../../../../lib/mockSeasonData'
  * 3. The aggregator will automatically calculate all statistics
  */
 export async function GET(
-  request: NextRequest,
-  { params }: { params: { year: string } }
+  _request: Request,
+  context: { params?: { year?: string } }
 ) {
   try {
-    const year = parseInt(params.year, 10)
+    const year = parseInt(context.params?.year ?? '', 10)
     
     if (isNaN(year) || year < 2024 || year > new Date().getFullYear()) {
       return NextResponse.json(
@@ -46,7 +48,7 @@ export async function GET(
     
     return NextResponse.json(seasonData, {
       headers: {
-        'Cache-Control': 'public, s-maxage=3600, stale-while-revalidate=86400',
+        'Cache-Control': 'no-store',
       },
     })
   } catch (error) {

@@ -1,0 +1,437 @@
+{
+  "defaultYear": 2026,
+  "drivers": {
+    "ALB": { "name": "Alexander Albon", "photoPath": "/driver-pictures/alex-albon.png" },
+    "ALO": { "name": "Fernando Alonso", "photoPath": "/driver-pictures/fernando-alonso.png" },
+    "ANT": { "name": "Kimi Antonelli", "photoPath": "/driver-pictures/kimi-antonelli.png" },
+    "BEA": { "name": "Oliver Bearman", "photoPath": "/driver-pictures/oliver-bearman.png" },
+    "BOR": { "name": "Gabriel Bortoleto", "photoPath": "/driver-pictures/gabriel-bortoleto.png" },
+    "BOT": { "name": "Valtteri Bottas", "photoPath": null },
+    "COL": { "name": "Franco Colapinto", "photoPath": "/driver-pictures/franco-colapinto.png" },
+    "DOO": { "name": "Jack Doohan", "photoPath": null },
+    "GAS": { "name": "Pierre Gasly", "photoPath": "/driver-pictures/pierre-gasly.png" },
+    "HAD": { "name": "Isack Hadjar", "photoPath": "/driver-pictures/isack-hadjar.png" },
+    "HAM": { "name": "Lewis Hamilton", "photoPath": "/driver-pictures/lewis-hamilton.png" },
+    "HUL": { "name": "Nico Hulkenberg", "photoPath": "/driver-pictures/nico-hulkenberg.png" },
+    "LAW": { "name": "Liam Lawson", "photoPath": "/driver-pictures/liam-lawson.png" },
+    "LEC": { "name": "Charles Leclerc", "photoPath": "/driver-pictures/charles-leclerc.png" },
+    "LIN": { "name": "Arvid Lindblad", "photoPath": null },
+    "MAG": { "name": "Kevin Magnussen", "photoPath": null },
+    "NOR": { "name": "Lando Norris", "photoPath": "/driver-pictures/lando-norris.png" },
+    "OCO": { "name": "Esteban Ocon", "photoPath": "/driver-pictures/esteban-ocon.png" },
+    "PER": { "name": "Sergio Perez", "photoPath": null },
+    "PIA": { "name": "Oscar Piastri", "photoPath": "/driver-pictures/oscar-piastri.png" },
+    "RIC": { "name": "Daniel Ricciardo", "photoPath": null },
+    "RUS": { "name": "George Russell", "photoPath": "/driver-pictures/george-russel.png" },
+    "SAI": { "name": "Carlos Sainz", "photoPath": "/driver-pictures/carlos-saintz.png" },
+    "SAR": { "name": "Logan Sargeant", "photoPath": null },
+    "STR": { "name": "Lance Stroll", "photoPath": "/driver-pictures/lance-stroll.png" },
+    "TSU": { "name": "Yuki Tsunoda", "photoPath": "/driver-pictures/yuki-tsunoda.png" },
+    "VER": { "name": "Max Verstappen", "photoPath": "/driver-pictures/max-verstappen.png" },
+    "ZHO": { "name": "Zhou Guanyu", "photoPath": null }
+  },
+  "seasons": {
+    "2024": {
+      "teams": [
+        {
+          "id": "red-bull",
+          "name": "Oracle Red Bull Racing",
+          "shortName": "Red Bull",
+          "color": "#000B8D",
+          "logoPath": "/team-logos/red-bull.png",
+          "aliases": ["Red Bull", "Red Bull Racing", "Oracle Red Bull Racing"],
+          "drivers": [
+            { "code": "VER", "number": 1, "startRound": 1 },
+            { "code": "PER", "number": 11, "startRound": 1 }
+          ]
+        },
+        {
+          "id": "mclaren",
+          "name": "McLaren Formula 1 Team",
+          "shortName": "McLaren",
+          "color": "#FF8000",
+          "logoPath": "/team-logos/mclaren.png",
+          "aliases": ["McLaren", "McLaren Formula 1 Team"],
+          "drivers": [
+            { "code": "NOR", "number": 4, "startRound": 1 },
+            { "code": "PIA", "number": 81, "startRound": 1 }
+          ]
+        },
+        {
+          "id": "mercedes",
+          "name": "Mercedes-AMG PETRONAS F1 Team",
+          "shortName": "Mercedes",
+          "color": "#00A19B",
+          "logoPath": "/team-logos/mercedes.png",
+          "aliases": ["Mercedes", "Mercedes-AMG PETRONAS F1 Team"],
+          "drivers": [
+            { "code": "HAM", "number": 44, "startRound": 1 },
+            { "code": "RUS", "number": 63, "startRound": 1 }
+          ]
+        },
+        {
+          "id": "ferrari",
+          "name": "Scuderia Ferrari HP",
+          "shortName": "Ferrari",
+          "color": "#ED1131",
+          "logoPath": "/team-logos/ferrari.png",
+          "aliases": ["Ferrari", "Scuderia Ferrari", "Scuderia Ferrari HP"],
+          "drivers": [
+            { "code": "LEC", "number": 16, "startRound": 1 },
+            { "code": "SAI", "number": 55, "startRound": 1, "endRound": 1 },
+            { "code": "BEA", "number": 38, "startRound": 2, "endRound": 2 },
+            { "code": "SAI", "number": 55, "startRound": 3 }
+          ]
+        },
+        {
+          "id": "aston-martin",
+          "name": "Aston Martin Aramco Formula One Team",
+          "shortName": "Aston Martin",
+          "color": "#358C75",
+          "logoPath": "/team-logos/aston-martin.png",
+          "aliases": ["Aston Martin", "Aston Martin Aramco Formula One Team"],
+          "drivers": [
+            { "code": "ALO", "number": 14, "startRound": 1 },
+            { "code": "STR", "number": 18, "startRound": 1 }
+          ]
+        },
+        {
+          "id": "alpine",
+          "name": "BWT Alpine F1 Team",
+          "shortName": "Alpine",
+          "color": "#2293D1",
+          "logoPath": "/team-logos/alpine.png",
+          "aliases": ["Alpine", "BWT Alpine F1 Team"],
+          "drivers": [
+            { "code": "GAS", "number": 10, "startRound": 1 },
+            { "code": "OCO", "number": 31, "startRound": 1, "endRound": 23 },
+            { "code": "DOO", "number": 61, "startRound": 24, "endRound": 24 }
+          ]
+        },
+        {
+          "id": "williams",
+          "name": "Williams Racing",
+          "shortName": "Williams",
+          "color": "#37BEDD",
+          "logoPath": "/team-logos/williams.png",
+          "aliases": ["Williams", "Williams Racing"],
+          "drivers": [
+            { "code": "ALB", "number": 23, "startRound": 1 },
+            { "code": "SAR", "number": 2, "startRound": 1, "endRound": 15 },
+            { "code": "COL", "number": 43, "startRound": 16 }
+          ]
+        },
+        {
+          "id": "visa-rb",
+          "name": "Visa Cash App RB Formula One Team",
+          "shortName": "RB",
+          "color": "#5E8FAA",
+          "logoPath": "/team-logos/visa-rb.png",
+          "aliases": ["RB", "Racing Bulls", "Visa Cash App RB", "Visa Cash App RB Formula One Team"],
+          "drivers": [
+            { "code": "TSU", "number": 22, "startRound": 1 },
+            { "code": "RIC", "number": 3, "startRound": 1, "endRound": 18 },
+            { "code": "LAW", "number": 30, "startRound": 19 }
+          ]
+        },
+        {
+          "id": "stake",
+          "name": "Stake F1 Team Kick Sauber",
+          "shortName": "Stake",
+          "color": "#52E252",
+          "logoPath": "/team-logos/stake.png",
+          "aliases": ["Stake", "Kick Sauber", "Stake F1 Team Kick Sauber"],
+          "drivers": [
+            { "code": "BOT", "number": 77, "startRound": 1 },
+            { "code": "ZHO", "number": 24, "startRound": 1 }
+          ]
+        },
+        {
+          "id": "haas",
+          "name": "MoneyGram Haas F1 Team",
+          "shortName": "Haas",
+          "color": "#B6BABD",
+          "logoPath": "/team-logos/haas.png",
+          "aliases": ["Haas", "Haas F1 Team", "MoneyGram Haas F1 Team"],
+          "drivers": [
+            { "code": "HUL", "number": 27, "startRound": 1 },
+            { "code": "MAG", "number": 20, "startRound": 1, "endRound": 16 },
+            { "code": "BEA", "number": 50, "startRound": 17, "endRound": 17 },
+            { "code": "MAG", "number": 20, "startRound": 18, "endRound": 20 },
+            { "code": "BEA", "number": 50, "startRound": 21, "endRound": 21 },
+            { "code": "MAG", "number": 20, "startRound": 22 }
+          ]
+        }
+      ]
+    },
+    "2025": {
+      "teams": [
+        {
+          "id": "red-bull",
+          "name": "Oracle Red Bull Racing",
+          "shortName": "Red Bull",
+          "color": "#000B8D",
+          "logoPath": "/team-logos/red-bull.png",
+          "aliases": ["Red Bull", "Red Bull Racing", "Oracle Red Bull Racing"],
+          "drivers": [
+            { "code": "VER", "number": 1, "startRound": 1 },
+            { "code": "LAW", "number": 30, "startRound": 1, "endRound": 2 },
+            { "code": "TSU", "number": 22, "startRound": 3 }
+          ]
+        },
+        {
+          "id": "mclaren",
+          "name": "McLaren Formula 1 Team",
+          "shortName": "McLaren",
+          "color": "#FF8000",
+          "logoPath": "/team-logos/mclaren.png",
+          "aliases": ["McLaren", "McLaren Formula 1 Team"],
+          "drivers": [
+            { "code": "NOR", "number": 4, "startRound": 1 },
+            { "code": "PIA", "number": 81, "startRound": 1 }
+          ]
+        },
+        {
+          "id": "mercedes",
+          "name": "Mercedes-AMG PETRONAS F1 Team",
+          "shortName": "Mercedes",
+          "color": "#00A19B",
+          "logoPath": "/team-logos/mercedes.png",
+          "aliases": ["Mercedes", "Mercedes-AMG PETRONAS F1 Team"],
+          "drivers": [
+            { "code": "RUS", "number": 63, "startRound": 1 },
+            { "code": "ANT", "number": 12, "startRound": 1 }
+          ]
+        },
+        {
+          "id": "ferrari",
+          "name": "Scuderia Ferrari HP",
+          "shortName": "Ferrari",
+          "color": "#ED1131",
+          "logoPath": "/team-logos/ferrari.png",
+          "aliases": ["Ferrari", "Scuderia Ferrari", "Scuderia Ferrari HP"],
+          "drivers": [
+            { "code": "LEC", "number": 16, "startRound": 1 },
+            { "code": "HAM", "number": 44, "startRound": 1 }
+          ]
+        },
+        {
+          "id": "aston-martin",
+          "name": "Aston Martin Aramco Formula One Team",
+          "shortName": "Aston Martin",
+          "color": "#358C75",
+          "logoPath": "/team-logos/aston-martin.png",
+          "aliases": ["Aston Martin", "Aston Martin Aramco Formula One Team"],
+          "drivers": [
+            { "code": "ALO", "number": 14, "startRound": 1 },
+            { "code": "STR", "number": 18, "startRound": 1 }
+          ]
+        },
+        {
+          "id": "alpine",
+          "name": "BWT Alpine F1 Team",
+          "shortName": "Alpine",
+          "color": "#2293D1",
+          "logoPath": "/team-logos/alpine.png",
+          "aliases": ["Alpine", "BWT Alpine F1 Team"],
+          "drivers": [
+            { "code": "GAS", "number": 10, "startRound": 1 },
+            { "code": "DOO", "number": 7, "startRound": 1, "endRound": 6 },
+            { "code": "COL", "number": 43, "startRound": 7 }
+          ]
+        },
+        {
+          "id": "williams",
+          "name": "Williams Racing",
+          "shortName": "Williams",
+          "color": "#37BEDD",
+          "logoPath": "/team-logos/williams.png",
+          "aliases": ["Williams", "Williams Racing"],
+          "drivers": [
+            { "code": "ALB", "number": 23, "startRound": 1 },
+            { "code": "SAI", "number": 55, "startRound": 1 }
+          ]
+        },
+        {
+          "id": "visa-rb",
+          "name": "Visa Cash App Racing Bulls Formula One Team",
+          "shortName": "Racing Bulls",
+          "color": "#5E8FAA",
+          "logoPath": "/team-logos/visa-rb.png",
+          "aliases": [
+            "RB",
+            "Racing Bulls",
+            "Visa Cash App RB",
+            "Visa Cash App RB Formula One Team",
+            "Visa Cash App Racing Bulls Formula One Team"
+          ],
+          "drivers": [
+            { "code": "TSU", "number": 22, "startRound": 1, "endRound": 2 },
+            { "code": "HAD", "number": 6, "startRound": 1 },
+            { "code": "LAW", "number": 30, "startRound": 3 }
+          ]
+        },
+        {
+          "id": "stake",
+          "name": "Stake F1 Team Kick Sauber",
+          "shortName": "Stake",
+          "color": "#52E252",
+          "logoPath": "/team-logos/stake.png",
+          "aliases": ["Stake", "Kick Sauber", "Stake F1 Team Kick Sauber"],
+          "drivers": [
+            { "code": "HUL", "number": 27, "startRound": 1 },
+            { "code": "BOR", "number": 5, "startRound": 1 }
+          ]
+        },
+        {
+          "id": "haas",
+          "name": "MoneyGram Haas F1 Team",
+          "shortName": "Haas",
+          "color": "#B6BABD",
+          "logoPath": "/team-logos/haas.png",
+          "aliases": ["Haas", "Haas F1 Team", "MoneyGram Haas F1 Team"],
+          "drivers": [
+            { "code": "OCO", "number": 31, "startRound": 1 },
+            { "code": "BEA", "number": 87, "startRound": 1 }
+          ]
+        }
+      ]
+    },
+    "2026": {
+      "teams": [
+        {
+          "id": "red-bull",
+          "name": "Oracle Red Bull Racing",
+          "shortName": "Red Bull",
+          "color": "#000B8D",
+          "logoPath": "/team-logos/red-bull.png",
+          "aliases": ["Red Bull", "Red Bull Racing", "Oracle Red Bull Racing"],
+          "drivers": [
+            { "code": "VER", "number": 3, "startRound": 1 },
+            { "code": "HAD", "number": 6, "startRound": 1 }
+          ]
+        },
+        {
+          "id": "mclaren",
+          "name": "McLaren Formula 1 Team",
+          "shortName": "McLaren",
+          "color": "#FF8000",
+          "logoPath": "/team-logos/mclaren.png",
+          "aliases": ["McLaren", "McLaren Formula 1 Team"],
+          "drivers": [
+            { "code": "NOR", "number": 1, "startRound": 1 },
+            { "code": "PIA", "number": 81, "startRound": 1 }
+          ]
+        },
+        {
+          "id": "mercedes",
+          "name": "Mercedes-AMG PETRONAS F1 Team",
+          "shortName": "Mercedes",
+          "color": "#00A19B",
+          "logoPath": "/team-logos/mercedes.png",
+          "aliases": ["Mercedes", "Mercedes-AMG PETRONAS F1 Team"],
+          "drivers": [
+            { "code": "RUS", "number": 63, "startRound": 1 },
+            { "code": "ANT", "number": 12, "startRound": 1 }
+          ]
+        },
+        {
+          "id": "ferrari",
+          "name": "Scuderia Ferrari HP",
+          "shortName": "Ferrari",
+          "color": "#ED1131",
+          "logoPath": "/team-logos/ferrari.png",
+          "aliases": ["Ferrari", "Scuderia Ferrari", "Scuderia Ferrari HP"],
+          "drivers": [
+            { "code": "LEC", "number": 16, "startRound": 1 },
+            { "code": "HAM", "number": 44, "startRound": 1 }
+          ]
+        },
+        {
+          "id": "aston-martin",
+          "name": "Aston Martin Aramco Formula One Team",
+          "shortName": "Aston Martin",
+          "color": "#358C75",
+          "logoPath": "/team-logos/aston-martin.png",
+          "aliases": ["Aston Martin", "Aston Martin Aramco Formula One Team"],
+          "drivers": [
+            { "code": "ALO", "number": 14, "startRound": 1 },
+            { "code": "STR", "number": 18, "startRound": 1 }
+          ]
+        },
+        {
+          "id": "alpine",
+          "name": "BWT Alpine F1 Team",
+          "shortName": "Alpine",
+          "color": "#2293D1",
+          "logoPath": "/team-logos/alpine.png",
+          "aliases": ["Alpine", "BWT Alpine F1 Team"],
+          "drivers": [
+            { "code": "GAS", "number": 10, "startRound": 1 },
+            { "code": "COL", "number": 43, "startRound": 1 }
+          ]
+        },
+        {
+          "id": "williams",
+          "name": "Williams Racing",
+          "shortName": "Williams",
+          "color": "#37BEDD",
+          "logoPath": "/team-logos/williams.png",
+          "aliases": ["Williams", "Williams Racing"],
+          "drivers": [
+            { "code": "ALB", "number": 23, "startRound": 1 },
+            { "code": "SAI", "number": 55, "startRound": 1 }
+          ]
+        },
+        {
+          "id": "racing-bulls",
+          "name": "Racing Bulls",
+          "shortName": "Racing Bulls",
+          "color": "#5E8FAA",
+          "logoPath": "/team-logos/visa-rb.png",
+          "aliases": ["Racing Bulls", "RB", "Visa Cash App Racing Bulls Formula One Team"],
+          "drivers": [
+            { "code": "LAW", "number": 30, "startRound": 1 },
+            { "code": "LIN", "number": 41, "startRound": 1 }
+          ]
+        },
+        {
+          "id": "audi",
+          "name": "Audi",
+          "shortName": "Audi",
+          "color": "#B91C1C",
+          "logoPath": "/team-logos/audi.svg",
+          "aliases": ["Audi", "Audi F1 Team"],
+          "drivers": [
+            { "code": "HUL", "number": 27, "startRound": 1 },
+            { "code": "BOR", "number": 5, "startRound": 1 }
+          ]
+        },
+        {
+          "id": "haas",
+          "name": "Haas F1 Team",
+          "shortName": "Haas",
+          "color": "#B6BABD",
+          "logoPath": "/team-logos/haas.png",
+          "aliases": ["Haas", "Haas F1 Team", "MoneyGram Haas F1 Team"],
+          "drivers": [
+            { "code": "OCO", "number": 31, "startRound": 1 },
+            { "code": "BEA", "number": 87, "startRound": 1 }
+          ]
+        },
+        {
+          "id": "cadillac",
+          "name": "Cadillac",
+          "shortName": "Cadillac",
+          "color": "#2563EB",
+          "logoPath": "/team-logos/cadillac.svg",
+          "aliases": ["Cadillac", "Cadillac F1 Team"],
+          "drivers": [
+            { "code": "PER", "number": 11, "startRound": 1 },
+            { "code": "BOT", "number": 77, "startRound": 1 }
+          ]
+        }
+      ]
+    }
+  }
+}

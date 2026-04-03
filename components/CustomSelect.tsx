@@ -6,7 +6,9 @@ import { createPortal } from 'react-dom'
 type Option = {
   value: string | number
   label: string
-  icon?: string // Optional icon URL/path
+  icon?: string
+  meta?: string
+  disabled?: boolean
 }
 
 type CustomSelectProps = {
@@ -36,55 +38,70 @@ export default function CustomSelect({
   const [dropdownPosition, setDropdownPosition] = useState<{ top: number; left: number; width: number } | null>(null)
 
   const selectedOption = options.find((opt: Option) => opt.value === value)
-  
-  // Filter out placeholder option from dropdown (but keep it for display)
+
   const dropdownOptions = useMemo(() => {
     if (placeholderValue === undefined) return options
     return options.filter((opt: Option) => opt.value !== placeholderValue)
   }, [options, placeholderValue])
 
-  // Set initial hover index when opening dropdown
+  const enabledOptionCount = useMemo(
+    () => dropdownOptions.filter((option) => !option.disabled).length,
+    [dropdownOptions],
+  )
+
+  const getNextEnabledIndex = (
+    startIndex: number,
+    direction: 1 | -1,
+  ): number | null => {
+    if (!dropdownOptions.length || enabledOptionCount === 0) return null
+
+    let index = startIndex
+    for (let attempts = 0; attempts < dropdownOptions.length; attempts += 1) {
+      index = (index + direction + dropdownOptions.length) % dropdownOptions.length
+      if (!dropdownOptions[index]?.disabled) {
+        return index
+      }
+    }
+
+    return null
+  }
+
   useEffect(() => {
     if (isOpen && dropdownOptions.length > 0) {
-      const currentIndex = dropdownOptions.findIndex(opt => opt.value === value)
-      if (currentIndex === -1) {
-        // Value is placeholder, start at first option
-        setHoveredIndex(0)
-      } else {
+      const currentIndex = dropdownOptions.findIndex(
+        (opt) => opt.value === value && !opt.disabled,
+      )
+      if (currentIndex !== -1) {
         setHoveredIndex(currentIndex)
+        return
       }
+
+      setHoveredIndex(dropdownOptions.findIndex((opt) => !opt.disabled))
     } else if (!isOpen) {
       setHoveredIndex(null)
     }
   }, [isOpen, dropdownOptions, value])
 
-  // Calculate dropdown position when opening - use requestAnimationFrame to ensure DOM is ready
   useEffect(() => {
     if (isOpen && buttonRef.current) {
       const updatePosition = () => {
         if (buttonRef.current) {
           const rect = buttonRef.current.getBoundingClientRect()
-          // Use the exact button width - getBoundingClientRect includes borders
-          // Since dropdown also has border and uses border-box, widths will match
-          const buttonWidth = rect.width
-          
           setDropdownPosition({
-            top: rect.bottom + 6, // mt-1.5 = 6px (fixed positioning, no scroll offset needed)
+            top: rect.bottom + 6,
             left: rect.left,
-            width: buttonWidth, // Exact match including borders
+            width: rect.width,
           })
         }
       }
-      
-      // Use requestAnimationFrame to ensure button is rendered and positioned
+
       requestAnimationFrame(() => {
         requestAnimationFrame(updatePosition)
       })
-      
-      // Update position on scroll or resize
+
       window.addEventListener('scroll', updatePosition, true)
       window.addEventListener('resize', updatePosition)
-      
+
       return () => {
         window.removeEventListener('scroll', updatePosition, true)
         window.removeEventListener('resize', updatePosition)
@@ -94,7 +111,6 @@ export default function CustomSelect({
     }
   }, [isOpen])
 
-  // Close dropdown when clicking outside
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
       if (containerRef.current && !containerRef.current.contains(event.target as Node)) {
@@ -111,7 +127,6 @@ export default function CustomSelect({
     }
   }, [isOpen])
 
-  // Handle keyboard navigation
   useEffect(() => {
     if (!isOpen) return
 
@@ -123,26 +138,18 @@ export default function CustomSelect({
 
       if (e.key === 'ArrowDown' || e.key === 'ArrowUp') {
         e.preventDefault()
-        let currentIndex = dropdownOptions.findIndex((opt: Option) => opt.value === value)
-        
-        // If current value is placeholder (not in dropdown), start at 0 or last
-        if (currentIndex === -1) {
-          currentIndex = e.key === 'ArrowDown' ? -1 : dropdownOptions.length
-        }
-        
-        let newIndex: number
+        const currentIndex =
+          hoveredIndex ??
+          dropdownOptions.findIndex((opt: Option) => opt.value === value)
+        const newIndex = getNextEnabledIndex(
+          currentIndex === -1 ? (e.key === 'ArrowDown' ? -1 : dropdownOptions.length) : currentIndex,
+          e.key === 'ArrowDown' ? 1 : -1,
+        )
 
-        if (e.key === 'ArrowDown') {
-          newIndex = currentIndex < dropdownOptions.length - 1 ? currentIndex + 1 : 0
-        } else {
-          newIndex = currentIndex > 0 ? currentIndex - 1 : dropdownOptions.length - 1
-        }
-
-        if (dropdownOptions[newIndex]) {
+        if (newIndex !== null && dropdownOptions[newIndex]) {
           onChange(dropdownOptions[newIndex].value)
           setHoveredIndex(newIndex)
-          
-          // Scroll into view
+
           if (listRef.current) {
             const items = listRef.current.children
             if (items[newIndex]) {
@@ -152,7 +159,12 @@ export default function CustomSelect({
         }
       }
 
-      if (e.key === 'Enter' && hoveredIndex !== null && dropdownOptions[hoveredIndex]) {
+      if (
+        e.key === 'Enter' &&
+        hoveredIndex !== null &&
+        dropdownOptions[hoveredIndex] &&
+        !dropdownOptions[hoveredIndex].disabled
+      ) {
         onChange(dropdownOptions[hoveredIndex].value)
         setIsOpen(false)
       }
@@ -160,10 +172,13 @@ export default function CustomSelect({
 
     document.addEventListener('keydown', handleKeyDown)
     return () => document.removeEventListener('keydown', handleKeyDown)
-  }, [isOpen, value, dropdownOptions, hoveredIndex, onChange])
+  }, [enabledOptionCount, getNextEnabledIndex, hoveredIndex, isOpen, onChange, dropdownOptions, value])
 
-  const handleOptionClick = (optionValue: string | number) => {
-    onChange(optionValue)
+  const handleOptionClick = (option: Option) => {
+    if (option.disabled) {
+      return
+    }
+    onChange(option.value)
     setIsOpen(false)
     setHoveredIndex(null)
   }
@@ -174,7 +189,6 @@ export default function CustomSelect({
       className={`relative overflow-visible ${className}`}
       style={{ minWidth }}
     >
-      {/* Select Button */}
       <button
         ref={buttonRef}
         type="button"
@@ -191,12 +205,12 @@ export default function CustomSelect({
         aria-expanded={isOpen}
         aria-haspopup="listbox"
       >
-        <div className="flex items-center gap-2 truncate">
+        <div className="flex items-center gap-2 truncate min-w-0">
           {selectedOption?.icon && (
             <img 
               src={selectedOption.icon} 
               alt="" 
-              className="w-3.5 h-3.5 flex-shrink-0 object-contain opacity-70"
+              className="w-4 h-4 flex-shrink-0 rounded-[4px] object-cover"
             />
           )}
           <span className={`truncate ${selectedOption ? 'text-white' : 'text-gray-400'}`}>
@@ -215,8 +229,6 @@ export default function CustomSelect({
         </svg>
       </button>
 
-      {/* Dropdown Menu - Rendered in portal to avoid z-index issues */}
-      {/* Only render when position is calculated to avoid flash of wrong position */}
       {isOpen && dropdownPosition && typeof window !== 'undefined' && createPortal(
         <ul
           ref={listRef}
@@ -240,7 +252,6 @@ export default function CustomSelect({
             maxWidth: `${dropdownPosition.width}px`,
             boxSizing: 'border-box',
             boxShadow: '0 10px 40px rgba(0, 0, 0, 0.5), 0 0 0 1px rgba(255, 255, 255, 0.05) inset',
-            // Ensure no extra spacing that could make it appear wider
             margin: 0,
             paddingLeft: 0,
             paddingRight: 0
@@ -249,39 +260,50 @@ export default function CustomSelect({
           {dropdownOptions.map((option: Option, index: number) => {
             const isSelected = option.value === value
             const isHovered = hoveredIndex === index
+            const isDisabled = Boolean(option.disabled)
 
             return (
               <li
                 key={option.value}
                 role="option"
                 aria-selected={isSelected}
-                onClick={() => handleOptionClick(option.value)}
-                onMouseEnter={() => setHoveredIndex(index)}
+                aria-disabled={isDisabled}
+                onClick={() => handleOptionClick(option)}
+                onMouseEnter={() => !isDisabled && setHoveredIndex(index)}
                 onMouseLeave={() => setHoveredIndex(null)}
                 className={`
-                  px-3 py-2 mx-1.5 rounded-md cursor-pointer
+                  px-3 py-2 mx-1.5 rounded-md
                   transition-all duration-150 ease-out
-                  ${isSelected
+                  ${isDisabled
+                    ? 'cursor-not-allowed text-gray-500 opacity-65'
+                    : isSelected
                     ? 'bg-accent/20 text-accent font-medium'
                     : isHovered
                     ? 'bg-gray-700/60 text-white'
                     : 'text-gray-300'
                   }
-                  ${isHovered || isSelected ? 'transform scale-[1.02]' : ''}
+                  ${!isDisabled && (isHovered || isSelected) ? 'transform scale-[1.02]' : ''}
                 `}
               >
                 <div className="flex items-center justify-between">
-                  <div className="flex items-center gap-2 truncate">
+                  <div className="flex items-center gap-2 truncate min-w-0">
                     {option.icon && (
                       <img 
                         src={option.icon} 
                         alt="" 
-                        className="w-3.5 h-3.5 flex-shrink-0 object-contain opacity-70"
+                        className="w-4 h-4 flex-shrink-0 rounded-[4px] object-cover"
                       />
                     )}
-                    <span className="truncate">{option.label}</span>
+                    <div className="min-w-0">
+                      <div className="truncate">{option.label}</div>
+                      {option.meta && (
+                        <div className="truncate text-[11px] uppercase tracking-wide text-gray-500">
+                          {option.meta}
+                        </div>
+                      )}
+                    </div>
                   </div>
-                  {isSelected && (
+                  {isSelected && !isDisabled && (
                     <svg
                       className="w-4 h-4 text-accent ml-2 flex-shrink-0"
                       fill="currentColor"

@@ -1,0 +1,247 @@
+{
+  "year": 2026,
+  "rounds": [
+    {
+      "round": 1,
+      "id": "australia",
+      "name": "Australian Grand Prix",
+      "location": "Melbourne",
+      "date": "13 - 15 Mar",
+      "officialName": "FORMULA 1 LOUIS VUITTON AUSTRALIAN GRAND PRIX 2026",
+      "country": "Australia",
+      "countryCode": "au",
+      "status": "completed"
+    },
+    {
+      "round": 2,
+      "id": "china",
+      "name": "Chinese Grand Prix",
+      "location": "Shanghai",
+      "date": "13 - 15 Mar",
+      "officialName": "FORMULA 1 CHINESE GRAND PRIX 2026",
+      "country": "China",
+      "countryCode": "cn",
+      "status": "completed"
+    },
+    {
+      "round": 3,
+      "id": "japan",
+      "name": "Japanese Grand Prix",
+      "location": "Suzuka",
+      "date": "27 - 29 Mar",
+      "officialName": "FORMULA 1 JAPANESE GRAND PRIX 2026",
+      "country": "Japan",
+      "countryCode": "jp",
+      "status": "completed"
+    },
+    {
+      "round": 4,
+      "id": "miami",
+      "name": "Miami Grand Prix",
+      "location": "Miami",
+      "date": "01 - 03 May",
+      "officialName": "FORMULA 1 MIAMI GRAND PRIX 2026",
+      "country": "United States",
+      "countryCode": "us",
+      "status": "upcoming"
+    },
+    {
+      "round": 5,
+      "id": "canada",
+      "name": "Canadian Grand Prix",
+      "location": "Montreal",
+      "date": "22 - 24 May",
+      "officialName": "FORMULA 1 CANADIAN GRAND PRIX 2026",
+      "country": "Canada",
+      "countryCode": "ca",
+      "status": "upcoming"
+    },
+    {
+      "round": 6,
+      "id": "monaco",
+      "name": "Monaco Grand Prix",
+      "location": "Monte Carlo",
+      "date": "05 - 07 Jun",
+      "officialName": "FORMULA 1 GRAND PRIX DE MONACO 2026",
+      "country": "Monaco",
+      "countryCode": "mc",
+      "status": "upcoming"
+    },
+    {
+      "round": 7,
+      "id": "barcelona-catalunya",
+      "name": "Barcelona Grand Prix",
+      "location": "Barcelona",
+      "date": "12 - 14 Jun",
+      "officialName": "FORMULA 1 BARCELONA GRAND PRIX 2026",
+      "country": "Spain",
+      "countryCode": "es",
+      "status": "upcoming"
+    },
+    {
+      "round": 8,
+      "id": "austria",
+      "name": "Austrian Grand Prix",
+      "location": "Spielberg",
+      "date": "26 - 28 Jun",
+      "officialName": "FORMULA 1 AUSTRIAN GRAND PRIX 2026",
+      "country": "Austria",
+      "countryCode": "at",
+      "status": "upcoming"
+    },
+    {
+      "round": 9,
+      "id": "great-britain",
+      "name": "British Grand Prix",
+      "location": "Silverstone",
+      "date": "03 - 05 Jul",
+      "officialName": "FORMULA 1 BRITISH GRAND PRIX 2026",
+      "country": "Great Britain",
+      "countryCode": "gb",
+      "status": "upcoming"
+    },
+    {
+      "round": 10,
+      "id": "belgium",
+      "name": "Belgian Grand Prix",
+      "location": "Spa-Francorchamps",
+      "date": "17 - 19 Jul",
+      "officialName": "FORMULA 1 BELGIAN GRAND PRIX 2026",
+      "country": "Belgium",
+      "countryCode": "be",
+      "status": "upcoming"
+    },
+    {
+      "round": 11,
+      "id": "hungary",
+      "name": "Hungarian Grand Prix",
+      "location": "Budapest",
+      "date": "24 - 26 Jul",
+      "officialName": "FORMULA 1 HUNGARIAN GRAND PRIX 2026",
+      "country": "Hungary",
+      "countryCode": "hu",
+      "status": "upcoming"
+    },
+    {
+      "round": 12,
+      "id": "netherlands",
+      "name": "Dutch Grand Prix",
+      "location": "Zandvoort",
+      "date": "21 - 23 Aug",
+      "officialName": "FORMULA 1 DUTCH GRAND PRIX 2026",
+      "country": "Netherlands",
+      "countryCode": "nl",
+      "status": "upcoming"
+    },
+    {
+      "round": 13,
+      "id": "italy",
+      "name": "Italian Grand Prix",
+      "location": "Monza",
+      "date": "04 - 06 Sep",
+      "officialName": "FORMULA 1 ITALIAN GRAND PRIX 2026",
+      "country": "Italy",
+      "countryCode": "it",
+      "status": "upcoming"
+    },
+    {
+      "round": 14,
+      "id": "madrid",
+      "name": "Spanish Grand Prix",
+      "location": "Madrid",
+      "date": "11 - 13 Sep",
+      "officialName": "FORMULA 1 GRAN PREMIO DE ESPAÑA 2026",
+      "country": "Spain",
+      "countryCode": "es",
+      "status": "upcoming"
+    },
+    {
+      "round": 15,
+      "id": "azerbaijan",
+      "name": "Azerbaijan Grand Prix",
+      "location": "Baku",
+      "date": "25 - 27 Sep",
+      "officialName": "FORMULA 1 AZERBAIJAN GRAND PRIX 2026",
+      "country": "Azerbaijan",
+      "countryCode": "az",
+      "status": "upcoming"
+    },
+    {
+      "round": 16,
+      "id": "singapore",
+      "name": "Singapore Grand Prix",
+      "location": "Singapore",
+      "date": "09 - 11 Oct",
+      "officialName": "FORMULA 1 SINGAPORE GRAND PRIX 2026",
+      "country": "Singapore",
+      "countryCode": "sg",
+      "status": "upcoming"
+    },
+    {
+      "round": 17,
+      "id": "united-states",
+      "name": "United States Grand Prix",
+      "location": "Austin",
+      "date": "23 - 25 Oct",
+      "officialName": "FORMULA 1 UNITED STATES GRAND PRIX 2026",
+      "country": "United States",
+      "countryCode": "us",
+      "status": "upcoming"
+    },
+    {
+      "round": 18,
+      "id": "mexico",
+      "name": "Mexico City Grand Prix",
+      "location": "Mexico City",
+      "date": "30 Oct - 01 Nov",
+      "officialName": "FORMULA 1 GRAN PREMIO DE LA CIUDAD DE MÉXICO 2026",
+      "country": "Mexico",
+      "countryCode": "mx",
+      "status": "upcoming"
+    },
+    {
+      "round": 19,
+      "id": "brazil",
+      "name": "São Paulo Grand Prix",
+      "location": "São Paulo",
+      "date": "06 - 08 Nov",
+      "officialName": "FORMULA 1 GRANDE PRÊMIO DE SÃO PAULO 2026",
+      "country": "Brazil",
+      "countryCode": "br",
+      "status": "upcoming"
+    },
+    {
+      "round": 20,
+      "id": "las-vegas",
+      "name": "Las Vegas Grand Prix",
+      "location": "Las Vegas",
+      "date": "20 - 22 Nov",
+      "officialName": "FORMULA 1 LAS VEGAS GRAND PRIX 2026",
+      "country": "United States",
+      "countryCode": "us",
+      "status": "upcoming"
+    },
+    {
+      "round": 21,
+      "id": "qatar",
+      "name": "Qatar Grand Prix",
+      "location": "Lusail",
+      "date": "27 - 29 Nov",
+      "officialName": "FORMULA 1 QATAR GRAND PRIX 2026",
+      "country": "Qatar",
+      "countryCode": "qa",
+      "status": "upcoming"
+    },
+    {
+      "round": 22,
+      "id": "abu-dhabi",
+      "name": "Abu Dhabi Grand Prix",
+      "location": "Yas Marina",
+      "date": "04 - 06 Dec",
+      "officialName": "FORMULA 1 ABU DHABI GRAND PRIX 2026",
+      "country": "United Arab Emirates",
+      "countryCode": "ae",
+      "status": "upcoming"
+    }
+  ]
+}

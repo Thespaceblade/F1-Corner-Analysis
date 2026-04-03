@@ -3,7 +3,7 @@
 // TODO: Add error boundaries for better error handling
 // TODO: Add loading states for all async operations
 
-import React, { useEffect, useMemo, useRef, useState, useCallback } from 'react'
+import React, { useEffect, useMemo, useRef, useState } from 'react'
 import Image from 'next/image'
 import Toolbar, { sessionOptions } from './Toolbar'
 import TrackPanel from './TrackPanel'
@@ -16,20 +16,8 @@ import { loadSessionData, SessionPayload } from '../lib/sessionDataClient'
 import { aggregateCornerPerformance } from '../lib/cornerPerformanceAggregator'
 import { trackInfo } from '../lib/trackInfo'
 import { filterDriversForTrack } from '../lib/trackDrivers'
-
-type CalendarTrack = {
-  id: string
-  name: string
-  location: string
-  date: string
-  officialName: string
-  round: number
-}
-
-type Calendar = {
-  year: number
-  rounds: CalendarTrack[]
-}
+import { getAvailableCalendarYears, getCalendarForYear, type SeasonCalendar } from '../lib/calendarData'
+import { getSupportedSeasonYears } from '../lib/teamData'
 
 type TrackData = {
   id: string
@@ -56,6 +44,7 @@ type TracksData = {
 }
 
 export default function ClientPage(){
+  const PREFERENCES_STORAGE_KEY = 'f1ca:user-preferences:v1'
   const [selectedTrack, setSelectedTrack] = useState<string>('')
   // Initialize with empty object so page can render immediately
   const [trackData, setTrackData] = useState<TracksData>({ tracks: {} })
@@ -69,6 +58,7 @@ export default function ClientPage(){
   const [sessionLoading, setSessionLoading] = useState<boolean>(false)
   const [sessionError, setSessionError] = useState<string | null>(null)
   const [showOutliers, setShowOutliers] = useState<boolean>(true)
+  const [preferencesHydrated, setPreferencesHydrated] = useState<boolean>(false)
 
   useEffect(() => {
     let cancelled = false
@@ -175,12 +165,60 @@ export default function ClientPage(){
     }
   }, [])
 
+  useEffect(() => {
+    if (typeof window === 'undefined') return
+
+    try {
+      const saved = window.localStorage.getItem(PREFERENCES_STORAGE_KEY)
+      if (!saved) {
+        setPreferencesHydrated(true)
+        return
+      }
+      const parsed = JSON.parse(saved) as {
+        selectedYear?: number
+        selectedTrack?: string
+        selectedSession?: string
+        selectedDrivers?: string[]
+        showOutliers?: boolean
+      }
+
+      if (typeof parsed.selectedYear === 'number') setSelectedYear(parsed.selectedYear)
+      if (typeof parsed.selectedTrack === 'string') setSelectedTrack(parsed.selectedTrack)
+      if (typeof parsed.selectedSession === 'string') setSelectedSession(parsed.selectedSession)
+      if (Array.isArray(parsed.selectedDrivers)) {
+        setSelectedDrivers(parsed.selectedDrivers.filter((d): d is string => typeof d === 'string'))
+      }
+      if (typeof parsed.showOutliers === 'boolean') setShowOutliers(parsed.showOutliers)
+    } catch (error) {
+      console.warn('[ClientPage] Failed to restore saved preferences:', error)
+    } finally {
+      setPreferencesHydrated(true)
+    }
+  }, [])
+
   const [selectedYear, setSelectedYear] = useState<number>(0)
-  const [availableYears, setAvailableYears] = useState<number[]>([])
   const [availableRoundsByYear, setAvailableRoundsByYear] = useState<Record<string, string[]>>({})
   const [sessionsByRound, setSessionsByRound] = useState<Record<string, Record<string, string[]>>>({})
-  const [calendarData, setCalendarData] = useState<Calendar | null>(null)
   const [sessionsLoadError, setSessionsLoadError] = useState<string | null>(null)
+
+  const seasonYears = useMemo(() => getSupportedSeasonYears(), [])
+  const calendarYears = useMemo(() => getAvailableCalendarYears(), [])
+  const availableYears = useMemo(
+    () =>
+      Array.from(
+        new Set([
+          ...seasonYears,
+          ...calendarYears,
+          ...Object.keys(availableRoundsByYear).map(Number),
+        ]),
+      ).sort((a, b) => a - b),
+    [availableRoundsByYear, calendarYears, seasonYears],
+  )
+
+  const calendarData = useMemo<SeasonCalendar | null>(
+    () => (selectedYear === 0 ? null : getCalendarForYear(selectedYear)),
+    [selectedYear],
+  )
 
   useEffect(() => {
     // Discover available sessions (years/rounds) via server-side index
@@ -193,10 +231,7 @@ export default function ClientPage(){
         if (idx?.error) {
           throw new Error(idx.error)
         }
-        const years = Object.keys(idx?.years ?? {}).map(Number).sort((a,b) => a - b)
-        setAvailableYears(years)
         setSessionsLoadError(null)
-        // Don't auto-select year - let user choose
 
         const map: Record<string, string[]> = {}
         const sessionsMap: Record<string, Record<string, string[]>> = {}
@@ -220,28 +255,28 @@ export default function ClientPage(){
       .catch((error) => {
         console.error('Error loading sessions index:', error)
         setSessionsLoadError(error instanceof Error ? error.message : 'Failed to load sessions')
-        // Set empty arrays so page can still render, just without session data
-        setAvailableYears([])
         setAvailableRoundsByYear({})
         setSessionsByRound({})
       })
   }, [])
 
   useEffect(() => {
-    // Load calendar data for the selected year to get round ordering
-    if (selectedYear === 0) {
-      setCalendarData(null)
-      return
+    if (typeof window === 'undefined' || !preferencesHydrated) return
+
+    const payload = {
+      selectedYear,
+      selectedTrack,
+      selectedSession,
+      selectedDrivers,
+      showOutliers,
     }
-    
-    fetch(`/data/calendar${selectedYear}.json`)
-      .then(r => r.json())
-      .then(setCalendarData)
-      .catch(() => {
-        // If calendar file doesn't exist for this year, that's okay
-        setCalendarData(null)
-      })
-  }, [selectedYear])
+
+    try {
+      window.localStorage.setItem(PREFERENCES_STORAGE_KEY, JSON.stringify(payload))
+    } catch (error) {
+      console.warn('[ClientPage] Failed to persist user preferences:', error)
+    }
+  }, [preferencesHydrated, selectedYear, selectedTrack, selectedSession, selectedDrivers, showOutliers])
 
   useEffect(() => {
     if (!selectedTrack || !selectedSession || selectedYear === 0) {
@@ -345,26 +380,6 @@ export default function ClientPage(){
     }
   }, [selectedSession, isQualifyingSession, isRaceSession])
   
-  // Build corner filter for aggregator
-  const cornerPerformanceFilter = useMemo(() => {
-    if (cornerFilter.type === 'qualifying-segment' && cornerFilter.segment && sessionData?.qualifyingBoundaries) {
-      return {
-        type: 'qualifying-segment' as const,
-        segment: cornerFilter.segment,
-        boundaries: sessionData.qualifyingBoundaries,
-        laps: sessionData.laps,
-      }
-    } else if (cornerFilter.type === 'lap' && cornerFilter.lapNumber !== undefined) {
-      return {
-        type: 'lap' as const,
-        lapNumber: cornerFilter.lapNumber,
-      }
-    } else if (cornerFilter.type === 'average') {
-      return { type: 'average' as const }
-    }
-    return { type: 'all' as const }
-  }, [cornerFilter, sessionData])
-  
   // Aggregate corner performance data
   // When selectedDrivers is empty, we want to show all drivers (pass undefined to aggregateCornerPerformance)
   const cornerPerformance = useMemo(() => {
@@ -384,6 +399,14 @@ export default function ClientPage(){
     if (!yearSessions) return []
     return yearSessions[selectedTrack] ?? []
   }, [selectedTrack, selectedYear, sessionsByRound])
+
+  useEffect(() => {
+    if (!preferencesHydrated || availableYears.length === 0) return
+    if (selectedYear !== 0 && availableYears.includes(selectedYear)) return
+
+    const latestYear = Math.max(...availableYears)
+    setSelectedYear(latestYear)
+  }, [preferencesHydrated, selectedYear, availableYears])
 
   // Reset selected session if it's not available for the selected track
   // Use a ref to track the current session to avoid stale closures
@@ -413,12 +436,28 @@ export default function ClientPage(){
     }
   }, [selectedTrack, availableSessions]) // Removed selectedSession from deps to prevent loops
 
-  // Get round number for the selected track
+  const indexedRoundIdsForYear = useMemo(() => {
+    if (selectedYear === 0) return []
+    return availableRoundsByYear[String(selectedYear)] ?? []
+  }, [availableRoundsByYear, selectedYear])
+
+  const roundNumberMap = useMemo(() => {
+    const map = new Map<string, number>()
+    calendarData?.rounds.forEach((round) => {
+      map.set(round.id, round.round)
+    })
+    indexedRoundIdsForYear.forEach((roundId, index) => {
+      if (!map.has(roundId)) {
+        map.set(roundId, index + 1)
+      }
+    })
+    return map
+  }, [calendarData, indexedRoundIdsForYear])
+
   const selectedRoundNumber = useMemo(() => {
-    if (!calendarData?.rounds || !selectedTrack) return null
-    const round = calendarData.rounds.find(r => r.id === selectedTrack)
-    return round?.round ?? null
-  }, [calendarData, selectedTrack])
+    if (!selectedTrack) return null
+    return roundNumberMap.get(selectedTrack) ?? null
+  }, [roundNumberMap, selectedTrack])
 
   // Filter selected drivers when track changes - only keep drivers who raced at this track
   useEffect(() => {
@@ -453,125 +492,88 @@ export default function ClientPage(){
     return found?.label ?? selectedSession
   }, [selectedSession])
 
-  // Get round IDs for selected year
-  const roundIds = useMemo(() => {
-    if (selectedYear === 0) {
-      // When no year selected, get all unique tracks from all years
-      const allRoundIds = new Set<string>()
-      Object.values(availableRoundsByYear).forEach(rounds => {
-        rounds.forEach(id => allRoundIds.add(id))
-      })
-      // Use most recent year's order as base for sorting
-      const years = Object.keys(availableRoundsByYear).map(Number).sort((a, b) => b - a)
-      if (years.length > 0) {
-        const mostRecentRounds = availableRoundsByYear[String(years[0])] ?? []
-        // Return in order: most recent year's tracks first, then others
-        const ordered = [...mostRecentRounds]
-        Array.from(allRoundIds).forEach(id => {
-          if (!ordered.includes(id)) {
-            ordered.push(id)
-          }
-        })
-        return ordered
-      }
-      return Array.from(allRoundIds)
-    }
-    return availableRoundsByYear[String(selectedYear)] ?? []
-  }, [selectedYear, availableRoundsByYear])
-  
-  // Load calendar for most recent year when no year selected (for sorting)
-  const [defaultCalendarData, setDefaultCalendarData] = useState<Calendar | null>(null)
-  
-  useEffect(() => {
-    if (selectedYear === 0 && availableYears.length > 0 && !defaultCalendarData) {
-      // Load calendar for most recent year to use for sorting
-      const mostRecentYear = Math.max(...availableYears)
-      fetch(`/data/calendar${mostRecentYear}.json`)
-        .then(r => r.json())
-        .then(setDefaultCalendarData)
-        .catch(() => setDefaultCalendarData(null))
-    } else if (selectedYear !== 0) {
-      // Clear default calendar when year is selected (use selected year's calendar)
-      setDefaultCalendarData(null)
-    }
-  }, [selectedYear, availableYears, defaultCalendarData])
-  
-  // Create a map of round ID to round number from calendar data for sorting
-  const roundNumberMap = useMemo(() => {
-    const calData = calendarData || defaultCalendarData
-    if (!calData?.rounds) return new Map<string, number>()
-    const map = new Map<string, number>()
-    calData.rounds.forEach(round => {
-      map.set(round.id, round.round)
-    })
-    return map
-  }, [calendarData, defaultCalendarData])
-
   const trackList = useMemo(() => {
-    if (!trackData?.tracks) return []
-    
-    // Determine which tracks to show - only tracks that exist in trackData AND in available rounds
-    let trackIdsToShow: string[]
-    
-    if (selectedYear === 0) {
-      // When no year selected, show all tracks that exist in any year
-      const allRoundIds = new Set<string>()
-      Object.values(availableRoundsByYear).forEach(rounds => {
-        rounds.forEach(id => {
-          if (trackData.tracks[id]) {
-            allRoundIds.add(id)
-          }
-        })
+    if (selectedYear === 0) return []
+
+    const seenRounds = new Set<string>()
+    const indexedRoundSet = new Set(indexedRoundIdsForYear)
+    const tracks: Array<{
+      id: string
+      name: string
+      countryCode?: string
+      disabled?: boolean
+      status?: 'completed' | 'upcoming' | 'postponed'
+      meta?: string
+    }> = []
+
+    const formatFallbackLabel = (roundId: string) =>
+      roundId
+        .split('-')
+        .map((segment) => segment.charAt(0).toUpperCase() + segment.slice(1))
+        .join(' ')
+
+    for (const round of calendarData?.rounds ?? []) {
+      seenRounds.add(round.id)
+      const hasSessionData = indexedRoundSet.has(round.id)
+      const status = round.status ?? (hasSessionData ? 'completed' : 'upcoming')
+      const disabled = status !== 'completed' || !hasSessionData
+
+      let meta: string | undefined
+      if (status === 'postponed') {
+        meta = 'Postponed'
+      } else if (status === 'upcoming') {
+        meta = 'Upcoming'
+      } else if (!hasSessionData) {
+        meta = 'Data pending'
+      }
+
+      tracks.push({
+        id: round.id,
+        name: round.name,
+        countryCode: round.countryCode,
+        disabled,
+        status,
+        meta,
       })
-      trackIdsToShow = Array.from(allRoundIds)
-    } else {
-      // When year selected, only show tracks from that year
-      trackIdsToShow = roundIds.filter(id => !!trackData.tracks[id])
     }
-    
-    const tracks = trackIdsToShow
-      .map(id => {
-        const trackInfo = trackData.tracks[id]
-        return {
-          id,
-          name: trackInfo.name,
-        }
+
+    for (const roundId of indexedRoundIdsForYear) {
+      if (seenRounds.has(roundId)) continue
+      tracks.push({
+        id: roundId,
+        name: trackData.tracks[roundId]?.name ?? formatFallbackLabel(roundId),
       })
-    
-    // Always sort by round number (race order: Australia to Abu Dhabi)
-    // Use calendar data if available, otherwise fall back to roundIds order
-    tracks.sort((a, b) => {
-      // First try to get round number from calendar data
+    }
+
+    return tracks.sort((a, b) => {
       const roundA = roundNumberMap.get(a.id)
       const roundB = roundNumberMap.get(b.id)
-      
       if (roundA !== undefined && roundB !== undefined) {
         return roundA - roundB
       }
-      
-      // If one has a round number and the other doesn't, prioritize the one with round number
-      if (roundA !== undefined && roundB === undefined) return -1
-      if (roundB !== undefined && roundA === undefined) return 1
-      
-      // If calendar data not available, use position in roundIds array
-      // This maintains the order from the API which should be sorted
-      const indexA = roundIds.indexOf(a.id)
-      const indexB = roundIds.indexOf(b.id)
-      
-      if (indexA !== -1 && indexB !== -1) {
-        return indexA - indexB
-      }
-      
-      // If one is in roundIds and the other isn't, prioritize the one in roundIds
-      if (indexA !== -1 && indexB === -1) return -1
-      if (indexB !== -1 && indexA === -1) return 1
-      
-      // Fallback: sort alphabetically by name
+      if (roundA !== undefined) return -1
+      if (roundB !== undefined) return 1
       return a.name.localeCompare(b.name)
     })
-    
-    return tracks
-  }, [roundIds, trackData, roundNumberMap, selectedYear, availableRoundsByYear])
+  }, [calendarData, indexedRoundIdsForYear, roundNumberMap, selectedYear, trackData])
+
+  const selectableTrackIds = useMemo(
+    () => trackList.filter((track) => !track.disabled).map((track) => track.id),
+    [trackList],
+  )
+
+  useEffect(() => {
+    if (selectedYear === 0) return
+
+    if (selectedTrack && selectableTrackIds.includes(selectedTrack)) {
+      return
+    }
+
+    const latestSelectableTrack = selectableTrackIds[selectableTrackIds.length - 1] ?? ''
+    if (latestSelectableTrack !== selectedTrack) {
+      setSelectedTrack(latestSelectableTrack)
+    }
+  }, [selectedTrack, selectableTrackIds, selectedYear])
 
   // Define TOC sections
   const tocSections = useMemo(() => {
@@ -595,7 +597,7 @@ export default function ClientPage(){
           <div className="min-h-screen flex items-center justify-center bg-[var(--page-bg)]">
             <div className="flex flex-col items-center gap-6">
               {/* Logo with rotating spinner around it */}
-              <div className="relative flex items-center justify-center w-32 h-32 md:w-40 md:w-40 loading-spinner-container">
+              <div className="relative flex items-center justify-center w-32 h-32 md:w-40 md:h-40 loading-spinner-container">
                 {/* Outer glow effect */}
                 <div className="absolute inset-[-24px] bg-accent/6 rounded-full blur-2xl animate-pulse-slow" />
                 

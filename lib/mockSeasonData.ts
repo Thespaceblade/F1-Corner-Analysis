@@ -17,6 +17,7 @@ import {
 import { aggregateSeasonData } from './seasonAggregator'
 import { SessionPayload } from './sessionDataClient'
 import { getTeamForDriver } from './driverAssignments'
+import { getTeamIdFromName } from './seasonMetadata'
 import { isDatabaseEnabled } from './db'
 import { loadCalendarRoundsFromDatabase, loadSessionPayloadFromDatabase } from './databaseData'
 import fs from 'fs'
@@ -104,16 +105,6 @@ async function loadRoundResults(year: number): Promise<RoundResult[]> {
   }
 }
 
-// Sprint weekend tracks for 2025
-const SPRINT_TRACKS_2025 = new Set([
-  'china',
-  'miami', 
-  'belgium',
-  'united-states',
-  'brazil',
-  'qatar'
-])
-
 /**
  * Load a single round's results
  */
@@ -121,9 +112,6 @@ async function loadSingleRound(
   year: number,
   round: CalendarRound
 ): Promise<RoundResult | null> {
-  // Check if this is a sprint weekend
-  const isSprintWeekend = year === 2025 && SPRINT_TRACKS_2025.has(round.id)
-  
   // Load race and qualifying sessions (always present)
   const [raceData, qualiData] = await Promise.all([
     loadSessionData(year, round.id, 'R'),
@@ -140,19 +128,14 @@ async function loadSingleRound(
   
   // Load sprint data only for sprint weekends AND only if it has proper race results
   let sprintResults: RaceResultEntry[] = []
-  if (isSprintWeekend) {
-    const [sprintData, sprintQualiData] = await Promise.all([
-      loadSessionData(year, round.id, 'S'),
-      loadSessionData(year, round.id, 'SQ'),
-    ])
-    
-    // Only use sprint results if they have the official raceResults data (not lap-based fallback)
-    if (sprintData && sprintData.raceResults && sprintData.raceResults.length > 0) {
-      sprintResults = extractRaceResults(sprintData, sprintQualiData, year, round.round)
-      console.log(`[loadSingleRound] Sprint weekend at ${round.name}: loaded ${sprintResults.length} sprint results`)
-    } else {
-      console.warn(`[loadSingleRound] Sprint weekend at ${round.name} but no official sprint race results found - skipping sprint points`)
-    }
+  const [sprintData, sprintQualiData] = await Promise.all([
+    loadSessionData(year, round.id, 'S'),
+    loadSessionData(year, round.id, 'SQ'),
+  ])
+
+  if (sprintData && sprintData.raceResults && sprintData.raceResults.length > 0) {
+    sprintResults = extractRaceResults(sprintData, sprintQualiData, year, round.round)
+    console.log(`[loadSingleRound] Sprint weekend at ${round.name}: loaded ${sprintResults.length} sprint results`)
   }
   
   // Combine race and sprint points
@@ -276,7 +259,7 @@ function extractRaceResults(
     return raceData.raceResults.map(result => {
       // Get team ID from driver assignments (handles mid-season swaps correctly)
       const teamId = getTeamForDriver(year, result.driverCode, round) || 
-                     getTeamIdFromSessionDriver(result.teamName)
+                     getTeamIdFromName(result.teamName, year)
       
       // Check if this driver set the fastest lap
       const hasFastestLap = fastestLapDriver.has(result.driverCode.toUpperCase())
@@ -338,7 +321,7 @@ function extractRaceResults(
     // Get team ID from driver assignments (correct for mid-season swaps)
     const driver = raceData.drivers[driverCode]
     const teamId = getTeamForDriver(year, driverCode, round) || 
-                   getTeamIdFromSessionDriver(driver.team || null)
+                   getTeamIdFromName(driver.team || null, year)
     
     // Grid position from qualifying
     const gridPosition = qualiData ? getQualifyingPosition(qualiData, driverCode) : 0
@@ -392,7 +375,7 @@ function extractQualifyingResults(
     return qualiData.qualifyingResults.map(result => {
       // Get team ID from driver assignments (handles mid-season swaps correctly)
       const teamId = getTeamForDriver(year, result.driverCode, round) || 
-                     getTeamIdFromSessionDriver(result.teamName)
+                     getTeamIdFromName(result.teamName, year)
       
       // Use best time from Q3, Q2, or Q1 (in that order)
       const time = result.q3Time || result.q2Time || result.q1Time
@@ -430,7 +413,7 @@ function extractQualifyingResults(
     // Get team ID from driver assignments (correct for mid-season swaps)
     const driver = qualiData.drivers[driverCode]
     const teamId = getTeamForDriver(year, driverCode, round) || 
-                   getTeamIdFromSessionDriver(driver.team || null)
+                   getTeamIdFromName(driver.team || null, year)
     
     results.push({
       position: 0, // Will be set after sorting
@@ -483,42 +466,6 @@ function getQualifyingPosition(qualiData: SessionPayload, driverCode: string): n
   return times.indexOf(bestTime) + 1
 }
 
-/**
- * Helper function from trackDrivers.ts
- */
-function getTeamIdFromSessionDriver(teamName: string | null | undefined): string | null {
-  if (!teamName) return null
-
-  const teamNameMap: Record<string, string> = {
-    'Red Bull': 'red-bull',
-    'Red Bull Racing': 'red-bull',
-    'Oracle Red Bull Racing': 'red-bull',
-    'McLaren': 'mclaren',
-    'McLaren Formula 1 Team': 'mclaren',
-    'Mercedes': 'mercedes',
-    'Mercedes-AMG PETRONAS F1 Team': 'mercedes',
-    'Ferrari': 'ferrari',
-    'Scuderia Ferrari': 'ferrari',
-    'Aston Martin': 'aston-martin',
-    'Aston Martin Aramco Formula One Team': 'aston-martin',
-    'Alpine': 'alpine',
-    'BWT Alpine F1 Team': 'alpine',
-    'Williams': 'williams',
-    'Williams Racing': 'williams',
-    'RB': 'visa-rb',
-    'Racing Bulls': 'visa-rb',
-    'Visa Cash App RB Formula One Team': 'visa-rb',
-    'Visa Cash App RB': 'visa-rb',
-    'Stake': 'stake',
-    'Stake F1 Team Kick Sauber': 'stake',
-    'Kick Sauber': 'stake',
-    'Haas': 'haas',
-    'Haas F1 Team': 'haas',
-    'MoneyGram Haas F1 Team': 'haas'
-  }
-
-  return teamNameMap[teamName] ?? null
-}
 
 /**
  * Add championship standings to each round

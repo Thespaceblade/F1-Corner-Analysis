@@ -2,14 +2,22 @@
 
 import React, { useEffect, useMemo, useRef, useState } from 'react'
 import { createPortal } from 'react-dom'
-import { f1Teams, driverColorMap } from '../lib/teamData'
+import { getSeasonTeams } from '../lib/teamData'
+import { getCountryFlagIcon } from '../lib/countryFlags'
 import CustomSelect from './CustomSelect'
-import { getAvailableDriversForTrack, didDriverRaceAtTrack } from '../lib/trackDrivers'
+import { getAvailableDriversForTrack } from '../lib/trackDrivers'
 import type { SessionPayload } from '../lib/sessionDataClient'
 import { getDriverPhoto } from '../lib/driverPhotos'
 
 type ToolbarProps = {
-  tracks: Array<{ id: string; name: string }>
+  tracks: Array<{
+    id: string
+    name: string
+    countryCode?: string
+    disabled?: boolean
+    status?: 'completed' | 'upcoming' | 'postponed'
+    meta?: string
+  }>
   selectedTrack: string
   onTrackChangeAction: (trackId: string) => void
   years: number[]
@@ -30,43 +38,6 @@ export const sessionOptions = [
   { label: 'Sprint Qualifying', value: 'SQ' },
   { label: 'Sprint', value: 'S' },
 ]
-
-const SPRINT_WEEKEND_TRACKS = new Set([
-  'china', 'miami', 'belgium', 'united-states', 'brazil', 'qatar'
-])
-
-// Map track IDs to their SVG filenames
-const getTrackIconPath = (trackId: string): string => {
-  const trackSvgMap: Record<string, string> = {
-    'australia': 'australia.svg',
-    'china': 'china.svg',
-    'japan': 'japan.svg',
-    'bahrain': 'bahrain.svg',
-    'saudi-arabia': 'saudi_arabia.svg',
-    'miami': 'miami.svg',
-    'emilia-romagna': 'imola.svg',
-    'monaco': 'monaco.svg',
-    'spain': 'spain.svg',
-    'canada': 'canada.svg',
-    'austria': 'austria.svg',
-    'great-britain': 'silverstone.svg',
-    'belgium': 'spa.svg',
-    'hungary': 'hungary.svg',
-    'netherlands': 'netherlands.svg',
-    'italy': 'monza.svg',
-    'azerbaijan': 'azerbaijan.svg',
-    'singapore': 'singapore.svg',
-    'united-states': 'usa.svg',
-    'mexico': 'mexico.svg',
-    'brazil': 'brazil.svg',
-    'las-vegas': 'las_vegas.svg',
-    'qatar': 'qatar.svg',
-    'abu-dhabi': 'abudhabi.svg',
-  }
-  
-  const svgFile = trackSvgMap[trackId]
-  return svgFile ? `/Tracks/${svgFile}` : ''
-}
 
 // Driver profile picture component for dropdown
 function DriverProfilePic({ driverCode, className = "w-8 h-8" }: { driverCode: string; className?: string }) {
@@ -109,6 +80,7 @@ export default function Toolbar({
   const dropdownRef = useRef<HTMLDivElement | null>(null)
 
   const selectedSet = useMemo(() => new Set(selectedDrivers), [selectedDrivers])
+  const seasonTeams = useMemo(() => getSeasonTeams(selectedYear), [selectedYear])
 
   // Get available drivers for the selected track
   const availableDriversForTrack = useMemo(() => {
@@ -125,7 +97,7 @@ export default function Toolbar({
   const filteredTeams = useMemo(() => {
     if (availableDriversForTrack.size === 0) {
       // If no track selected or no available drivers, show all teams
-      return f1Teams
+      return seasonTeams
     }
 
     // Get team assignments for each available driver
@@ -144,7 +116,7 @@ export default function Toolbar({
         let driverInfo: { code: string; name: string; number: number } | null = null
         
         // Try to find in teamData first (has proper names)
-        for (const team of f1Teams) {
+        for (const team of seasonTeams) {
           const teamDriver = team.drivers.find(d => d.code.toUpperCase() === driverCode)
           if (teamDriver) {
             driverInfo = teamDriver
@@ -176,18 +148,20 @@ export default function Toolbar({
     }
 
     // Build teams dynamically based on actual drivers who raced
-    type TeamWithDynamicDrivers = Omit<typeof f1Teams[0], 'drivers'> & { 
+    type TeamWithDynamicDrivers = Omit<typeof seasonTeams[number], 'drivers'> & { 
       drivers: Array<{ code: string; name: string; number: number }> 
     }
     const teamsByTeamId = new Map<string, TeamWithDynamicDrivers>()
     
     // Initialize with all teams from f1Teams (to get team metadata)
-    for (const team of f1Teams) {
+    for (const team of seasonTeams) {
       teamsByTeamId.set(team.id, {
         id: team.id,
         name: team.name,
         shortName: team.shortName,
         color: team.color,
+        logoPath: team.logoPath,
+        aliases: team.aliases,
         drivers: []
       })
     }
@@ -217,11 +191,11 @@ export default function Toolbar({
       .filter(team => team.drivers.length > 0)
       .sort((a, b) => {
         // Sort teams in a consistent order (use original f1Teams order)
-        const aIndex = f1Teams.findIndex(t => t.id === a.id)
-        const bIndex = f1Teams.findIndex(t => t.id === b.id)
+        const aIndex = seasonTeams.findIndex(t => t.id === a.id)
+        const bIndex = seasonTeams.findIndex(t => t.id === b.id)
         return (aIndex === -1 ? 999 : aIndex) - (bIndex === -1 ? 999 : bIndex)
       })
-  }, [availableDriversForTrack, selectedTrack, selectedYear, roundNumber, sessionData])
+  }, [availableDriversForTrack, roundNumber, seasonTeams, selectedTrack, selectedYear, sessionData])
 
   // Position dropdown below button
   useEffect(() => {
@@ -284,19 +258,21 @@ export default function Toolbar({
     ...tracks.map(t => ({ 
       value: t.id, 
       label: t.name,
-      icon: getTrackIconPath(t.id)
+      icon: getCountryFlagIcon(t.countryCode),
+      meta: t.meta,
+      disabled: t.disabled,
     }))
   ], [tracks])
 
   const sessionOptionsList = useMemo(() => {
     const options = [{ value: '', label: 'Session' }]
     
-    if (!selectedTrack || availableSessions.length === 0) {
+    if (!selectedTrack) {
       return [...options, ...sessionOptions.map(o => ({ value: o.value, label: o.label }))]
     }
-    
-    if (SPRINT_WEEKEND_TRACKS.has(selectedTrack)) {
-      return [...options, ...sessionOptions.map(o => ({ value: o.value, label: o.label }))]
+
+    if (availableSessions.length === 0) {
+      return options
     }
     
     const hasQR = availableSessions.some(s => s === 'Q' || s === 'R')
@@ -376,7 +352,7 @@ export default function Toolbar({
                 />
                 {/* Team logo */}
                 <img
-                  src={`/team-logos/${team.id}.png`}
+                  src={team.logoPath}
                   alt={team.shortName}
                   className={`relative z-10 h-full w-full object-contain ${
                     ['aston-martin', 'visa-rb', 'stake'].includes(team.id)
