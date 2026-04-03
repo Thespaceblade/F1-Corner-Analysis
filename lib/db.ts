@@ -30,7 +30,11 @@ function getPool(): Pool {
   pool = new Pool({
     connectionString: connection,
     ssl: { rejectUnauthorized: false },
-    max: 5,
+    // Serverless runtimes should keep application-side pooling very small.
+    // Supabase recommends transaction pooling for serverless and starting at 1 connection.
+    max: 1,
+    idleTimeoutMillis: 5000,
+    connectionTimeoutMillis: 10000,
   })
 
   return pool
