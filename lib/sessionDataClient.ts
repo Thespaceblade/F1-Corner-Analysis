@@ -111,11 +111,54 @@ export type DriverDataRequest = SessionIdentifier & {
   drivers?: string[]
 }
 
+type SessionRequestErrorPayload = {
+  error?: string
+  details?: string
+}
+
+const RETRYABLE_STATUS_CODES = new Set([429, 500, 502, 503, 504])
+const SESSION_REQUEST_MAX_ATTEMPTS = 3
+
+function isAbortError(error: unknown): boolean {
+  return error instanceof DOMException && error.name === 'AbortError'
+}
+
+function createDelay(ms: number, signal?: AbortSignal): Promise<void> {
+  return new Promise((resolve, reject) => {
+    const timer = setTimeout(() => {
+      signal?.removeEventListener('abort', onAbort)
+      resolve()
+    }, ms)
+
+    const onAbort = () => {
+      clearTimeout(timer)
+      signal?.removeEventListener('abort', onAbort)
+      reject(new DOMException('The operation was aborted.', 'AbortError'))
+    }
+
+    signal?.addEventListener('abort', onAbort, { once: true })
+  })
+}
+
+async function createResponseError(res: Response): Promise<Error> {
+  let payload: SessionRequestErrorPayload | null = null
+
+  try {
+    payload = (await res.clone().json()) as SessionRequestErrorPayload
+  } catch {
+    payload = null
+  }
+
+  const message = payload?.details || payload?.error || `Failed to load session data (${res.status})`
+  return new Error(message)
+}
+
 export async function loadSessionData(
   request: DriverDataRequest,
   init?: RequestInit
 ): Promise<SessionPayload> {
   const { year, round, session, drivers } = request
+  const signal = init?.signal ?? undefined
   const params = new URLSearchParams()
 
   if (drivers?.length) {
@@ -123,14 +166,38 @@ export async function loadSessionData(
   }
 
   const url = `/api/sessions/${year}/${round}/${session}${params.toString() ? `?${params}` : ''}`
-  const res = await fetch(url, {
-    cache: 'no-cache',
-    ...init,
-  })
 
-  if (!res.ok) {
-    throw new Error(`Failed to load session data (${res.status})`)
+  for (let attempt = 1; attempt <= SESSION_REQUEST_MAX_ATTEMPTS; attempt += 1) {
+    try {
+      const res = await fetch(url, {
+        cache: 'no-cache',
+        ...init,
+      })
+
+      if (!res.ok) {
+        const error = await createResponseError(res)
+
+        if (!RETRYABLE_STATUS_CODES.has(res.status) || attempt === SESSION_REQUEST_MAX_ATTEMPTS) {
+          throw error
+        }
+
+        await createDelay(attempt * 400, signal)
+        continue
+      }
+
+      return res.json()
+    } catch (error) {
+      if (isAbortError(error)) {
+        throw error
+      }
+
+      if (attempt === SESSION_REQUEST_MAX_ATTEMPTS) {
+        throw error instanceof Error ? error : new Error(String(error))
+      }
+
+      await createDelay(attempt * 400, signal)
+    }
   }
 
-  return res.json()
+  throw new Error('Failed to load session data')
 }
