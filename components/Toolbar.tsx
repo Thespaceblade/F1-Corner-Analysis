@@ -264,165 +264,198 @@ export default function Toolbar({
     }))
   ], [tracks])
 
-  const sessionOptionsList = useMemo(() => {
-    const options = [{ value: '', label: 'Session' }]
-    
+  const sessionPills = useMemo(() => {
     if (!selectedTrack) {
-      return [...options, ...sessionOptions.map(o => ({ value: o.value, label: o.label }))]
+      return sessionOptions
     }
 
     if (availableSessions.length === 0) {
-      return options
+      return []
     }
-    
-    const hasQR = availableSessions.some(s => s === 'Q' || s === 'R')
-    const hasSprint = availableSessions.some(s => s === 'SQ' || s === 'S')
-    
-    if (hasQR && !hasSprint) {
-      return [
-        ...options,
-        ...sessionOptions
-          .filter(o => o.value !== 'SQ' && o.value !== 'S')
-          .map(o => ({ value: o.value, label: o.label }))
-      ]
-    }
-    
-    return [...options, ...sessionOptions.map(o => ({ value: o.value, label: o.label }))]
+
+    const hasSprint = availableSessions.some((s) => s === 'SQ' || s === 'S')
+    return sessionOptions.filter((opt) => {
+      if (!hasSprint && (opt.value === 'SQ' || opt.value === 'S')) return false
+      return true
+    })
   }, [availableSessions, selectedTrack])
 
   return (
-    <div className="panel p-3 flex flex-col lg:flex-row lg:items-center gap-3">
-      {/* Selects row */}
-      <div className="flex items-center gap-2 sm:gap-3 shrink-0">
-        <CustomSelect
-          options={yearOptions}
-          value={selectedYear}
-          onChange={(v) => onYearChangeAction(Number(v))}
-          placeholder="Select Year"
-          placeholderValue={0}
-          className="w-[88px] sm:w-[100px]"
-          minWidth="88px"
-        />
-        
-        <CustomSelect
-          options={trackOptions}
-          value={selectedTrack}
-          onChange={(v) => onTrackChangeAction(String(v))}
-          placeholder="Select Track"
-          placeholderValue=""
-          className="min-w-0 flex-1 lg:flex-none lg:w-[220px]"
-          minWidth="160px"
-        />
+    <div className="space-y-2">
+      {/* Year / track / teams */}
+      <div className="panel p-3 flex flex-col lg:flex-row lg:items-center gap-3">
+        <div className="flex items-center gap-2 sm:gap-3 shrink-0">
+          <CustomSelect
+            options={yearOptions}
+            value={selectedYear}
+            onChange={(v) => onYearChangeAction(Number(v))}
+            placeholder="Select Year"
+            placeholderValue={0}
+            className="w-[88px] sm:w-[100px]"
+            minWidth="88px"
+          />
 
-        <CustomSelect
-          options={sessionOptionsList}
-          value={selectedSession}
-          onChange={(v) => onSessionChangeAction(String(v))}
-          placeholder="Select Session"
-          placeholderValue=""
-          className="min-w-0 w-[120px] sm:w-[160px]"
-          minWidth="120px"
-        />
-      </div>
+          <CustomSelect
+            options={trackOptions}
+            value={selectedTrack}
+            onChange={(v) => onTrackChangeAction(String(v))}
+            placeholder="Select Track"
+            placeholderValue=""
+            className="min-w-0 flex-1 lg:flex-none lg:w-[220px]"
+            minWidth="160px"
+          />
+        </div>
 
-      {/* Team buttons — always one row; shrink evenly so all stay on-screen */}
-      <div className="min-w-0 flex-1 flex items-center justify-end gap-1 sm:gap-1.5 flex-nowrap overflow-x-auto scrollbar-hide">
-        {filteredTeams.map(team => {
-          const codes = team.drivers.map(d => d.code)
-          const allSelected = codes.every(c => selectedSet.has(c))
-          const someSelected = codes.some(c => selectedSet.has(c))
-          const isOpen = activeTeam === team.id
+        {/* Team buttons — always one row; shrink evenly so all stay on-screen */}
+        <div className="min-w-0 flex-1 flex items-center justify-end gap-1 sm:gap-1.5 flex-nowrap overflow-x-auto scrollbar-hide">
+          {filteredTeams.map((team) => {
+            const codes = team.drivers.map((d) => d.code)
+            const allSelected = codes.every((c) => selectedSet.has(c))
+            const someSelected = codes.some((c) => selectedSet.has(c))
+            const isOpen = activeTeam === team.id
 
-          return (
-            <div key={team.id} className="relative shrink min-w-[1.75rem] max-w-[2.75rem] basis-0 flex-1">
-              {/* Team button */}
-              <button
-                ref={el => { buttonRefs.current[team.id] = el }}
-                type="button"
-                onClick={() => setActiveTeam(isOpen ? null : team.id)}
-                className="chip relative aspect-square w-full p-0 flex items-center justify-center"
-                style={{ backgroundColor: team.color }}
-                title={team.name}
-              >
-                {/* Selection ring */}
-                <span
-                  className={`absolute inset-0 rounded-full transition-all ${
-                    allSelected ? 'ring-2 ring-white' : someSelected ? 'ring-2 ring-white/50' : ''
-                  }`}
-                />
-                {/* Team logo */}
-                <img
-                  src={team.logoPath}
-                  alt={team.shortName}
-                  className="relative z-10 h-full w-full object-contain"
-                  style={
-                    ['aston-martin', 'visa-rb', 'stake', 'cadillac', 'audi', 'racing-bulls'].includes(team.id)
-                      ? { transform: 'scale(1.25)' }
-                      : undefined
-                  }
-                />
-              </button>
-
-              {/* Driver dropdown */}
-              {isOpen && dropdownPos && typeof window !== 'undefined' && createPortal(
-                <div
-                  ref={dropdownRef}
-                  className="fixed z-[9999] w-44 rounded-lg border border-gray-700 bg-gray-900/95 backdrop-blur-md py-2 shadow-xl"
-                  style={{
-                    top: dropdownPos.top,
-                    left: dropdownPos.left,
-                    transform: 'translateX(-50%)',
+            return (
+              <div key={team.id} className="relative shrink min-w-[1.75rem] max-w-[2.75rem] basis-0 flex-1">
+                <button
+                  ref={(el) => {
+                    buttonRefs.current[team.id] = el
                   }}
+                  type="button"
+                  onClick={() => setActiveTeam(isOpen ? null : team.id)}
+                  className="chip relative aspect-square w-full p-0 flex items-center justify-center"
+                  style={{ backgroundColor: team.color }}
+                  title={team.name}
                 >
-                  {team.drivers.map(driver => {
-                    const isSelected = selectedSet.has(driver.code)
-                    const isAvailable = availableDriversForTrack.size === 0 || availableDriversForTrack.has(driver.code.toUpperCase())
-                    
-                    return (
-                      <button
-                        key={driver.code}
-                        type="button"
-                        onClick={() => isAvailable && toggleDriver(driver.code)}
-                        disabled={!isAvailable}
-                        className={`
+                  <span
+                    className={`absolute inset-0 rounded-full transition-all ${
+                      allSelected ? 'ring-2 ring-white' : someSelected ? 'ring-2 ring-white/50' : ''
+                    }`}
+                  />
+                  <img
+                    src={team.logoPath}
+                    alt={team.shortName}
+                    className="relative z-10 h-full w-full object-contain"
+                    style={
+                      ['aston-martin', 'visa-rb', 'stake', 'cadillac', 'audi', 'racing-bulls'].includes(team.id)
+                        ? { transform: 'scale(1.25)' }
+                        : undefined
+                    }
+                  />
+                </button>
+
+                {isOpen &&
+                  dropdownPos &&
+                  typeof window !== 'undefined' &&
+                  createPortal(
+                    <div
+                      ref={dropdownRef}
+                      className="fixed z-[9999] w-44 rounded-lg border border-gray-700 bg-gray-900/95 backdrop-blur-md py-2 shadow-xl"
+                      style={{
+                        top: dropdownPos.top,
+                        left: dropdownPos.left,
+                        transform: 'translateX(-50%)',
+                      }}
+                    >
+                      {team.drivers.map((driver) => {
+                        const isSelected = selectedSet.has(driver.code)
+                        const isAvailable =
+                          availableDriversForTrack.size === 0 ||
+                          availableDriversForTrack.has(driver.code.toUpperCase())
+
+                        return (
+                          <button
+                            key={driver.code}
+                            type="button"
+                            onClick={() => isAvailable && toggleDriver(driver.code)}
+                            disabled={!isAvailable}
+                            className={`
                           w-full px-3 py-2 flex items-center gap-3 text-left transition-colors
-                          ${!isAvailable 
-                            ? 'opacity-40 cursor-not-allowed text-gray-500' 
-                            : isSelected 
-                            ? 'bg-accent/20 text-accent' 
-                            : 'text-gray-200 hover:bg-gray-800'
+                          ${
+                            !isAvailable
+                              ? 'opacity-40 cursor-not-allowed text-gray-500'
+                              : isSelected
+                                ? 'bg-accent/20 text-accent'
+                                : 'text-gray-200 hover:bg-gray-800'
                           }
                         `}
-                        title={!isAvailable ? `Driver did not race at this track` : undefined}
-                      >
-                        {/* Driver profile picture */}
-                        <DriverProfilePic driverCode={driver.code} />
-                        
-                        {/* Driver code */}
-                        <span className="font-mono font-semibold text-sm">
-                          {driver.code}
-                        </span>
-                        
-                        {/* Driver number */}
-                        <span className="text-xs text-gray-400 tabular-nums">
-                          #{driver.number}
-                        </span>
-                        
-                        {/* Checkmark */}
-                        {isSelected && (
-                          <svg className="w-4 h-4 ml-auto text-accent" fill="currentColor" viewBox="0 0 20 20">
-                            <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
-                          </svg>
-                        )}
-                      </button>
-                    )
-                  })}
-                </div>,
-                document.body
-              )}
-            </div>
-          )
-        })}
+                            title={!isAvailable ? `Driver did not race at this track` : undefined}
+                          >
+                            <DriverProfilePic driverCode={driver.code} />
+                            <span className="font-mono font-semibold text-sm">{driver.code}</span>
+                            <span className="text-xs text-gray-400 tabular-nums">#{driver.number}</span>
+                            {isSelected && (
+                              <svg
+                                className="w-4 h-4 ml-auto text-accent"
+                                fill="currentColor"
+                                viewBox="0 0 20 20"
+                              >
+                                <path
+                                  fillRule="evenodd"
+                                  d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
+                                  clipRule="evenodd"
+                                />
+                              </svg>
+                            )}
+                          </button>
+                        )
+                      })}
+                    </div>,
+                    document.body
+                  )}
+              </div>
+            )
+          })}
+        </div>
+      </div>
+
+      {/* Session — own mini section so the current session type is obvious */}
+      <div className="panel px-3 py-2.5 flex flex-col sm:flex-row sm:items-center gap-3">
+        <div className="shrink-0 sm:border-r sm:border-gray-700/80 sm:pr-4">
+          <div className="text-[10px] uppercase tracking-wider text-gray-500 font-semibold">Session</div>
+          <div className="text-xs text-gray-400 mt-0.5">
+            {selectedTrack
+              ? availableSessions.length > 0
+                ? 'Pick qualifying, race, or sprint for this round'
+                : 'No session data for this track yet'
+              : 'Select a track first'}
+          </div>
+        </div>
+
+        <div className="flex flex-wrap items-center gap-2 min-w-0 flex-1">
+          {sessionPills.length === 0 ? (
+            <span className="text-xs text-gray-500">—</span>
+          ) : (
+            sessionPills.map((opt) => {
+              const isAvailable = !selectedTrack || availableSessions.includes(opt.value)
+              const isActive = selectedSession === opt.value
+              return (
+                <button
+                  key={opt.value}
+                  type="button"
+                  disabled={!isAvailable}
+                  onClick={() => isAvailable && onSessionChangeAction(opt.value)}
+                  className={`
+                    px-3 py-1.5 rounded-md text-sm font-medium transition-colors border
+                    ${
+                      !isAvailable
+                        ? 'border-gray-800 text-gray-600 cursor-not-allowed opacity-50'
+                        : isActive
+                          ? 'border-accent bg-accent/20 text-accent'
+                          : 'border-gray-700 text-gray-300 hover:border-gray-500 hover:bg-gray-800/60'
+                    }
+                  `}
+                  title={
+                    !isAvailable
+                      ? `${opt.label} data not available for this track`
+                      : opt.label
+                  }
+                >
+                  {opt.label}
+                </button>
+              )
+            })
+          )}
+        </div>
       </div>
     </div>
   )

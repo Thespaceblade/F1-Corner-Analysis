@@ -20,6 +20,7 @@ import { getTeamForDriver } from './driverAssignments'
 import { getTeamIdFromName } from './seasonMetadata'
 import { isDatabaseEnabled } from './db'
 import { loadCalendarRoundsFromDatabase, loadSessionPayloadFromDatabase } from './databaseData'
+import { getCalendarForYear } from './calendarData'
 import fs from 'fs'
 import path from 'path'
 
@@ -37,7 +38,18 @@ interface CalendarRound {
  */
 export async function loadSeasonData(year: number): Promise<SeasonData> {
   const rounds = await loadRoundResults(year)
-  return aggregateSeasonData(year, rounds)
+  const calendar = getCalendarForYear(year)
+  const scheduledRaces = calendar?.rounds.length ?? rounds.length
+  const isSeasonComplete = Boolean(
+    calendar &&
+      calendar.rounds.length > 0 &&
+      calendar.rounds.every((round) => round.status === 'completed')
+  )
+
+  return aggregateSeasonData(year, rounds, {
+    scheduledRaces,
+    isSeasonComplete,
+  })
 }
 
 /**
