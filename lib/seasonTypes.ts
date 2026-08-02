@@ -157,6 +157,8 @@ export interface SeasonData {
   // Metadata
   totalRaces: number
   completedRaces: number
+  /** True only when every scheduled calendar round is completed */
+  isSeasonComplete: boolean
   champion: {
     driver: string | null
     constructor: string | null

@@ -22,7 +22,14 @@ import {
 /**
  * Aggregate all session data for a season
  */
-export function aggregateSeasonData(year: number, rounds: RoundResult[]): SeasonData {
+export function aggregateSeasonData(
+  year: number,
+  rounds: RoundResult[],
+  options?: {
+    scheduledRaces?: number
+    isSeasonComplete?: boolean
+  }
+): SeasonData {
   
   // Get all drivers who raced this year
   const assignments = getDriverAssignments(year)
@@ -51,11 +58,14 @@ export function aggregateSeasonData(year: number, rounds: RoundResult[]): Season
   // Build championship progression
   const championshipProgression = buildChampionshipProgression(rounds)
   
-  // Determine champions
+  // Determine standings / champions
   const driverStandings = Object.entries(drivers)
     .sort((a, b) => b[1].totalPoints - a[1].totalPoints)
   const constructorStandings = Object.entries(teams)
     .sort((a, b) => b[1].totalPoints - a[1].totalPoints)
+
+  const isSeasonComplete = Boolean(options?.isSeasonComplete)
+  const scheduledRaces = options?.scheduledRaces ?? rounds.length
   
   return {
     year,
@@ -63,11 +73,14 @@ export function aggregateSeasonData(year: number, rounds: RoundResult[]): Season
     teams,
     rounds,
     championshipProgression,
-    totalRaces: rounds.length,
+    totalRaces: scheduledRaces,
     completedRaces: rounds.length,
+    isSeasonComplete,
+    // Only crown champions when the season is finished; otherwise leave null
+    // so the UI can show standings / leaders instead of "World Champion".
     champion: {
-      driver: driverStandings[0]?.[0] ?? null,
-      constructor: constructorStandings[0]?.[0] ?? null,
+      driver: isSeasonComplete ? driverStandings[0]?.[0] ?? null : null,
+      constructor: isSeasonComplete ? constructorStandings[0]?.[0] ?? null : null,
     },
   }
 }

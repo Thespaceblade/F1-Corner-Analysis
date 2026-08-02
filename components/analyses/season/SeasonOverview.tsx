@@ -14,6 +14,7 @@ import StatisticsCard from './StatisticsCard'
 import { getDriverColor, getTeamById } from '../../../lib/teamData'
 import { BarChart, Bar, XAxis, YAxis, Tooltip, ResponsiveContainer, PieChart, Pie, Cell } from 'recharts'
 import { getDriverPhoto } from '../../../lib/driverPhotos'
+import DriverBadge from '../../formatting/DriverBadge'
 
 type SeasonOverviewProps = {
   seasonData: SeasonData
@@ -196,139 +197,295 @@ export default function SeasonOverview({ seasonData }: SeasonOverviewProps) {
     }
   }, [chartView])
 
+  const championshipStandings = useMemo(() => {
+    return Object.values(seasonData.drivers)
+      .sort((a, b) => b.totalPoints - a.totalPoints)
+      .map((driver, index) => ({ ...driver, position: index + 1 }))
+  }, [seasonData.drivers])
+
+  const constructorStandings = useMemo(() => {
+    return Object.values(seasonData.teams)
+      .sort((a, b) => b.totalPoints - a.totalPoints)
+      .map((team, index) => ({ ...team, position: index + 1 }))
+  }, [seasonData.teams])
+
+  const showChampions = seasonData.isSeasonComplete && Boolean(driverChampion && constructorChampion)
+
   return (
     <div className="space-y-6">
-      {/* Champions Banner */}
-      <div className="grid md:grid-cols-2 gap-4">
-        {/* Driver Champion */}
-        <div 
-          className="border rounded-lg p-6 backdrop-blur-sm"
-          style={{
-            borderColor: driverChampion ? `${getSeasonDriverColor(driverChampion.driverCode, '#f59e0b')}40` : '#f59e0b40',
-            background: `linear-gradient(to bottom right, ${driverChampion ? `${getSeasonDriverColor(driverChampion.driverCode, '#f59e0b')}10` : '#f59e0b10'}, transparent)`
-          }}
-        >
-          <div className="flex items-center gap-3 mb-4">
-            <Trophy 
-              className="w-8 h-8"
-              style={{ color: driverChampion ? getSeasonDriverColor(driverChampion.driverCode, '#fbbf24') : '#fbbf24' }}
-            />
-            <div>
-              <h4 
-                className="text-lg font-bold"
-                style={{ color: driverChampion ? getSeasonDriverColor(driverChampion.driverCode, '#e7eaee') : '#e7eaee' }}
-              >
-                World Champion
-              </h4>
-              <p className="text-xs text-gray-400">{seasonData.year} Driver Championship</p>
+      {showChampions ? (
+        /* Champions Banner — only when the season is finished */
+        <div className="grid md:grid-cols-2 gap-4">
+          <div
+            className="border rounded-lg p-6 backdrop-blur-sm"
+            style={{
+              borderColor: `${getSeasonDriverColor(driverChampion!.driverCode, '#f59e0b')}40`,
+              background: `linear-gradient(to bottom right, ${getSeasonDriverColor(driverChampion!.driverCode, '#f59e0b')}10, transparent)`,
+            }}
+          >
+            <div className="flex items-center gap-3 mb-4">
+              <Trophy
+                className="w-8 h-8"
+                style={{ color: getSeasonDriverColor(driverChampion!.driverCode, '#fbbf24') }}
+              />
+              <div>
+                <h4
+                  className="text-lg font-bold"
+                  style={{ color: getSeasonDriverColor(driverChampion!.driverCode, '#e7eaee') }}
+                >
+                  World Champion
+                </h4>
+                <p className="text-xs text-gray-400">{seasonData.year} Driver Championship</p>
+              </div>
             </div>
-          </div>
-          
-          {driverChampion ? (
             <div className="space-y-3">
               <div className="flex items-center gap-3">
-                <div className="relative w-20 h-20 rounded-full overflow-hidden bg-gray-800 border-4 flex-shrink-0"
-                  style={{ borderColor: getSeasonDriverColor(driverChampion.driverCode, '#fbbf24') }}
+                <div
+                  className="relative w-20 h-20 rounded-full overflow-hidden bg-gray-800 border-4 flex-shrink-0"
+                  style={{ borderColor: getSeasonDriverColor(driverChampion!.driverCode, '#fbbf24') }}
                 >
                   <img
-                    src={getDriverPhoto(driverChampion.driverCode)}
-                    alt={driverChampion.driverCode}
+                    src={getDriverPhoto(driverChampion!.driverCode)}
+                    alt={driverChampion!.driverCode}
                     className="w-full h-full object-cover"
                   />
                 </div>
-                <div 
+                <div
                   className="text-3xl font-bold"
-                  style={{ color: getSeasonDriverColor(driverChampion.driverCode, '#fbbf24') }}
+                  style={{ color: getSeasonDriverColor(driverChampion!.driverCode, '#fbbf24') }}
                 >
-                  {driverChampion.totalPoints} pts
+                  {driverChampion!.totalPoints} pts
                 </div>
               </div>
               <div className="grid grid-cols-3 gap-3 text-sm">
                 <div>
                   <div className="text-gray-400 text-xs">Wins</div>
-                  <div className="font-semibold text-gray-200">{driverChampion.raceWins}</div>
+                  <div className="font-semibold text-gray-200">{driverChampion!.raceWins}</div>
                 </div>
                 <div>
                   <div className="text-gray-400 text-xs">Podiums</div>
-                  <div className="font-semibold text-gray-200">{driverChampion.podiums}</div>
+                  <div className="font-semibold text-gray-200">{driverChampion!.podiums}</div>
                 </div>
                 <div>
                   <div className="text-gray-400 text-xs">Poles</div>
-                  <div className="font-semibold text-gray-200">{driverChampion.polePositions}</div>
+                  <div className="font-semibold text-gray-200">{driverChampion!.polePositions}</div>
                 </div>
               </div>
             </div>
-          ) : (
-            <p className="text-gray-500">Season in progress</p>
-          )}
-        </div>
-
-        {/* Constructor Champion */}
-        <div 
-          className="border rounded-lg p-6 backdrop-blur-sm"
-          style={{
-            borderColor: constructorChampion ? `${getSeasonTeam(constructorChampion.teamId)?.color ?? '#3b82f6'}40` : '#3b82f640',
-            background: `linear-gradient(to bottom right, ${constructorChampion ? `${getSeasonTeam(constructorChampion.teamId)?.color ?? '#3b82f6'}10` : '#3b82f610'}, transparent)`
-          }}
-        >
-          <div className="flex items-center gap-3 mb-4">
-            <Building2 
-              className="w-8 h-8"
-              style={{ color: constructorChampion ? (getSeasonTeam(constructorChampion.teamId)?.color ?? '#60a5fa') : '#60a5fa' }}
-            />
-            <div>
-              <h4 
-                className="text-lg font-bold"
-                style={{ color: constructorChampion ? (getSeasonTeam(constructorChampion.teamId)?.color ?? '#e7eaee') : '#e7eaee' }}
-              >
-                Constructor Champion
-              </h4>
-              <p className="text-xs text-gray-400">{seasonData.year} Team Championship</p>
-            </div>
           </div>
-          
-          {constructorChampion ? (
+
+          <div
+            className="border rounded-lg p-6 backdrop-blur-sm"
+            style={{
+              borderColor: `${getSeasonTeam(constructorChampion!.teamId)?.color ?? '#3b82f6'}40`,
+              background: `linear-gradient(to bottom right, ${getSeasonTeam(constructorChampion!.teamId)?.color ?? '#3b82f6'}10, transparent)`,
+            }}
+          >
+            <div className="flex items-center gap-3 mb-4">
+              <Building2
+                className="w-8 h-8"
+                style={{ color: getSeasonTeam(constructorChampion!.teamId)?.color ?? '#60a5fa' }}
+              />
+              <div>
+                <h4
+                  className="text-lg font-bold"
+                  style={{ color: getSeasonTeam(constructorChampion!.teamId)?.color ?? '#e7eaee' }}
+                >
+                  Constructor Champion
+                </h4>
+                <p className="text-xs text-gray-400">{seasonData.year} Team Championship</p>
+              </div>
+            </div>
             <div className="space-y-3">
               <div className="flex items-center gap-3">
                 <div className="relative w-12 h-12 flex-shrink-0">
                   <img
-                    src={getSeasonTeam(constructorChampion.teamId)?.logoPath ?? `/team-logos/${constructorChampion.teamId}.png`}
-                    alt={getSeasonTeam(constructorChampion.teamId)?.shortName ?? constructorChampion.teamId}
+                    src={getSeasonTeam(constructorChampion!.teamId)?.logoPath ?? `/team-logos/${constructorChampion!.teamId}.png`}
+                    alt={getSeasonTeam(constructorChampion!.teamId)?.shortName ?? constructorChampion!.teamId}
                     className="relative z-10 h-full w-full object-contain"
                     style={
-                      ['aston-martin', 'visa-rb', 'stake'].includes(constructorChampion.teamId)
+                      ['aston-martin', 'visa-rb', 'stake'].includes(constructorChampion!.teamId)
                         ? { transform: 'scale(1.3)' }
                         : undefined
                     }
                   />
                 </div>
-                <div 
+                <div
                   className="text-3xl font-bold"
-                  style={{ color: getSeasonTeam(constructorChampion.teamId)?.color ?? '#60a5fa' }}
+                  style={{ color: getSeasonTeam(constructorChampion!.teamId)?.color ?? '#60a5fa' }}
                 >
-                  {constructorChampion.totalPoints} pts
+                  {constructorChampion!.totalPoints} pts
                 </div>
               </div>
               <div className="grid grid-cols-3 gap-3 text-sm">
                 <div>
                   <div className="text-gray-400 text-xs">Wins</div>
-                  <div className="font-semibold text-gray-200">{constructorChampion.totalWins}</div>
+                  <div className="font-semibold text-gray-200">{constructorChampion!.totalWins}</div>
                 </div>
                 <div>
                   <div className="text-gray-400 text-xs">Podiums</div>
-                  <div className="font-semibold text-gray-200">{constructorChampion.totalPodiums}</div>
+                  <div className="font-semibold text-gray-200">{constructorChampion!.totalPodiums}</div>
                 </div>
                 <div>
                   <div className="text-gray-400 text-xs">1-2s</div>
-                  <div className="font-semibold text-gray-200">{constructorChampion.oneTwo}</div>
+                  <div className="font-semibold text-gray-200">{constructorChampion!.oneTwo}</div>
                 </div>
               </div>
             </div>
-          ) : (
-            <p className="text-gray-500">Season in progress</p>
-          )}
+          </div>
         </div>
-      </div>
+      ) : (
+        /* Mid-season: championship score tables instead of crowning a champion */
+        <div className="space-y-3">
+          <div className="flex flex-wrap items-end justify-between gap-2">
+            <div>
+              <h4 className="text-sm font-semibold text-gray-200">Championship Standings</h4>
+              <p className="text-xs text-gray-400">
+                After {seasonData.completedRaces} of {seasonData.totalRaces} rounds · season in progress
+              </p>
+            </div>
+          </div>
+
+          <div className="grid lg:grid-cols-2 gap-4">
+            <div className="border border-gray-700 rounded-lg overflow-hidden backdrop-blur-sm bg-gray-800/30">
+              <div className="px-3 py-2 border-b border-gray-700 bg-gray-900/50">
+                <h5 className="text-xs font-semibold uppercase tracking-wide text-gray-400">Drivers</h5>
+              </div>
+              <div className="overflow-x-auto max-h-[28rem] overflow-y-auto">
+                <table className="w-full text-sm">
+                  <thead className="sticky top-0 bg-gray-900/95">
+                    <tr className="border-b border-gray-700">
+                      <th className="text-left py-2 px-3 text-gray-500 font-semibold text-[10px] uppercase">Pos</th>
+                      <th className="text-left py-2 px-3 text-gray-500 font-semibold text-[10px] uppercase">Driver</th>
+                      <th className="text-right py-2 px-3 text-gray-500 font-semibold text-[10px] uppercase">Pts</th>
+                      <th className="text-right py-2 px-3 text-gray-500 font-semibold text-[10px] uppercase">W</th>
+                      <th className="text-right py-2 px-3 text-gray-500 font-semibold text-[10px] uppercase">Pod</th>
+                      <th className="text-right py-2 px-3 text-gray-500 font-semibold text-[10px] uppercase">Pole</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {championshipStandings.map((driver) => {
+                      const team = getSeasonTeam(driver.teamId)
+                      return (
+                        <tr
+                          key={driver.driverCode}
+                          className="border-b border-gray-800/80 hover:bg-gray-800/40 transition-colors"
+                        >
+                          <td className="py-2 px-3">
+                            <span
+                              className={`font-bold tabular-nums text-sm ${
+                                driver.position === 1
+                                  ? 'text-amber-400'
+                                  : driver.position === 2
+                                    ? 'text-gray-300'
+                                    : driver.position === 3
+                                      ? 'text-orange-400'
+                                      : 'text-gray-500'
+                              }`}
+                            >
+                              {driver.position}
+                            </span>
+                          </td>
+                          <td className="py-2 px-3">
+                            <div className="flex items-center gap-2 min-w-0">
+                              <DriverBadge
+                                code={driver.driverCode}
+                                year={seasonData.year}
+                                size="sm"
+                              />
+                              <span className="text-xs text-gray-500 truncate hidden sm:inline">
+                                {team?.shortName ?? driver.teamId ?? '—'}
+                              </span>
+                            </div>
+                          </td>
+                          <td className="py-2 px-3 text-right font-semibold tabular-nums text-gray-100">
+                            {driver.totalPoints}
+                          </td>
+                          <td className="py-2 px-3 text-right tabular-nums text-gray-400">{driver.raceWins}</td>
+                          <td className="py-2 px-3 text-right tabular-nums text-gray-400">{driver.podiums}</td>
+                          <td className="py-2 px-3 text-right tabular-nums text-gray-400">{driver.polePositions}</td>
+                        </tr>
+                      )
+                    })}
+                  </tbody>
+                </table>
+              </div>
+            </div>
+
+            <div className="border border-gray-700 rounded-lg overflow-hidden backdrop-blur-sm bg-gray-800/30">
+              <div className="px-3 py-2 border-b border-gray-700 bg-gray-900/50">
+                <h5 className="text-xs font-semibold uppercase tracking-wide text-gray-400">Constructors</h5>
+              </div>
+              <div className="overflow-x-auto max-h-[28rem] overflow-y-auto">
+                <table className="w-full text-sm">
+                  <thead className="sticky top-0 bg-gray-900/95">
+                    <tr className="border-b border-gray-700">
+                      <th className="text-left py-2 px-3 text-gray-500 font-semibold text-[10px] uppercase">Pos</th>
+                      <th className="text-left py-2 px-3 text-gray-500 font-semibold text-[10px] uppercase">Team</th>
+                      <th className="text-right py-2 px-3 text-gray-500 font-semibold text-[10px] uppercase">Pts</th>
+                      <th className="text-right py-2 px-3 text-gray-500 font-semibold text-[10px] uppercase">W</th>
+                      <th className="text-right py-2 px-3 text-gray-500 font-semibold text-[10px] uppercase">Pod</th>
+                      <th className="text-right py-2 px-3 text-gray-500 font-semibold text-[10px] uppercase">1-2</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {constructorStandings.map((team) => {
+                      const teamInfo = getSeasonTeam(team.teamId)
+                      return (
+                        <tr
+                          key={team.teamId}
+                          className="border-b border-gray-800/80 hover:bg-gray-800/40 transition-colors"
+                        >
+                          <td className="py-2 px-3">
+                            <span
+                              className={`font-bold tabular-nums text-sm ${
+                                team.position === 1
+                                  ? 'text-amber-400'
+                                  : team.position === 2
+                                    ? 'text-gray-300'
+                                    : team.position === 3
+                                      ? 'text-orange-400'
+                                      : 'text-gray-500'
+                              }`}
+                            >
+                              {team.position}
+                            </span>
+                          </td>
+                          <td className="py-2 px-3">
+                            <div className="flex items-center gap-2">
+                              <div className="relative w-7 h-7 flex-shrink-0">
+                                <img
+                                  src={teamInfo?.logoPath ?? `/team-logos/${team.teamId}.png`}
+                                  alt={teamInfo?.shortName ?? team.teamId}
+                                  className="h-full w-full object-contain"
+                                  style={
+                                    ['aston-martin', 'visa-rb', 'stake', 'cadillac'].includes(team.teamId)
+                                      ? { transform: 'scale(1.25)' }
+                                      : undefined
+                                  }
+                                />
+                              </div>
+                              <span className="font-medium text-gray-200 text-sm">
+                                {teamInfo?.shortName ?? team.teamId}
+                              </span>
+                            </div>
+                          </td>
+                          <td className="py-2 px-3 text-right font-semibold tabular-nums text-gray-100">
+                            {team.totalPoints}
+                          </td>
+                          <td className="py-2 px-3 text-right tabular-nums text-gray-400">{team.totalWins}</td>
+                          <td className="py-2 px-3 text-right tabular-nums text-gray-400">{team.totalPodiums}</td>
+                          <td className="py-2 px-3 text-right tabular-nums text-gray-400">{team.oneTwo}</td>
+                        </tr>
+                      )
+                    })}
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
 
       {/* Key Statistics Grid */}
       <div>
