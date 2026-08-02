@@ -43,6 +43,8 @@ type TracksData = {
   }
 }
 
+type ViewMode = 'race' | 'season'
+
 export default function ClientPage(){
   const PREFERENCES_STORAGE_KEY = 'f1ca:user-preferences:v1'
   const [selectedTrack, setSelectedTrack] = useState<string>('')
@@ -58,6 +60,7 @@ export default function ClientPage(){
   const [sessionLoading, setSessionLoading] = useState<boolean>(false)
   const [sessionError, setSessionError] = useState<string | null>(null)
   const [showOutliers, setShowOutliers] = useState<boolean>(true)
+  const [viewMode, setViewMode] = useState<ViewMode>('race')
   const [preferencesHydrated, setPreferencesHydrated] = useState<boolean>(false)
 
   useEffect(() => {
@@ -180,6 +183,7 @@ export default function ClientPage(){
         selectedSession?: string
         selectedDrivers?: string[]
         showOutliers?: boolean
+        viewMode?: ViewMode
       }
 
       if (typeof parsed.selectedYear === 'number') setSelectedYear(parsed.selectedYear)
@@ -189,6 +193,7 @@ export default function ClientPage(){
         setSelectedDrivers(parsed.selectedDrivers.filter((d): d is string => typeof d === 'string'))
       }
       if (typeof parsed.showOutliers === 'boolean') setShowOutliers(parsed.showOutliers)
+      if (parsed.viewMode === 'race' || parsed.viewMode === 'season') setViewMode(parsed.viewMode)
     } catch (error) {
       console.warn('[ClientPage] Failed to restore saved preferences:', error)
     } finally {
@@ -269,6 +274,7 @@ export default function ClientPage(){
       selectedSession,
       selectedDrivers,
       showOutliers,
+      viewMode,
     }
 
     try {
@@ -276,7 +282,7 @@ export default function ClientPage(){
     } catch (error) {
       console.warn('[ClientPage] Failed to persist user preferences:', error)
     }
-  }, [preferencesHydrated, selectedYear, selectedTrack, selectedSession, selectedDrivers, showOutliers])
+  }, [preferencesHydrated, selectedYear, selectedTrack, selectedSession, selectedDrivers, showOutliers, viewMode])
 
   useEffect(() => {
     if (!selectedTrack || !selectedSession || selectedYear === 0) {
@@ -768,7 +774,7 @@ export default function ClientPage(){
         </div>
         
         {/* Table of Contents - Header integrated - positioned absolutely over header */}
-        {currentTrack && tocSections.length > 0 && (
+        {viewMode === 'race' && currentTrack && tocSections.length > 0 && (
           <div 
             className="absolute top-4 right-4 md:top-6 md:right-6 hidden lg:block" 
             style={{ zIndex: 200, overflow: 'visible' }}
@@ -799,7 +805,40 @@ export default function ClientPage(){
       )}
 
       <div className="page-section page-section-2">
+        <div
+          role="tablist"
+          aria-label="View mode"
+          className="mb-4 inline-flex items-center gap-1 rounded-lg border border-gray-700/70 bg-gray-900/40 p-1"
+        >
+          <button
+            type="button"
+            role="tab"
+            aria-selected={viewMode === 'race'}
+            onClick={() => setViewMode('race')}
+            className={`rounded-md px-4 py-2 text-sm font-semibold transition ${
+              viewMode === 'race'
+                ? 'bg-accent/15 text-accent shadow-sm'
+                : 'text-gray-400 hover:text-gray-200'
+            }`}
+          >
+            Race Analysis
+          </button>
+          <button
+            type="button"
+            role="tab"
+            aria-selected={viewMode === 'season'}
+            onClick={() => setViewMode('season')}
+            className={`rounded-md px-4 py-2 text-sm font-semibold transition ${
+              viewMode === 'season'
+                ? 'bg-accent/15 text-accent shadow-sm'
+                : 'text-gray-400 hover:text-gray-200'
+            }`}
+          >
+            Season Review
+          </button>
+        </div>
         <Toolbar 
+          mode={viewMode}
           tracks={trackList}
           selectedTrack={selectedTrack}
           onTrackChangeAction={setSelectedTrack}
@@ -819,7 +858,7 @@ export default function ClientPage(){
         />
       </div>
 
-      {currentTrack && (
+      {viewMode === 'race' && currentTrack && (
         <>
           <section id="track-visualization" className="mt-6 grid lg:grid-cols-2 gap-6 page-section page-section-3">
             <div className="panel p-4">
@@ -981,12 +1020,21 @@ export default function ClientPage(){
         </>
       )}
 
-      {/* Season Review - Separate section, shows when year is selected */}
-      <SeasonReview 
-        year={selectedYear}
-        isVisible={selectedYear > 0}
-        selectedDrivers={selectedDrivers}
-      />
+      {/* Season Review - its own top-level view mode */}
+      {viewMode === 'season' && (
+        selectedYear > 0 ? (
+          <SeasonReview 
+            year={selectedYear}
+            selectedDrivers={selectedDrivers}
+          />
+        ) : (
+          <section className="mt-6 page-section page-section-3">
+            <div className="panel p-8 text-center text-sm text-gray-400">
+              Select a year from the dropdown above to view season statistics and championship analysis.
+            </div>
+          </section>
+        )
+      )}
       </main>
       <Chatbot 
         context={{

@@ -10,6 +10,7 @@ import type { SessionPayload } from '../lib/sessionDataClient'
 import { getDriverPhoto } from '../lib/driverPhotos'
 
 type ToolbarProps = {
+  mode?: 'race' | 'season'
   tracks: Array<{
     id: string
     name: string
@@ -65,6 +66,7 @@ function DriverProfilePic({ driverCode, className = "w-8 h-8" }: { driverCode: s
 }
 
 export default function Toolbar({
+  mode = 'race',
   tracks,
   selectedTrack,
   onTrackChangeAction,
@@ -425,7 +427,9 @@ export default function Toolbar({
       <div className="panel px-3 py-2.5 flex flex-col sm:flex-row sm:items-center gap-3">
         <div className="shrink-0 sm:border-r sm:border-gray-700/80 sm:pr-4">
           <div className="text-[10px] uppercase tracking-wider text-gray-500 font-semibold">Event</div>
-          <div className="text-xs text-gray-400 mt-0.5">Season and grand prix</div>
+          <div className="text-xs text-gray-400 mt-0.5">
+            {mode === 'season' ? 'Season' : 'Season and grand prix'}
+          </div>
         </div>
         <div className="flex items-center gap-2 sm:gap-3 min-w-0 flex-1">
           <CustomSelect
@@ -437,19 +441,22 @@ export default function Toolbar({
             className="w-[88px] sm:w-[100px]"
             minWidth="88px"
           />
-          <CustomSelect
-            options={trackOptions}
-            value={selectedTrack}
-            onChange={(v) => onTrackChangeAction(String(v))}
-            placeholder="Select Track"
-            placeholderValue=""
-            className="min-w-0 flex-1 lg:flex-none lg:w-[240px]"
-            minWidth="160px"
-          />
+          {mode === 'race' && (
+            <CustomSelect
+              options={trackOptions}
+              value={selectedTrack}
+              onChange={(v) => onTrackChangeAction(String(v))}
+              placeholder="Select Track"
+              placeholderValue=""
+              className="min-w-0 flex-1 lg:flex-none lg:w-[240px]"
+              minWidth="160px"
+            />
+          )}
         </div>
       </div>
 
       {/* Session */}
+      {mode === 'race' && (
       <div className="panel px-3 py-2.5 flex flex-col sm:flex-row sm:items-center gap-3">
         <div className="shrink-0 sm:border-r sm:border-gray-700/80 sm:pr-4">
           <div className="text-[10px] uppercase tracking-wider text-gray-500 font-semibold">Session</div>
@@ -489,6 +496,7 @@ export default function Toolbar({
           )}
         </div>
       </div>
+      )}
 
       {/* Drivers: presets + team pickers */}
       <div className="panel px-3 py-2.5 flex flex-col gap-3">
