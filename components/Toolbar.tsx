@@ -39,6 +39,12 @@ export const sessionOptions = [
   { label: 'Sprint', value: 'S' },
 ]
 
+function driverSetsEqual(a: string[], b: string[]) {
+  if (a.length !== b.length) return false
+  const setB = new Set(b.map((c) => c.toUpperCase()))
+  return a.every((c) => setB.has(c.toUpperCase()))
+}
+
 // Driver profile picture component for dropdown
 function DriverProfilePic({ driverCode, className = "w-8 h-8" }: { driverCode: string; className?: string }) {
   const photoSrc = getDriverPhoto(driverCode)
@@ -79,7 +85,10 @@ export default function Toolbar({
   const buttonRefs = useRef<Record<string, HTMLButtonElement | null>>({})
   const dropdownRef = useRef<HTMLDivElement | null>(null)
 
-  const selectedSet = useMemo(() => new Set(selectedDrivers), [selectedDrivers])
+  const selectedSet = useMemo(
+    () => new Set(selectedDrivers.map((code) => code.toUpperCase())),
+    [selectedDrivers]
+  )
   const seasonTeams = useMemo(() => getSeasonTeams(selectedYear), [selectedYear])
 
   // Get available drivers for the selected track
@@ -240,29 +249,147 @@ export default function Toolbar({
 
   // Toggle driver selection
   const toggleDriver = (code: string) => {
-    if (selectedSet.has(code)) {
-      onDriversChangeAction(selectedDrivers.filter(c => c !== code))
+    const normalized = code.toUpperCase()
+    if (selectedSet.has(normalized)) {
+      onDriversChangeAction(selectedDrivers.filter((c) => c.toUpperCase() !== normalized))
     } else {
-      onDriversChangeAction([...selectedDrivers, code])
+      onDriversChangeAction([...selectedDrivers.map((c) => c.toUpperCase()), normalized])
     }
   }
 
-  // Select options
-  const yearOptions = useMemo(() => [
-    { value: 0, label: 'Year' },
-    ...years.map(y => ({ value: y, label: String(y) }))
-  ], [years])
+  const toggleTeamDrivers = (codes: string[]) => {
+    const availableCodes = codes
+      .map((code) => code.toUpperCase())
+      .filter(
+        (code) =>
+          availableDriversForTrack.size === 0 || availableDriversForTrack.has(code)
+      )
+    if (availableCodes.length === 0) return
 
-  const trackOptions = useMemo(() => [
-    { value: '', label: 'Track' },
-    ...tracks.map(t => ({ 
-      value: t.id, 
-      label: t.name,
-      icon: getCountryFlagIcon(t.countryCode),
-      meta: t.meta,
-      disabled: t.disabled,
-    }))
-  ], [tracks])
+    const allSelected = availableCodes.every((c) => selectedSet.has(c))
+    if (allSelected) {
+      const remove = new Set(availableCodes)
+      onDriversChangeAction(selectedDrivers.filter((c) => !remove.has(c.toUpperCase())))
+    } else {
+      const next = new Set(selectedDrivers.map((c) => c.toUpperCase()))
+      for (const code of availableCodes) next.add(code)
+      onDriversChangeAction(Array.from(next))
+    }
+  }
+
+  /** Session classification order (P1 → last), used for Top N presets */
+  const rankedDriverCodes = useMemo(() => {
+    const isQualifying = selectedSession === 'Q' || selectedSession === 'SQ'
+    const results = isQualifying
+      ? sessionData?.qualifyingResults
+      : sessionData?.raceResults
+
+    if (results && results.length > 0) {
+      return [...results]
+        .filter((r) => r.driverCode && r.position != null && r.position > 0)
+        .sort((a, b) => (a.position ?? 999) - (b.position ?? 999))
+        .map((r) => r.driverCode.toUpperCase())
+    }
+
+    // Fallback when results aren't loaded yet: session drivers / track roster
+    if (sessionData?.drivers) {
+      return Object.keys(sessionData.drivers).map((c) => c.toUpperCase())
+    }
+    if (availableDriversForTrack.size > 0) {
+      return Array.from(availableDriversForTrack)
+    }
+    return filteredTeams.flatMap((team) => team.drivers.map((d) => d.code.toUpperCase()))
+  }, [
+    availableDriversForTrack,
+    filteredTeams,
+    selectedSession,
+    sessionData?.drivers,
+    sessionData?.qualifyingResults,
+    sessionData?.raceResults,
+  ])
+
+  const allDriverCodes = useMemo(() => {
+    if (rankedDriverCodes.length > 0) return rankedDriverCodes
+    return filteredTeams.flatMap((team) => team.drivers.map((d) => d.code.toUpperCase()))
+  }, [filteredTeams, rankedDriverCodes])
+
+  type DriverPresetId = 'all' | 'top3' | 'top5' | 'top10' | 'clear'
+
+  const driverPresets = useMemo(() => {
+    const presets: Array<{
+      id: DriverPresetId
+      label: string
+      title: string
+      disabled?: boolean
+      codes: string[]
+    }> = [
+      {
+        id: 'all',
+        label: 'All',
+        title: 'Select every driver in this session',
+        disabled: allDriverCodes.length === 0,
+        codes: allDriverCodes,
+      },
+      {
+        id: 'top3',
+        label: 'Top 3',
+        title: 'Select podium finishers (P1–P3)',
+        disabled: rankedDriverCodes.length === 0,
+        codes: rankedDriverCodes.slice(0, 3),
+      },
+      {
+        id: 'top5',
+        label: 'Top 5',
+        title: 'Select classification P1–P5',
+        disabled: rankedDriverCodes.length === 0,
+        codes: rankedDriverCodes.slice(0, 5),
+      },
+      {
+        id: 'top10',
+        label: 'Top 10',
+        title: 'Select classification P1–P10',
+        disabled: rankedDriverCodes.length === 0,
+        codes: rankedDriverCodes.slice(0, 10),
+      },
+      {
+        id: 'clear',
+        label: 'Clear',
+        title: 'Clear driver selection',
+        disabled: selectedDrivers.length === 0,
+        codes: [],
+      },
+    ]
+    return presets
+  }, [allDriverCodes, rankedDriverCodes, selectedDrivers.length])
+
+  const activePresetId = useMemo((): DriverPresetId | null => {
+    if (selectedDrivers.length === 0) return 'clear'
+    for (const preset of driverPresets) {
+      if (preset.id === 'clear') continue
+      if (driverSetsEqual(selectedDrivers, preset.codes)) return preset.id
+    }
+    return null
+  }, [driverPresets, selectedDrivers])
+
+  // Select options
+  const yearOptions = useMemo(
+    () => [{ value: 0, label: 'Year' }, ...years.map((y) => ({ value: y, label: String(y) }))],
+    [years]
+  )
+
+  const trackOptions = useMemo(
+    () => [
+      { value: '', label: 'Track' },
+      ...tracks.map((t) => ({
+        value: t.id,
+        label: t.name,
+        icon: getCountryFlagIcon(t.countryCode),
+        meta: t.meta,
+        disabled: t.disabled,
+      })),
+    ],
+    [tracks]
+  )
 
   const sessionPills = useMemo(() => {
     if (!selectedTrack) {
@@ -280,11 +407,27 @@ export default function Toolbar({
     })
   }, [availableSessions, selectedTrack])
 
+  const chipClass = (active: boolean, disabled?: boolean) =>
+    `
+      px-2.5 py-1 rounded-md text-xs font-medium transition-colors border
+      ${
+        disabled
+          ? 'border-gray-800 text-gray-600 cursor-not-allowed opacity-50'
+          : active
+            ? 'border-accent bg-accent/20 text-accent'
+            : 'border-gray-700 text-gray-300 hover:border-gray-500 hover:bg-gray-800/60'
+      }
+    `
+
   return (
     <div className="space-y-2">
-      {/* Year / track / teams */}
-      <div className="panel p-3 flex flex-col lg:flex-row lg:items-center gap-3">
-        <div className="flex items-center gap-2 sm:gap-3 shrink-0">
+      {/* Event: year + track */}
+      <div className="panel px-3 py-2.5 flex flex-col sm:flex-row sm:items-center gap-3">
+        <div className="shrink-0 sm:border-r sm:border-gray-700/80 sm:pr-4">
+          <div className="text-[10px] uppercase tracking-wider text-gray-500 font-semibold">Event</div>
+          <div className="text-xs text-gray-400 mt-0.5">Season and grand prix</div>
+        </div>
+        <div className="flex items-center gap-2 sm:gap-3 min-w-0 flex-1">
           <CustomSelect
             options={yearOptions}
             value={selectedYear}
@@ -294,128 +437,26 @@ export default function Toolbar({
             className="w-[88px] sm:w-[100px]"
             minWidth="88px"
           />
-
           <CustomSelect
             options={trackOptions}
             value={selectedTrack}
             onChange={(v) => onTrackChangeAction(String(v))}
             placeholder="Select Track"
             placeholderValue=""
-            className="min-w-0 flex-1 lg:flex-none lg:w-[220px]"
+            className="min-w-0 flex-1 lg:flex-none lg:w-[240px]"
             minWidth="160px"
           />
         </div>
-
-        {/* Team buttons — always one row; shrink evenly so all stay on-screen */}
-        <div className="min-w-0 flex-1 flex items-center justify-end gap-1 sm:gap-1.5 flex-nowrap overflow-x-auto scrollbar-hide">
-          {filteredTeams.map((team) => {
-            const codes = team.drivers.map((d) => d.code)
-            const allSelected = codes.every((c) => selectedSet.has(c))
-            const someSelected = codes.some((c) => selectedSet.has(c))
-            const isOpen = activeTeam === team.id
-
-            return (
-              <div key={team.id} className="relative shrink min-w-[1.75rem] max-w-[2.75rem] basis-0 flex-1">
-                <button
-                  ref={(el) => {
-                    buttonRefs.current[team.id] = el
-                  }}
-                  type="button"
-                  onClick={() => setActiveTeam(isOpen ? null : team.id)}
-                  className="chip relative aspect-square w-full p-0 flex items-center justify-center"
-                  style={{ backgroundColor: team.color }}
-                  title={team.name}
-                >
-                  <span
-                    className={`absolute inset-0 rounded-full transition-all ${
-                      allSelected ? 'ring-2 ring-white' : someSelected ? 'ring-2 ring-white/50' : ''
-                    }`}
-                  />
-                  <img
-                    src={team.logoPath}
-                    alt={team.shortName}
-                    className="relative z-10 h-full w-full object-contain"
-                    style={
-                      ['aston-martin', 'visa-rb', 'stake', 'cadillac', 'audi', 'racing-bulls'].includes(team.id)
-                        ? { transform: 'scale(1.25)' }
-                        : undefined
-                    }
-                  />
-                </button>
-
-                {isOpen &&
-                  dropdownPos &&
-                  typeof window !== 'undefined' &&
-                  createPortal(
-                    <div
-                      ref={dropdownRef}
-                      className="fixed z-[9999] w-44 rounded-lg border border-gray-700 bg-gray-900/95 backdrop-blur-md py-2 shadow-xl"
-                      style={{
-                        top: dropdownPos.top,
-                        left: dropdownPos.left,
-                        transform: 'translateX(-50%)',
-                      }}
-                    >
-                      {team.drivers.map((driver) => {
-                        const isSelected = selectedSet.has(driver.code)
-                        const isAvailable =
-                          availableDriversForTrack.size === 0 ||
-                          availableDriversForTrack.has(driver.code.toUpperCase())
-
-                        return (
-                          <button
-                            key={driver.code}
-                            type="button"
-                            onClick={() => isAvailable && toggleDriver(driver.code)}
-                            disabled={!isAvailable}
-                            className={`
-                          w-full px-3 py-2 flex items-center gap-3 text-left transition-colors
-                          ${
-                            !isAvailable
-                              ? 'opacity-40 cursor-not-allowed text-gray-500'
-                              : isSelected
-                                ? 'bg-accent/20 text-accent'
-                                : 'text-gray-200 hover:bg-gray-800'
-                          }
-                        `}
-                            title={!isAvailable ? `Driver did not race at this track` : undefined}
-                          >
-                            <DriverProfilePic driverCode={driver.code} />
-                            <span className="font-mono font-semibold text-sm">{driver.code}</span>
-                            <span className="text-xs text-gray-400 tabular-nums">#{driver.number}</span>
-                            {isSelected && (
-                              <svg
-                                className="w-4 h-4 ml-auto text-accent"
-                                fill="currentColor"
-                                viewBox="0 0 20 20"
-                              >
-                                <path
-                                  fillRule="evenodd"
-                                  d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
-                                  clipRule="evenodd"
-                                />
-                              </svg>
-                            )}
-                          </button>
-                        )
-                      })}
-                    </div>,
-                    document.body
-                  )}
-              </div>
-            )
-          })}
-        </div>
       </div>
 
-      {/* Session — own mini section so the current session type is obvious */}
+      {/* Session */}
       <div className="panel px-3 py-2.5 flex flex-col sm:flex-row sm:items-center gap-3">
         <div className="shrink-0 sm:border-r sm:border-gray-700/80 sm:pr-4">
           <div className="text-[10px] uppercase tracking-wider text-gray-500 font-semibold">Session</div>
           <div className="text-xs text-gray-400 mt-0.5">
             {selectedTrack
               ? availableSessions.length > 0
-                ? 'Pick qualifying, race, or sprint for this round'
+                ? 'Qualifying, race, or sprint'
                 : 'No session data for this track yet'
               : 'Select a track first'}
           </div>
@@ -434,16 +475,7 @@ export default function Toolbar({
                   type="button"
                   disabled={!isAvailable}
                   onClick={() => isAvailable && onSessionChangeAction(opt.value)}
-                  className={`
-                    px-3 py-1.5 rounded-md text-sm font-medium transition-colors border
-                    ${
-                      !isAvailable
-                        ? 'border-gray-800 text-gray-600 cursor-not-allowed opacity-50'
-                        : isActive
-                          ? 'border-accent bg-accent/20 text-accent'
-                          : 'border-gray-700 text-gray-300 hover:border-gray-500 hover:bg-gray-800/60'
-                    }
-                  `}
+                  className={chipClass(isActive, !isAvailable)}
                   title={
                     !isAvailable
                       ? `${opt.label} data not available for this track`
@@ -455,6 +487,190 @@ export default function Toolbar({
               )
             })
           )}
+        </div>
+      </div>
+
+      {/* Drivers: presets + team pickers */}
+      <div className="panel px-3 py-2.5 flex flex-col gap-3">
+        <div className="flex flex-col sm:flex-row sm:items-center gap-3">
+          <div className="shrink-0 sm:border-r sm:border-gray-700/80 sm:pr-4 min-w-[7.5rem]">
+            <div className="text-[10px] uppercase tracking-wider text-gray-500 font-semibold">Drivers</div>
+            <div className="text-xs text-gray-400 mt-0.5">
+              {selectedDrivers.length === 0
+                ? 'None selected'
+                : `${selectedDrivers.length} selected`}
+            </div>
+          </div>
+
+          <div className="flex flex-wrap items-center gap-1.5 min-w-0 flex-1">
+            <span className="text-[10px] uppercase tracking-wide text-gray-500 mr-1 hidden sm:inline">
+              Quick
+            </span>
+            {driverPresets.map((preset) => {
+              const active = activePresetId === preset.id
+              return (
+                <button
+                  key={preset.id}
+                  type="button"
+                  disabled={preset.disabled}
+                  onClick={() => {
+                    if (preset.disabled) return
+                    onDriversChangeAction(preset.codes)
+                  }}
+                  className={chipClass(active, preset.disabled)}
+                  title={
+                    preset.disabled && preset.id !== 'clear'
+                      ? 'Load a session first to use classification presets'
+                      : preset.title
+                  }
+                >
+                  {preset.label}
+                </button>
+              )
+            })}
+          </div>
+        </div>
+
+        <div className="flex flex-col sm:flex-row sm:items-center gap-3 border-t border-gray-800/80 pt-3">
+          <div className="shrink-0 sm:pr-4 min-w-[7.5rem]">
+            <div className="text-[10px] uppercase tracking-wide text-gray-500">By team</div>
+            <div className="text-xs text-gray-500 mt-0.5 hidden sm:block">Click logo · pick drivers</div>
+          </div>
+
+          <div className="min-w-0 flex-1 flex items-center gap-1 sm:gap-1.5 flex-nowrap overflow-x-auto scrollbar-hide">
+            {filteredTeams.length === 0 ? (
+              <span className="text-xs text-gray-500">Select a track to see teams</span>
+            ) : (
+              filteredTeams.map((team) => {
+                const codes = team.drivers.map((d) => d.code.toUpperCase())
+                const availableCodes = codes.filter(
+                  (c) =>
+                    availableDriversForTrack.size === 0 || availableDriversForTrack.has(c)
+                )
+                const allSelected =
+                  availableCodes.length > 0 && availableCodes.every((c) => selectedSet.has(c))
+                const someSelected = availableCodes.some((c) => selectedSet.has(c))
+                const isOpen = activeTeam === team.id
+
+                return (
+                  <div
+                    key={team.id}
+                    className="relative shrink min-w-[1.75rem] max-w-[2.75rem] basis-0 flex-1"
+                  >
+                    <button
+                      ref={(el) => {
+                        buttonRefs.current[team.id] = el
+                      }}
+                      type="button"
+                      onClick={() => setActiveTeam(isOpen ? null : team.id)}
+                      className="chip relative aspect-square w-full p-0 flex items-center justify-center"
+                      style={{ backgroundColor: team.color }}
+                      title={team.name}
+                    >
+                      <span
+                        className={`absolute inset-0 rounded-full transition-all ${
+                          allSelected
+                            ? 'ring-2 ring-white'
+                            : someSelected
+                              ? 'ring-2 ring-white/50'
+                              : ''
+                        }`}
+                      />
+                      <img
+                        src={team.logoPath}
+                        alt={team.shortName}
+                        className="relative z-10 h-full w-full object-contain"
+                        style={
+                          ['aston-martin', 'visa-rb', 'stake', 'cadillac', 'audi', 'racing-bulls'].includes(
+                            team.id
+                          )
+                            ? { transform: 'scale(1.25)' }
+                            : undefined
+                        }
+                      />
+                    </button>
+
+                    {isOpen &&
+                      dropdownPos &&
+                      typeof window !== 'undefined' &&
+                      createPortal(
+                        <div
+                          ref={dropdownRef}
+                          className="fixed z-[9999] w-48 rounded-lg border border-gray-700 bg-gray-900/95 backdrop-blur-md py-2 shadow-xl"
+                          style={{
+                            top: dropdownPos.top,
+                            left: dropdownPos.left,
+                            transform: 'translateX(-50%)',
+                          }}
+                        >
+                          <div className="px-3 pb-2 mb-1 border-b border-gray-800 flex items-center justify-between gap-2">
+                            <span className="text-[10px] uppercase tracking-wide text-gray-500 truncate">
+                              {team.shortName}
+                            </span>
+                            <button
+                              type="button"
+                              onClick={() => toggleTeamDrivers(codes)}
+                              className="text-[10px] font-semibold text-accent hover:text-accent/80"
+                            >
+                              {allSelected
+                                ? 'Deselect'
+                                : availableCodes.length === 1
+                                  ? 'Select'
+                                  : 'Select team'}
+                            </button>
+                          </div>
+                          {team.drivers.map((driver) => {
+                            const driverCode = driver.code.toUpperCase()
+                            const isSelected = selectedSet.has(driverCode)
+                            const isAvailable =
+                              availableDriversForTrack.size === 0 ||
+                              availableDriversForTrack.has(driverCode)
+
+                            return (
+                              <button
+                                key={driverCode}
+                                type="button"
+                                onClick={() => isAvailable && toggleDriver(driverCode)}
+                                disabled={!isAvailable}
+                                className={`
+                                  w-full px-3 py-2 flex items-center gap-3 text-left transition-colors
+                                  ${
+                                    !isAvailable
+                                      ? 'opacity-40 cursor-not-allowed text-gray-500'
+                                      : isSelected
+                                        ? 'bg-accent/20 text-accent'
+                                        : 'text-gray-200 hover:bg-gray-800'
+                                  }
+                                `}
+                                title={!isAvailable ? `Driver did not race at this track` : undefined}
+                              >
+                                <DriverProfilePic driverCode={driverCode} />
+                                <span className="font-mono font-semibold text-sm">{driverCode}</span>
+                                <span className="text-xs text-gray-400 tabular-nums">#{driver.number}</span>
+                                {isSelected && (
+                                  <svg
+                                    className="w-4 h-4 ml-auto text-accent"
+                                    fill="currentColor"
+                                    viewBox="0 0 20 20"
+                                  >
+                                    <path
+                                      fillRule="evenodd"
+                                      d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
+                                      clipRule="evenodd"
+                                    />
+                                  </svg>
+                                )}
+                              </button>
+                            )
+                          })}
+                        </div>,
+                        document.body
+                      )}
+                  </div>
+                )
+              })
+            )}
+          </div>
         </div>
       </div>
     </div>
