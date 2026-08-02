@@ -32,6 +32,12 @@ export async function generateResponse(
   }
 }
 
+function withSessionNotes(body: string, queryResult: QueryResult): string {
+  const notes = queryResult.metadata.notes?.filter(Boolean) || []
+  if (!notes.length) return body
+  return `${body}\n\nNote: ${notes.join(' ')}`
+}
+
 /**
  * Generate a concise, insight-focused response
  * Uses insight generator to create bullet-point responses instead of paragraphs
@@ -48,18 +54,24 @@ function generateConciseResponse(
     case 'CORNER_PERFORMANCE': {
       const cornerData = queryResult.data as any[]
       if (cornerData.length === 0) {
-        return `No corner performance data for corner ${classifiedQuery.parameters.cornerNumber} at ${track} ${year} ${session}`
+        return withSessionNotes(
+          `No corner performance data for corner ${classifiedQuery.parameters.cornerNumber} at ${track} ${year} ${session}.`,
+          queryResult
+        )
       }
 
       const insights = generateCornerPerformanceInsights(cornerData)
       const header = `Corner ${classifiedQuery.parameters.cornerNumber} - ${track} ${session}`
-      return formatInsightsAsBullets(insights, header)
+      return withSessionNotes(formatInsightsAsBullets(insights, header), queryResult)
     }
 
     case 'DRIVER_PERFORMANCE': {
       const stats = queryResult.data as any[]
       if (stats.length === 0) {
-        return `No performance data for ${classifiedQuery.parameters.driverCode} at ${track} ${year} ${session}`
+        return withSessionNotes(
+          `No performance data for ${classifiedQuery.parameters.driverCode} at ${track} ${year} ${session}.`,
+          queryResult
+        )
       }
 
       const insights = generateDriverPerformanceInsights(
@@ -67,19 +79,28 @@ function generateConciseResponse(
         classifiedQuery.parameters.driverCode || ''
       )
       const header = `${classifiedQuery.parameters.driverCode} - ${track} ${session}`
-      return formatInsightsAsBullets(insights, header)
+      return withSessionNotes(formatInsightsAsBullets(insights, header), queryResult)
     }
 
     case 'COMPARISON': {
       const comparisonData = queryResult.data as any
-      if (!comparisonData.deltas || comparisonData.deltas.length === 0) {
-        const driver1 = classifiedQuery.parameters.driverCodes?.[0] || 'Driver 1'
-        const driver2 = classifiedQuery.parameters.driverCodes?.[1] || 'Driver 2'
-        return `No comparison data for ${driver1} vs ${driver2} at ${track} ${year} ${session}`
-      }
-
       const driver1 = classifiedQuery.parameters.driverCodes?.[0] || 'Driver 1'
       const driver2 = classifiedQuery.parameters.driverCodes?.[1] || 'Driver 2'
+
+      if (!comparisonData.deltas || comparisonData.deltas.length === 0) {
+        const missing = [driver1, driver2].filter((code) => {
+          const stats =
+            code === driver1 ? comparisonData.driver1 : comparisonData.driver2
+          return !Array.isArray(stats) || stats.length === 0
+        })
+        const detail = missing.length
+          ? ` Missing corner telemetry for ${missing.join(', ')} in this session.`
+          : ''
+        return withSessionNotes(
+          `No comparison data for ${driver1} vs ${driver2} at ${track} ${year} ${session}.${detail}`,
+          queryResult
+        )
+      }
 
       const insights = generateComparisonInsights(
         comparisonData,
@@ -87,7 +108,7 @@ function generateConciseResponse(
         driver2
       )
       const header = `${driver1} vs ${driver2} - ${track} ${session}`
-      return formatInsightsAsBullets(insights, header)
+      return withSessionNotes(formatInsightsAsBullets(insights, header), queryResult)
     }
 
     case 'SESSION_INFO': {

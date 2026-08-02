@@ -76,6 +76,7 @@ export type QueryResult = {
     year?: number
     session?: string
     timestamp: string
+    notes?: string[]
     laps?: any[] // Lap data for tyre/trend analysis
     qualifyingBoundaries?: {
       q1Start: number

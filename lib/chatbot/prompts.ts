@@ -19,10 +19,12 @@ Parameters to extract:
 - driverCode: 3-letter driver code (VER, HAM, NOR, etc.)
 - driverCodes: Array of driver codes for comparisons
 - track/roundSlug: Track identifier (monaco, silverstone, etc.)
-- year: 4-digit year (2024, 2025, etc.)
-- session: Session code (Q, R, FP1, FP2, FP3)
+- year: 4-digit year (2024, 2025, 2026, etc.)
+- session: Session code (Q, R, S, SQ, FP1, FP2, FP3). Prefer R for race questions and Q for qualifying. If unsure, omit session and the system will pick an available one.
 - cornerType: 'slow', 'medium', 'fast'
 - tyreCompound: 'SOFT', 'MEDIUM', 'HARD'
+
+Track IDs must use these slugs when possible: australia, china, japan, miami, canada, monaco, barcelona-catalunya, austria, great-britain, belgium, hungary, netherlands, italy, madrid, azerbaijan, singapore, united-states, mexico, brazil, las-vegas, qatar, abu-dhabi, bahrain, saudi-arabia, spain, emilia-romagna.
 
 Return your response as JSON with this structure:
 {

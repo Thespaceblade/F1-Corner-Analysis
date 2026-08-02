@@ -291,17 +291,17 @@ export default function Toolbar({
   }, [availableSessions, selectedTrack])
 
   return (
-    <div className="panel p-3 flex flex-col sm:flex-row sm:items-center gap-3">
+    <div className="panel p-3 flex flex-col lg:flex-row lg:items-center gap-3">
       {/* Selects row */}
-      <div className="flex items-center gap-3">
+      <div className="flex items-center gap-2 sm:gap-3 shrink-0">
         <CustomSelect
           options={yearOptions}
           value={selectedYear}
           onChange={(v) => onYearChangeAction(Number(v))}
           placeholder="Select Year"
           placeholderValue={0}
-          className="w-[100px]"
-          minWidth="100px"
+          className="w-[88px] sm:w-[100px]"
+          minWidth="88px"
         />
         
         <CustomSelect
@@ -310,8 +310,8 @@ export default function Toolbar({
           onChange={(v) => onTrackChangeAction(String(v))}
           placeholder="Select Track"
           placeholderValue=""
-          className="flex-1"
-          minWidth="240px"
+          className="min-w-0 flex-1 lg:flex-none lg:w-[220px]"
+          minWidth="160px"
         />
 
         <CustomSelect
@@ -320,13 +320,13 @@ export default function Toolbar({
           onChange={(v) => onSessionChangeAction(String(v))}
           placeholder="Select Session"
           placeholderValue=""
-          className="flex-1"
-          minWidth="180px"
+          className="min-w-0 w-[120px] sm:w-[160px]"
+          minWidth="120px"
         />
       </div>
 
-      {/* Team buttons */}
-      <div className="flex-1 flex items-center justify-end gap-2 flex-wrap">
+      {/* Team buttons — always one row; shrink evenly so all stay on-screen */}
+      <div className="min-w-0 flex-1 flex items-center justify-end gap-1 sm:gap-1.5 flex-nowrap overflow-x-auto scrollbar-hide">
         {filteredTeams.map(team => {
           const codes = team.drivers.map(d => d.code)
           const allSelected = codes.every(c => selectedSet.has(c))
@@ -334,13 +334,13 @@ export default function Toolbar({
           const isOpen = activeTeam === team.id
 
           return (
-            <div key={team.id} className="relative">
+            <div key={team.id} className="relative shrink min-w-[1.75rem] max-w-[2.75rem] basis-0 flex-1">
               {/* Team button */}
               <button
                 ref={el => { buttonRefs.current[team.id] = el }}
                 type="button"
                 onClick={() => setActiveTeam(isOpen ? null : team.id)}
-                className="chip relative h-11 w-11 p-0 flex items-center justify-center"
+                className="chip relative aspect-square w-full p-0 flex items-center justify-center"
                 style={{ backgroundColor: team.color }}
                 title={team.name}
               >
@@ -354,14 +354,10 @@ export default function Toolbar({
                 <img
                   src={team.logoPath}
                   alt={team.shortName}
-                  className={`relative z-10 h-full w-full object-contain ${
-                    ['aston-martin', 'visa-rb', 'stake'].includes(team.id)
-                      ? 'scale-130'
-                      : ''
-                  }`}
+                  className="relative z-10 h-full w-full object-contain"
                   style={
-                    ['aston-martin', 'visa-rb', 'stake'].includes(team.id)
-                      ? { transform: 'scale(1.3)' }
+                    ['aston-martin', 'visa-rb', 'stake', 'cadillac', 'audi', 'racing-bulls'].includes(team.id)
+                      ? { transform: 'scale(1.25)' }
                       : undefined
                   }
                 />
