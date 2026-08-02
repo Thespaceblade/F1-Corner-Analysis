@@ -108,7 +108,7 @@ export default function ExportAnalysis({
       params.set('drivers', selectedDrivers.join(','))
     }
 
-    const shareUrl = `${window.location.origin}?${params.toString()}`
+    const shareUrl = `${window.location.origin}/race?${params.toString()}`
     
     // Copy to clipboard
     navigator.clipboard.writeText(shareUrl).then(() => {

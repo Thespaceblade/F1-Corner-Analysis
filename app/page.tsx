@@ -1,6 +1,5 @@
-import ClientPage from '../components/ClientPage'
+import HomePage from '../components/HomePage'
 
 export default function Page() {
-
-  return <ClientPage />
+  return <HomePage />
 }

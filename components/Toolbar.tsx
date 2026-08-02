@@ -514,7 +514,10 @@ export default function Toolbar({
             <span className="text-[10px] uppercase tracking-wide text-gray-500 mr-1 hidden sm:inline">
               Quick
             </span>
-            {driverPresets.map((preset) => {
+            {(mode === 'season'
+              ? driverPresets.filter((preset) => preset.id === 'all' || preset.id === 'clear')
+              : driverPresets
+            ).map((preset) => {
               const active = activePresetId === preset.id
               return (
                 <button
