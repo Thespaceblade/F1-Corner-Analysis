@@ -1,9 +1,30 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 160 160" role="img" aria-labelledby="title">
   <title>Cadillac</title>
-  <rect width="160" height="160" rx="80" fill="#0f172a"/>
-  <path d="M80 28 118 42v30c0 24-15 45-38 60C57 117 42 96 42 72V42Z" fill="#f8fafc" stroke="#94a3b8" stroke-width="4"/>
-  <path d="M62 52h36v10H62Z" fill="#dc2626"/>
-  <path d="M58 68h44v10H58Z" fill="#2563eb"/>
-  <path d="M62 84h36v10H62Z" fill="#facc15"/>
-  <text x="80" y="136" text-anchor="middle" font-family="Arial, sans-serif" font-size="18" font-weight="700" fill="#f8fafc">CADILLAC</text>
+  <!-- Dual black/white badge inspired by the 2026 Cadillac F1 livery -->
+  <defs>
+    <linearGradient id="cadSplit" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0%" stop-color="#f4f4f5"/>
+      <stop offset="50%" stop-color="#f4f4f5"/>
+      <stop offset="50%" stop-color="#0a0a0a"/>
+      <stop offset="100%" stop-color="#0a0a0a"/>
+    </linearGradient>
+  </defs>
+  <circle cx="80" cy="80" r="80" fill="url(#cadSplit)"/>
+  <!-- Official Cadillac F1 Team chevron (from team brand mark) -->
+  <g transform="translate(20.2 50) scale(5.05)">
+    <path
+      d="M23.6308 0L22.0399 2.12455C21.8654 3.02681 21.4095 5.35087 21.3577 5.57708C21.208 6.22754 20.9725 6.53815 19.7865 6.92694C17.8016 7.57762 13.8789 8.59475 11.814 8.9007C9.74994 8.59513 5.72193 7.57762 3.8443 6.92694C2.68723 6.52596 2.42278 6.22753 2.27302 5.57708C2.22127 5.35235 1.76533 3.0268 1.59088 2.12455L0 0H23.6308Z"
+      fill="#c9a227"
+    />
+  </g>
+  <text
+    x="80"
+    y="130"
+    text-anchor="middle"
+    font-family="Arial, Helvetica, sans-serif"
+    font-size="13"
+    font-weight="700"
+    letter-spacing="2"
+    fill="#c9a227"
+  >CADILLAC</text>
 </svg>

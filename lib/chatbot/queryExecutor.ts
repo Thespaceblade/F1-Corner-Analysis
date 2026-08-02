@@ -4,13 +4,122 @@
 
 import { promises as fs } from 'fs'
 import path from 'path'
-import { isDatabaseEnabled, queryDb, DriverRow, LapRow, SessionRow } from '../db'
+import { isDatabaseEnabled, queryDb } from '../db'
+import { loadSessionPayloadFromDatabase } from '../databaseData'
+import type { SessionPayload } from '../sessionDataClient'
 import type {
   QueryParameters,
   QueryResult,
   CornerPerformanceData,
   DriverCornerStats,
 } from './types'
+
+const SESSION_FALLBACK_ORDER = ['Q', 'R', 'SQ', 'S', 'FP3', 'FP2', 'FP1'] as const
+
+function normalizeDriverFilter(driverCodes?: string[]): string[] {
+  if (!driverCodes?.length) return []
+  return Array.from(
+    new Set(driverCodes.map((code) => code.trim().toUpperCase()).filter(Boolean))
+  )
+}
+
+function filterSessionPayload(
+  payload: SessionPayload,
+  driverCodes?: string[]
+): SessionPayload {
+  const requested = normalizeDriverFilter(driverCodes)
+  if (!requested.length) return payload
+
+  const allDrivers = Object.keys(payload.drivers ?? {})
+  const foundSet = new Set(allDrivers.filter((code) => requested.includes(code)))
+  const missing = requested.filter((code) => !foundSet.has(code))
+
+  const notes: string[] = Array.isArray(payload.notes) ? [...payload.notes] : []
+  if (missing.length) {
+    notes.push(`Drivers not found in dataset: ${missing.join(', ')}`)
+  }
+
+  return {
+    ...payload,
+    meta: {
+      ...payload.meta,
+      requestedDrivers: requested,
+      filteredDrivers: Array.from(foundSet),
+      missingDrivers: missing,
+    },
+    drivers: Object.fromEntries(
+      Object.entries(payload.drivers ?? {}).filter(([code]) => foundSet.has(code))
+    ),
+    laps: (payload.laps ?? []).filter((lap) => foundSet.has(lap.driver)),
+    corners: Object.fromEntries(
+      Object.entries(payload.corners ?? {}).filter(([code]) => foundSet.has(code))
+    ),
+    notes,
+  }
+}
+
+async function loadSessionFromFile(
+  roundSlug: string,
+  year: number,
+  sessionCode: string
+): Promise<SessionPayload | null> {
+  const sessionPath = path.join(
+    process.cwd(),
+    'public',
+    'data',
+    'sessions',
+    String(year),
+    roundSlug,
+    sessionCode.toUpperCase(),
+    'session.json'
+  )
+
+  try {
+    const raw = await fs.readFile(sessionPath, 'utf8')
+    return JSON.parse(raw) as SessionPayload
+  } catch {
+    return null
+  }
+}
+
+async function resolveAvailableSessionCodes(
+  roundSlug: string,
+  year: number
+): Promise<string[]> {
+  const available = await getAvailableSessions(roundSlug, year)
+  return available.map((entry) => entry.session.toUpperCase())
+}
+
+/**
+ * Resolve the session code strictly.
+ * Only substitutes when the preferred session does not exist at all
+ * (e.g. Miami 2026 has R but no Q). Never swaps sessions because a
+ * driver is missing from an existing session.
+ */
+async function resolveSessionCode(
+  roundSlug: string,
+  year: number,
+  preferredSession?: string
+): Promise<{ session: string; substitutedFrom?: string }> {
+  const preferred = (preferredSession || 'Q').toUpperCase()
+  const available = await resolveAvailableSessionCodes(roundSlug, year)
+
+  if (!available.length) {
+    return { session: preferred }
+  }
+
+  if (available.includes(preferred)) {
+    return { session: preferred }
+  }
+
+  for (const code of SESSION_FALLBACK_ORDER) {
+    if (available.includes(code)) {
+      return { session: code, substitutedFrom: preferred }
+    }
+  }
+
+  return { session: available[0], substitutedFrom: preferred }
+}
 
 /**
  * Get session data for a specific session
@@ -20,162 +129,68 @@ export async function getSessionData(
   year: number,
   sessionCode: string,
   driverCodes?: string[]
-): Promise<any> {
+): Promise<SessionPayload> {
   try {
-    const sessionPath = path.join(
-      process.cwd(),
-      'public',
-      'data',
-      'sessions',
-      String(year),
+    const { session: resolvedSession, substitutedFrom } = await resolveSessionCode(
       roundSlug,
-      sessionCode.toUpperCase(),
-      'session.json'
+      year,
+      sessionCode
     )
+    const driversFilter = normalizeDriverFilter(driverCodes)
+
+    let payload: SessionPayload | null = null
 
     if (isDatabaseEnabled()) {
-      const sessionRows = await queryDb<SessionRow>(
-        'SELECT * FROM sessions WHERE year = $1 AND round_slug = $2 AND session_code = $3 LIMIT 1',
-        [year, roundSlug, sessionCode.toUpperCase()]
-      )
-
-      if (!sessionRows.length) {
-        throw new Error('Session not found in database')
-      }
-
-      const s = sessionRows[0]
-      const driversFilter = driverCodes || []
-      const laps = driversFilter.length
-        ? await queryDb<LapRow>(
-            `SELECT driver_code, lap_number, stint, compound, tyre_life,
-                    lap_time_seconds, sector1_seconds, sector2_seconds,
-                    sector3_seconds, track_status, flags, is_valid
-             FROM laps
-             WHERE session_id = $1 AND driver_code = ANY($2::text[])`,
-            [s.id, driversFilter]
-          )
-        : await queryDb<LapRow>(
-            `SELECT driver_code, lap_number, stint, compound, tyre_life,
-                    lap_time_seconds, sector1_seconds, sector2_seconds,
-                    sector3_seconds, track_status, flags, is_valid
-             FROM laps
-             WHERE session_id = $1`,
-            [s.id]
-          )
-      const driverCodesList = Array.from(
-        new Set(laps.map((l) => (l.driver_code || '').toUpperCase()).filter(Boolean))
-      )
-      const driverRows = driverCodesList.length
-        ? await queryDb<DriverRow>(
-            'SELECT code, team, number FROM drivers WHERE code = ANY($1::text[])',
-            [driverCodesList]
-          )
-        : []
-
-      const drivers = Object.fromEntries(
-        driverRows.map((d) => [
-          d.code.toUpperCase(),
-          {
-            code: d.code.toUpperCase(),
-            team: d.team,
-            number: d.number,
-            defaultCompound: null,
-          },
-        ])
-      )
-
-      const lapsPayload = laps.map((l) => ({
-        driver: (l.driver_code || '').toUpperCase(),
-        lapNumber: l.lap_number ?? null,
-        stint: l.stint ?? null,
-        compound: l.compound ?? null,
-        tyreLife: l.tyre_life ?? null,
-        lapTimeSeconds: l.lap_time_seconds ?? null,
-        sectorTimesSeconds: [
-          l.sector1_seconds ?? null,
-          l.sector2_seconds ?? null,
-          l.sector3_seconds ?? null,
-        ],
-        isPersonalBest: false,
-        trackStatus: l.track_status ?? null,
-        hasData: true,
-        flags: Array.isArray(l.flags) ? l.flags : [],
-        isValid: typeof l.is_valid === 'boolean' ? l.is_valid : undefined,
-      }))
-
-      return {
-        meta: {
-          year: s.year,
-          round: s.round_slug,
-          session: s.session_code,
-          generatedAt: s.generated_at ?? undefined,
-          requestedDrivers: driversFilter.length ? driversFilter : null,
-          event: {
-            name: s.event_name,
-            country: s.country,
-            officialName: s.official_name,
-          },
-          availableDrivers: driverCodesList,
-        },
-        drivers,
-        laps: lapsPayload,
-        corners: Object.fromEntries(
-          driverCodesList.map((c) => [c, [] as unknown[]])
-        ),
-        notes: [] as string[],
+      try {
+        payload = await loadSessionPayloadFromDatabase({
+          year,
+          round: roundSlug,
+          session: resolvedSession,
+          driversFilter,
+        })
+      } catch (dbError) {
+        // Fall through to file-backed data in local/dev when DB misses a session.
+        if (!(dbError instanceof Error) || !dbError.message.includes('Session not found')) {
+          throw dbError
+        }
       }
     }
 
-    // Fallback to JSON file
-    const raw = await fs.readFile(sessionPath, 'utf8')
-    const payload = JSON.parse(raw)
+    if (!payload) {
+      payload = await loadSessionFromFile(roundSlug, year, resolvedSession)
+    }
 
-    // Filter drivers if specified
-    if (driverCodes && driverCodes.length > 0) {
-      const allDrivers = Object.keys(payload?.drivers ?? {})
-      const requested = driverCodes
-      const foundSet = new Set(allDrivers.filter((code) => requested.includes(code)))
-      const missing = requested.filter((code) => !foundSet.has(code))
+    if (!payload) {
+      throw new Error(
+        `Session not found for ${year}/${roundSlug}/${resolvedSession}`
+      )
+    }
 
-      const filteredDrivers = Object.fromEntries(
-        Object.entries(payload?.drivers ?? {}).filter(([code]) =>
-          foundSet.has(code)
+    const filtered = filterSessionPayload(payload, driversFilter)
+    const notes = Array.isArray(filtered.notes) ? [...filtered.notes] : []
+
+    if (substitutedFrom) {
+      notes.unshift(
+        `Session ${substitutedFrom} is not available for ${year}/${roundSlug}; using ${resolvedSession} instead.`
+      )
+    }
+
+    // Be explicit when requested drivers have no corner telemetry in THIS session.
+    if (driversFilter.length) {
+      const missingCorners = driversFilter.filter(
+        (code) => !(filtered.corners?.[code] || []).length
+      )
+      if (missingCorners.length) {
+        notes.push(
+          `No corner telemetry for ${missingCorners.join(', ')} in ${year}/${roundSlug}/${resolvedSession}.`
         )
-      )
-
-      const filteredLaps = (payload?.laps ?? []).filter((lap: any) =>
-        foundSet.has(lap.driver)
-      )
-
-      const filteredCorners = Object.fromEntries(
-        Object.entries(payload?.corners ?? {}).filter(([code]) =>
-          foundSet.has(code)
-        )
-      )
-
-      const meta = {
-        ...(payload?.meta ?? {}),
-        requestedDrivers: requested,
-        filteredDrivers: Array.from(foundSet),
-        missingDrivers: missing,
-      }
-
-      const notes: string[] = Array.isArray(payload?.notes) ? [...payload.notes] : []
-      if (missing.length) {
-        notes.push(`Drivers not found in dataset: ${missing.join(', ')}`)
-      }
-
-      return {
-        ...payload,
-        meta,
-        drivers: filteredDrivers,
-        laps: filteredLaps,
-        corners: filteredCorners,
-        notes,
       }
     }
 
-    return payload
+    return {
+      ...filtered,
+      notes,
+    }
   } catch (error) {
     console.error('Error loading session data:', error)
     throw new Error(
@@ -192,29 +207,32 @@ export async function getCornerPerformance(
   roundSlug: string,
   year: number,
   sessionCode: string,
-  driverCode?: string
+  driverCode?: string,
+  preloadedSession?: SessionPayload
 ): Promise<CornerPerformanceData[]> {
-  const sessionData = await getSessionData(
-    roundSlug,
-    year,
-    sessionCode,
-    driverCode ? [driverCode] : undefined
-  )
+  const sessionData =
+    preloadedSession ??
+    (await getSessionData(
+      roundSlug,
+      year,
+      sessionCode,
+      driverCode ? [driverCode] : undefined
+    ))
 
   const results: CornerPerformanceData[] = []
 
   // Extract corner data from session payload
   if (sessionData.corners) {
     const driversToProcess = driverCode
-      ? [driverCode]
+      ? [driverCode.toUpperCase()]
       : Object.keys(sessionData.corners)
 
     for (const driver of driversToProcess) {
       const driverCorners = sessionData.corners[driver] || []
       // Use cornerNumber if available, otherwise fall back to detectedCornerIndex
       const cornerData = driverCorners.filter(
-        (c: any) => 
-          (c.cornerNumber === cornerNumber) || 
+        (c: any) =>
+          c.cornerNumber === cornerNumber ||
           (c.cornerNumber === undefined && c.detectedCornerIndex === cornerNumber)
       )
 
@@ -224,7 +242,7 @@ export async function getCornerPerformance(
         if (num === undefined || num === null) {
           continue // Skip corners without a number
         }
-        
+
         results.push({
           cornerNumber: num,
           driverCode: driver,
@@ -250,25 +268,25 @@ export async function getDriverCornerStats(
   roundSlug: string,
   year: number,
   sessionCode: string,
-  cornerNumber?: number
+  cornerNumber?: number,
+  preloadedSession?: SessionPayload
 ): Promise<DriverCornerStats[]> {
-  const sessionData = await getSessionData(
-    roundSlug,
-    year,
-    sessionCode,
-    [driverCode]
-  )
+  const normalizedDriver = driverCode.toUpperCase()
+  const sessionData =
+    preloadedSession ??
+    (await getSessionData(roundSlug, year, sessionCode, [normalizedDriver]))
 
   const results: DriverCornerStats[] = []
 
-  if (sessionData.corners && sessionData.corners[driverCode]) {
-    const driverCorners = sessionData.corners[driverCode] || []
-    
+  if (sessionData.corners && sessionData.corners[normalizedDriver]) {
+    const driverCorners = sessionData.corners[normalizedDriver] || []
+
     // Use cornerNumber if available, otherwise fall back to detectedCornerIndex
     const cornersToProcess = cornerNumber
-      ? driverCorners.filter((c: any) => 
-          (c.cornerNumber === cornerNumber) || 
-          (c.cornerNumber === undefined && c.detectedCornerIndex === cornerNumber)
+      ? driverCorners.filter(
+          (c: any) =>
+            c.cornerNumber === cornerNumber ||
+            (c.cornerNumber === undefined && c.detectedCornerIndex === cornerNumber)
         )
       : driverCorners
 
@@ -300,15 +318,17 @@ export async function getDriverCornerStats(
       // Determine corner type (use most common type, or first non-unknown type)
       const cornerTypes = corners
         .map((c) => c.cornerType)
-        .filter((t): t is 'slow' | 'medium' | 'fast' => 
-          t !== undefined && t !== 'unknown'
+        .filter(
+          (t): t is 'slow' | 'medium' | 'fast' =>
+            t !== undefined && t !== 'unknown'
         )
-      const cornerType = cornerTypes.length > 0 
-        ? cornerTypes[0] // Use first non-unknown type (usually consistent)
-        : corners[0]?.cornerType || 'unknown'
+      const cornerType =
+        cornerTypes.length > 0
+          ? cornerTypes[0] // Use first non-unknown type (usually consistent)
+          : corners[0]?.cornerType || 'unknown'
 
       results.push({
-        driverCode,
+        driverCode: normalizedDriver,
         cornerNumber: cornerNum,
         avgTime:
           validTimes.length > 0
@@ -346,7 +366,8 @@ export async function compareDrivers(
   roundSlug: string,
   year: number,
   sessionCode: string,
-  cornerNumber?: number
+  cornerNumber?: number,
+  preloadedSession?: SessionPayload
 ): Promise<{
   driver1: DriverCornerStats[]
   driver2: DriverCornerStats[]
@@ -357,9 +378,13 @@ export async function compareDrivers(
     cornerType?: 'slow' | 'medium' | 'fast'
   }>
 }> {
+  const sessionData =
+    preloadedSession ??
+    (await getSessionData(roundSlug, year, sessionCode, [driverCode1, driverCode2]))
+
   const [stats1, stats2] = await Promise.all([
-    getDriverCornerStats(driverCode1, roundSlug, year, sessionCode, cornerNumber),
-    getDriverCornerStats(driverCode2, roundSlug, year, sessionCode, cornerNumber),
+    getDriverCornerStats(driverCode1, roundSlug, year, sessionCode, cornerNumber, sessionData),
+    getDriverCornerStats(driverCode2, roundSlug, year, sessionCode, cornerNumber, sessionData),
   ])
 
   // Calculate deltas
@@ -384,11 +409,12 @@ export async function compareDrivers(
 
       // Use corner type from either stat (they should match)
       // Filter out 'unknown' type
-      const cornerType = (stat1.cornerType && stat1.cornerType !== 'unknown') 
-        ? stat1.cornerType 
-        : (stat2.cornerType && stat2.cornerType !== 'unknown') 
-          ? stat2.cornerType 
-          : undefined
+      const cornerType =
+        stat1.cornerType && stat1.cornerType !== 'unknown'
+          ? stat1.cornerType
+          : stat2.cornerType && stat2.cornerType !== 'unknown'
+            ? stat2.cornerType
+            : undefined
 
       deltas.push({
         cornerNumber: cornerNum,
@@ -478,12 +504,35 @@ export async function executeQuery(
 ): Promise<QueryResult> {
   // Default to current year and most common session if not specified
   const year = parameters.year || new Date().getFullYear()
-  const session = parameters.session || 'Q'
+  const preferredSession = parameters.session || 'Q'
   const track = parameters.track || parameters.roundSlug
 
   // SESSION_INFO queries don't always require a track
   if (!track && intent !== 'SESSION_INFO') {
     throw new Error('Track/round slug is required')
+  }
+
+  // Soft-handle intents that are classified but not yet implemented
+  if (
+    intent === 'STATISTICAL' ||
+    intent === 'TREND_ANALYSIS' ||
+    intent === 'TYRE_ANALYSIS'
+  ) {
+    if (!track) {
+      throw new Error('Track/round slug is required')
+    }
+
+    // Fall back to the closest supported analysis so users still get useful data.
+    const fallbackIntent =
+      parameters.driverCodes && parameters.driverCodes.length >= 2
+        ? 'COMPARISON'
+        : parameters.driverCode
+          ? 'DRIVER_PERFORMANCE'
+          : parameters.cornerNumber
+            ? 'CORNER_PERFORMANCE'
+            : 'SESSION_INFO'
+
+    return executeQuery(fallbackIntent, parameters, _context)
   }
 
   switch (intent) {
@@ -494,13 +543,20 @@ export async function executeQuery(
       if (!track) {
         throw new Error('Track/round slug is required for corner performance queries')
       }
-      const sessionData = await getSessionData(track, year, session, parameters.driverCode ? [parameters.driverCode] : undefined)
+      const sessionData = await getSessionData(
+        track,
+        year,
+        preferredSession,
+        parameters.driverCode ? [parameters.driverCode] : undefined
+      )
+      const session = sessionData.meta.session || preferredSession
       const data = await getCornerPerformance(
         parameters.cornerNumber,
         track,
         year,
         session,
-        parameters.driverCode
+        parameters.driverCode,
+        sessionData
       )
       return {
         type: 'CORNER_PERFORMANCE',
@@ -510,6 +566,7 @@ export async function executeQuery(
           year,
           session,
           timestamp: new Date().toISOString(),
+          notes: sessionData.notes,
           laps: sessionData.laps || [],
           qualifyingBoundaries: sessionData.qualifyingBoundaries,
         },
@@ -523,13 +580,17 @@ export async function executeQuery(
       if (!track) {
         throw new Error('Track/round slug is required for driver performance queries')
       }
-      const sessionData = await getSessionData(track, year, session, [parameters.driverCode])
+      const sessionData = await getSessionData(track, year, preferredSession, [
+        parameters.driverCode,
+      ])
+      const session = sessionData.meta.session || preferredSession
       const data = await getDriverCornerStats(
         parameters.driverCode,
         track,
         year,
         session,
-        parameters.cornerNumber
+        parameters.cornerNumber,
+        sessionData
       )
       return {
         type: 'DRIVER_PERFORMANCE',
@@ -539,6 +600,7 @@ export async function executeQuery(
           year,
           session,
           timestamp: new Date().toISOString(),
+          notes: sessionData.notes,
           laps: sessionData.laps || [],
           qualifyingBoundaries: sessionData.qualifyingBoundaries,
         },
@@ -552,14 +614,21 @@ export async function executeQuery(
       if (!track) {
         throw new Error('Track/round slug is required for comparison queries')
       }
-      const sessionData = await getSessionData(track, year, session, parameters.driverCodes)
+      const sessionData = await getSessionData(
+        track,
+        year,
+        preferredSession,
+        parameters.driverCodes
+      )
+      const session = sessionData.meta.session || preferredSession
       const data = await compareDrivers(
         parameters.driverCodes[0],
         parameters.driverCodes[1],
         track,
         year,
         session,
-        parameters.cornerNumber
+        parameters.cornerNumber,
+        sessionData
       )
       return {
         type: 'COMPARISON',
@@ -569,6 +638,7 @@ export async function executeQuery(
           year,
           session,
           timestamp: new Date().toISOString(),
+          notes: sessionData.notes,
           laps: sessionData.laps || [],
           qualifyingBoundaries: sessionData.qualifyingBoundaries,
         },
