@@ -906,7 +906,7 @@ export default function ClientPage(){
                           {code}
                         </span>
                       ))
-                    : <span className="text-gray-500">No drivers selected</span>
+                    : <span className="text-gray-500">None — use Drivers presets or team logos above</span>
                   }
                 </div>
               </div>
