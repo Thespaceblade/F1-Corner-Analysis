@@ -29,10 +29,9 @@ export default function AppShell({
   aside,
 }: AppShellProps) {
   return (
-    <div className="py-8">
-      <main className="mx-auto max-w-6xl px-4">
-        <AppNav contextLabel={contextLabel} />
-
+    <div className="pb-8">
+      <AppNav contextLabel={contextLabel} />
+      <main className="mx-auto max-w-6xl px-4 pt-6 page-content page-content-visible">
         {(title || headerAside) && (
           <header className="mb-6 flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
             <div className="min-w-0">

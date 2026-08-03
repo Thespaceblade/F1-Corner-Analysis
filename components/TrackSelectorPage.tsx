@@ -1,6 +1,6 @@
 'use client'
 
-import React, { useEffect, useMemo, useState } from 'react'
+import React, { useEffect, useMemo, useRef, useState } from 'react'
 import dynamic from 'next/dynamic'
 import Link from 'next/link'
 import AppShell from './AppShell'
@@ -8,11 +8,12 @@ import CustomSelect from './CustomSelect'
 import { getAvailableCalendarYears, getCalendarForYear } from '../lib/calendarData'
 import { getSupportedSeasonYears } from '../lib/teamData'
 import { getCountryFlagIcon } from '../lib/countryFlags'
+import { trackInfo } from '../lib/trackInfo'
 import LoadingIndicator from './LoadingIndicator'
 
-const Track3DPanel = dynamic(() => import('./Track3DPanel'), {
+const LazyTrack3D = dynamic(() => import('./LazyTrack3D'), {
   ssr: false,
-  loading: () => <LoadingIndicator label="Loading 3D..." className="py-10" />,
+  loading: () => <div className="lazy-track-3d-placeholder" aria-hidden="true" />,
 })
 
 const PREFERENCES_STORAGE_KEY = 'f1ca:user-preferences:v1'
@@ -54,6 +55,14 @@ type TrackCard = {
   status?: 'completed' | 'upcoming' | 'postponed'
   meta?: string
   sessions: string[]
+}
+
+type RaceHighlights = {
+  winner?: string
+  winnerTeam?: string
+  pole?: string
+  poleTeam?: string
+  podium?: string[]
 }
 
 function sortSessions(sessions: string[]) {
@@ -106,9 +115,35 @@ function statusLabel(track: TrackCard) {
   return 'Ready'
 }
 
+function railLabel(track: TrackCard) {
+  const raw = (track.location ?? track.name.replace(/\s+Grand Prix$/i, '')).toUpperCase()
+  return raw.replace(/[^A-Z0-9\s]/g, '').trim() || track.id.toUpperCase()
+}
+
+function RedTrackSilhouette({
+  svgFile,
+  className = '',
+}: {
+  svgFile: string
+  className?: string
+}) {
+  const url = `/Tracks/${svgFile}`
+  return (
+    <div
+      className={`track-red-sil ${className}`.trim()}
+      style={{
+        WebkitMaskImage: `url(${url})`,
+        maskImage: `url(${url})`,
+      }}
+      aria-hidden="true"
+    />
+  )
+}
+
 export default function TrackSelectorPage() {
   const [selectedYear, setSelectedYear] = useState(0)
   const [filter, setFilter] = useState<FilterId>('all')
+  const [selectedTrackId, setSelectedTrackId] = useState<string | null>(null)
   const [preferencesHydrated, setPreferencesHydrated] = useState(false)
   const [trackData, setTrackData] = useState<TracksJson>({ tracks: {} })
   const [trackDataLoading, setTrackDataLoading] = useState(true)
@@ -116,6 +151,8 @@ export default function TrackSelectorPage() {
   const [sessionsByRound, setSessionsByRound] = useState<Record<string, Record<string, string[]>>>({})
   const [sessionIndexLoading, setSessionIndexLoading] = useState(true)
   const [indexError, setIndexError] = useState<string | null>(null)
+  const [highlights, setHighlights] = useState<RaceHighlights | null>(null)
+  const [highlightsLoading, setHighlightsLoading] = useState(false)
 
   const availableYears = useMemo(
     () =>
@@ -130,8 +167,9 @@ export default function TrackSelectorPage() {
     try {
       const saved = window.localStorage.getItem(PREFERENCES_STORAGE_KEY)
       if (saved) {
-        const parsed = JSON.parse(saved) as { selectedYear?: number }
+        const parsed = JSON.parse(saved) as { selectedYear?: number; selectedTrack?: string }
         if (typeof parsed.selectedYear === 'number') setSelectedYear(parsed.selectedYear)
+        if (typeof parsed.selectedTrack === 'string') setSelectedTrackId(parsed.selectedTrack)
       }
     } catch {
       // ignore
@@ -262,14 +300,34 @@ export default function TrackSelectorPage() {
   const upcomingCount = tracks.filter((t) => t.disabled).length
   const dataLoading = !preferencesHydrated || trackDataLoading || sessionIndexLoading
 
-  const featured = useMemo(
-    () => [...tracks].reverse().find((t) => !t.disabled) ?? null,
-    [tracks],
-  )
+  const previousYearRef = useRef<number | null>(null)
 
-  const nextUp = useMemo(
-    () => tracks.find((t) => t.disabled && t.status !== 'postponed') ?? null,
-    [tracks],
+  useEffect(() => {
+    if (!preferencesHydrated || selectedYear === 0) return
+    if (previousYearRef.current === null) {
+      previousYearRef.current = selectedYear
+      return
+    }
+    if (previousYearRef.current !== selectedYear) {
+      previousYearRef.current = selectedYear
+      setSelectedTrackId(null)
+    }
+  }, [selectedYear, preferencesHydrated])
+
+  useEffect(() => {
+    if (!tracks.length) {
+      setSelectedTrackId(null)
+      return
+    }
+    // Keep flat card grid until the user clicks a circuit into the big view.
+    if (selectedTrackId && !tracks.some((t) => t.id === selectedTrackId)) {
+      setSelectedTrackId(null)
+    }
+  }, [tracks, selectedTrackId])
+
+  const selected = useMemo(
+    () => tracks.find((t) => t.id === selectedTrackId) ?? null,
+    [tracks, selectedTrackId],
   )
 
   const filteredTracks = useMemo(() => {
@@ -281,11 +339,79 @@ export default function TrackSelectorPage() {
   const progressPct =
     tracks.length > 0 ? Math.round((availableCount / tracks.length) * 100) : 0
 
+  const info = selected ? trackInfo[selected.id] : undefined
+
+  useEffect(() => {
+    if (!selected || selected.disabled || selectedYear === 0) {
+      setHighlights(null)
+      return
+    }
+
+    let cancelled = false
+    setHighlightsLoading(true)
+
+    const load = async () => {
+      try {
+        const raceRes = await fetch(`/data/sessions/${selectedYear}/${selected.id}/R/session.json`)
+        const raceData = raceRes.ok ? await raceRes.json() : null
+
+        let qualiData = null
+        if (selected.sessions.includes('Q')) {
+          const qualiRes = await fetch(`/data/sessions/${selectedYear}/${selected.id}/Q/session.json`)
+          qualiData = qualiRes.ok ? await qualiRes.json() : null
+        }
+
+        if (cancelled) return
+
+        const raceResults = Array.isArray(raceData?.raceResults) ? raceData.raceResults : []
+        const qualiResults = Array.isArray(qualiData?.qualifyingResults)
+          ? qualiData.qualifyingResults
+          : Array.isArray(raceData?.qualifyingResults)
+            ? raceData.qualifyingResults
+            : []
+
+        const winner = raceResults.find((r: { position?: number }) => r.position === 1)
+        const pole =
+          qualiResults.find((r: { position?: number }) => r.position === 1) ??
+          raceResults.find((r: { gridPosition?: number }) => r.gridPosition === 1)
+        const podium = raceResults
+          .filter((r: { position?: number }) => typeof r.position === 'number' && r.position <= 3)
+          .sort(
+            (a: { position: number }, b: { position: number }) => a.position - b.position,
+          )
+          .map((r: { driverCode?: string }) => r.driverCode)
+          .filter(Boolean)
+
+        setHighlights({
+          winner: winner?.driverCode,
+          winnerTeam: winner?.teamName,
+          pole: pole?.driverCode,
+          poleTeam: pole?.teamName,
+          podium,
+        })
+      } catch {
+        if (!cancelled) setHighlights(null)
+      } finally {
+        if (!cancelled) setHighlightsLoading(false)
+      }
+    }
+
+    void load()
+    return () => {
+      cancelled = true
+    }
+  }, [selected, selectedYear])
+
+  const selectTrack = (track: TrackCard) => {
+    setSelectedTrackId(track.id)
+    rememberTrack(selectedYear, track.id)
+  }
+
   return (
     <AppShell
       kicker="Race analysis"
       title="Circuits"
-      description="Pick a grand prix to open corner telemetry, lap charts, and session analysis for that weekend."
+      description="Select a grand prix below. The visualiser frames circuit stats, then open Qualifying or Race analysis when you are ready."
       headerAside={
         <div className="track-selector-header-aside">
           <CustomSelect
@@ -330,113 +456,142 @@ export default function TrackSelectorPage() {
         </div>
       ) : (
         <>
-          {(featured || nextUp) && (
-            <section className="track-selector-spotlight" aria-label="Season highlights">
-              {featured && (
-                <article className="track-selector-featured">
-                  <Link
-                    href={trackHref(selectedYear, featured.id, preferredSession(featured.sessions))}
-                    className="track-selector-featured-hit"
-                    onClick={() => rememberTrack(selectedYear, featured.id)}
-                  >
-                    <div className="track-selector-featured-map">
-                      {featured.svgFile ? (
-                        <Track3DPanel
-                          svgFile={featured.svgFile}
-                          compact
-                          autoRotate
-                          showCorners={false}
-                          className="track-selector-featured-3d"
-                        />
-                      ) : (
-                        <div className="track-selector-svg-fallback">No map</div>
-                      )}
-                    </div>
-                    <div className="track-selector-featured-body">
-                      <div className="track-selector-featured-eyebrow">
-                        <span className="track-selector-chip is-live">Latest weekend</span>
-                        {featured.round != null && (
-                          <span className="track-selector-mono-meta">
-                            R{featured.round}
-                            {featured.date ? ` · ${featured.date}` : ''}
-                          </span>
-                        )}
-                      </div>
-                      <div className="track-selector-featured-title-row">
-                        {getCountryFlagIcon(featured.countryCode) && (
-                          <img
-                            src={getCountryFlagIcon(featured.countryCode)!}
-                            alt=""
-                            className="track-selector-flag is-lg"
-                          />
-                        )}
-                        <h2 className="track-selector-featured-name">{featured.name}</h2>
-                      </div>
-                      <p className="track-selector-featured-sub">
-                        {[featured.location, selectedYear].filter(Boolean).join(' · ')}
-                      </p>
-                      <span className="track-selector-featured-cta">
-                        Open analysis
-                        <span aria-hidden="true"> →</span>
-                      </span>
-                    </div>
-                  </Link>
-                  {featured.sessions.length > 0 && (
-                    <div className="track-selector-featured-sessions" aria-label="Available sessions">
-                      {featured.sessions.map((session) => (
-                        <Link
-                          key={session}
-                          href={trackHref(selectedYear, featured.id, session)}
-                          className="track-selector-session is-on is-link"
-                          onClick={() => rememberTrack(selectedYear, featured.id)}
-                        >
-                          {SESSION_LABELS[session] ?? session}
-                        </Link>
-                      ))}
-                    </div>
-                  )}
-                </article>
-              )}
+          {selected && (
+            <section className="track-visualiser" aria-label="Track visualiser">
+              <div className="track-visualiser-rail" aria-hidden="true">
+                <span className="track-visualiser-rail-name">{railLabel(selected)}</span>
+                {getCountryFlagIcon(selected.countryCode) && (
+                  <img
+                    src={getCountryFlagIcon(selected.countryCode)!}
+                    alt=""
+                    className="track-visualiser-rail-flag"
+                  />
+                )}
+              </div>
 
-              {nextUp && (
-                <div className="track-selector-next" aria-label="Next on calendar">
-                  <div className="track-selector-next-map">
-                    {nextUp.svgFile ? (
-                      <img
-                        src={`/Tracks/${nextUp.svgFile}`}
-                        alt=""
-                        className="track-selector-featured-svg is-muted"
-                      />
-                    ) : (
-                      <div className="track-selector-svg-fallback">No map</div>
-                    )}
+              <div className="track-visualiser-stage">
+                {selected.svgFile ? (
+                  selected.disabled ? (
+                    <div className="track-visualiser-still">
+                      <RedTrackSilhouette svgFile={selected.svgFile} className="is-lg is-muted" />
+                    </div>
+                  ) : (
+                    <LazyTrack3D
+                      svgFile={selected.svgFile}
+                      variant="neon"
+                      autoRotate
+                      autoRotateSpeed={0.32}
+                      className="track-visualiser-3d"
+                      rootMargin="400px 0px"
+                    />
+                  )
+                ) : (
+                  <div className="track-selector-svg-fallback">No map</div>
+                )}
+              </div>
+
+              <div className="track-visualiser-side">
+                <div className="track-visualiser-stats">
+                  <div className="track-visualiser-stat">
+                    <span className="track-visualiser-stat-label">When</span>
+                    <span className="track-visualiser-stat-value is-accent">
+                      {selected.date ?? selectedYear}
+                    </span>
                   </div>
-                  <div className="track-selector-next-body">
-                    <div className="track-selector-featured-eyebrow">
-                      <span className="track-selector-chip is-upcoming">Next up</span>
-                      {nextUp.round != null && (
-                        <span className="track-selector-mono-meta">
-                          R{nextUp.round}
-                          {nextUp.date ? ` · ${nextUp.date}` : ''}
+                  <div className="track-visualiser-stat">
+                    <span className="track-visualiser-stat-label">Length</span>
+                    <span className="track-visualiser-stat-value is-accent">
+                      {info?.trackLength ?? 'N/A'}
+                    </span>
+                  </div>
+                  <div className="track-visualiser-stat">
+                    <span className="track-visualiser-stat-label">First raced</span>
+                    <span className="track-visualiser-stat-value is-accent">
+                      {info?.firstGrandPrix ?? 'N/A'}
+                    </span>
+                  </div>
+                  <div className="track-visualiser-stat">
+                    <span className="track-visualiser-stat-label">Elevation</span>
+                    <span className="track-visualiser-stat-value is-accent">
+                      {info?.elevationChange ?? 'N/A'}
+                    </span>
+                  </div>
+                  {!selected.disabled && (
+                    <>
+                      <div className="track-visualiser-stat">
+                        <span className="track-visualiser-stat-label">Winner</span>
+                        <span className="track-visualiser-stat-value is-accent">
+                          {highlightsLoading ? '…' : highlights?.winner ?? 'N/A'}
                         </span>
-                      )}
-                    </div>
-                    <div className="track-selector-featured-title-row">
-                      {getCountryFlagIcon(nextUp.countryCode) && (
-                        <img
-                          src={getCountryFlagIcon(nextUp.countryCode)!}
-                          alt=""
-                          className="track-selector-flag"
-                        />
-                      )}
-                      <h2 className="track-selector-next-name">{nextUp.name}</h2>
-                    </div>
-                    <p className="track-selector-featured-sub">
-                      {[nextUp.location, nextUp.meta ?? 'Upcoming'].filter(Boolean).join(' · ')}
-                    </p>
-                  </div>
+                        {highlights?.winnerTeam && (
+                          <span className="track-visualiser-stat-note">{highlights.winnerTeam}</span>
+                        )}
+                      </div>
+                      <div className="track-visualiser-stat">
+                        <span className="track-visualiser-stat-label">Pole</span>
+                        <span className="track-visualiser-stat-value is-accent">
+                          {highlightsLoading ? '…' : highlights?.pole ?? 'N/A'}
+                        </span>
+                        {highlights?.poleTeam && (
+                          <span className="track-visualiser-stat-note">{highlights.poleTeam}</span>
+                        )}
+                      </div>
+                    </>
+                  )}
                 </div>
-              )}
+
+                <div className="track-visualiser-copy">
+                  <p className="track-visualiser-kicker">
+                    {selected.disabled ? 'Upcoming weekend' : 'Track visualiser'}
+                    {selected.round != null ? ` · R${selected.round}` : ''}
+                  </p>
+                  <h2 className="track-visualiser-title">{selected.name}</h2>
+                  <p className="track-visualiser-blurb">
+                    {[selected.location, selectedYear].filter(Boolean).join(' · ')}
+                  </p>
+                  {!selected.disabled && highlights?.podium && highlights.podium.length > 0 && (
+                    <p className="track-visualiser-podium">
+                      Podium {highlights.podium.join(' · ')}
+                    </p>
+                  )}
+                  {selected.disabled && (
+                    <p className="track-visualiser-blurb">
+                      Session data is not available yet for this round.
+                    </p>
+                  )}
+                </div>
+
+                {!selected.disabled && selected.sessions.length > 0 && (
+                  <div className="track-visualiser-sessions" aria-label="Available sessions">
+                    {selected.sessions.map((session) => (
+                      <Link
+                        key={session}
+                        href={trackHref(selectedYear, selected.id, session)}
+                        className={`track-visualiser-session${session === 'R' ? ' is-race' : ''}`}
+                        onClick={() => rememberTrack(selectedYear, selected.id)}
+                      >
+                        <span>{SESSION_LABELS[session] ?? session}</span>
+                        <span className="track-visualiser-session-open">Open</span>
+                      </Link>
+                    ))}
+                  </div>
+                )}
+
+                {!selected.disabled ? (
+                  <Link
+                    href={trackHref(selectedYear, selected.id, preferredSession(selected.sessions))}
+                    className="track-visualiser-cta"
+                    onClick={() => rememberTrack(selectedYear, selected.id)}
+                  >
+                    Open analysis
+                    <span aria-hidden="true"> →</span>
+                  </Link>
+                ) : (
+                  <div className="track-visualiser-cta is-disabled" aria-disabled="true">
+                    Data pending
+                  </div>
+                )}
+              </div>
             </section>
           )}
 
@@ -463,23 +618,28 @@ export default function TrackSelectorPage() {
               ))}
             </div>
             <p className="track-selector-toolbar-hint">
-              Session chips open Qualifying, Race, or Sprint when available.
+              Click a circuit to load it in the visualiser.
             </p>
           </div>
 
           <div className="track-selector-grid">
             {filteredTracks.map((track) => {
               const flag = getCountryFlagIcon(track.countryCode)
-              const session = preferredSession(track.sessions)
-              const mainHref = trackHref(selectedYear, track.id, session)
-              const cardInner = (
-                <>
+              const isActive = track.id === selected?.id
+              return (
+                <button
+                  key={track.id}
+                  type="button"
+                  className={`track-selector-card is-button${track.disabled ? ' is-disabled' : ''}${isActive ? ' is-active' : ''}`}
+                  aria-pressed={isActive}
+                  title={track.disabled ? track.meta ?? 'Not available yet' : `View ${track.name}`}
+                  onClick={() => selectTrack(track)}
+                >
                   <div className="track-selector-svg-wrap">
                     {track.svgFile ? (
-                      <img
-                        src={`/Tracks/${track.svgFile}`}
-                        alt=""
-                        className="track-selector-svg"
+                      <RedTrackSilhouette
+                        svgFile={track.svgFile}
+                        className={track.disabled ? 'is-muted' : undefined}
                       />
                     ) : (
                       <div className="track-selector-svg-fallback">No map</div>
@@ -502,55 +662,7 @@ export default function TrackSelectorPage() {
                       </p>
                     )}
                   </div>
-                </>
-              )
-
-              if (track.disabled) {
-                return (
-                  <div
-                    key={track.id}
-                    className="track-selector-card is-disabled"
-                    aria-disabled="true"
-                    title={track.meta ?? 'Not available yet'}
-                  >
-                    {cardInner}
-                    <div className="track-selector-card-footer">
-                      <span className="track-selector-session is-off">No data yet</span>
-                    </div>
-                  </div>
-                )
-              }
-
-              return (
-                <article key={track.id} className="track-selector-card">
-                  <Link
-                    href={mainHref}
-                    className="track-selector-card-hit"
-                    onClick={() => rememberTrack(selectedYear, track.id)}
-                  >
-                    {cardInner}
-                    <span className="track-selector-card-cta">
-                      Open analysis
-                      <span aria-hidden="true"> →</span>
-                    </span>
-                  </Link>
-                  {track.sessions.length > 0 && (
-                    <div className="track-selector-card-footer" aria-label="Sessions">
-                      <div className="track-selector-sessions">
-                        {track.sessions.map((code) => (
-                          <Link
-                            key={code}
-                            href={trackHref(selectedYear, track.id, code)}
-                            className="track-selector-session is-on is-link"
-                            onClick={() => rememberTrack(selectedYear, track.id)}
-                          >
-                            {SESSION_LABELS[code] ?? code}
-                          </Link>
-                        ))}
-                      </div>
-                    </div>
-                  )}
-                </article>
+                </button>
               )
             })}
           </div>

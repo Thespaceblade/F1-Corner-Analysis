@@ -8,9 +8,14 @@ import {
   Zap, 
   Flag, 
   TrendingDown,
-  Building2
+  TrendingUp,
+  Building2,
+  Gauge,
+  Crosshair,
+  Medal,
 } from 'lucide-react'
 import StatisticsCard from './StatisticsCard'
+import ChampionshipProgressionChart from './ChampionshipProgressionChart'
 import { getDriverColor, getTeamById } from '../../../lib/teamData'
 import { BarChart, Bar, XAxis, YAxis, Tooltip, ResponsiveContainer, PieChart, Pie, Cell } from 'recharts'
 import { getDriverPhoto } from '../../../lib/driverPhotos'
@@ -77,6 +82,109 @@ export default function SeasonOverview({ seasonData }: SeasonOverviewProps) {
       .sort((a, b) => b.dnfs - a.dnfs)
     return sorted[0] ?? null
   }, [seasonData.drivers])
+
+  const bestAverageFinish = useMemo(() => {
+    const sorted = Object.values(seasonData.drivers)
+      .filter((d) => d.averageFinishPosition != null && d.racesFinished >= 3)
+      .sort((a, b) => (a.averageFinishPosition ?? 99) - (b.averageFinishPosition ?? 99))
+    return sorted[0] ?? null
+  }, [seasonData.drivers])
+
+  const mostConsistent = useMemo(() => {
+    const sorted = Object.values(seasonData.drivers)
+      .filter((d) => d.finishingPositionStdDev != null && d.racesFinished >= 3)
+      .sort((a, b) => (a.finishingPositionStdDev ?? 99) - (b.finishingPositionStdDev ?? 99))
+    return sorted[0] ?? null
+  }, [seasonData.drivers])
+
+  const mostPositionsGained = useMemo(() => {
+    const sorted = Object.values(seasonData.drivers)
+      .filter((d) => d.averagePositionsGained != null && d.raceStarts >= 3)
+      .sort((a, b) => (b.averagePositionsGained ?? -99) - (a.averagePositionsGained ?? -99))
+    return sorted[0] ?? null
+  }, [seasonData.drivers])
+
+  const bestScoringRate = useMemo(() => {
+    const sorted = Object.values(seasonData.drivers)
+      .filter((d) => d.raceStarts >= 3)
+      .sort((a, b) => b.pointScoringRate - a.pointScoringRate)
+    return sorted[0] ?? null
+  }, [seasonData.drivers])
+
+  const titleFight = useMemo(() => {
+    return Object.values(seasonData.drivers)
+      .sort((a, b) => b.totalPoints - a.totalPoints)
+      .slice(0, 3)
+      .map((driver, index, arr) => ({
+        ...driver,
+        position: index + 1,
+        gapToLeader: arr[0].totalPoints - driver.totalPoints,
+        gapAhead: index === 0 ? 0 : arr[index - 1].totalPoints - driver.totalPoints,
+      }))
+  }, [seasonData.drivers])
+
+  const constructorFight = useMemo(() => {
+    return Object.values(seasonData.teams)
+      .sort((a, b) => b.totalPoints - a.totalPoints)
+      .slice(0, 3)
+      .map((team, index, arr) => ({
+        ...team,
+        position: index + 1,
+        gapToLeader: arr[0].totalPoints - team.totalPoints,
+        info: getSeasonTeam(team.teamId),
+      }))
+  }, [seasonData.teams])
+
+  const raceWinners = useMemo(() => {
+    return seasonData.rounds
+      .slice()
+      .sort((a, b) => a.round - b.round)
+      .map((round) => {
+        const winner = round.results.find((r) => r.position === 1)
+        const pole = round.qualifyingResults.find((q) => q.position === 1)
+        return {
+          round: round.round,
+          trackId: round.trackId,
+          trackName: round.trackName,
+          date: round.date,
+          winnerCode: winner?.driverCode ?? null,
+          winnerTeamId: winner?.teamId ?? null,
+          poleCode: pole?.driverCode ?? null,
+          winnerPoints: winner?.points ?? 0,
+        }
+      })
+  }, [seasonData.rounds])
+
+  const winsByDriver = useMemo(() => {
+    const counts: Record<string, number> = {}
+    for (const race of raceWinners) {
+      if (!race.winnerCode) continue
+      counts[race.winnerCode] = (counts[race.winnerCode] ?? 0) + 1
+    }
+    return Object.entries(counts)
+      .map(([code, wins]) => ({ code, wins }))
+      .sort((a, b) => b.wins - a.wins)
+  }, [raceWinners])
+
+  const recentForm = useMemo(() => {
+    const lastRounds = seasonData.rounds
+      .slice()
+      .sort((a, b) => a.round - b.round)
+      .slice(-5)
+    return titleFight.map((driver) => {
+      const finishes = lastRounds.map((round) => {
+        const entry = round.results.find((r) => r.driverCode === driver.driverCode)
+        return {
+          round: round.round,
+          trackName: round.trackName,
+          position: entry?.position ?? null,
+          status: entry?.status ?? null,
+          points: entry?.points ?? 0,
+        }
+      })
+      return { driver, finishes }
+    })
+  }, [seasonData.rounds, titleFight])
 
   // Points distribution data for pie chart (using team colors)
   const pointsDistribution = useMemo(() => {
@@ -213,7 +321,7 @@ export default function SeasonOverview({ seasonData }: SeasonOverviewProps) {
 
   return (
     <div className="space-y-6">
-      {showChampions ? (
+      {showChampions && (
         /* Champions banner, shown only when the season is finished. */
         <div className="grid md:grid-cols-2 gap-4">
           <div
@@ -334,7 +442,147 @@ export default function SeasonOverview({ seasonData }: SeasonOverviewProps) {
             </div>
           </div>
         </div>
-      ) : (
+      )}
+
+      {/* Title fight: top 3 with gaps */}
+      {titleFight.length > 0 && (
+        <div className="space-y-3">
+          <div className="flex flex-wrap items-end justify-between gap-2">
+            <div>
+              <h4 className="text-sm font-semibold text-gray-200">
+                {seasonData.isSeasonComplete ? 'Final title fight' : 'Championship battle'}
+              </h4>
+              <p className="text-xs text-gray-400">
+                Top three on points after {seasonData.completedRaces} rounds
+              </p>
+            </div>
+            {titleFight.length >= 2 && (
+              <div className="text-xs text-gray-500">
+                Lead:{' '}
+                <span className="font-semibold text-accent tabular-nums">
+                  {titleFight[1].gapToLeader} pts
+                </span>
+              </div>
+            )}
+          </div>
+
+          <div className="grid gap-3 md:grid-cols-3">
+            {titleFight.map((driver) => {
+              const team = getSeasonTeam(driver.teamId)
+              const color = getSeasonDriverColor(driver.driverCode)
+              return (
+                <div
+                  key={driver.driverCode}
+                  className="relative overflow-hidden rounded-lg border p-4 backdrop-blur-sm"
+                  style={{
+                    borderColor: `${color}55`,
+                    background: `linear-gradient(160deg, ${color}14, transparent 70%)`,
+                  }}
+                >
+                  <div className="flex items-start justify-between gap-3">
+                    <div className="flex items-center gap-3 min-w-0">
+                      <div
+                        className="relative h-14 w-14 shrink-0 overflow-hidden rounded-full border-2 bg-gray-900"
+                        style={{ borderColor: color }}
+                      >
+                        <img
+                          src={getDriverPhoto(driver.driverCode)}
+                          alt={driver.driverCode}
+                          className="h-full w-full object-cover"
+                        />
+                      </div>
+                      <div className="min-w-0">
+                        <div className="text-[10px] uppercase tracking-[0.16em] text-gray-500 font-semibold">
+                          P{driver.position}
+                        </div>
+                        <DriverBadge code={driver.driverCode} year={seasonData.year} size="md" />
+                        <div className="mt-0.5 truncate text-xs text-gray-500">
+                          {team?.shortName ?? driver.teamId ?? 'n/a'}
+                        </div>
+                      </div>
+                    </div>
+                    <div className="text-right shrink-0">
+                      <div className="text-2xl font-bold tabular-nums text-gray-100">
+                        {driver.totalPoints}
+                      </div>
+                      <div className="text-[10px] uppercase tracking-wide text-gray-500">pts</div>
+                    </div>
+                  </div>
+
+                  <div className="mt-4 grid grid-cols-4 gap-2 text-center">
+                    <div>
+                      <div className="text-[10px] uppercase text-gray-500">W</div>
+                      <div className="text-sm font-semibold tabular-nums text-gray-200">{driver.raceWins}</div>
+                    </div>
+                    <div>
+                      <div className="text-[10px] uppercase text-gray-500">Pod</div>
+                      <div className="text-sm font-semibold tabular-nums text-gray-200">{driver.podiums}</div>
+                    </div>
+                    <div>
+                      <div className="text-[10px] uppercase text-gray-500">Pole</div>
+                      <div className="text-sm font-semibold tabular-nums text-gray-200">{driver.polePositions}</div>
+                    </div>
+                    <div>
+                      <div className="text-[10px] uppercase text-gray-500">Gap</div>
+                      <div className="text-sm font-semibold tabular-nums text-gray-200">
+                        {driver.gapToLeader === 0 ? '-' : `-${driver.gapToLeader}`}
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              )
+            })}
+          </div>
+
+          {constructorFight.length > 0 && (
+            <div className="grid gap-2 sm:grid-cols-3">
+              {constructorFight.map((team) => (
+                <div
+                  key={team.teamId}
+                  className="flex items-center gap-3 rounded-lg border border-gray-700/80 bg-gray-900/40 px-3 py-2.5"
+                >
+                  <span
+                    className={`w-5 text-sm font-bold tabular-nums ${
+                      team.position === 1
+                        ? 'text-amber-400'
+                        : team.position === 2
+                          ? 'text-gray-300'
+                          : 'text-orange-400'
+                    }`}
+                  >
+                    {team.position}
+                  </span>
+                  <div className="relative h-7 w-7 shrink-0">
+                    <img
+                      src={team.info?.logoPath ?? `/team-logos/${team.teamId}.png`}
+                      alt={team.info?.shortName ?? team.teamId}
+                      className="h-full w-full object-contain"
+                    />
+                  </div>
+                  <div className="min-w-0 flex-1">
+                    <div className="truncate text-sm font-medium text-gray-200">
+                      {team.info?.shortName ?? team.teamId}
+                    </div>
+                    <div className="text-[10px] text-gray-500">
+                      {team.gapToLeader === 0 ? 'Leading' : `${team.gapToLeader} pts behind`}
+                    </div>
+                  </div>
+                  <div className="text-sm font-semibold tabular-nums text-gray-100">
+                    {team.totalPoints}
+                  </div>
+                </div>
+              ))}
+            </div>
+          )}
+        </div>
+      )}
+
+      {/* Cumulative points through the season */}
+      {seasonData.rounds.length > 0 && (
+        <ChampionshipProgressionChart seasonData={seasonData} />
+      )}
+
+      {!showChampions && (
         /* Mid-season: championship score tables instead of crowning a champion */
         <div className="space-y-3">
           <div className="flex flex-wrap items-end justify-between gap-2">
@@ -487,6 +735,116 @@ export default function SeasonOverview({ seasonData }: SeasonOverviewProps) {
         </div>
       )}
 
+
+      {/* Race-by-race winners */}
+      {raceWinners.length > 0 && (
+        <div className="space-y-3">
+          <div className="flex flex-wrap items-end justify-between gap-2">
+            <div>
+              <h4 className="text-sm font-semibold text-gray-200">Race winners</h4>
+              <p className="text-xs text-gray-400">
+                Every completed round · {winsByDriver.length} different winners
+              </p>
+            </div>
+            <div className="flex flex-wrap gap-1.5">
+              {winsByDriver.slice(0, 6).map(({ code, wins }) => (
+                <span
+                  key={code}
+                  className="inline-flex items-center gap-1 rounded-md border border-gray-700 bg-gray-900/50 px-2 py-0.5 text-[11px]"
+                >
+                  <span
+                    className="font-semibold"
+                    style={{ color: getSeasonDriverColor(code) }}
+                  >
+                    {code}
+                  </span>
+                  <span className="tabular-nums text-gray-400">{wins}×</span>
+                </span>
+              ))}
+            </div>
+          </div>
+
+          <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-2">
+            {raceWinners.map((race) => {
+              const color = race.winnerCode
+                ? getSeasonDriverColor(race.winnerCode)
+                : '#6b7280'
+              return (
+                <div
+                  key={`${race.round}-${race.trackId}`}
+                  className="rounded-lg border border-gray-700/80 bg-gray-900/35 p-2.5"
+                  style={{ borderTopColor: color, borderTopWidth: 2 }}
+                >
+                  <div className="flex items-center justify-between gap-1 text-[10px] uppercase tracking-wide text-gray-500">
+                    <span>R{race.round}</span>
+                    {race.poleCode && <span title="Pole">P {race.poleCode}</span>}
+                  </div>
+                  <div className="mt-1 truncate text-xs font-medium text-gray-300">
+                    {race.trackName}
+                  </div>
+                  <div className="mt-2 flex items-center gap-2">
+                    {race.winnerCode ? (
+                      <DriverBadge code={race.winnerCode} year={seasonData.year} size="sm" />
+                    ) : (
+                      <span className="text-xs text-gray-500">TBD</span>
+                    )}
+                  </div>
+                </div>
+              )
+            })}
+          </div>
+        </div>
+      )}
+
+      {/* Recent form for title contenders */}
+      {recentForm.length > 0 && seasonData.completedRaces >= 3 && (
+        <div className="space-y-3">
+          <div>
+            <h4 className="text-sm font-semibold text-gray-200">Recent form</h4>
+            <p className="text-xs text-gray-400">Last {recentForm[0]?.finishes.length ?? 0} race finishes for the top three</p>
+          </div>
+          <div className="space-y-2">
+            {recentForm.map(({ driver, finishes }) => (
+              <div
+                key={driver.driverCode}
+                className="flex flex-col gap-2 rounded-lg border border-gray-700/70 bg-gray-900/30 px-3 py-2.5 sm:flex-row sm:items-center sm:justify-between"
+              >
+                <div className="flex items-center gap-2 shrink-0">
+                  <span className="w-5 text-xs font-bold tabular-nums text-gray-500">
+                    P{driver.position}
+                  </span>
+                  <DriverBadge code={driver.driverCode} year={seasonData.year} size="sm" />
+                </div>
+                <div className="flex flex-wrap items-center gap-1.5">
+                  {finishes.map((finish) => {
+                    const pos = finish.position
+                    const tone =
+                      pos === 1
+                        ? 'bg-amber-500/20 text-amber-300 border-amber-500/40'
+                        : pos != null && pos <= 3
+                          ? 'bg-sky-500/15 text-sky-300 border-sky-500/30'
+                          : pos != null && pos <= 10
+                            ? 'bg-gray-700/60 text-gray-200 border-gray-600/60'
+                            : 'bg-gray-900 text-gray-500 border-gray-700'
+                    return (
+                      <div
+                        key={`${driver.driverCode}-${finish.round}`}
+                        title={`${finish.trackName}${pos != null ? ` · P${pos}` : ''}${finish.status && finish.status !== 'Finished' ? ` · ${finish.status}` : ''}`}
+                        className={`min-w-[2.25rem] rounded border px-1.5 py-1 text-center text-xs font-semibold tabular-nums ${tone}`}
+                      >
+                        {finish.status === 'DNF' || finish.status === 'DNS' || finish.status === 'DSQ'
+                          ? finish.status.slice(0, 3)
+                          : pos ?? '-'}
+                      </div>
+                    )
+                  })}
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      )}
+
       {/* Key Statistics Grid */}
       <div>
         <h4 className="text-sm font-semibold text-gray-200 mb-3">Season Statistics</h4>
@@ -495,7 +853,7 @@ export default function SeasonOverview({ seasonData }: SeasonOverviewProps) {
             label="Total Races"
             value={seasonData.totalRaces}
             icon={Flag}
-            description={`${seasonData.completedRaces} completed`}
+            description={`${seasonData.completedRaces} completed · ${Math.max(0, seasonData.totalRaces - seasonData.completedRaces)} remaining`}
           />
           
           {mostWins && (
@@ -525,6 +883,46 @@ export default function SeasonOverview({ seasonData }: SeasonOverviewProps) {
               icon={Zap}
               description={mostFastestLaps.driverCode}
               color={getSeasonDriverColor(mostFastestLaps.driverCode)}
+            />
+          )}
+
+          {bestAverageFinish && bestAverageFinish.averageFinishPosition != null && (
+            <StatisticsCard
+              label="Best Avg Finish"
+              value={bestAverageFinish.averageFinishPosition.toFixed(1)}
+              icon={Medal}
+              description={bestAverageFinish.driverCode}
+              color={getSeasonDriverColor(bestAverageFinish.driverCode)}
+            />
+          )}
+
+          {mostConsistent && mostConsistent.finishingPositionStdDev != null && (
+            <StatisticsCard
+              label="Most Consistent"
+              value={mostConsistent.finishingPositionStdDev.toFixed(2)}
+              icon={Gauge}
+              description={`${mostConsistent.driverCode} · lower σ`}
+              color={getSeasonDriverColor(mostConsistent.driverCode)}
+            />
+          )}
+
+          {mostPositionsGained && mostPositionsGained.averagePositionsGained != null && (
+            <StatisticsCard
+              label="Best Race Craft"
+              value={`+${mostPositionsGained.averagePositionsGained.toFixed(1)}`}
+              icon={TrendingUp}
+              description={`${mostPositionsGained.driverCode} · avg places gained`}
+              color={getSeasonDriverColor(mostPositionsGained.driverCode)}
+            />
+          )}
+
+          {bestScoringRate && (
+            <StatisticsCard
+              label="Scoring Rate"
+              value={`${bestScoringRate.pointScoringRate.toFixed(0)}%`}
+              icon={Crosshair}
+              description={bestScoringRate.driverCode}
+              color={getSeasonDriverColor(bestScoringRate.driverCode)}
             />
           )}
         </div>

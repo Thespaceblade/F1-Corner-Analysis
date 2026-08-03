@@ -5,11 +5,21 @@ import Image from 'next/image'
 import { usePathname } from 'next/navigation'
 
 type AppNavProps = {
-  /** Optional context shown after the primary links (e.g. current circuit name) */
+  /** Optional context shown after the brand (e.g. current circuit name) */
   contextLabel?: string
+  /**
+   * overlay — absolute topbar for the homepage hero
+   * page — document-flow topbar for tool pages
+   */
+  variant?: 'overlay' | 'page'
 }
 
-const links: Array<{ href: string; label: string; match: (path: string) => boolean }> = [
+const links: Array<{
+  href: string
+  label: string
+  match: (path: string) => boolean
+  external?: boolean
+}> = [
   {
     href: '/race',
     label: 'Circuits',
@@ -20,69 +30,77 @@ const links: Array<{ href: string; label: string; match: (path: string) => boole
     label: 'Season',
     match: (path) => path === '/season' || path.startsWith('/season/'),
   },
+  {
+    href: 'https://github.com/Thespaceblade/F1-Corner-Analysis',
+    label: 'Source',
+    match: () => false,
+    external: true,
+  },
 ]
 
-export default function AppNav({ contextLabel }: AppNavProps) {
+export default function AppNav({ contextLabel, variant = 'page' }: AppNavProps) {
   const pathname = usePathname()
   const onHome = pathname === '/'
+  const isOverlay = variant === 'overlay'
 
-  return (
-    <nav
-      aria-label="Primary"
-      className="mb-6 flex flex-wrap items-center gap-x-3 gap-y-2 border-b border-gray-800/80 pb-3"
-    >
-      <Link
-        href="/"
-        className="mr-1 inline-flex items-center gap-2 no-underline transition hover:opacity-90"
-        aria-label="F1 Corner Analysis home"
-      >
-        <Image
-          src="/logos/f1-corner-analysis.png"
-          alt=""
-          width={28}
-          height={28}
-          className="object-contain"
-        />
-        <span
-          className={`font-display text-sm font-semibold tracking-tight ${
-            onHome ? 'text-accent' : 'text-gray-200'
-          }`}
-        >
-          F1 Corner Analysis
-        </span>
-      </Link>
+  const inner = (
+    <div className="app-topbar-inner">
+      <div className="app-topbar-left">
+        <Link href="/" className="app-topbar-brand" aria-label="F1 Corner Analysis home">
+          <Image
+            src="/logos/f1-corner-analysis.png"
+            alt=""
+            width={28}
+            height={28}
+            className="object-contain"
+            priority={isOverlay}
+          />
+          <span className={onHome ? 'is-home' : undefined}>F1 Corner Analysis</span>
+        </Link>
 
-      <div className="hidden h-4 w-px bg-gray-700/80 sm:block" aria-hidden="true" />
+        {contextLabel && !isOverlay && (
+          <>
+            <span className="app-topbar-slash" aria-hidden="true">
+              /
+            </span>
+            <span className="app-topbar-context">{contextLabel}</span>
+          </>
+        )}
+      </div>
 
-      <div className="flex flex-wrap items-center gap-1">
+      <nav aria-label="Primary" className="app-topbar-links">
         {links.map((link) => {
-          const active = link.match(pathname)
+          const active = !link.external && link.match(pathname)
+          if (link.external) {
+            return (
+              <a
+                key={link.href}
+                href={link.href}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="app-topbar-link"
+              >
+                {link.label}
+              </a>
+            )
+          }
           return (
             <Link
               key={link.href}
               href={link.href}
-              className={`rounded-md px-3 py-1.5 text-sm font-semibold no-underline transition ${
-                active
-                  ? 'bg-accent/15 text-accent'
-                  : 'text-gray-400 hover:bg-gray-800/50 hover:text-gray-200'
-              }`}
+              className={`app-topbar-link ${active ? 'is-active' : ''}`}
             >
               {link.label}
             </Link>
           )
         })}
-      </div>
+      </nav>
+    </div>
+  )
 
-      {contextLabel && (
-        <>
-          <span className="hidden text-gray-600 sm:inline" aria-hidden="true">
-            /
-          </span>
-          <span className="max-w-[14rem] truncate text-sm text-gray-400 sm:max-w-xs">
-            {contextLabel}
-          </span>
-        </>
-      )}
-    </nav>
+  return (
+    <div className={`app-topbar ${isOverlay ? 'app-topbar--overlay' : 'app-topbar--page'}`}>
+      {inner}
+    </div>
   )
 }
