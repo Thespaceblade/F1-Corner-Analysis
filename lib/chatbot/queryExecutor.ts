@@ -479,10 +479,24 @@ export async function getAvailableSessions(
           'session.json'
         )
         try {
-          await fs.access(sessionJson)
+          const raw = await fs.readFile(sessionJson, 'utf-8')
+          const payload = JSON.parse(raw) as {
+            meta?: { status?: string }
+            drivers?: Record<string, unknown>
+            raceResults?: unknown[]
+            qualifyingResults?: unknown[]
+            laps?: unknown[]
+          }
+          const status = payload.meta?.status
+          if (status && status !== 'ok') continue
+          const driverCount = payload.drivers ? Object.keys(payload.drivers).length : 0
+          const resultCount =
+            (payload.raceResults?.length ?? 0) + (payload.qualifyingResults?.length ?? 0)
+          const lapCount = payload.laps?.length ?? 0
+          if (driverCount === 0 && resultCount === 0 && lapCount === 0) continue
           sessionList.push({ session: sessionDir.name })
         } catch {
-          // Session JSON doesn't exist, skip
+          // Session JSON doesn't exist or is unreadable, skip
         }
       }
     }

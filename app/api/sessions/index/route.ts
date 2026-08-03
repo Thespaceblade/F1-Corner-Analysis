@@ -69,9 +69,31 @@ export async function GET() {
           if (!sd.isDirectory()) continue
           const sessionCode = sd.name
           const sessionJson = path.join(roundPath, sessionCode, 'session.json')
-          if (await exists(sessionJson)) {
-            sessions.push(sessionCode)
+          if (!(await exists(sessionJson))) continue
+
+          // Skip failed / empty fetches so Toolbar doesn't offer phantom sessions
+          // (e.g. 2025 non-sprint weekends with status:"error" S/SQ files).
+          try {
+            const raw = await fs.readFile(sessionJson, 'utf-8')
+            const payload = JSON.parse(raw) as {
+              meta?: { status?: string }
+              drivers?: Record<string, unknown>
+              raceResults?: unknown[]
+              qualifyingResults?: unknown[]
+              laps?: unknown[]
+            }
+            const status = payload.meta?.status
+            if (status && status !== 'ok') continue
+            const driverCount = payload.drivers ? Object.keys(payload.drivers).length : 0
+            const resultCount =
+              (payload.raceResults?.length ?? 0) + (payload.qualifyingResults?.length ?? 0)
+            const lapCount = payload.laps?.length ?? 0
+            if (driverCount === 0 && resultCount === 0 && lapCount === 0) continue
+          } catch {
+            continue
           }
+
+          sessions.push(sessionCode)
         }
         if (sessions.length) {
           rounds.push({ id: roundId, sessions: sessions.sort() })

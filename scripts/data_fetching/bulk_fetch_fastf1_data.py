@@ -87,7 +87,12 @@ def fetch_round_sessions(
         output_dir = config.resolve_output(year, round_id, identifier.session_code)
         output_dir.mkdir(parents=True, exist_ok=True)
         output_path = output_dir / "session.json"
-        output_path.write_text(json.dumps(payload, indent=2))
+        if fetch_result.status != "ok":
+            if output_path.exists():
+                output_path.unlink()
+            output_path = None
+        else:
+            output_path.write_text(json.dumps(payload, indent=2))
 
         results.append(
             FetchSummary(
@@ -206,7 +211,13 @@ def main(argv: Sequence[str] | None = None) -> int:
             output_dir = config.resolve_output(args.year, round_id, identifier.session_code)
             output_dir.mkdir(parents=True, exist_ok=True)
             output_path = output_dir / "session.json"
-            output_path.write_text(json.dumps(payload, indent=2))
+
+            if fetch_result.status != "ok":
+                if output_path.exists():
+                    output_path.unlink()
+                output_path = None
+            else:
+                output_path.write_text(json.dumps(payload, indent=2))
             
             result = FetchSummary(
                 round_id=round_id,
