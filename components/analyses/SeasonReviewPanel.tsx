@@ -6,7 +6,6 @@ import {
   Users,
   Building2,
   GitCompare,
-  TrendingUp,
   Map,
   Route,
 } from 'lucide-react'
@@ -16,25 +15,29 @@ import SeasonOverview from './season/SeasonOverview'
 import DriverStandingsTable from './season/DriverStandingsTable'
 import TeamStandingsTable from './season/TeamStandingsTable'
 import HeadToHeadComparison from './season/HeadToHeadComparison'
-import ChampionshipProgressionChart from './season/ChampionshipProgressionChart'
 import TrackByTrackAnalysis from './season/TrackByTrackAnalysis'
 import TrackTypeAnalysis from './season/TrackTypeAnalysis'
 import LoadingIndicator from '../LoadingIndicator'
+import SeasonControls from '../SeasonControls'
 
 type SeasonTab =
   | 'overview'
   | 'drivers'
   | 'teams'
   | 'head-to-head'
-  | 'progression'
   | 'tracks'
   | 'track-types'
 
 type SeasonReviewPanelProps = {
-  year?: number
+  year: number
+  years: number[]
+  onYearChange: (year: number) => void
   initialTab?: SeasonTab
   selectedDrivers?: string[]
+  onDriversChange?: (drivers: string[]) => void
 }
+
+const DRIVER_FOCUS_TABS: SeasonTab[] = ['head-to-head', 'tracks', 'track-types']
 
 const seasonTabs: Array<{
   id: SeasonTab
@@ -47,7 +50,7 @@ const seasonTabs: Array<{
     id: 'overview',
     label: 'Season Overview',
     shortLabel: 'Overview',
-    description: 'Leaders, key stats, and season highlight charts',
+    description: 'Title fight, points by round, winners, and key stats',
     icon: Trophy,
   },
   {
@@ -72,13 +75,6 @@ const seasonTabs: Array<{
     icon: GitCompare,
   },
   {
-    id: 'progression',
-    label: 'Championship Progression',
-    shortLabel: 'Progress',
-    description: 'Cumulative points charts for drivers or constructors',
-    icon: TrendingUp,
-  },
-  {
     id: 'tracks',
     label: 'Track-by-Track',
     shortLabel: 'Rounds',
@@ -95,9 +91,12 @@ const seasonTabs: Array<{
 ]
 
 export default function SeasonReviewPanel({
-  year = new Date().getFullYear(),
+  year,
+  years,
+  onYearChange,
   initialTab = 'overview',
   selectedDrivers = [],
+  onDriversChange,
 }: SeasonReviewPanelProps) {
   const [selectedTab, setSelectedTab] = useState<SeasonTab>(initialTab)
   const [seasonData, setSeasonData] = useState<SeasonData | null>(null)
@@ -129,12 +128,21 @@ export default function SeasonReviewPanel({
     loadSeasonData()
   }, [year])
 
+  const rankedDriverCodes = useMemo(() => {
+    if (!seasonData) return []
+    return Object.values(seasonData.drivers)
+      .sort((a, b) => b.totalPoints - a.totalPoints)
+      .map((d) => d.driverCode)
+  }, [seasonData])
+
   const leaderMeta = useMemo(() => {
     if (!seasonData) return null
     const drivers = Object.values(seasonData.drivers).sort((a, b) => b.totalPoints - a.totalPoints)
     const teams = Object.values(seasonData.teams).sort((a, b) => b.totalPoints - a.totalPoints)
     const leadDriver = drivers[0]
+    const secondDriver = drivers[1]
     const leadTeam = teams[0]
+    const secondTeam = teams[1]
     const progress =
       seasonData.totalRaces > 0
         ? Math.min(100, Math.round((seasonData.completedRaces / seasonData.totalRaces) * 100))
@@ -144,18 +152,39 @@ export default function SeasonReviewPanel({
       leadDriver,
       leadTeam,
       progress,
+      gap:
+        leadDriver && secondDriver
+          ? leadDriver.totalPoints - secondDriver.totalPoints
+          : null,
+      teamGap:
+        leadTeam && secondTeam ? leadTeam.totalPoints - secondTeam.totalPoints : null,
+      racesLeft: Math.max(0, seasonData.totalRaces - seasonData.completedRaces),
       teamName: leadTeam
         ? getTeamById(leadTeam.teamId, seasonData.year)?.shortName ?? leadTeam.teamId
         : null,
     }
   }, [seasonData])
 
+  const showDriverFocus = DRIVER_FOCUS_TABS.includes(selectedTab)
+
   return (
-    <div className="relative">
+    <div className="relative space-y-4">
+      <div className="page-section page-section-2">
+        <SeasonControls
+          years={years}
+          selectedYear={year}
+          onYearChange={onYearChange}
+          showDriverFocus={showDriverFocus}
+          selectedDrivers={selectedDrivers}
+          onDriversChange={onDriversChange ?? (() => {})}
+          rankedDriverCodes={rankedDriverCodes}
+        />
+      </div>
+
       <div className="absolute inset-0 bg-gradient-to-br from-accent/5 via-transparent to-transparent rounded-lg pointer-events-none -z-10" />
 
       {seasonData && leaderMeta && !loading && (
-        <div className="mb-4 rounded-lg border border-gray-700/70 bg-gray-900/40 p-3 sm:p-4">
+        <div className="rounded-lg border border-gray-700/70 bg-gray-900/40 p-3 sm:p-4">
           <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 mb-3">
             <div>
               <div className="text-[10px] uppercase tracking-[0.16em] text-accent font-semibold">
@@ -169,18 +198,33 @@ export default function SeasonReviewPanel({
                     <span className="text-accent font-medium">{leaderMeta.leadDriver.driverCode}</span>
                     {' leads on '}
                     {leaderMeta.leadDriver.totalPoints} pts
+                    {leaderMeta.gap != null && leaderMeta.gap > 0 && (
+                      <span className="text-gray-400"> (+{leaderMeta.gap} on P2)</span>
+                    )}
                   </>
                 )}
                 {leaderMeta.teamName && (
                   <>
                     {' · '}
                     {leaderMeta.teamName} leads constructors
+                    {leaderMeta.teamGap != null && leaderMeta.teamGap > 0 && (
+                      <span className="text-gray-400"> (+{leaderMeta.teamGap})</span>
+                    )}
                   </>
                 )}
               </div>
             </div>
-            <div className="text-right text-xs text-gray-500 shrink-0">
-              {leaderMeta.progress}% of calendar
+            <div className="flex items-center gap-4 shrink-0">
+              {leaderMeta.racesLeft > 0 && (
+                <div className="text-right text-xs text-gray-500">
+                  <div className="font-semibold tabular-nums text-gray-300">{leaderMeta.racesLeft}</div>
+                  <div>rounds left</div>
+                </div>
+              )}
+              <div className="text-right text-xs text-gray-500">
+                <div className="font-semibold tabular-nums text-gray-300">{leaderMeta.progress}%</div>
+                <div>of calendar</div>
+              </div>
             </div>
           </div>
           <div className="h-1.5 rounded-full bg-gray-800 overflow-hidden">
@@ -214,8 +258,7 @@ export default function SeasonReviewPanel({
                       : 'group-hover:scale-105 text-gray-400 group-hover:text-gray-200'
                   }`}
                 />
-                <span className="hidden sm:inline text-xs leading-tight font-medium">{tab.shortLabel}</span>
-                <span className="sm:hidden text-[10px] leading-tight font-medium">{tab.shortLabel}</span>
+                <span className="text-[10px] sm:text-xs leading-tight font-medium">{tab.shortLabel}</span>
 
                 <div className="absolute bottom-full left-1/2 transform -translate-x-1/2 mb-2 px-3 py-2 bg-gray-900/95 backdrop-blur-sm text-white text-xs rounded-lg shadow-xl opacity-0 group-hover:opacity-100 pointer-events-none transition-all duration-200 ease-out whitespace-nowrap z-50 border border-gray-700/50 translate-y-1 group-hover:translate-y-0">
                   <div className="font-semibold mb-1 text-accent">{tab.label}</div>
@@ -230,7 +273,7 @@ export default function SeasonReviewPanel({
         </div>
       </div>
 
-      <div className="mt-3 relative min-h-[420px]">
+      <div className="relative min-h-[420px]">
         {loading && (
           <LoadingIndicator label={`Loading ${year} season data...`} className="py-20" />
         )}
@@ -249,12 +292,6 @@ export default function SeasonReviewPanel({
             {selectedTab === 'teams' && <TeamStandingsTable seasonData={seasonData} />}
             {selectedTab === 'head-to-head' && (
               <HeadToHeadComparison seasonData={seasonData} selectedDrivers={selectedDrivers} />
-            )}
-            {selectedTab === 'progression' && (
-              <ChampionshipProgressionChart
-                seasonData={seasonData}
-                selectedDrivers={selectedDrivers}
-              />
             )}
             {selectedTab === 'tracks' && (
               <TrackByTrackAnalysis seasonData={seasonData} selectedDrivers={selectedDrivers} />

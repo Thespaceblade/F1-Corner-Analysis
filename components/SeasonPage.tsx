@@ -2,7 +2,6 @@
 
 import React, { useEffect, useMemo, useState } from 'react'
 import AppShell from './AppShell'
-import Toolbar from './Toolbar'
 import SeasonReview from './SeasonReview'
 import Chatbot from './Chatbot'
 import { getAvailableCalendarYears } from '../lib/calendarData'
@@ -67,16 +66,27 @@ export default function SeasonPage() {
           selectedDrivers,
         }),
       )
+
+      const url = new URL(window.location.href)
+      if (selectedYear > 0) url.searchParams.set('year', String(selectedYear))
+      else url.searchParams.delete('year')
+      window.history.replaceState({}, '', url.toString())
     } catch (error) {
       console.warn('[SeasonPage] Failed to persist preferences:', error)
     }
   }, [preferencesHydrated, selectedYear, selectedDrivers])
 
+  const years = availableYears.length > 0 ? availableYears : selectedYear > 0 ? [selectedYear] : []
+
   return (
     <AppShell
       kicker="Championship"
       title={selectedYear > 0 ? `${selectedYear} Season` : 'Season Review'}
-      description="Standings, head-to-heads, progression, and form by circuit type across the whole year."
+      description={
+        selectedYear > 0
+          ? `Title fight, points by round, standings, and form across the ${selectedYear} calendar.`
+          : 'Standings, head-to-heads, progression, and form by circuit type across the whole year.'
+      }
       aside={
         <Chatbot
           context={{
@@ -88,28 +98,18 @@ export default function SeasonPage() {
         />
       }
     >
-      <div className="page-section page-section-2">
-        <Toolbar
-          mode="season"
-          years={availableYears.length > 0 ? availableYears : [selectedYear]}
-          selectedYear={selectedYear}
-          onYearChangeAction={setSelectedYear}
-          selectedDrivers={selectedDrivers}
-          onDriversChangeAction={setSelectedDrivers}
-          selectedSession=""
-          onSessionChangeAction={() => {}}
-          availableSessions={[]}
-          roundNumber={null}
-          sessionData={null}
-        />
-      </div>
-
       {selectedYear > 0 ? (
-        <SeasonReview year={selectedYear} selectedDrivers={selectedDrivers} />
+        <SeasonReview
+          year={selectedYear}
+          years={years}
+          onYearChange={setSelectedYear}
+          selectedDrivers={selectedDrivers}
+          onDriversChange={setSelectedDrivers}
+        />
       ) : (
         <section className="mt-6 page-section page-section-3">
           <div className="panel p-8 text-center text-sm text-gray-400">
-            Select a year above to load season statistics.
+            Select a year to load season statistics.
           </div>
         </section>
       )}

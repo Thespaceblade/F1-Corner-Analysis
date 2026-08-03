@@ -615,7 +615,7 @@ export default function ClientPage({ trackId }: ClientPageProps){
   const isLoading = showLoadingScreen && (tracksLoading || Object.keys(trackData.tracks).length === 0)
   
   return (
-    <div className="relative py-8">
+    <div className="relative pb-8">
       {/* Loading screen overlay with smooth fade transition */}
       {showLoadingScreen && (
         <div className={`loading-screen-wrapper ${isLoading ? 'opacity-100' : 'opacity-0'}`}>
@@ -683,10 +683,11 @@ export default function ClientPage({ trackId }: ClientPageProps){
         </div>
       )}
 
+      <AppNav contextLabel={currentTrack?.name} />
+
       {/* Page content - rendered behind loading screen for smooth transition */}
-      <main className={`max-w-6xl mx-auto px-4 page-content ${pageContentVisible ? 'page-content-visible' : 'page-content-hidden'}`}>
+      <main className={`max-w-6xl mx-auto px-4 pt-6 page-content ${pageContentVisible ? 'page-content-visible' : 'page-content-hidden'}`}>
       <div className="relative">
-        <AppNav contextLabel={currentTrack?.name} />
         {currentTrack && tocSections.length > 0 && (
           <div
             className="absolute top-0 right-0 hidden lg:block"

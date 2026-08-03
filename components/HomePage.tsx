@@ -3,6 +3,7 @@
 import React, { useEffect, useRef, useState } from 'react'
 import Link from 'next/link'
 import Image from 'next/image'
+import AppNav from './AppNav'
 import HeroTrackStage, { type HeroCorner } from './home/HeroTrackStage'
 
 const TRACK_PREVIEWS = [
@@ -140,32 +141,7 @@ export default function HomePage() {
 
   return (
     <div className="home-root">
-      <div className="home-topbar">
-        <div className="home-topbar-inner">
-          <Link href="/" className="home-topbar-brand" aria-label="F1 Corner Analysis home">
-            <Image
-              src="/logos/f1-corner-analysis.png"
-              alt=""
-              width={28}
-              height={28}
-              className="object-contain"
-              priority
-            />
-            <span>F1 Corner Analysis</span>
-          </Link>
-          <nav className="home-topbar-nav" aria-label="Primary">
-            <Link href="/race">Circuits</Link>
-            <Link href="/season">Season</Link>
-            <a
-              href="https://github.com/Thespaceblade/F1-Corner-Analysis"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              Source
-            </a>
-          </nav>
-        </div>
-      </div>
+      <AppNav variant="overlay" />
 
       <section ref={heroRef} className="home-hero">
         <div className="home-hero-atmosphere" aria-hidden="true">
@@ -178,7 +154,7 @@ export default function HomePage() {
           svgFile={`${LATEST.trackFile}.svg`}
           corners={HERO_CORNERS}
           href={LATEST.sessions[0].href}
-          ctaLabel="Explore Hungaroring"
+          ctaLabel="Explore Hungarian GP"
           ariaLabel="Open Hungarian Grand Prix race analysis"
           pointer={pointer}
           reducedMotion={reducedMotion}
