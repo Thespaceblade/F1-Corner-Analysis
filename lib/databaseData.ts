@@ -157,6 +157,7 @@ export async function loadSessionIndexFromDatabase(): Promise<SessionIndex> {
       left join calendar_rounds c
         on c.year = s.year
        and c.round_slug = s.round_slug
+      where coalesce(s.status, 'ok') = 'ok'
       order by
         s.year asc,
         coalesce(s.round_number, c.round_number) asc nulls last,

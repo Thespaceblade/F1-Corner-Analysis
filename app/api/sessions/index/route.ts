@@ -4,6 +4,7 @@ import path from 'path'
 import { isDatabaseEnabled } from '../../../../lib/db'
 import { loadSessionIndexFromDatabase, type SessionIndex } from '../../../../lib/databaseData'
 import { isRemoteDataEnabled, fetchFromRemote } from '../../../../lib/remoteData'
+import { loadSessionsIndexFromCache } from '../../../../lib/sessionsIndexCache'
 
 // Mark this route as dynamic to prevent static generation issues
 export const dynamic = 'force-dynamic'
@@ -22,20 +23,36 @@ export async function GET() {
   const isVercelRuntime = process.env.VERCEL === '1'
 
   try {
+    // Prefer the committed index: correct (no phantoms / missing sprints) and
+    // instant. Remote/DB hosts are often stale relative to git session fixes.
+    const cached = await loadSessionsIndexFromCache()
+    if (cached) {
+      return NextResponse.json(cached, {
+        headers: {
+          'Cache-Control': 'public, s-maxage=300, stale-while-revalidate=3600',
+          'X-Sessions-Index-Source': 'cache',
+        },
+      })
+    }
+
     if (isRemoteDataEnabled()) {
       const payload = await fetchFromRemote<SessionIndex>('/api/sessions/index')
-      return NextResponse.json(payload)
+      return NextResponse.json(payload, {
+        headers: { 'X-Sessions-Index-Source': 'remote' },
+      })
     }
 
     if (isDatabaseEnabled()) {
-      return NextResponse.json(await loadSessionIndexFromDatabase())
+      return NextResponse.json(await loadSessionIndexFromDatabase(), {
+        headers: { 'X-Sessions-Index-Source': 'database' },
+      })
     }
 
     if (isVercelRuntime) {
       return NextResponse.json(
         {
           error: 'File data source disabled on Vercel',
-          details: 'Configure DATA_SOURCE=database with DATABASE_URL (or SUPABASE_DB_URL), or set REMOTE_DATA_URL.',
+          details: 'Configure DATA_SOURCE=database with DATABASE_URL (or SUPABASE_DB_URL), or set REMOTE_DATA_URL. Or commit public/data/sessions-index.json.',
         },
         { status: 503 }
       )

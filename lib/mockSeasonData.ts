@@ -21,6 +21,7 @@ import { getTeamIdFromName } from './seasonMetadata'
 import { isDatabaseEnabled } from './db'
 import { loadCalendarRoundsFromDatabase, loadSessionPayloadFromDatabase } from './databaseData'
 import { getCalendarForYear } from './calendarData'
+import { sessionMatchesRound } from './sessionEventGuard'
 import fs from 'fs'
 import path from 'path'
 
@@ -31,64 +32,6 @@ interface CalendarRound {
   location: string
   date: string
   officialName: string
-}
-
-/** Tokens used to verify a session.json actually belongs to the expected round. */
-const ROUND_EVENT_ALIASES: Record<string, string[]> = {
-  australia: ['australian', 'melbourne'],
-  china: ['chinese', 'shanghai'],
-  japan: ['japanese', 'suzuka'],
-  bahrain: ['bahrain', 'sakhir'],
-  'saudi-arabia': ['saudi', 'jeddah'],
-  miami: ['miami'],
-  canada: ['canadian', 'montreal', 'canada'],
-  monaco: ['monaco', 'monte carlo'],
-  'barcelona-catalunya': ['barcelona', 'catalunya'],
-  austria: ['austrian', 'spielberg', 'austria'],
-  'great-britain': ['british', 'silverstone', 'great britain'],
-  belgium: ['belgian', 'spa'],
-  hungary: ['hungarian', 'budapest'],
-  netherlands: ['dutch', 'zandvoort', 'netherlands'],
-  italy: ['italian', 'monza'],
-  madrid: ['madrid'],
-  azerbaijan: ['azerbaijan', 'baku'],
-  singapore: ['singapore'],
-  'united-states': ['united states', 'austin', 'americas'],
-  mexico: ['mexico', 'méxico'],
-  brazil: ['brazil', 'são paulo', 'sao paulo'],
-  'las-vegas': ['las vegas', 'vegas'],
-  qatar: ['qatar', 'lusail'],
-  'abu-dhabi': ['abu dhabi', 'yas marina'],
-}
-
-/**
- * Return true when session event metadata looks like it belongs to `round`.
- * Catches silent data bugs (e.g. British GP files that still say Austrian GP).
- */
-function sessionMatchesRound(
-  session: SessionPayload,
-  round: CalendarRound
-): boolean {
-  const eventName = (session.meta?.event?.name || '').trim()
-  const officialName = (session.meta?.event?.officialName || '').trim()
-  const haystack = `${eventName} ${officialName}`.toLowerCase()
-  if (!haystack.trim()) return true
-
-  const aliases = ROUND_EVENT_ALIASES[round.id] ?? []
-  const tokens = [
-    ...aliases,
-    round.name.replace(/ grand prix$/i, ''),
-    round.location,
-    round.id.replace(/-/g, ' '),
-  ]
-    .map((t) => t.toLowerCase().trim())
-    .filter((t) => t.length >= 3)
-
-  // Word-boundary match so "austria" does not hit "australian".
-  return tokens.some((token) => {
-    const escaped = token.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')
-    return new RegExp(`(^|[^a-z0-9])${escaped}([^a-z0-9]|$)`).test(haystack)
-  })
 }
 
 /**
@@ -307,7 +250,13 @@ async function loadSessionData(
     }
     
     const sessionContent = fs.readFileSync(sessionPath, 'utf-8')
-    return JSON.parse(sessionContent) as SessionPayload
+    const payload = JSON.parse(sessionContent) as SessionPayload
+    // Season aggregation only needs classification + lap times for FL.
+    // Drop corner telemetry immediately so we don't hold ~10–30MB per race in memory.
+    if (payload.corners) {
+      payload.corners = {}
+    }
+    return payload
   } catch (error) {
     console.error(`Error loading session ${year}/${trackId}/${session}:`, error)
     return null

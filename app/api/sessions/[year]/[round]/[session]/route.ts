@@ -4,9 +4,67 @@ import path from 'path'
 import { isDatabaseEnabled } from '../../../../../../lib/db'
 import { loadSessionPayloadFromDatabase } from '../../../../../../lib/databaseData'
 import { isRemoteDataEnabled, fetchFromRemote } from '../../../../../../lib/remoteData'
+import { getCalendarForYear } from '../../../../../../lib/calendarData'
+import {
+  describeSessionEvent,
+  sessionMatchesRound,
+} from '../../../../../../lib/sessionEventGuard'
 
 // Mark this route as dynamic to prevent static generation issues
 export const dynamic = 'force-dynamic'
+
+function assertPayloadMatchesRound(
+  year: string,
+  round: string,
+  payload: unknown
+): NextResponse | null {
+  const calendar = getCalendarForYear(Number(year))
+  const calendarRound = calendar?.rounds.find((entry) => entry.id === round)
+  if (!calendarRound || !payload || typeof payload !== 'object') {
+    return null
+  }
+
+  const session = payload as {
+    meta?: {
+      status?: string
+      event?: { name?: string | null; officialName?: string | null }
+    }
+  }
+
+  if (session.meta?.status && session.meta.status !== 'ok') {
+    return NextResponse.json(
+      {
+        error: 'Session data unavailable',
+        details: `Session status is "${session.meta.status}" for ${year}/${round}. Re-fetch this session.`,
+        params: { year, round },
+      },
+      { status: 409 }
+    )
+  }
+
+  if (
+    !sessionMatchesRound(session, {
+      id: calendarRound.id,
+      name: calendarRound.name,
+      location: calendarRound.location,
+    })
+  ) {
+    return NextResponse.json(
+      {
+        error: 'Session event mismatch',
+        details:
+          `Remote/file payload for ${year}/${round} is "${describeSessionEvent(session)}" ` +
+          `but the calendar expects "${calendarRound.name}". ` +
+          `This is usually a stale jason-server / DB copy (FastF1 slug mismatch). ` +
+          `Copy the fixed session JSON from this repo onto the data host and re-import.`,
+        params: { year, round, expected: calendarRound.name, actual: describeSessionEvent(session) },
+      },
+      { status: 409 }
+    )
+  }
+
+  return null
+}
 
 type Params = {
   params: {
@@ -97,6 +155,11 @@ export async function GET(request: Request, { params }: Params) {
     if (isRemoteDataEnabled()) {
       const remotePath = `/api/sessions/${year}/${round}/${session.toUpperCase()}${driversFilter.length ? `?drivers=${driversFilter.join(',')}` : ''}`
       const payload = await fetchFromRemote<unknown>(remotePath)
+      const mismatch = assertPayloadMatchesRound(year, round, payload)
+      if (mismatch) {
+        console.error(`[API] Rejected mismatched remote session ${year}/${round}/${session}`)
+        return mismatch
+      }
       const elapsed = Date.now() - startTime
       const driverCount = typeof payload === 'object' && payload !== null && 'drivers' in payload
         ? Object.keys((payload as { drivers?: Record<string, unknown> }).drivers ?? {}).length
@@ -113,6 +176,11 @@ export async function GET(request: Request, { params }: Params) {
         session: session.toUpperCase(),
         driversFilter,
       })
+      const mismatch = assertPayloadMatchesRound(year, round, payload)
+      if (mismatch) {
+        console.error(`[API] Rejected mismatched database session ${year}/${round}/${session}`)
+        return mismatch
+      }
       const elapsed = Date.now() - startTime
       const driverCount = Object.keys(payload.drivers ?? {}).length
       const lapCount = payload.laps?.length ?? 0
@@ -135,6 +203,11 @@ export async function GET(request: Request, { params }: Params) {
     try {
       const raw = await readFileWithTimeout(sessionPath, 30000)
       const payload = JSON.parse(raw)
+      const mismatch = assertPayloadMatchesRound(year, round, payload)
+      if (mismatch) {
+        console.error(`[API] Rejected mismatched file session ${year}/${round}/${session}`)
+        return mismatch
+      }
       const filtered = filterDrivers(payload, driversFilter)
       
       const elapsed = Date.now() - startTime

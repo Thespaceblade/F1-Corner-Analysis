@@ -4,6 +4,26 @@ You can keep session data on **your machine** (this Mac or jason-server) and hav
 
 ---
 
+## Keep standings correct when the data host is stale
+
+`public/data/sessions/` is **not** deployed to Vercel (size limit). If `REMOTE_DATA_URL` / the DB still has old files (e.g. British GP written as Austrian GP, missing Miami/Canada/Silverstone sprints), the live site used to show wrong championship points for ~20+ seconds while re-parsing huge JSON.
+
+The app now ships small committed caches that Vercel **does** deploy:
+
+- `public/data/season-cache/{year}.json` — season standings / teams / drivers pages
+- `public/data/sessions-index.json` — which sessions exist (no phantom S/SQ)
+
+After fetching or repairing sessions locally:
+
+```bash
+npm run dev   # in one terminal
+DATA_CACHE_BASE_URL=http://127.0.0.1:3000 npm run build:data-caches
+```
+
+Then copy the updated `public/data/sessions/**` onto jason-server (or re-run `npm run import:sessions`) so race-page telemetry matches git. Until the host is updated, mismatched remote sessions (Austria-as-Britain) are rejected with HTTP 409 instead of being shown as correct.
+
+---
+
 ## Run the data server from this Mac (when jason-server is down)
 
 You can be the “data server” from the Mac you’re coding on:

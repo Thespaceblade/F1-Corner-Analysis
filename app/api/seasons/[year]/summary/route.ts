@@ -1,23 +1,21 @@
 import { NextResponse } from 'next/server'
 import { loadSeasonData } from '../../../../../lib/mockSeasonData'
+import { loadSeasonDataFromCache } from '../../../../../lib/seasonCache'
 
 export const dynamic = 'force-dynamic'
 
 /**
  * GET /api/seasons/:year/summary
- * 
+ *
  * Returns aggregated season data including driver standings, team standings,
  * and championship progression for the specified year.
- * 
- * Example: GET /api/seasons/2025/summary
- * 
- * TO INTEGRATE WITH YOUR DATA:
- * 1. Update lib/mockSeasonData.ts to load from your actual race results
- * 2. Ensure you have RoundResult data for each race in the season
- * 3. The aggregator will automatically calculate all statistics
+ *
+ * Prefers public/data/season-cache/{year}.json (deployable, ~100KB) so Vercel
+ * does not depend on a stale REMOTE_DATA_URL / DB import, and does not parse
+ * hundreds of MB of corner telemetry just to sum points.
  */
 export async function GET(
-  _request: Request,
+  request: Request,
   context: { params?: { year?: string } }
 ) {
   try {
@@ -30,9 +28,14 @@ export async function GET(
       )
     }
 
-    // Load season data (currently returns empty/mock data)
-    // TODO: Implement in lib/mockSeasonData.ts to load your actual race results
-    const seasonData = await loadSeasonData(year)
+    const url = new URL(request.url)
+    const forceLive =
+      url.searchParams.get('fresh') === '1' ||
+      url.searchParams.get('source') === 'live'
+
+    const cached = forceLive ? null : await loadSeasonDataFromCache(year)
+    const seasonData = cached ?? (await loadSeasonData(year))
+    const fromCache = Boolean(cached)
     
     // Check if we have any data
     if (!seasonData || seasonData.rounds.length === 0) {
@@ -40,7 +43,7 @@ export async function GET(
         { 
           error: 'No data available',
           message: `No race results found for ${year}. See lib/mockSeasonData.ts for data structure.`,
-          hint: 'You need to populate RoundResult[] data from your race results database/files'
+          hint: 'Run `npm run build:data-caches` after fetching sessions, or populate RoundResult[] data.'
         },
         { status: 404 }
       )
@@ -48,7 +51,11 @@ export async function GET(
     
     return NextResponse.json(seasonData, {
       headers: {
-        'Cache-Control': 'no-store',
+        // Cache is content-addressed in git; allow short CDN/browser cache.
+        'Cache-Control': fromCache
+          ? 'public, s-maxage=300, stale-while-revalidate=3600'
+          : 'no-store',
+        'X-Season-Data-Source': fromCache ? 'cache' : 'live',
       },
     })
   } catch (error) {
