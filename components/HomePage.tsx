@@ -1,85 +1,410 @@
 'use client'
 
+import React, { useEffect, useRef, useState } from 'react'
 import Link from 'next/link'
 import Image from 'next/image'
+import HeroTrackStage, { type HeroCorner } from './home/HeroTrackStage'
+
+const TRACK_PREVIEWS = [
+  { id: 'monaco', label: 'Monaco' },
+  { id: 'spa', label: 'Spa' },
+  { id: 'silverstone', label: 'Silverstone' },
+  { id: 'monza', label: 'Monza' },
+  { id: 'suzuka', label: 'Japan', file: 'japan' },
+  { id: 'singapore', label: 'Singapore' },
+  { id: 'interlagos', label: 'Brazil', file: 'brazil' },
+  { id: 'bahrain', label: 'Bahrain' },
+  { id: 'australia', label: 'Australia' },
+  { id: 'austin', label: 'USA', file: 'usa' },
+  { id: 'canada', label: 'Canada' },
+  { id: 'hungary', label: 'Hungary' },
+] as const
+
+const INSTRUMENTS = [
+  {
+    code: 'ENT',
+    title: 'Entry',
+    body: 'Braking markers and approach speed into the corner.',
+  },
+  {
+    code: 'APX',
+    title: 'Apex',
+    body: 'Minimum speed and commitment through the geometric apex.',
+  },
+  {
+    code: 'EXT',
+    title: 'Exit',
+    body: 'Traction and drive onto the following straight.',
+  },
+  {
+    code: 'ΔT',
+    title: 'Delta',
+    body: 'Where time is won or lost versus another driver.',
+  },
+] as const
+
+const LATEST = {
+  year: 2026,
+  roundLabel: 'Round 11',
+  name: 'Hungarian Grand Prix',
+  location: 'Hungaroring',
+  trackFile: 'hungary',
+  sessions: [
+    { label: 'Race', href: '/race/hungary?year=2026&session=R' },
+    { label: 'Qualifying', href: '/race/hungary?year=2026&session=Q' },
+    { label: 'Season view', href: '/season?year=2026' },
+  ],
+} as const
+
+// Hungaroring corner markers for the hero stage. Coordinates already match the
+// hungary.svg viewBox; one entry per unique turn (duplicates removed).
+const HERO_CORNERS: HeroCorner[] = [
+  { number: 1, type: 'medium', x: 17.7, y: 380.6 },
+  { number: 2, type: 'fast', x: 253.4, y: 471.4 },
+  { number: 3, type: 'fast', x: 236.9, y: 380.6 },
+  { number: 4, type: 'medium', x: 364.2, y: 153.2 },
+  { number: 5, type: 'fast', x: 358.3, y: 22.4 },
+  { number: 6, type: 'fast', x: 487.9, y: 119.0 },
+  { number: 7, type: 'medium', x: 476.2, y: 136.7 },
+  { number: 8, type: 'fast', x: 499.7, y: 226.3 },
+  { number: 9, type: 'medium', x: 568.1, y: 251.0 },
+  { number: 10, type: 'medium', x: 563.4, y: 352.4 },
+  { number: 11, type: 'fast', x: 603.4, y: 439.6 },
+  { number: 12, type: 'slow', x: 449.1, y: 615.2 },
+  { number: 13, type: 'medium', x: 344.2, y: 550.3 },
+  { number: 14, type: 'medium', x: 398.4, y: 671.7 },
+]
+
+function usePrefersReducedMotion() {
+  const [reduced, setReduced] = useState(false)
+  useEffect(() => {
+    const mq = window.matchMedia('(prefers-reduced-motion: reduce)')
+    setReduced(mq.matches)
+    const onChange = () => setReduced(mq.matches)
+    mq.addEventListener('change', onChange)
+    return () => mq.removeEventListener('change', onChange)
+  }, [])
+  return reduced
+}
+
+function useScrollReveal<T extends HTMLElement>() {
+  const ref = useRef<T | null>(null)
+  const [visible, setVisible] = useState(false)
+
+  useEffect(() => {
+    const el = ref.current
+    if (!el) return
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setVisible(true)
+          observer.disconnect()
+        }
+      },
+      { threshold: 0.16, rootMargin: '0px 0px -6% 0px' },
+    )
+    observer.observe(el)
+    return () => observer.disconnect()
+  }, [])
+
+  return { ref, visible }
+}
 
 export default function HomePage() {
+  const reducedMotion = usePrefersReducedMotion()
+  const heroRef = useRef<HTMLElement | null>(null)
+  const [pointer, setPointer] = useState({ x: 0.72, y: 0.42 })
+  const latest = useScrollReveal<HTMLElement>()
+  const paths = useScrollReveal<HTMLElement>()
+  const instruments = useScrollReveal<HTMLElement>()
+  const circuits = useScrollReveal<HTMLElement>()
+
+  useEffect(() => {
+    if (reducedMotion) return
+    const el = heroRef.current
+    if (!el) return
+
+    const onMove = (event: PointerEvent) => {
+      const rect = el.getBoundingClientRect()
+      setPointer({
+        x: Math.min(1, Math.max(0, (event.clientX - rect.left) / rect.width)),
+        y: Math.min(1, Math.max(0, (event.clientY - rect.top) / rect.height)),
+      })
+    }
+
+    el.addEventListener('pointermove', onMove)
+    return () => el.removeEventListener('pointermove', onMove)
+  }, [reducedMotion])
+
+  const marqueeTracks = [...TRACK_PREVIEWS, ...TRACK_PREVIEWS]
+
   return (
-    <div className="relative min-h-[calc(100vh-4rem)] overflow-hidden">
-      {/* Full-bleed atmospheric plane */}
-      <div className="pointer-events-none absolute inset-0" aria-hidden="true">
-        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_20%_30%,rgba(124,199,255,0.18),transparent_55%),radial-gradient(ellipse_at_80%_70%,rgba(255,80,80,0.10),transparent_50%),linear-gradient(160deg,#0a0c10_0%,#0d0f13_45%,#121820_100%)]" />
-        <div className="absolute inset-y-0 right-0 w-full md:w-[62%] opacity-[0.22] md:opacity-[0.35]">
-          <Image
-            src="/logos/f1 car.png"
-            alt=""
-            fill
-            priority
-            className="object-contain object-right-bottom scale-110 md:scale-100"
-            sizes="(max-width: 768px) 100vw, 62vw"
-          />
+    <div className="home-root">
+      <div className="home-topbar">
+        <div className="home-topbar-inner">
+          <Link href="/" className="home-topbar-brand" aria-label="F1 Corner Analysis home">
+            <Image
+              src="/logos/f1-corner-analysis.png"
+              alt=""
+              width={28}
+              height={28}
+              className="object-contain"
+              priority
+            />
+            <span>F1 Corner Analysis</span>
+          </Link>
+          <nav className="home-topbar-nav" aria-label="Primary">
+            <Link href="/race">Circuits</Link>
+            <Link href="/season">Season</Link>
+            <a
+              href="https://github.com/Thespaceblade/F1-Corner-Analysis"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              Source
+            </a>
+          </nav>
         </div>
-        <div className="absolute inset-0 bg-gradient-to-r from-[var(--page-bg)] via-[var(--page-bg)]/85 to-transparent md:via-[var(--page-bg)]/55" />
       </div>
 
-      <div className="relative z-10 mx-auto flex min-h-[calc(100vh-4rem)] max-w-6xl flex-col justify-center px-4 py-12 md:px-8">
-        <div className="max-w-xl space-y-6 md:space-y-8">
-          <div className="home-brand-enter flex items-center gap-4">
-            <div className="relative flex h-16 w-16 shrink-0 items-center justify-center rounded-full border border-accent/40 md:h-20 md:w-20">
+      <section ref={heroRef} className="home-hero">
+        <div className="home-hero-atmosphere" aria-hidden="true">
+          <div className="home-hero-grain" />
+          <div className="home-hero-vignette" />
+          <div className="home-hero-wash" />
+        </div>
+
+        <HeroTrackStage
+          svgFile={`${LATEST.trackFile}.svg`}
+          corners={HERO_CORNERS}
+          href={LATEST.sessions[0].href}
+          ctaLabel="Explore Hungaroring"
+          ariaLabel="Open Hungarian Grand Prix race analysis"
+          pointer={pointer}
+          reducedMotion={reducedMotion}
+        />
+
+        <div className="home-hero-inner">
+          <p className="home-eyebrow home-enter" style={{ animationDelay: '0.04s' }}>
+            FastF1 telemetry · corner geometry · season standings
+          </p>
+
+          <div className="home-brand home-enter" style={{ animationDelay: '0.1s' }}>
+            <span className="home-brand-mark" aria-hidden="true">
               <Image
-                src="/logos/logo-transparent.png"
+                src="/logos/f1-corner-analysis.png"
                 alt=""
-                width={80}
-                height={80}
-                className="object-contain p-1.5"
+                width={72}
+                height={72}
+                className="object-contain p-1"
                 priority
               />
-            </div>
-            <p className="font-display text-4xl font-bold tracking-tight text-[#7cc7ff] drop-shadow-[0_0_24px_rgba(124,199,255,0.35)] md:text-5xl">
-              F1 Corner Analysis
+            </span>
+            <h1 className="home-brand-name">
+              <span className="home-brand-accent">F1 Corner</span>
+              <span className="home-brand-rest"> Analysis</span>
+            </h1>
+          </div>
+
+          <p className="home-headline home-enter" style={{ animationDelay: '0.2s' }}>
+            See the lap where it bends.
+          </p>
+
+          <p className="home-lede home-enter" style={{ animationDelay: '0.3s' }}>
+            Entry, apex, and exit for every corner. Then zoom out to the championship when the weekend is over.
+          </p>
+
+          <div className="home-cta-row home-enter" style={{ animationDelay: '0.4s' }}>
+            <Link href="/race" className="home-cta home-cta-primary">
+              Open Race Analysis
+            </Link>
+            <Link href="/season" className="home-cta home-cta-ghost">
+              Season Review
+            </Link>
+          </div>
+        </div>
+
+        {!reducedMotion && (
+          <a href="#latest" className="home-scroll-cue" aria-label="Scroll to latest weekend">
+            <span className="home-scroll-cue-bar" />
+            Scroll
+          </a>
+        )}
+      </section>
+
+      <section
+        id="latest"
+        ref={latest.ref}
+        className={`home-section home-latest ${latest.visible ? 'is-visible' : ''}`}
+      >
+        <div className="home-section-inner home-latest-grid">
+          <div className="home-latest-copy">
+            <p className="home-kicker">Jump in</p>
+            <h2 className="home-section-title">Latest completed weekend</h2>
+            <p className="home-section-lede">
+              Start from the most recent race on the calendar, using the same path as the analysis tools once you pick year, track, and session.
             </p>
           </div>
 
-          <h1 className="home-copy-enter font-display text-2xl font-semibold leading-snug tracking-tight text-white md:text-3xl">
-            Corner telemetry and season standings, side by side.
-          </h1>
+          <div className="home-latest-board">
+            <div className="home-latest-meta">
+              <span className="home-mono">{LATEST.year}</span>
+              <span className="home-mono">{LATEST.roundLabel}</span>
+              <span className="home-latest-live">Completed</span>
+            </div>
+            <h3 className="home-latest-name">{LATEST.name}</h3>
+            <p className="home-latest-loc">{LATEST.location}</p>
+            <div className="home-latest-actions">
+              {LATEST.sessions.map((session) => (
+                <Link key={session.label} href={session.href} className="home-latest-chip">
+                  {session.label}
+                </Link>
+              ))}
+            </div>
+            <div className="home-latest-silhouette" aria-hidden="true">
+              <img src={`/Tracks/${LATEST.trackFile}.svg`} alt="" />
+            </div>
+          </div>
+        </div>
+      </section>
 
-          <p className="home-copy-enter text-base text-subtext-clr md:text-lg" style={{ animationDelay: '0.12s' }}>
-            Dig into session lap data track by track, or step back and read the championship story for a whole year.
-          </p>
+      <section
+        ref={paths.ref}
+        className={`home-section home-paths ${paths.visible ? 'is-visible' : ''}`}
+      >
+        <div className="home-section-inner">
+          <header className="home-section-header">
+            <p className="home-kicker">Two paths</p>
+            <h2 className="home-section-title">Pick the depth of the question</h2>
+            <p className="home-section-lede">
+              Race Analysis is for the lap. Season Review is for the year. Both read the same FastF1-backed sessions.
+            </p>
+          </header>
 
-          <div
-            className="home-cta-enter flex flex-col gap-3 sm:flex-row sm:items-stretch"
-            style={{ animationDelay: '0.22s' }}
-          >
-            <Link
-              href="/race"
-              className="group flex min-h-[3.25rem] flex-1 items-center justify-between gap-3 rounded-xl border border-accent/40 bg-accent/10 px-5 py-3 no-underline transition hover:border-accent hover:bg-accent/20"
-            >
-              <span>
-                <span className="block font-display text-lg font-semibold text-accent">Race Analysis</span>
-                <span className="block text-xs text-gray-400">Track, session, corners</span>
-              </span>
-              <span className="text-accent transition group-hover:translate-x-0.5" aria-hidden="true">
-                →
+          <div className="home-path-split">
+            <Link href="/race" className="home-path home-path-race">
+              <div className="home-path-index home-mono">01</div>
+              <h3>Race Analysis</h3>
+              <p>
+                Interactive circuits, corner deltas, entry and exit speed, sectors, stints, and consistency, filtered to the drivers you select.
+              </p>
+              <span className="home-path-go">
+                Enter session tools <span aria-hidden="true">→</span>
               </span>
             </Link>
 
-            <Link
-              href="/season"
-              className="group flex min-h-[3.25rem] flex-1 items-center justify-between gap-3 rounded-xl border border-gray-600 bg-gray-900/50 px-5 py-3 no-underline transition hover:border-gray-400 hover:bg-gray-800/70"
-            >
-              <span>
-                <span className="block font-display text-lg font-semibold text-white">Season Review</span>
-                <span className="block text-xs text-gray-400">Standings and progression</span>
-              </span>
-              <span className="text-gray-300 transition group-hover:translate-x-0.5" aria-hidden="true">
-                →
+            <Link href="/season" className="home-path home-path-season">
+              <div className="home-path-index home-mono">02</div>
+              <h3>Season Review</h3>
+              <p>
+                Standings score tables mid-season, teammate head-to-heads, championship swing charts, and form track by track.
+              </p>
+              <span className="home-path-go">
+                Open championship view <span aria-hidden="true">→</span>
               </span>
             </Link>
           </div>
         </div>
-      </div>
+      </section>
+
+      <section
+        ref={instruments.ref}
+        className={`home-section home-instruments ${instruments.visible ? 'is-visible' : ''}`}
+      >
+        <div className="home-section-inner">
+          <header className="home-section-header">
+            <p className="home-kicker">Instruments</p>
+            <h2 className="home-section-title">Built around the corner, not the highlight reel</h2>
+            <p className="home-section-lede">
+              Most telemetry tools stop at the trace. Here the circuit geometry is the frame, so you can read a lap the way an engineer talks about it.
+            </p>
+          </header>
+
+          <div className="home-instrument-row">
+            {INSTRUMENTS.map((item, index) => (
+              <article
+                key={item.code}
+                className="home-instrument"
+                style={{ transitionDelay: `${index * 70}ms` }}
+              >
+                <span className="home-instrument-code home-mono">{item.code}</span>
+                <h3>{item.title}</h3>
+                <p>{item.body}</p>
+              </article>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      <section
+        ref={circuits.ref}
+        className={`home-section home-circuits ${circuits.visible ? 'is-visible' : ''}`}
+      >
+        <div className="home-section-inner">
+          <header className="home-section-header">
+            <p className="home-kicker">Circuits</p>
+            <h2 className="home-section-title">Real track outlines, session after session</h2>
+            <p className="home-section-lede">
+              Corner overlays sit on the same geometry you see here, from street circuits to permanent high-speed layouts.
+            </p>
+          </header>
+        </div>
+
+        <div className="home-marquee" aria-hidden="true">
+          <div className={`home-marquee-track ${reducedMotion ? 'is-static' : ''}`}>
+            {marqueeTracks.map((track, index) => {
+              const file = 'file' in track ? track.file : track.id
+              return (
+                <div key={`${track.id}-${index}`} className="home-marquee-item">
+                  <img src={`/Tracks/${file}.svg`} alt="" className="home-marquee-svg" />
+                  <span className="home-mono">{track.label}</span>
+                </div>
+              )
+            })}
+          </div>
+        </div>
+
+        <div className="home-section-inner home-circuits-cta">
+          <Link href="/race" className="home-inline-link">
+            Open Race Analysis and choose a grand prix
+            <span aria-hidden="true"> →</span>
+          </Link>
+        </div>
+      </section>
+
+      <footer className="home-footer">
+        <div className="home-footer-inner">
+          <div className="home-footer-brand">
+            <Image
+              src="/logos/f1-corner-analysis.png"
+              alt=""
+              width={36}
+              height={36}
+              className="object-contain"
+            />
+            <div>
+              <div className="font-display text-lg font-semibold tracking-tight">F1 Corner Analysis</div>
+              <p className="home-footer-disclaimer">
+                Unofficial fan project · not affiliated with Formula 1 · telemetry via FastF1
+              </p>
+            </div>
+          </div>
+          <p className="home-footer-copy">
+            Made by{' '}
+            <a href="https://jasonindata.vercel.app" target="_blank" rel="noopener noreferrer">
+              Jason Charwin
+            </a>
+            {' · '}
+            <a
+              href="https://github.com/Thespaceblade/F1-Corner-Analysis"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              Source
+            </a>
+          </p>
+        </div>
+      </footer>
     </div>
   )
 }
