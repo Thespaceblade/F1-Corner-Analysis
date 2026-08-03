@@ -48,8 +48,9 @@ export default function TeamsPage() {
 
   return (
     <AppShell
+      headerVariant="hero"
       kicker="Constructors"
-      title="Teams"
+      title={selectedYear > 0 ? `${selectedYear} Teams` : 'Teams'}
       description="Every constructor on the grid. Open a team to see how each car performed at every circuit."
       headerAside={yearAside}
       aside={

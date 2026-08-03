@@ -81,8 +81,9 @@ export default function DriversPage() {
 
   return (
     <AppShell
+      headerVariant="hero"
       kicker="Grid"
-      title="Drivers"
+      title={selectedYear > 0 ? `${selectedYear} Drivers` : 'Drivers'}
       description="Every driver on the grid. Open a driver to see their result at every circuit this season."
       headerAside={yearAside}
       aside={
