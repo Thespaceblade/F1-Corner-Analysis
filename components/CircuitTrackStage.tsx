@@ -41,8 +41,8 @@ const PLANE_SCALE_2D = 1.15
 const AUTO_SPIN_MS = 110_000
 const DRAG_SENSITIVITY = 0.28
 const INERTIA_FRICTION = 0.965
-/** Per-frame approach factor for pitch/scale (higher = snappier). */
-const ORIENT_LERP = 0.085
+/** Per-frame approach factor for pitch/scale (~0.8s settle at 60fps). */
+const ORIENT_LERP = 0.055
 
 /** Per-circuit visual size tweaks relative to the default stage scale. */
 export function getCircuitVisualScale(
@@ -143,7 +143,6 @@ export default function CircuitTrackStage({
   const orientationRef = useRef(orientation)
   const pitchRef = useRef(targetsForOrientation(orientation, scaleFactor).pitch)
   const scaleRef = useRef(targetsForOrientation(orientation, scaleFactor).scale)
-  const initial = targetsForOrientation(orientation, scaleFactor)
 
   useEffect(() => {
     autoSpinRef.current = autoSpin && !reducedMotion && orientation === '3d'
@@ -295,7 +294,8 @@ export default function CircuitTrackStage({
         className="circuit-track-stage-plane"
         style={{
           aspectRatio: `${aspectW} / ${aspectH}`,
-          transform: planeTransform(0, initial.pitch, initial.scale),
+          // Transform is owned exclusively by the rAF loop so orientation
+          // changes lerp in space instead of snapping via React style updates.
         }}
       >
         {geometry && geometry.lapD ? (
