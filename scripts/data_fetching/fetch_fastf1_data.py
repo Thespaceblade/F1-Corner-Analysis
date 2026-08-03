@@ -26,6 +26,13 @@ def parse_args(argv: Sequence[str] | None = None) -> argparse.Namespace:
     parser.add_argument("--round", required=True, help="Round slug matching tracks.json (e.g. 'bahrain')")
     parser.add_argument("--session", required=True, help="Session code (FP1, FP2, FP3, Q, R, SQ, etc.)")
     parser.add_argument(
+        "--round-number",
+        type=int,
+        default=None,
+        help="Optional championship round number. Preferred over slug to avoid FastF1 fuzzy-match bugs "
+        "(e.g. great-britain → Austrian GP). When omitted, looked up from public/data/calendar{year}.json.",
+    )
+    parser.add_argument(
         "--drivers",
         nargs="*",
         default=None,
@@ -40,6 +47,20 @@ def parse_args(argv: Sequence[str] | None = None) -> argparse.Namespace:
     return parser.parse_args(argv)
 
 
+def lookup_round_number(year: int, round_slug: str) -> int | None:
+    calendar_path = Path(f"public/data/calendar{year}.json")
+    if not calendar_path.exists():
+        return None
+    try:
+        rounds = json.loads(calendar_path.read_text()).get("rounds", [])
+    except Exception:
+        return None
+    for entry in rounds:
+        if entry.get("id") == round_slug:
+            return entry.get("round")
+    return None
+
+
 def main(argv: Sequence[str] | None = None) -> int:
     args = parse_args(argv)
     config = PipelineConfig()
@@ -50,8 +71,10 @@ def main(argv: Sequence[str] | None = None) -> int:
         session_code=args.session.upper(),
     )
 
+    round_number = args.round_number if args.round_number is not None else lookup_round_number(args.year, args.round)
+
     cache_dir = config.resolve_cache(identifier.year, identifier.round_slug, identifier.session_code)
-    fetch_result = fetch_session(identifier, cache_dir)
+    fetch_result = fetch_session(identifier, cache_dir, round_number=round_number)
     payload = build_session_payload(fetch_result, drivers=args.drivers)
 
     output_dir = args.output or config.resolve_output(identifier.year, identifier.round_slug, identifier.session_code)

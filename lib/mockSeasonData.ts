@@ -33,6 +33,64 @@ interface CalendarRound {
   officialName: string
 }
 
+/** Tokens used to verify a session.json actually belongs to the expected round. */
+const ROUND_EVENT_ALIASES: Record<string, string[]> = {
+  australia: ['australian', 'melbourne'],
+  china: ['chinese', 'shanghai'],
+  japan: ['japanese', 'suzuka'],
+  bahrain: ['bahrain', 'sakhir'],
+  'saudi-arabia': ['saudi', 'jeddah'],
+  miami: ['miami'],
+  canada: ['canadian', 'montreal', 'canada'],
+  monaco: ['monaco', 'monte carlo'],
+  'barcelona-catalunya': ['barcelona', 'catalunya'],
+  austria: ['austrian', 'spielberg', 'austria'],
+  'great-britain': ['british', 'silverstone', 'great britain'],
+  belgium: ['belgian', 'spa'],
+  hungary: ['hungarian', 'budapest'],
+  netherlands: ['dutch', 'zandvoort', 'netherlands'],
+  italy: ['italian', 'monza'],
+  madrid: ['madrid'],
+  azerbaijan: ['azerbaijan', 'baku'],
+  singapore: ['singapore'],
+  'united-states': ['united states', 'austin', 'americas'],
+  mexico: ['mexico', 'méxico'],
+  brazil: ['brazil', 'são paulo', 'sao paulo'],
+  'las-vegas': ['las vegas', 'vegas'],
+  qatar: ['qatar', 'lusail'],
+  'abu-dhabi': ['abu dhabi', 'yas marina'],
+}
+
+/**
+ * Return true when session event metadata looks like it belongs to `round`.
+ * Catches silent data bugs (e.g. British GP files that still say Austrian GP).
+ */
+function sessionMatchesRound(
+  session: SessionPayload,
+  round: CalendarRound
+): boolean {
+  const eventName = (session.meta?.event?.name || '').trim()
+  const officialName = (session.meta?.event?.officialName || '').trim()
+  const haystack = `${eventName} ${officialName}`.toLowerCase()
+  if (!haystack.trim()) return true
+
+  const aliases = ROUND_EVENT_ALIASES[round.id] ?? []
+  const tokens = [
+    ...aliases,
+    round.name.replace(/ grand prix$/i, ''),
+    round.location,
+    round.id.replace(/-/g, ' '),
+  ]
+    .map((t) => t.toLowerCase().trim())
+    .filter((t) => t.length >= 3)
+
+  // Word-boundary match so "austria" does not hit "australian".
+  return tokens.some((token) => {
+    const escaped = token.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')
+    return new RegExp(`(^|[^a-z0-9])${escaped}([^a-z0-9]|$)`).test(haystack)
+  })
+}
+
 /**
  * Load season data from your existing session files
  */
@@ -134,6 +192,18 @@ async function loadSingleRound(
     console.warn(`No race data for ${round.name}`)
     return null
   }
+
+  if (!sessionMatchesRound(raceData, round)) {
+    const eventLabel =
+      raceData.meta?.event?.name ||
+      raceData.meta?.event?.officialName ||
+      'unknown event'
+    console.error(
+      `[loadSingleRound] Skipping ${round.id}: session event "${eventLabel}" does not match calendar round "${round.name}". ` +
+        `Re-fetch this session — championship points would otherwise be wrong.`
+    )
+    return null
+  }
   
   // Convert race results
   const raceResults = extractRaceResults(raceData, qualiData, year, round.round)
@@ -146,8 +216,15 @@ async function loadSingleRound(
   ])
 
   if (sprintData && sprintData.raceResults && sprintData.raceResults.length > 0) {
-    sprintResults = extractRaceResults(sprintData, sprintQualiData, year, round.round)
-    console.log(`[loadSingleRound] Sprint weekend at ${round.name}: loaded ${sprintResults.length} sprint results`)
+    if (!sessionMatchesRound(sprintData, round)) {
+      console.error(
+        `[loadSingleRound] Ignoring sprint data for ${round.id}: event mismatch ` +
+          `(${sprintData.meta?.event?.name || 'unknown'})`
+      )
+    } else {
+      sprintResults = extractRaceResults(sprintData, sprintQualiData, year, round.round)
+      console.log(`[loadSingleRound] Sprint weekend at ${round.name}: loaded ${sprintResults.length} sprint results`)
+    }
   }
   
   // Combine race and sprint points
