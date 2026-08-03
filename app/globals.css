@@ -4573,8 +4573,11 @@ main:has(.track-visualiser) {
   height: clamp(26rem, 58vh, 40rem);
   overflow: hidden;
   border: none;
-  border-radius: 0;
-  background: transparent;
+  border-radius: 0.5rem;
+  background:
+    radial-gradient(ellipse at 40% 28%, rgba(225, 6, 0, 0.16), transparent 55%),
+    radial-gradient(ellipse at 70% 85%, rgba(225, 6, 0, 0.06), transparent 45%),
+    linear-gradient(180deg, #101010, #070708);
 }
 
 /*
