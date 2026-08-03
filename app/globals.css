@@ -3269,6 +3269,10 @@ body{
   margin: 0;
 }
 
+.track-selector-svg-wrap .track-red-sil-stroke {
+  stroke-width: 2.35;
+}
+
 .track-visualiser-kicker {
   margin: 0;
   font-size: clamp(0.72rem, 1.05vw, 0.88rem);

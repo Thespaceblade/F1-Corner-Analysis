@@ -937,6 +937,7 @@ export default function TrackSelectorPage() {
                     {track.svgFile ? (
                       <RedTrackSilhouette
                         svgFile={track.svgFile}
+                        weight="thin"
                         className={track.disabled ? 'is-muted' : undefined}
                       />
                     ) : (
