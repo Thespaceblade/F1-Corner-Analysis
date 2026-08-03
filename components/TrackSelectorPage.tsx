@@ -160,7 +160,7 @@ function sponsorFromOfficial(officialName?: string, eventName?: string): string 
 
 function visualiserKicker(track: TrackCard): string {
   if (track.disabled) {
-    return track.round != null ? `Upcoming · R${track.round}` : 'Upcoming weekend'
+    return track.round != null ? `Round ${track.round}` : 'Upcoming weekend'
   }
   const sponsor = sponsorFromOfficial(track.officialName, track.name)
   if (sponsor) return sponsor
@@ -182,19 +182,6 @@ function rememberTrack(year: number, trackId: string) {
   } catch {
     // ignore
   }
-}
-
-function statusTone(status?: TrackCard['status'], disabled?: boolean) {
-  if (status === 'postponed') return 'is-postponed'
-  if (status === 'upcoming' || disabled) return 'is-upcoming'
-  return 'is-ready'
-}
-
-function statusLabel(track: TrackCard) {
-  if (track.meta) return track.meta
-  if (track.status === 'postponed') return 'Postponed'
-  if (track.status === 'upcoming' || track.disabled) return 'Upcoming'
-  return 'Ready'
 }
 
 function railLabel(track: TrackCard) {
@@ -956,11 +943,8 @@ export default function TrackSelectorPage() {
                       <div className="track-selector-svg-fallback">No map</div>
                     )}
                     {track.round != null && (
-                      <span className="track-selector-round">R{track.round}</span>
+                      <span className="track-selector-round">Round {track.round}</span>
                     )}
-                    <span className={`track-selector-status ${statusTone(track.status, track.disabled)}`}>
-                      {statusLabel(track)}
-                    </span>
                   </div>
                   <div className="track-selector-meta">
                     <div className="track-selector-name-row">
