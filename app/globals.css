@@ -4541,23 +4541,52 @@ main:has(.track-visualiser) {
   border-color: var(--accent-border);
 }
 
-/* Race analysis: same extruded ribbon stage as circuits visualiser */
-.race-circuit-stage-host {
-  position: relative;
-  width: 100%;
-  aspect-ratio: 1 / 1;
-  max-width: 460px;
-  margin: 0 auto;
-  overflow: hidden;
-  /* No inner bezel — sit flush inside the panel */
-  border: none;
-  border-radius: 0;
-  background: transparent;
+/* Race analysis: ~65 / 35 track map vs info */
+.race-track-split {
+  grid-template-columns: 1fr;
 }
 
-.race-circuit-stage-host .circuit-track-stage-plane {
-  width: min(88%, 28rem);
-  max-height: 86%;
+@media (min-width: 1024px) {
+  .race-track-split {
+    grid-template-columns: minmax(0, 65fr) minmax(0, 35fr);
+  }
+}
+
+.race-track-map-panel {
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+}
+
+.race-track-map-panel .track-map-mode-bar {
+  flex: 0 0 auto;
+}
+
+/* Race analysis: fill the panel — no inset crop box */
+.race-circuit-stage-host {
+  position: relative;
+  flex: 1 1 auto;
+  width: 100%;
+  max-width: none;
+  margin: 0;
+  min-height: 26rem;
+  height: clamp(26rem, 58vh, 40rem);
+  overflow: hidden;
+  border: none;
+  border-radius: 0.5rem;
+  background:
+    radial-gradient(ellipse at 40% 28%, rgba(225, 6, 0, 0.16), transparent 55%),
+    radial-gradient(ellipse at 70% 85%, rgba(225, 6, 0, 0.06), transparent 45%),
+    linear-gradient(180deg, #101010, #070708);
+}
+
+/*
+ * Panel fit uses near-1.0 JS scale, so the layout box can occupy most of the host
+ * without the perspective scale overflowing into overflow:hidden crop.
+ */
+.race-circuit-stage-host .circuit-track-stage.is-fit-panel .circuit-track-stage-plane {
+  width: min(96%, 100%);
+  max-height: 92%;
 }
 
 .race-circuit-stage-host .circuit-track-stage.is-2d .circuit-track-stage-shadow {
