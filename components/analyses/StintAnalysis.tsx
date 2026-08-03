@@ -11,7 +11,7 @@ type StintAnalysisProps = {
 }
 
 const FALLBACK_COLORS = [
-  '#7cc7ff',
+  '#e10600',
   '#22c55e',
   '#facc15',
   '#f97316',

@@ -23,7 +23,7 @@ export default function StatisticsCard({
   description,
   trend,
   trendValue,
-  color = '#7cc7ff',
+  color = '#e10600',
   size = 'md',
   variant = 'default',
 }: StatisticsCardProps) {
@@ -164,7 +164,7 @@ export function RankingStatCard({
     rank === 1 ? '#FFD700' : // Gold
     rank === 2 ? '#C0C0C0' : // Silver
     rank === 3 ? '#CD7F32' : // Bronze
-    '#7cc7ff'
+    '#e10600'
 
   return (
     <StatisticsCard

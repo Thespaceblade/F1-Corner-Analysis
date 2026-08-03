@@ -1,5 +1,5 @@
-import ClientPage from '../../components/ClientPage'
+import TrackSelectorPage from '../../components/TrackSelectorPage'
 
-export default function RacePage() {
-  return <ClientPage />
+export default function RaceIndexPage() {
+  return <TrackSelectorPage />
 }

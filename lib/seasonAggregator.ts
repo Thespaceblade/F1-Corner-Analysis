@@ -54,6 +54,13 @@ export function aggregateSeasonData(
   for (const teamId of allTeams) {
     teams[teamId] = calculateTeamStats(teamId, rounds, year)
   }
+
+  // Assign constructor championship positions from points order
+  Object.entries(teams)
+    .sort((a, b) => b[1].totalPoints - a[1].totalPoints)
+    .forEach(([teamId], index) => {
+      teams[teamId] = { ...teams[teamId], constructorPosition: index + 1 }
+    })
   
   // Build championship progression
   const championshipProgression = buildChampionshipProgression(rounds)

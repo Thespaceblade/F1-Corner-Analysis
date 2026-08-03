@@ -1648,6 +1648,136 @@ a.track-selector-card:hover .track-selector-svg,
   border-radius: 8px;
 }
 
+/* 3D circuit viewer */
+.track-map-mode-bar {
+  display: inline-flex;
+  gap: 0.25rem;
+  margin-bottom: 0.75rem;
+  padding: 0.2rem;
+  border-radius: 0.5rem;
+  border: 1px solid var(--border-clr);
+  background: rgba(255, 255, 255, 0.03);
+}
+
+.track-map-mode-btn {
+  min-width: 2.75rem;
+  padding: 0.3rem 0.65rem;
+  border-radius: 0.35rem;
+  border: 1px solid transparent;
+  background: transparent;
+  color: var(--subtext-clr);
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: color 0.15s ease, background 0.15s ease, border-color 0.15s ease;
+}
+
+.track-map-mode-btn:hover {
+  color: var(--text-clr);
+}
+
+.track-map-mode-btn.is-active {
+  color: #fff;
+  background: var(--accent-soft);
+  border-color: var(--accent-border);
+}
+
+.track-3d-panel {
+  position: relative;
+  width: 100%;
+}
+
+.track-3d-panel-meta {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 0.75rem;
+  margin-bottom: 0.55rem;
+}
+
+.track-3d-panel-label {
+  font-size: 0.68rem;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--subtext-clr);
+}
+
+.track-3d-panel-hint {
+  font-size: 0.68rem;
+  color: rgba(161, 161, 170, 0.85);
+}
+
+.track-3d-canvas-host {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 1 / 1;
+  max-width: 460px;
+  margin: 0 auto;
+  overflow: hidden;
+  border-radius: 0.65rem;
+  background:
+    radial-gradient(ellipse at 40% 28%, rgba(225, 6, 0, 0.14), transparent 55%),
+    linear-gradient(180deg, #101010, #070708);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.track-3d-panel.is-compact .track-3d-canvas-host {
+  max-width: none;
+  aspect-ratio: 16 / 11;
+  height: 100%;
+  min-height: 9.5rem;
+  border: none;
+  border-radius: 0;
+  background: transparent;
+}
+
+.track-3d-loading {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  background: rgba(8, 8, 8, 0.55);
+}
+
+.track-3d-error {
+  margin-top: 0.65rem;
+  padding: 0.65rem 0.75rem;
+  border-radius: 0.45rem;
+  border: 1px solid rgba(239, 68, 68, 0.35);
+  background: rgba(127, 29, 29, 0.25);
+  color: #fca5a5;
+  font-size: 0.8rem;
+}
+
+.track-3d-hover-chip {
+  position: absolute;
+  left: 0.75rem;
+  bottom: 0.75rem;
+  z-index: 3;
+  padding: 0.28rem 0.55rem;
+  border-radius: 0.35rem;
+  border: 1px solid var(--accent-border);
+  background: rgba(10, 10, 10, 0.82);
+  color: #ff8f86;
+  font-size: 0.68rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  pointer-events: none;
+}
+
+.track-selector-featured-3d {
+  width: 100%;
+  height: 100%;
+}
+
+.track-selector-featured-map .track-3d-panel {
+  width: 100%;
+  height: 100%;
+}
+
 .input-slim{
   height: 40px; /* h-10 */
   padding-left: 12px;

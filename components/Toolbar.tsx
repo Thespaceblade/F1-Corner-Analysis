@@ -3,7 +3,6 @@
 import React, { useEffect, useMemo, useRef, useState } from 'react'
 import { createPortal } from 'react-dom'
 import { getSeasonTeams } from '../lib/teamData'
-import { getCountryFlagIcon } from '../lib/countryFlags'
 import CustomSelect from './CustomSelect'
 import { getAvailableDriversForTrack } from '../lib/trackDrivers'
 import type { SessionPayload } from '../lib/sessionDataClient'
@@ -11,16 +10,8 @@ import { getDriverPhoto } from '../lib/driverPhotos'
 
 type ToolbarProps = {
   mode?: 'race' | 'season'
-  tracks: Array<{
-    id: string
-    name: string
-    countryCode?: string
-    disabled?: boolean
-    status?: 'completed' | 'upcoming' | 'postponed'
-    meta?: string
-  }>
-  selectedTrack: string
-  onTrackChangeAction: (trackId: string) => void
+  /** Selected track id, used for driver availability and not shown as a control. */
+  selectedTrack?: string
   years: number[]
   selectedYear: number
   onYearChangeAction: (year: number) => void
@@ -67,9 +58,7 @@ function DriverProfilePic({ driverCode, className = "w-8 h-8" }: { driverCode: s
 
 export default function Toolbar({
   mode = 'race',
-  tracks,
-  selectedTrack,
-  onTrackChangeAction,
+  selectedTrack = '',
   years,
   selectedYear,
   onYearChangeAction,
@@ -379,20 +368,6 @@ export default function Toolbar({
     [years]
   )
 
-  const trackOptions = useMemo(
-    () => [
-      { value: '', label: 'Track' },
-      ...tracks.map((t) => ({
-        value: t.id,
-        label: t.name,
-        icon: getCountryFlagIcon(t.countryCode),
-        meta: t.meta,
-        disabled: t.disabled,
-      })),
-    ],
-    [tracks]
-  )
-
   const sessionPills = useMemo(() => {
     if (!selectedTrack) {
       return sessionOptions
@@ -423,13 +398,11 @@ export default function Toolbar({
 
   return (
     <div className="space-y-2">
-      {/* Event: year + track */}
+      {/* Event: year */}
       <div className="panel px-3 py-2.5 flex flex-col sm:flex-row sm:items-center gap-3">
         <div className="shrink-0 sm:border-r sm:border-gray-700/80 sm:pr-4">
-          <div className="text-[10px] uppercase tracking-wider text-gray-500 font-semibold">Event</div>
-          <div className="text-xs text-gray-400 mt-0.5">
-            {mode === 'season' ? 'Season' : 'Season and grand prix'}
-          </div>
+          <div className="text-[10px] uppercase tracking-wider text-gray-500 font-semibold">Season</div>
+          <div className="text-xs text-gray-400 mt-0.5">Championship year</div>
         </div>
         <div className="flex items-center gap-2 sm:gap-3 min-w-0 flex-1">
           <CustomSelect
@@ -441,17 +414,6 @@ export default function Toolbar({
             className="w-[88px] sm:w-[100px]"
             minWidth="88px"
           />
-          {mode === 'race' && (
-            <CustomSelect
-              options={trackOptions}
-              value={selectedTrack}
-              onChange={(v) => onTrackChangeAction(String(v))}
-              placeholder="Select Track"
-              placeholderValue=""
-              className="min-w-0 flex-1 lg:flex-none lg:w-[240px]"
-              minWidth="160px"
-            />
-          )}
         </div>
       </div>
 
@@ -461,17 +423,15 @@ export default function Toolbar({
         <div className="shrink-0 sm:border-r sm:border-gray-700/80 sm:pr-4">
           <div className="text-[10px] uppercase tracking-wider text-gray-500 font-semibold">Session</div>
           <div className="text-xs text-gray-400 mt-0.5">
-            {selectedTrack
-              ? availableSessions.length > 0
-                ? 'Qualifying, race, or sprint'
-                : 'No session data for this track yet'
-              : 'Select a track first'}
+            {availableSessions.length > 0
+              ? 'Qualifying, race, or sprint'
+              : 'No session data for this track yet'}
           </div>
         </div>
 
         <div className="flex flex-wrap items-center gap-2 min-w-0 flex-1">
           {sessionPills.length === 0 ? (
-            <span className="text-xs text-gray-500">—</span>
+            <span className="text-xs text-gray-500">N/A</span>
           ) : (
             sessionPills.map((opt) => {
               const isAvailable = !selectedTrack || availableSessions.includes(opt.value)

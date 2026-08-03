@@ -1,7 +1,7 @@
 'use client'
 
 import React, { useEffect, useMemo, useState } from 'react'
-import AppNav from './AppNav'
+import AppShell from './AppShell'
 import Toolbar from './Toolbar'
 import SeasonReview from './SeasonReview'
 import Chatbot from './Chatbot'
@@ -27,6 +27,7 @@ export default function SeasonPage() {
     if (typeof window === 'undefined') return
 
     try {
+      const queryYear = Number(new URLSearchParams(window.location.search).get('year'))
       const saved = window.localStorage.getItem(PREFERENCES_STORAGE_KEY)
       if (saved) {
         const parsed = JSON.parse(saved) as {
@@ -38,6 +39,7 @@ export default function SeasonPage() {
           setSelectedDrivers(parsed.selectedDrivers.filter((d): d is string => typeof d === 'string'))
         }
       }
+      if (Number.isInteger(queryYear) && queryYear > 0) setSelectedYear(queryYear)
     } catch (error) {
       console.warn('[SeasonPage] Failed to restore preferences:', error)
     } finally {
@@ -71,48 +73,46 @@ export default function SeasonPage() {
   }, [preferencesHydrated, selectedYear, selectedDrivers])
 
   return (
-    <div>
-      <main className="mx-auto max-w-6xl px-4">
-        <AppNav />
+    <AppShell
+      kicker="Championship"
+      title={selectedYear > 0 ? `${selectedYear} Season` : 'Season Review'}
+      description="Standings, head-to-heads, progression, and form by circuit type across the whole year."
+      aside={
+        <Chatbot
+          context={{
+            track: '',
+            year: selectedYear,
+            session: '',
+            drivers: selectedDrivers,
+          }}
+        />
+      }
+    >
+      <div className="page-section page-section-2">
+        <Toolbar
+          mode="season"
+          years={availableYears.length > 0 ? availableYears : [selectedYear]}
+          selectedYear={selectedYear}
+          onYearChangeAction={setSelectedYear}
+          selectedDrivers={selectedDrivers}
+          onDriversChangeAction={setSelectedDrivers}
+          selectedSession=""
+          onSessionChangeAction={() => {}}
+          availableSessions={[]}
+          roundNumber={null}
+          sessionData={null}
+        />
+      </div>
 
-        <div className="page-section page-section-2">
-          <Toolbar
-            mode="season"
-            tracks={[]}
-            selectedTrack=""
-            onTrackChangeAction={() => {}}
-            years={availableYears.length > 0 ? availableYears : [selectedYear]}
-            selectedYear={selectedYear}
-            onYearChangeAction={setSelectedYear}
-            selectedDrivers={selectedDrivers}
-            onDriversChangeAction={setSelectedDrivers}
-            selectedSession=""
-            onSessionChangeAction={() => {}}
-            availableSessions={[]}
-            roundNumber={null}
-            sessionData={null}
-          />
-        </div>
-
-        {selectedYear > 0 ? (
-          <SeasonReview year={selectedYear} selectedDrivers={selectedDrivers} />
-        ) : (
-          <section className="mt-6 page-section page-section-3">
-            <div className="panel p-8 text-center text-sm text-gray-400">
-              Select a year from the dropdown above to view season statistics and championship analysis.
-            </div>
-          </section>
-        )}
-      </main>
-
-      <Chatbot
-        context={{
-          track: '',
-          year: selectedYear,
-          session: '',
-          drivers: selectedDrivers,
-        }}
-      />
-    </div>
+      {selectedYear > 0 ? (
+        <SeasonReview year={selectedYear} selectedDrivers={selectedDrivers} />
+      ) : (
+        <section className="mt-6 page-section page-section-3">
+          <div className="panel p-8 text-center text-sm text-gray-400">
+            Select a year above to load season statistics.
+          </div>
+        </section>
+      )}
+    </AppShell>
   )
 }
