@@ -26,6 +26,11 @@ type CircuitTrackStageProps = {
    * `2d` = flattened top-down. Transitions animate the plane in space.
    */
   orientation?: CircuitTrackOrientation
+  /**
+   * `stage` = circuits expanded visualiser (default).
+   * `panel` = race-page map: fill the host without overscaling into crop.
+   */
+  fit?: 'stage' | 'panel'
 }
 
 /** Dense identical slabs so the vertical face reads as one continuous ribbon. */
@@ -38,6 +43,9 @@ const PITCH_3D = 68
 const PITCH_2D = 8
 const PLANE_SCALE = 1.4
 const PLANE_SCALE_2D = 1.15
+/** Panel embed uses near-1.0 scale so layout width can fill the host without crop. */
+const PANEL_PLANE_SCALE = 1.06
+const PANEL_PLANE_SCALE_2D = 1.02
 const AUTO_SPIN_MS = 110_000
 const DRAG_SENSITIVITY = 0.28
 const INERTIA_FRICTION = 0.965
@@ -108,7 +116,17 @@ function planeTransform(yawDeg: number, pitchDeg: number, scale: number) {
   return `perspective(1400px) rotateX(${pitchDeg}deg) scale(${scale}) rotateZ(${yawDeg}deg)`
 }
 
-function targetsForOrientation(orientation: CircuitTrackOrientation, scaleFactor: number) {
+function targetsForOrientation(
+  orientation: CircuitTrackOrientation,
+  scaleFactor: number,
+  fit: 'stage' | 'panel',
+) {
+  if (fit === 'panel') {
+    if (orientation === '2d') {
+      return { pitch: PITCH_2D, scale: PANEL_PLANE_SCALE_2D * scaleFactor }
+    }
+    return { pitch: PITCH_3D, scale: PANEL_PLANE_SCALE * scaleFactor }
+  }
   if (orientation === '2d') {
     return { pitch: PITCH_2D, scale: PLANE_SCALE_2D * scaleFactor }
   }
@@ -128,6 +146,7 @@ export default function CircuitTrackStage({
   reducedMotion = false,
   scaleFactor = 1,
   orientation = '3d',
+  fit = 'stage',
 }: CircuitTrackStageProps) {
   const [geometry, setGeometry] = useState<LapGeometry | null>(null)
   const [fitted, setFitted] = useState<FittedBox | null>(null)
@@ -141,8 +160,9 @@ export default function CircuitTrackStage({
   const autoSpinRef = useRef(autoSpin && !reducedMotion && orientation === '3d')
   const scaleFactorRef = useRef(scaleFactor)
   const orientationRef = useRef(orientation)
-  const pitchRef = useRef(targetsForOrientation(orientation, scaleFactor).pitch)
-  const scaleRef = useRef(targetsForOrientation(orientation, scaleFactor).scale)
+  const fitRef = useRef(fit)
+  const pitchRef = useRef(targetsForOrientation(orientation, scaleFactor, fit).pitch)
+  const scaleRef = useRef(targetsForOrientation(orientation, scaleFactor, fit).scale)
 
   useEffect(() => {
     autoSpinRef.current = autoSpin && !reducedMotion && orientation === '3d'
@@ -152,6 +172,10 @@ export default function CircuitTrackStage({
   useEffect(() => {
     scaleFactorRef.current = scaleFactor
   }, [scaleFactor])
+
+  useEffect(() => {
+    fitRef.current = fit
+  }, [fit])
 
   useEffect(() => {
     let active = true
@@ -191,7 +215,11 @@ export default function CircuitTrackStage({
       last = now
       const lerp = 1 - Math.pow(1 - ORIENT_LERP, dt / 16)
 
-      const target = targetsForOrientation(orientationRef.current, scaleFactorRef.current)
+      const target = targetsForOrientation(
+        orientationRef.current,
+        scaleFactorRef.current,
+        fitRef.current,
+      )
       pitchRef.current += (target.pitch - pitchRef.current) * lerp
       scaleRef.current += (target.scale - scaleRef.current) * lerp
 
@@ -282,7 +310,7 @@ export default function CircuitTrackStage({
 
   return (
     <div
-      className={`circuit-track-stage is-interactive${dragging ? ' is-dragging' : ''}${reducedMotion ? '' : ' is-animated'} is-${orientation} ${className}`.trim()}
+      className={`circuit-track-stage is-interactive${dragging ? ' is-dragging' : ''}${reducedMotion ? '' : ' is-animated'} is-${orientation} is-fit-${fit} ${className}`.trim()}
       role="img"
       aria-label="Circuit map — drag horizontally to spin"
       onPointerDown={onPointerDown}
