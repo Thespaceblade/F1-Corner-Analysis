@@ -424,6 +424,10 @@ def build_session_payload(
             "defaultCompound": getattr(row, "Compound", None),
         }
 
+    # Classification often includes DNS / 0-lap drivers who never appear in laps.
+    # Merge them into `drivers` so the UI/API can select them consistently.
+    _merge_classification_drivers(drivers_payload, session, selected_drivers)
+
     lap_entries: List[Dict[str, Any]] = []
     total_laps = int(len(laps_df))
     valid_laps = 0
@@ -643,57 +647,93 @@ def build_session_payload(
     if qualifyingBoundaries is not None:
         payload["qualifyingBoundaries"] = qualifyingBoundaries
     
-    # Extract race results/classification if this is a race session
-    if hasattr(session, 'results') and session.results is not None and not session.results.empty:
+    # Attach classification tables by session type (avoid writing raceResults onto Q).
+    session_code = str(identifier.session_code or "").upper()
+    is_race_like = session_code in {"R", "S"}
+    is_quali_like = session_code in {"Q", "SQ", "SSQ", "FQ"}
+
+    if hasattr(session, "results") and session.results is not None and not session.results.empty:
         results_df = session.results
-        race_results = []
-        
-        for _, row in results_df.iterrows():
-            driver_code = str(row.get('Abbreviation', ''))
-            if not driver_code:
-                continue
-            
-            # Extract race classification data
-            race_results.append({
-                'position': _safe_int(row.get('Position')),
-                'driverCode': driver_code,
-                'driverNumber': _safe_int(row.get('DriverNumber')),
-                'teamName': str(row.get('TeamName', '')) or None,
-                'gridPosition': _safe_int(row.get('GridPosition')),
-                'status': str(row.get('Status', '')) or 'Unknown',
-                'points': float(row.get('Points', 0.0)) if pd.notna(row.get('Points')) else 0.0,
-                'classifiedPosition': str(row.get('ClassifiedPosition', '')) or None,
-                'time': _timedelta_to_seconds(row.get('Time')),
-                'lapsCompleted': _safe_int(row.get('LapsCompleted')) or _safe_int(row.get('Laps')),
-            })
-        
-        # Sort by finishing position
-        race_results.sort(key=lambda x: x['position'] if x['position'] is not None else 999)
-        payload['raceResults'] = race_results
-    
-    # Extract qualifying results if this is a qualifying session
-    if hasattr(session, 'results') and session.results is not None and not session.results.empty:
-        results_df = session.results
-        quali_results = []
-        
-        for _, row in results_df.iterrows():
-            driver_code = str(row.get('Abbreviation', ''))
-            if not driver_code:
-                continue
-            
-            # Extract qualifying times
-            quali_results.append({
-                'position': _safe_int(row.get('Position')),
-                'driverCode': driver_code,
-                'driverNumber': _safe_int(row.get('DriverNumber')),
-                'teamName': str(row.get('TeamName', '')) or None,
-                'q1Time': _timedelta_to_seconds(row.get('Q1')),
-                'q2Time': _timedelta_to_seconds(row.get('Q2')),
-                'q3Time': _timedelta_to_seconds(row.get('Q3')),
-            })
-        
-        # Sort by qualifying position
-        quali_results.sort(key=lambda x: x['position'] if x['position'] is not None else 999)
-        payload['qualifyingResults'] = quali_results
+        if is_race_like:
+            race_results = []
+            for _, row in results_df.iterrows():
+                driver_code = str(row.get("Abbreviation", "") or "")
+                if not driver_code:
+                    continue
+                race_results.append(
+                    {
+                        "position": _safe_int(row.get("Position")),
+                        "driverCode": driver_code,
+                        "driverNumber": _safe_int(row.get("DriverNumber")),
+                        "teamName": str(row.get("TeamName", "")) or None,
+                        "gridPosition": _safe_int(row.get("GridPosition")),
+                        "status": str(row.get("Status", "")) or "Unknown",
+                        "points": float(row.get("Points", 0.0)) if pd.notna(row.get("Points")) else 0.0,
+                        "classifiedPosition": str(row.get("ClassifiedPosition", "")) or None,
+                        "time": _timedelta_to_seconds(row.get("Time")),
+                        "lapsCompleted": _safe_int(row.get("LapsCompleted")) or _safe_int(row.get("Laps")),
+                    }
+                )
+            race_results.sort(key=lambda x: x["position"] if x["position"] is not None else 999)
+            payload["raceResults"] = race_results
+
+        if is_quali_like:
+            quali_results = []
+            for _, row in results_df.iterrows():
+                driver_code = str(row.get("Abbreviation", "") or "")
+                if not driver_code:
+                    continue
+                quali_results.append(
+                    {
+                        "position": _safe_int(row.get("Position")),
+                        "driverCode": driver_code,
+                        "driverNumber": _safe_int(row.get("DriverNumber")),
+                        "teamName": str(row.get("TeamName", "")) or None,
+                        "q1Time": _timedelta_to_seconds(row.get("Q1")),
+                        "q2Time": _timedelta_to_seconds(row.get("Q2")),
+                        "q3Time": _timedelta_to_seconds(row.get("Q3")),
+                    }
+                )
+            quali_results.sort(key=lambda x: x["position"] if x["position"] is not None else 999)
+            payload["qualifyingResults"] = quali_results
 
     return payload
+
+
+def _merge_classification_drivers(
+    drivers_payload: Dict[str, Any],
+    session: Any,
+    selected_drivers: Sequence[str] | None,
+) -> None:
+    """Ensure every classified driver exists in `drivers`, even with zero laps."""
+    if not hasattr(session, "results") or session.results is None:
+        return
+    try:
+        results_df = session.results
+    except Exception:
+        return
+    if results_df is None or getattr(results_df, "empty", True):
+        return
+
+    for _, row in results_df.iterrows():
+        code = str(row.get("Abbreviation", "") or "").upper()
+        if not code:
+            continue
+        if selected_drivers and code not in selected_drivers:
+            continue
+        if code in drivers_payload:
+            # Fill missing team/number if lap-derived row was sparse.
+            existing = drivers_payload[code]
+            if not existing.get("team"):
+                team = str(row.get("TeamName", "") or "") or None
+                if team:
+                    existing["team"] = team
+            if existing.get("number") is None:
+                existing["number"] = _safe_int(row.get("DriverNumber"))
+            continue
+        drivers_payload[code] = {
+            "code": code,
+            "team": str(row.get("TeamName", "")) or None,
+            "number": _safe_int(row.get("DriverNumber")),
+            "defaultCompound": None,
+        }

@@ -485,33 +485,31 @@ export default function ClientPage({ trackId }: ClientPageProps){
     return roundNumberMap.get(selectedTrack) ?? null
   }, [roundNumberMap, selectedTrack])
 
-  // Filter selected drivers when track changes - only keep drivers who raced at this track
+  // Filter selected drivers when track/session data changes.
+  // Use functional setState so we can react to sessionData without depending on selectedDrivers
+  // (which would re-trigger this effect every time we update the selection).
   useEffect(() => {
     if (!selectedTrack || selectedYear === 0 || selectedRoundNumber === null) {
       return
     }
 
-    // Filter drivers based on assignments and session data
-    const filtered = filterDriversForTrack(
-      selectedYear,
-      selectedRoundNumber,
-      selectedDrivers,
-      sessionData
-    )
-
-    // Only update if the list actually changed (to avoid infinite loops)
-    if (filtered.length !== selectedDrivers.length || 
-        !filtered.every((d, i) => d.toUpperCase() === selectedDrivers[i]?.toUpperCase())) {
-      console.log(`[ClientPage] Filtering drivers for track ${selectedTrack} (round ${selectedRoundNumber}): ${selectedDrivers.length} -> ${filtered.length}`)
-      if (filtered.length > 0) {
-        setSelectedDrivers(filtered)
-      } else {
-        // If no selected drivers are available, clear selection
-        // User can select new drivers from the toolbar
-        setSelectedDrivers([])
-      }
-    }
-  }, [selectedTrack, selectedYear, selectedRoundNumber]) // Note: intentionally not including selectedDrivers or sessionData to avoid loops
+    setSelectedDrivers((prev) => {
+      const filtered = filterDriversForTrack(
+        selectedYear,
+        selectedRoundNumber,
+        prev,
+        sessionData
+      )
+      const unchanged =
+        filtered.length === prev.length &&
+        filtered.every((d, i) => d.toUpperCase() === prev[i]?.toUpperCase())
+      if (unchanged) return prev
+      console.log(
+        `[ClientPage] Filtering drivers for track ${selectedTrack} (round ${selectedRoundNumber}): ${prev.length} -> ${filtered.length}`
+      )
+      return filtered
+    })
+  }, [selectedTrack, selectedYear, selectedRoundNumber, sessionData])
 
   const sessionLabel = useMemo(() => {
     const found = sessionOptions.find(option => option.value === selectedSession)

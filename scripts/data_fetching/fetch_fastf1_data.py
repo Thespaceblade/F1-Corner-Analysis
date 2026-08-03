@@ -80,11 +80,16 @@ def main(argv: Sequence[str] | None = None) -> int:
     output_dir = args.output or config.resolve_output(identifier.year, identifier.round_slug, identifier.session_code)
     output_dir.mkdir(parents=True, exist_ok=True)
     output_path = output_dir / "session.json"
-    output_path.write_text(json.dumps(payload, indent=2))
 
-    print(f"Wrote session data to {output_path}")
     if fetch_result.status != "ok":
-        print(f"Warning: fetch status = {fetch_result.status} ({fetch_result.message})")
+        # Do not leave phantom empty session.json files that the UI would treat as available.
+        if output_path.exists():
+            output_path.unlink()
+        print(f"Skipped write for {output_path} (fetch status = {fetch_result.status}: {fetch_result.message})")
+        return 1
+
+    output_path.write_text(json.dumps(payload, indent=2))
+    print(f"Wrote session data to {output_path}")
     return 0
 
 
