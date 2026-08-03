@@ -25,7 +25,8 @@
     "start": "next start",
     "lint": "next lint",
     "import:sessions": "node scripts/importSessionsToSupabase.cjs",
-    "db:verify": "node scripts/verifyDatabaseSetup.cjs"
+    "db:verify": "node scripts/verifyDatabaseSetup.cjs",
+    "build:data-caches": "node scripts/buildDataCaches.cjs"
   },
   "dependencies": {
     "@google/generative-ai": "^0.24.1",

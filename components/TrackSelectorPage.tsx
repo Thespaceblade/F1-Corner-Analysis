@@ -551,6 +551,45 @@ export default function TrackSelectorPage() {
 
     const load = async () => {
       try {
+        // Prefer the deployable season cache (~100KB) over multi-MB session.json
+        // files that are excluded from Vercel and often missing locally via CDN.
+        const cacheRes = await fetch(`/data/season-cache/${selectedYear}.json`)
+        if (cacheRes.ok) {
+          const season = await cacheRes.json()
+          const round = Array.isArray(season?.rounds)
+            ? season.rounds.find(
+                (entry: { trackId?: string }) => entry.trackId === selected.id,
+              )
+            : null
+          const raceResults = Array.isArray(round?.results) ? round.results : []
+          const qualiResults = Array.isArray(round?.qualifyingResults)
+            ? round.qualifyingResults
+            : []
+
+          if (!cancelled && raceResults.length) {
+            const winner = raceResults.find((r: { position?: number }) => r.position === 1)
+            const pole =
+              qualiResults.find((r: { position?: number }) => r.position === 1) ??
+              raceResults.find((r: { gridPosition?: number }) => r.gridPosition === 1)
+            const podium = raceResults
+              .filter((r: { position?: number }) => typeof r.position === 'number' && r.position <= 3)
+              .sort(
+                (a: { position: number }, b: { position: number }) => a.position - b.position,
+              )
+              .map((r: { driverCode?: string }) => r.driverCode)
+              .filter(Boolean)
+
+            setHighlights({
+              winner: winner?.driverCode,
+              winnerTeam: winner?.teamName ?? winner?.teamId,
+              pole: pole?.driverCode,
+              poleTeam: pole?.teamName ?? pole?.teamId,
+              podium,
+            })
+            return
+          }
+        }
+
         const raceRes = await fetch(`/data/sessions/${selectedYear}/${selected.id}/R/session.json`)
         const raceData = raceRes.ok ? await raceRes.json() : null
 
@@ -583,9 +622,9 @@ export default function TrackSelectorPage() {
 
         setHighlights({
           winner: winner?.driverCode,
-          winnerTeam: winner?.teamName,
+          winnerTeam: winner?.teamName ?? winner?.teamId,
           pole: pole?.driverCode,
-          poleTeam: pole?.teamName,
+          poleTeam: pole?.teamName ?? pole?.teamId,
           podium,
         })
       } catch {
