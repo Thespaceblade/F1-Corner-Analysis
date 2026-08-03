@@ -4387,6 +4387,173 @@
           "y": 55.83509101838057
         }
       ]
+    },
+    "barcelona-catalunya": {
+      "id": "barcelona-catalunya",
+      "name": "Barcelona Grand Prix",
+      "svgFile": "spain.svg",
+      "corners": [
+        {
+          "number": 1,
+          "type": "medium",
+          "expectedDistanceRange": {
+            "min": 0,
+            "max": 60.0
+          },
+          "x": 228.36363636363635,
+          "y": 655.2188552188552
+        },
+        {
+          "number": 2,
+          "type": "fast",
+          "expectedDistanceRange": {
+            "min": 1001.0,
+            "max": 1165.0
+          },
+          "x": 177.69023569023568,
+          "y": 642.2558922558923
+        },
+        {
+          "number": 3,
+          "type": "fast",
+          "expectedDistanceRange": {
+            "min": 577.0,
+            "max": 877.0
+          },
+          "x": 49.23905723905722,
+          "y": 670.5387205387206
+        },
+        {
+          "number": 4,
+          "type": "medium",
+          "expectedDistanceRange": {
+            "min": 840.0,
+            "max": 960.0
+          },
+          "x": 123.48148148148147,
+          "y": 417.1717171717172
+        },
+        {
+          "number": 5,
+          "type": "fast",
+          "expectedDistanceRange": {
+            "min": 1125.0,
+            "max": 1275.0
+          },
+          "x": 110.5185185185185,
+          "y": 605.7239057239058
+        },
+        {
+          "number": 6,
+          "type": "fast",
+          "expectedDistanceRange": {
+            "min": 1465.0,
+            "max": 1751.0
+          },
+          "x": 241.3265993265993,
+          "y": 552.6936026936028
+        },
+        {
+          "number": 6,
+          "type": "fast",
+          "expectedDistanceRange": {
+            "min": 2741.0,
+            "max": 2915.0
+          },
+          "x": 241.3265993265993,
+          "y": 552.6936026936028
+        },
+        {
+          "number": 7,
+          "type": "medium",
+          "expectedDistanceRange": {
+            "min": 1740.0,
+            "max": 1860.0
+          },
+          "x": 282.5723905723906,
+          "y": 476.0942760942761
+        },
+        {
+          "number": 8,
+          "type": "medium",
+          "expectedDistanceRange": {
+            "min": 1891.0,
+            "max": 2141.0
+          },
+          "x": 249.57575757575756,
+          "y": 446.63299663299665
+        },
+        {
+          "number": 9,
+          "type": "fast",
+          "expectedDistanceRange": {
+            "min": 2361.0,
+            "max": 2563.0
+          },
+          "x": 204.7946127946128,
+          "y": 304.04040404040404
+        },
+        {
+          "number": 9,
+          "type": "fast",
+          "expectedDistanceRange": {
+            "min": 4167.0,
+            "max": 4369.0
+          },
+          "x": 204.7946127946128,
+          "y": 304.04040404040404
+        },
+        {
+          "number": 10,
+          "type": "medium",
+          "expectedDistanceRange": {
+            "min": 2640.0,
+            "max": 2760.0
+          },
+          "x": 484.08754208754203,
+          "y": 135.52188552188554
+        },
+        {
+          "number": 11,
+          "type": "fast",
+          "expectedDistanceRange": {
+            "min": 2925.0,
+            "max": 3075.0
+          },
+          "x": 446.37710437710433,
+          "y": 104.8821548821549
+        },
+        {
+          "number": 12,
+          "type": "fast",
+          "expectedDistanceRange": {
+            "min": 3241.0,
+            "max": 3517.0
+          },
+          "x": 347.38720538720537,
+          "y": 122.55892255892256
+        },
+        {
+          "number": 13,
+          "type": "medium",
+          "expectedDistanceRange": {
+            "min": 3591.0,
+            "max": 3795.0
+          },
+          "x": 439.3063973063973,
+          "y": 18.855218855218855
+        },
+        {
+          "number": 14,
+          "type": "fast",
+          "expectedDistanceRange": {
+            "min": 3825.0,
+            "max": 3975.0
+          },
+          "x": 567.7575757575758,
+          "y": 109.5959595959596
+        }
+      ]
     }
   }
 }

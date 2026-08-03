@@ -100,15 +100,9 @@ export default function ExportAnalysis({
   }
 
   const handleShareLink = () => {
-    const params = new URLSearchParams()
-    params.set('track', sessionData.meta.round)
-    params.set('year', String(sessionData.meta.year))
-    params.set('session', sessionData.meta.session)
-    if (selectedDrivers.length > 0) {
-      params.set('drivers', selectedDrivers.join(','))
-    }
-
-    const shareUrl = `${window.location.origin}/race?${params.toString()}`
+    const shareUrl = `${window.location.origin}/race/${encodeURIComponent(sessionData.meta.round)}?year=${sessionData.meta.year}&session=${sessionData.meta.session}${
+      selectedDrivers.length > 0 ? `&drivers=${encodeURIComponent(selectedDrivers.join(','))}` : ''
+    }`
     
     // Copy to clipboard
     navigator.clipboard.writeText(shareUrl).then(() => {
@@ -117,12 +111,6 @@ export default function ExportAnalysis({
       // Fallback: show in alert
       prompt('Copy this link:', shareUrl)
     })
-  }
-
-  const handleExportChart = () => {
-    // This would export the current chart view
-    // For now, we'll show a message
-    alert('Chart export functionality coming soon! This will allow you to export charts as PNG or SVG.')
   }
 
   return (
@@ -212,13 +200,14 @@ export default function ExportAnalysis({
         <div className="space-y-4">
           <button
             type="button"
-            onClick={handleExportChart}
-            className="px-4 py-2 bg-accent text-white rounded hover:bg-accent/90"
+            disabled
+            aria-describedby="chart-export-status"
+            className="cursor-not-allowed rounded bg-gray-800 px-4 py-2 text-gray-500"
           >
-            Export Chart as Image
+            Export Chart as Image (Coming Soon)
           </button>
-          <p className="text-xs text-gray-500">
-            Export current chart views as PNG or SVG images. (Coming soon)
+          <p id="chart-export-status" className="text-xs text-gray-500">
+            Chart image export is not available yet.
           </p>
         </div>
       </div>

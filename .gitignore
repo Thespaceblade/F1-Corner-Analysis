@@ -46,6 +46,9 @@ output/
 *.test.output
 *.test.log
 
+# Competitive UI scrapes (local research only)
+ui-scrapes/
+
 # Documentation and planning files (not needed in repo)
 docs/
 scripts/docs/

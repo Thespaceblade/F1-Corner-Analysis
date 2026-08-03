@@ -197,7 +197,7 @@ export default function CustomSelect({
           input-slim w-full flex items-center justify-between gap-2
           transition-all duration-200 ease-out
           ${isOpen 
-            ? 'border-accent/60 bg-gray-800/50 shadow-[0_0_0_3px_rgba(124,199,255,0.1)]' 
+            ? 'border-accent/60 bg-gray-800/50 shadow-[0_0_0_3px_rgba(225,6,0,0.1)]'
             : 'border-gray-600/60 hover:border-accent/40 hover:bg-gray-800/30'
           }
           focus:outline-none focus:ring-2 focus:ring-accent/30 focus:border-accent/60

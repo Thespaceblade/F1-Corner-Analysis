@@ -11,7 +11,7 @@ type ConsistencyAnalysisProps = {
 }
 
 const FALLBACK_COLORS = [
-  '#7cc7ff',
+  '#e10600',
   '#22c55e',
   '#facc15',
   '#f97316',
@@ -265,7 +265,7 @@ export default function ConsistencyAnalysis({
                 <Legend 
                   wrapperStyle={{ fontSize: '12px', paddingTop: '8px' }}
                 />
-                <Bar dataKey="stdDev" fill="#7cc7ff" name="Standard Deviation" />
+                <Bar dataKey="stdDev" fill="#e10600" name="Standard Deviation" />
               </BarChart>
             </ResponsiveContainer>
           </div>

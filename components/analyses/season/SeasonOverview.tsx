@@ -22,7 +22,7 @@ type SeasonOverviewProps = {
 
 export default function SeasonOverview({ seasonData }: SeasonOverviewProps) {
   const [chartView, setChartView] = useState<'wins' | 'podiums' | 'poles' | 'fastest-laps'>('wins')
-  const getSeasonDriverColor = (driverCode: string, fallback = '#7cc7ff') =>
+  const getSeasonDriverColor = (driverCode: string, fallback = '#e10600') =>
     getDriverColor(driverCode, seasonData.year) ?? fallback
   const getSeasonTeam = (teamId: string | null | undefined) =>
     teamId ? getTeamById(teamId, seasonData.year) : null
@@ -97,7 +97,7 @@ export default function SeasonOverview({ seasonData }: SeasonOverviewProps) {
     return topTeams.map(team => ({
       name: getSeasonTeam(team.teamId)?.shortName ?? team.teamId,
       wins: team.totalWins,
-      color: getSeasonTeam(team.teamId)?.color ?? '#7cc7ff',
+      color: getSeasonTeam(team.teamId)?.color ?? '#e10600',
     }))
   }, [topTeams])
 
@@ -214,7 +214,7 @@ export default function SeasonOverview({ seasonData }: SeasonOverviewProps) {
   return (
     <div className="space-y-6">
       {showChampions ? (
-        /* Champions Banner — only when the season is finished */
+        /* Champions banner, shown only when the season is finished. */
         <div className="grid md:grid-cols-2 gap-4">
           <div
             className="border rounded-lg p-6 backdrop-blur-sm"
@@ -231,7 +231,7 @@ export default function SeasonOverview({ seasonData }: SeasonOverviewProps) {
               <div>
                 <h4
                   className="text-lg font-bold"
-                  style={{ color: getSeasonDriverColor(driverChampion!.driverCode, '#e7eaee') }}
+                  style={{ color: getSeasonDriverColor(driverChampion!.driverCode, '#f0f0f0') }}
                 >
                   World Champion
                 </h4>
@@ -289,7 +289,7 @@ export default function SeasonOverview({ seasonData }: SeasonOverviewProps) {
               <div>
                 <h4
                   className="text-lg font-bold"
-                  style={{ color: getSeasonTeam(constructorChampion!.teamId)?.color ?? '#e7eaee' }}
+                  style={{ color: getSeasonTeam(constructorChampion!.teamId)?.color ?? '#f0f0f0' }}
                 >
                   Constructor Champion
                 </h4>
@@ -394,7 +394,7 @@ export default function SeasonOverview({ seasonData }: SeasonOverviewProps) {
                                 size="sm"
                               />
                               <span className="text-xs text-gray-500 truncate hidden sm:inline">
-                                {team?.shortName ?? driver.teamId ?? '—'}
+                                {team?.shortName ?? driver.teamId ?? 'N/A'}
                               </span>
                             </div>
                           </td>
@@ -551,13 +551,13 @@ export default function SeasonOverview({ seasonData }: SeasonOverviewProps) {
                     `${name}: ${value} (${(percent * 100).toFixed(0)}%)`
                   }
                   labelLine={{
-                    stroke: '#9aa4b2',
+                    stroke: '#a1a1aa',
                     strokeWidth: 1
                   }}
                   style={{
                     fontFamily: 'system-ui, -apple-system, sans-serif',
                     fontSize: '11px',
-                    fill: '#e7eaee',
+                    fill: '#f0f0f0',
                     fontWeight: 500
                   }}
                 >
@@ -565,25 +565,25 @@ export default function SeasonOverview({ seasonData }: SeasonOverviewProps) {
                     <Cell 
                       key={`cell-${index}`} 
                       fill={entry.color}
-                      stroke="#12151b"
+                      stroke="#111111"
                       strokeWidth={2}
                     />
                   ))}
                 </Pie>
                 <Tooltip 
                   contentStyle={{ 
-                    backgroundColor: '#1f2937',
-                    border: '1px solid #374151',
+                    backgroundColor: '#18181b',
+                    border: '1px solid #3f3f46',
                     borderRadius: '0.5rem',
                     fontFamily: 'system-ui, -apple-system, sans-serif',
                     fontSize: '12px',
-                    color: '#e7eaee'
+                    color: '#f0f0f0'
                   }}
                   itemStyle={{
-                    color: '#e7eaee'
+                    color: '#f0f0f0'
                   }}
                   labelStyle={{
-                    color: '#e7eaee',
+                    color: '#f0f0f0',
                     fontWeight: 600
                   }}
                 />
@@ -650,27 +650,27 @@ export default function SeasonOverview({ seasonData }: SeasonOverviewProps) {
                   <>
                     <XAxis 
                       type="number"
-                      stroke="#9aa4b2"
+                      stroke="#a1a1aa"
                       tick={{ 
-                        fill: '#e7eaee', 
+                        fill: '#f0f0f0',
                         fontSize: 11,
                         fontFamily: 'system-ui, -apple-system, sans-serif'
                       }}
-                      tickLine={{ stroke: '#374151' }}
-                      axisLine={{ stroke: '#374151' }}
+                      tickLine={{ stroke: '#3f3f46' }}
+                      axisLine={{ stroke: '#3f3f46' }}
                     />
                     <YAxis 
                       type="category"
                       dataKey="name" 
-                      stroke="#9aa4b2"
+                      stroke="#a1a1aa"
                       tick={{ 
-                        fill: '#e7eaee', 
+                        fill: '#f0f0f0',
                         fontSize: 11,
                         fontFamily: 'system-ui, -apple-system, sans-serif',
                         fontWeight: 500
                       }}
-                      tickLine={{ stroke: '#374151' }}
-                      axisLine={{ stroke: '#374151' }}
+                      tickLine={{ stroke: '#3f3f46' }}
+                      axisLine={{ stroke: '#3f3f46' }}
                       width={60}
                     />
                   </>
@@ -678,48 +678,48 @@ export default function SeasonOverview({ seasonData }: SeasonOverviewProps) {
                   <>
                     <XAxis 
                       type="number"
-                      stroke="#9aa4b2"
+                      stroke="#a1a1aa"
                       tick={{ 
-                        fill: '#e7eaee', 
+                        fill: '#f0f0f0',
                         fontSize: 11,
                         fontFamily: 'system-ui, -apple-system, sans-serif'
                       }}
-                      tickLine={{ stroke: '#374151' }}
-                      axisLine={{ stroke: '#374151' }}
+                      tickLine={{ stroke: '#3f3f46' }}
+                      axisLine={{ stroke: '#3f3f46' }}
                     />
                     <YAxis 
                       type="category"
                       dataKey="name" 
-                      stroke="#9aa4b2"
+                      stroke="#a1a1aa"
                       tick={{ 
-                        fill: '#e7eaee', 
+                        fill: '#f0f0f0',
                         fontSize: 11,
                         fontFamily: 'system-ui, -apple-system, sans-serif',
                         fontWeight: 500
                       }}
-                      tickLine={{ stroke: '#374151' }}
-                      axisLine={{ stroke: '#374151' }}
+                      tickLine={{ stroke: '#3f3f46' }}
+                      axisLine={{ stroke: '#3f3f46' }}
                       width={50}
                     />
                   </>
                 )}
                 <Tooltip 
                   contentStyle={{ 
-                    backgroundColor: '#1f2937',
-                    border: '1px solid #374151',
+                    backgroundColor: '#18181b',
+                    border: '1px solid #3f3f46',
                     borderRadius: '0.5rem',
                     fontFamily: 'system-ui, -apple-system, sans-serif',
                     fontSize: '12px',
-                    color: '#e7eaee'
+                    color: '#f0f0f0'
                   }}
                   itemStyle={{
-                    color: '#e7eaee'
+                    color: '#f0f0f0'
                   }}
                   labelStyle={{
-                    color: '#e7eaee',
+                    color: '#f0f0f0',
                     fontWeight: 600
                   }}
-                  cursor={{ fill: 'rgba(124, 199, 255, 0.1)' }}
+                  cursor={{ fill: 'rgba(225, 6, 0, 0.1)' }}
                 />
                 <Bar 
                   dataKey="value" 

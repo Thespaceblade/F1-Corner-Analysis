@@ -5,6 +5,7 @@ import { createPortal } from 'react-dom'
 import { loadTrackSvg } from '../lib/trackSvgLoader'
 import { CornerPerformance } from '../lib/cornerPerformanceAggregator'
 import CornerPerformanceOverlay, { CornerTooltipPortal } from './CornerPerformanceOverlay'
+import LoadingIndicator from './LoadingIndicator'
 
 type Corner = {
   number: number
@@ -149,9 +150,10 @@ export default function TrackPanel({
                 dangerouslySetInnerHTML={{ __html: svgContent }} 
               />
             ) : (
-              <div className="absolute inset-0 bg-gray-800 flex items-center justify-center text-sm text-gray-400">
-                Loading track...
-              </div>
+              <LoadingIndicator
+                label="Loading circuit map..."
+                className="absolute inset-0 bg-gray-800/40"
+              />
             )}
 
             {/* overlay markers if we know the viewBox (coords should be in viewBox units) */}

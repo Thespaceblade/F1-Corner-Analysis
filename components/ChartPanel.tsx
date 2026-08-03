@@ -18,6 +18,7 @@ import {
 import { SessionPayload } from '../lib/sessionDataClient'
 import { getDriverColor as getSeasonDriverColor } from '../lib/teamData'
 import ChartTooltip from './ChartTooltip'
+import LoadingIndicator from './LoadingIndicator'
 import F1CarIcon from './F1CarIcon'
 
 type ChartPanelProps = {
@@ -60,7 +61,7 @@ type QualifyingAttempt = {
 }
 
 const FALLBACK_COLORS = [
-  '#7cc7ff',
+  '#e10600',
   '#22c55e',
   '#facc15',
   '#f97316',
@@ -1353,9 +1354,7 @@ export default function ChartPanel({
       </div>
 
       {loading && (
-        <div className="flex h-64 items-center justify-center text-sm text-gray-400">
-          Loading session telemetry…
-        </div>
+        <LoadingIndicator label="Loading session telemetry..." className="h-64" />
       )}
 
       {!loading && !sessionData && (

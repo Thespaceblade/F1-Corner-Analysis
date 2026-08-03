@@ -2,13 +2,14 @@
 
 import React, { useState, useEffect } from 'react'
 import dynamic from 'next/dynamic'
+import LoadingIndicator from '../LoadingIndicator'
 
 // Dynamically import react-markdown with SSR disabled to avoid build issues
 const ReactMarkdown = dynamic(
   () => import('react-markdown').then((mod) => mod.default),
   { 
     ssr: false,
-    loading: () => <div className="text-sm text-gray-200">Loading...</div>
+    loading: () => <LoadingIndicator label="Formatting response..." compact />
   }
 )
 
