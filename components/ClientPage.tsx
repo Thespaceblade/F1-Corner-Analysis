@@ -753,8 +753,8 @@ export default function ClientPage({ trackId }: ClientPageProps){
 
       {currentTrack && (
         <>
-          <section id="track-visualization" className="mt-6 grid lg:grid-cols-2 gap-6 page-section page-section-3">
-            <div className="panel p-4">
+          <section id="track-visualization" className="mt-6 grid gap-6 page-section page-section-3 race-track-split">
+            <div className="panel p-4 race-track-map-panel">
               <div className="track-map-mode-bar" role="tablist" aria-label="Circuit map mode">
                 <button
                   type="button"
@@ -782,6 +782,7 @@ export default function ClientPage({ trackId }: ClientPageProps){
                   orientation={trackMapMode}
                   autoSpin={trackMapMode === '3d'}
                   scaleFactor={getCircuitVisualScale(currentTrack.id)}
+                  fit="panel"
                 />
               </div>
             </div>
