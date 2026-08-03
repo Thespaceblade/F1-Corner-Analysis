@@ -1,6 +1,7 @@
 'use client'
 
 import React, { useState, useMemo } from 'react'
+import Link from 'next/link'
 import { SeasonData } from '../../../lib/seasonTypes'
 import DriverBadge from '../../formatting/DriverBadge'
 import { ChevronDown, ChevronUp, ChevronsUpDown } from 'lucide-react'
@@ -210,11 +211,23 @@ export default function DriverStandingsTable({ seasonData }: SeasonDataProps) {
                       </div>
                     </td>
                     <td className="py-3 px-3">
-                      <DriverBadge code={driver.driverCode} year={seasonData.year} size="sm" variant="badge" />
+                      <Link
+                        href={`/drivers/${encodeURIComponent(driver.driverCode)}?year=${seasonData.year}`}
+                        onClick={(e) => e.stopPropagation()}
+                        className="inline-flex hover:opacity-80 transition-opacity"
+                        title={`View ${driver.driverCode} season`}
+                      >
+                        <DriverBadge code={driver.driverCode} year={seasonData.year} size="sm" variant="badge" />
+                      </Link>
                     </td>
                     <td className="py-3 px-3">
                       {driver.teamId ? (
-                        <div className="relative w-8 h-8 flex items-center">
+                        <Link
+                          href={`/teams/${encodeURIComponent(driver.teamId)}?year=${seasonData.year}`}
+                          onClick={(e) => e.stopPropagation()}
+                          className="relative w-8 h-8 flex items-center hover:opacity-80 transition-opacity"
+                          title={`View ${getTeamById(driver.teamId, seasonData.year)?.shortName ?? driver.teamId}`}
+                        >
                           <img
                             src={getTeamById(driver.teamId, seasonData.year)?.logoPath ?? `/team-logos/${driver.teamId}.png`}
                             alt={getTeamById(driver.teamId, seasonData.year)?.shortName ?? driver.teamId}
@@ -225,7 +238,7 @@ export default function DriverStandingsTable({ seasonData }: SeasonDataProps) {
                                 : undefined
                             }
                           />
-                        </div>
+                        </Link>
                       ) : (
                         <span className="text-xs text-gray-400">N/A</span>
                       )}

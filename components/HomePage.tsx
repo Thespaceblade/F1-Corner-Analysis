@@ -280,6 +280,17 @@ export default function HomePage() {
               </span>
             </Link>
           </div>
+
+          <div className="home-explore-links">
+            <Link href="/teams" className="home-inline-link">
+              Browse teams and per-circuit form
+              <span aria-hidden="true"> →</span>
+            </Link>
+            <Link href="/drivers" className="home-inline-link">
+              Browse drivers and per-circuit form
+              <span aria-hidden="true"> →</span>
+            </Link>
+          </div>
         </div>
       </section>
 
