@@ -38,6 +38,11 @@ const FLAG_SVGS: Record<string, string> = {
     <circle cx="15" cy="15.5" r="1" fill="#ffffff" />
     <circle cx="20.5" cy="7" r=".8" fill="#ffffff" />
   `),
+  at: FLAG_BADGE_BASE(`
+    <rect x="1" y="3" width="22" height="6" fill="#dc2626" />
+    <rect x="1" y="9" width="22" height="6" fill="#ffffff" />
+    <rect x="1" y="15" width="22" height="6" fill="#dc2626" />
+  `),
   az: FLAG_BADGE_BASE(`
     <rect x="1" y="3" width="22" height="6" fill="#2aa5db" />
     <rect x="1" y="9" width="22" height="6" fill="#ef4444" />
