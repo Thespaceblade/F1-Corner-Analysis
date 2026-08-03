@@ -848,7 +848,7 @@ export default function TrackSelectorPage() {
                           <h2 className="track-visualiser-title">{selected.name}</h2>
                           <p className="track-visualiser-blurb">
                             {[selected.location, selectedYear].filter(Boolean).join(' · ')}
-                            {selected.round != null ? ` · R${selected.round}` : ''}
+                            {selected.round != null ? ` · Round ${selected.round}` : ''}
                           </p>
                           {selected.disabled && (
                             <p className="track-visualiser-blurb">

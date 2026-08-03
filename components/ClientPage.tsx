@@ -4,28 +4,21 @@
 // TODO: Add loading states for all async operations
 
 import React, { useEffect, useMemo, useRef, useState } from 'react'
-import dynamic from 'next/dynamic'
 import Image from 'next/image'
 import Link from 'next/link'
 import Toolbar, { sessionOptions } from './Toolbar'
-import TrackPanel from './TrackPanel'
+import CircuitTrackStage, { getCircuitVisualScale } from './CircuitTrackStage'
 import ChartPanel from './ChartPanel'
 import AnalysisPanel from './AnalysisPanel'
 import TableOfContents from './TableOfContents'
 import Chatbot from './Chatbot'
 import AppNav from './AppNav'
-import LoadingIndicator from './LoadingIndicator'
 import { loadSessionData, SessionPayload } from '../lib/sessionDataClient'
 import { aggregateCornerPerformance } from '../lib/cornerPerformanceAggregator'
 import { trackInfo } from '../lib/trackInfo'
 import { filterDriversForTrack } from '../lib/trackDrivers'
 import { getAvailableCalendarYears, getCalendarForYear, type SeasonCalendar } from '../lib/calendarData'
 import { getSupportedSeasonYears } from '../lib/teamData'
-
-const Track3DPanel = dynamic(() => import('./Track3DPanel'), {
-  ssr: false,
-  loading: () => <LoadingIndicator label="Loading 3D circuit..." className="py-16" />,
-})
 
 type TrackData = {
   id: string
@@ -782,21 +775,15 @@ export default function ClientPage({ trackId }: ClientPageProps){
                   2D
                 </button>
               </div>
-              {trackMapMode === '3d' ? (
-                <Track3DPanel
+              <div className="race-circuit-stage-host">
+                <CircuitTrackStage
                   svgFile={currentTrack.svgFile}
                   corners={currentTrack.corners}
-                  autoRotate
-                  showCorners
+                  orientation={trackMapMode}
+                  autoSpin={trackMapMode === '3d'}
+                  scaleFactor={getCircuitVisualScale(currentTrack.id)}
                 />
-              ) : (
-                <TrackPanel 
-                  svgFile={currentTrack.svgFile}
-                  corners={currentTrack.corners}
-                  cornerPerformance={cornerPerformance}
-                  selectedDrivers={selectedDrivers}
-                />
-              )}
+              </div>
             </div>
             <div id="track-information" className="panel p-4">
               <div className="text-lg font-bold">{currentTrack.name}</div>
