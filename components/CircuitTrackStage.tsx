@@ -11,6 +11,8 @@ export type CircuitTrackCorner = {
   y: number
 }
 
+export type CircuitTrackOrientation = '3d' | '2d'
+
 type CircuitTrackStageProps = {
   svgFile: string
   corners?: CircuitTrackCorner[]
@@ -19,6 +21,11 @@ type CircuitTrackStageProps = {
   reducedMotion?: boolean
   /** Multiplier on base plane scale (1 = default). */
   scaleFactor?: number
+  /**
+   * `3d` = pitched perspective ribbon (circuits visualiser default).
+   * `2d` = flattened top-down. Transitions animate the plane in space.
+   */
+  orientation?: CircuitTrackOrientation
 }
 
 /** Dense identical slabs so the vertical face reads as one continuous ribbon. */
@@ -27,11 +34,15 @@ const EXTRUSION_STEP_PX = 2
 const VIEW_PAD = 28
 
 /** Match CSS camera — yaw (rotateZ) is driven in JS for drag + auto-spin. */
-const PLANE_PITCH = 68
+const PITCH_3D = 68
+const PITCH_2D = 8
 const PLANE_SCALE = 1.4
+const PLANE_SCALE_2D = 1.15
 const AUTO_SPIN_MS = 110_000
 const DRAG_SENSITIVITY = 0.28
 const INERTIA_FRICTION = 0.965
+/** Per-frame approach factor for pitch/scale (~0.8s settle at 60fps). */
+const ORIENT_LERP = 0.055
 
 /** Per-circuit visual size tweaks relative to the default stage scale. */
 export function getCircuitVisualScale(
@@ -93,14 +104,21 @@ function fitPathViewBox(lapD: string, fallback: string): FittedBox {
   }
 }
 
-function planeTransform(yawDeg: number, scaleFactor = 1) {
-  const scale = PLANE_SCALE * scaleFactor
-  return `perspective(1400px) rotateX(${PLANE_PITCH}deg) scale(${scale}) rotateZ(${yawDeg}deg)`
+function planeTransform(yawDeg: number, pitchDeg: number, scale: number) {
+  return `perspective(1400px) rotateX(${pitchDeg}deg) scale(${scale}) rotateZ(${yawDeg}deg)`
+}
+
+function targetsForOrientation(orientation: CircuitTrackOrientation, scaleFactor: number) {
+  if (orientation === '2d') {
+    return { pitch: PITCH_2D, scale: PLANE_SCALE_2D * scaleFactor }
+  }
+  return { pitch: PITCH_3D, scale: PLANE_SCALE * scaleFactor }
 }
 
 /**
  * Circuits visualiser: extruded asphalt ribbon, translucent red walls,
  * slow auto-yaw, and click-drag spin on that same axis.
+ * Orientation animates the plane between perspective 3D and flattened 2D.
  */
 export default function CircuitTrackStage({
   svgFile,
@@ -109,6 +127,7 @@ export default function CircuitTrackStage({
   autoSpin = true,
   reducedMotion = false,
   scaleFactor = 1,
+  orientation = '3d',
 }: CircuitTrackStageProps) {
   const [geometry, setGeometry] = useState<LapGeometry | null>(null)
   const [fitted, setFitted] = useState<FittedBox | null>(null)
@@ -119,18 +138,19 @@ export default function CircuitTrackStage({
   const velocityRef = useRef(0)
   const draggingRef = useRef(false)
   const lastPointerRef = useRef<{ x: number; t: number } | null>(null)
-  const autoSpinRef = useRef(autoSpin && !reducedMotion)
-  const scaleRef = useRef(scaleFactor)
+  const autoSpinRef = useRef(autoSpin && !reducedMotion && orientation === '3d')
+  const scaleFactorRef = useRef(scaleFactor)
+  const orientationRef = useRef(orientation)
+  const pitchRef = useRef(targetsForOrientation(orientation, scaleFactor).pitch)
+  const scaleRef = useRef(targetsForOrientation(orientation, scaleFactor).scale)
 
   useEffect(() => {
-    autoSpinRef.current = autoSpin && !reducedMotion
-  }, [autoSpin, reducedMotion])
+    autoSpinRef.current = autoSpin && !reducedMotion && orientation === '3d'
+    orientationRef.current = orientation
+  }, [autoSpin, reducedMotion, orientation])
 
   useEffect(() => {
-    scaleRef.current = scaleFactor
-    if (planeRef.current) {
-      planeRef.current.style.transform = planeTransform(yawRef.current, scaleRef.current)
-    }
+    scaleFactorRef.current = scaleFactor
   }, [scaleFactor])
 
   useEffect(() => {
@@ -151,7 +171,7 @@ export default function CircuitTrackStage({
     }
   }, [svgFile])
 
-  // Auto-spin + inertia on the same yaw axis used by drag.
+  // Auto-spin + inertia + orientation tilt on the shared plane transform.
   useEffect(() => {
     const autoDegPerMs = 360 / AUTO_SPIN_MS
     let frame = 0
@@ -159,7 +179,9 @@ export default function CircuitTrackStage({
 
     const apply = () => {
       const el = planeRef.current
-      if (el) el.style.transform = planeTransform(yawRef.current, scaleRef.current)
+      if (el) {
+        el.style.transform = planeTransform(yawRef.current, pitchRef.current, scaleRef.current)
+      }
     }
 
     apply()
@@ -167,6 +189,11 @@ export default function CircuitTrackStage({
     const tick = (now: number) => {
       const dt = Math.min(64, now - last)
       last = now
+      const lerp = 1 - Math.pow(1 - ORIENT_LERP, dt / 16)
+
+      const target = targetsForOrientation(orientationRef.current, scaleFactorRef.current)
+      pitchRef.current += (target.pitch - pitchRef.current) * lerp
+      scaleRef.current += (target.scale - scaleRef.current) * lerp
 
       if (!draggingRef.current) {
         let v = velocityRef.current
@@ -183,9 +210,9 @@ export default function CircuitTrackStage({
         } else {
           velocityRef.current = 0
         }
-        apply()
       }
 
+      apply()
       frame = requestAnimationFrame(tick)
     }
 
@@ -204,7 +231,11 @@ export default function CircuitTrackStage({
       velocityRef.current = deltaYaw / dt
       lastPointerRef.current = { x: event.clientX, t: now }
       if (planeRef.current) {
-        planeRef.current.style.transform = planeTransform(yawRef.current, scaleRef.current)
+        planeRef.current.style.transform = planeTransform(
+          yawRef.current,
+          pitchRef.current,
+          scaleRef.current,
+        )
       }
     }
 
@@ -251,7 +282,7 @@ export default function CircuitTrackStage({
 
   return (
     <div
-      className={`circuit-track-stage is-interactive${dragging ? ' is-dragging' : ''}${reducedMotion ? '' : ' is-animated'} ${className}`.trim()}
+      className={`circuit-track-stage is-interactive${dragging ? ' is-dragging' : ''}${reducedMotion ? '' : ' is-animated'} is-${orientation} ${className}`.trim()}
       role="img"
       aria-label="Circuit map — drag horizontally to spin"
       onPointerDown={onPointerDown}
@@ -263,7 +294,8 @@ export default function CircuitTrackStage({
         className="circuit-track-stage-plane"
         style={{
           aspectRatio: `${aspectW} / ${aspectH}`,
-          transform: planeTransform(0, scaleFactor),
+          // Transform is owned exclusively by the rAF loop so orientation
+          // changes lerp in space instead of snapping via React style updates.
         }}
       >
         {geometry && geometry.lapD ? (
