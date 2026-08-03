@@ -11,7 +11,7 @@ import ChartPanel from './ChartPanel'
 import AnalysisPanel from './AnalysisPanel'
 import TableOfContents from './TableOfContents'
 import Chatbot from './Chatbot'
-import SeasonReview from './SeasonReview'
+import AppNav from './AppNav'
 import { loadSessionData, SessionPayload } from '../lib/sessionDataClient'
 import { aggregateCornerPerformance } from '../lib/cornerPerformanceAggregator'
 import { trackInfo } from '../lib/trackInfo'
@@ -263,16 +263,20 @@ export default function ClientPage(){
   useEffect(() => {
     if (typeof window === 'undefined' || !preferencesHydrated) return
 
-    const payload = {
-      selectedYear,
-      selectedTrack,
-      selectedSession,
-      selectedDrivers,
-      showOutliers,
-    }
-
     try {
-      window.localStorage.setItem(PREFERENCES_STORAGE_KEY, JSON.stringify(payload))
+      const existing = window.localStorage.getItem(PREFERENCES_STORAGE_KEY)
+      const parsed = existing ? JSON.parse(existing) : {}
+      window.localStorage.setItem(
+        PREFERENCES_STORAGE_KEY,
+        JSON.stringify({
+          ...parsed,
+          selectedYear,
+          selectedTrack,
+          selectedSession,
+          selectedDrivers,
+          showOutliers,
+        }),
+      )
     } catch (error) {
       console.warn('[ClientPage] Failed to persist user preferences:', error)
     }
@@ -660,6 +664,7 @@ export default function ClientPage(){
 
       {/* Page content - rendered behind loading screen for smooth transition */}
       <main className={`max-w-6xl mx-auto px-4 page-content ${pageContentVisible ? 'page-content-visible' : 'page-content-hidden'}`}>
+      <AppNav />
       <header className="relative mb-8 overflow-visible page-header" style={{ zIndex: 10 }}>
         {/* Animated gradient background - behind text/logo, text will obscure edges */}
         <div className="absolute inset-0 bg-gradient-radial-header animate-pulse-slow pointer-events-none" style={{ zIndex: 0 }} />
@@ -800,6 +805,7 @@ export default function ClientPage(){
 
       <div className="page-section page-section-2">
         <Toolbar 
+          mode="race"
           tracks={trackList}
           selectedTrack={selectedTrack}
           onTrackChangeAction={setSelectedTrack}
@@ -980,13 +986,6 @@ export default function ClientPage(){
           </section>
         </>
       )}
-
-      {/* Season Review - Separate section, shows when year is selected */}
-      <SeasonReview 
-        year={selectedYear}
-        isVisible={selectedYear > 0}
-        selectedDrivers={selectedDrivers}
-      />
       </main>
       <Chatbot 
         context={{
