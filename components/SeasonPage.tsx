@@ -80,6 +80,7 @@ export default function SeasonPage() {
 
   return (
     <AppShell
+      headerVariant="hero"
       kicker="Championship"
       title={selectedYear > 0 ? `${selectedYear} Season` : 'Season Review'}
       description={
