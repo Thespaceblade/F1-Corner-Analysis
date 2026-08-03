@@ -3269,6 +3269,10 @@ body{
   margin: 0;
 }
 
+.track-selector-svg-wrap .track-red-sil-stroke {
+  stroke-width: 2.35;
+}
+
 .track-visualiser-kicker {
   margin: 0;
   font-size: clamp(0.72rem, 1.05vw, 0.88rem);
@@ -3463,12 +3467,6 @@ body{
   color: #ffb4ae;
   background: rgba(12, 12, 12, 0.9);
   border-color: rgba(225, 6, 0, 0.35);
-}
-
-.track-selector-status.is-ready {
-  color: #86efac;
-  background: rgba(22, 163, 74, 0.14);
-  border-color: rgba(34, 197, 94, 0.28);
 }
 
 .track-selector-card-cta {
@@ -4020,36 +4018,6 @@ a.track-selector-card:hover .track-selector-svg,
   border: 1px solid rgba(225, 6, 0, 0.28);
   border-radius: 0.3rem;
   padding: 0.18rem 0.42rem;
-}
-
-.track-selector-status {
-  position: absolute;
-  top: 0.65rem;
-  right: 0.65rem;
-  font-size: 0.6rem;
-  font-weight: 700;
-  letter-spacing: 0.1em;
-  text-transform: uppercase;
-  border-radius: 0.3rem;
-  padding: 0.18rem 0.4rem;
-}
-
-.track-selector-status.is-ready {
-  color: #86efac;
-  background: rgba(22, 163, 74, 0.14);
-  border: 1px solid rgba(34, 197, 94, 0.28);
-}
-
-.track-selector-status.is-upcoming {
-  color: #a1a1aa;
-  background: rgba(255, 255, 255, 0.04);
-  border: 1px solid rgba(255, 255, 255, 0.1);
-}
-
-.track-selector-status.is-postponed {
-  color: #fde68a;
-  background: rgba(234, 179, 8, 0.12);
-  border: 1px solid rgba(234, 179, 8, 0.28);
 }
 
 .track-selector-meta {
