@@ -31,6 +31,16 @@ const links: Array<{
     match: (path) => path === '/season' || path.startsWith('/season/'),
   },
   {
+    href: '/teams',
+    label: 'Teams',
+    match: (path) => path === '/teams' || path.startsWith('/teams/'),
+  },
+  {
+    href: '/drivers',
+    label: 'Drivers',
+    match: (path) => path === '/drivers' || path.startsWith('/drivers/'),
+  },
+  {
     href: 'https://github.com/Thespaceblade/F1-Corner-Analysis',
     label: 'Source',
     match: () => false,

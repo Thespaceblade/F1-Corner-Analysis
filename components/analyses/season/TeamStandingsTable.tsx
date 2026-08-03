@@ -1,6 +1,7 @@
 'use client'
 
 import React, { useMemo, useState } from 'react'
+import Link from 'next/link'
 import { SeasonData } from '../../../lib/seasonTypes'
 import { getTeamById } from '../../../lib/teamData'
 import DriverBadge from '../../formatting/DriverBadge'
@@ -209,7 +210,12 @@ export default function TeamStandingsTable({ seasonData }: TeamStandingsTablePro
                         </span>
                       </td>
                       <td className="py-3 px-3">
-                        <div className="flex items-center gap-2">
+                        <Link
+                          href={`/teams/${encodeURIComponent(team.teamId)}?year=${seasonData.year}`}
+                          onClick={(e) => e.stopPropagation()}
+                          className="flex items-center gap-2 hover:opacity-80 transition-opacity"
+                          title={`View ${teamInfo?.name ?? team.teamId} season`}
+                        >
                           <div className="relative w-8 h-8 flex items-center">
                             <img
                               src={teamInfo?.logoPath ?? `/team-logos/${team.teamId}.png`}
@@ -227,25 +233,37 @@ export default function TeamStandingsTable({ seasonData }: TeamStandingsTablePro
                           <span className="font-medium text-gray-200">
                             {teamInfo?.shortName ?? team.teamId}
                           </span>
-                        </div>
+                        </Link>
                       </td>
                       <td className="py-3 px-3">
                         <div className="flex items-center gap-1.5">
                           {team.driver1 && (
-                            <DriverBadge
-                              code={team.driver1}
-                              year={seasonData.year}
-                              size="sm"
-                              variant="badge"
-                            />
+                            <Link
+                              href={`/drivers/${encodeURIComponent(team.driver1)}?year=${seasonData.year}`}
+                              onClick={(e) => e.stopPropagation()}
+                              className="inline-flex hover:opacity-80 transition-opacity"
+                            >
+                              <DriverBadge
+                                code={team.driver1}
+                                year={seasonData.year}
+                                size="sm"
+                                variant="badge"
+                              />
+                            </Link>
                           )}
                           {team.driver2 && (
-                            <DriverBadge
-                              code={team.driver2}
-                              year={seasonData.year}
-                              size="sm"
-                              variant="badge"
-                            />
+                            <Link
+                              href={`/drivers/${encodeURIComponent(team.driver2)}?year=${seasonData.year}`}
+                              onClick={(e) => e.stopPropagation()}
+                              className="inline-flex hover:opacity-80 transition-opacity"
+                            >
+                              <DriverBadge
+                                code={team.driver2}
+                                year={seasonData.year}
+                                size="sm"
+                                variant="badge"
+                              />
+                            </Link>
                           )}
                         </div>
                       </td>
