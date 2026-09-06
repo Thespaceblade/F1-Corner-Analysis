@@ -47,6 +47,30 @@ def _safe_int(value: Any) -> int | None:
         return None
 
 
+# Ergast/Jolpica often lag behind timing for very recent races. FastF1 may still
+# have Position from the timing feed while Points is NaN — fill standard tables.
+_RACE_POINTS = {1: 25.0, 2: 18.0, 3: 15.0, 4: 12.0, 5: 10.0, 6: 8.0, 7: 6.0, 8: 4.0, 9: 2.0, 10: 1.0}
+_SPRINT_POINTS = {1: 8.0, 2: 7.0, 3: 6.0, 4: 5.0, 5: 4.0, 6: 3.0, 7: 2.0, 8: 1.0}
+
+
+def _classification_points(row: Any, *, sprint: bool = False) -> float:
+    raw = row.get("Points") if hasattr(row, "get") else None
+    # np.nan / float('nan') are not None — must reject them before float().
+    has_numeric = raw is not None and not (pd is not None and pd.isna(raw))
+    if has_numeric:
+        try:
+            value = float(raw)
+            if value == value:  # False for NaN
+                return value
+        except (TypeError, ValueError):
+            pass
+    position = _safe_int(row.get("Position") if hasattr(row, "get") else None)
+    if position is None:
+        return 0.0
+    table = _SPRINT_POINTS if sprint else _RACE_POINTS
+    return float(table.get(position, 0.0))
+
+
 def _stringify_track_status(value: Any) -> str | None:
     if value is None:
         return None
@@ -668,7 +692,7 @@ def build_session_payload(
                         "teamName": str(row.get("TeamName", "")) or None,
                         "gridPosition": _safe_int(row.get("GridPosition")),
                         "status": str(row.get("Status", "")) or "Unknown",
-                        "points": float(row.get("Points", 0.0)) if pd.notna(row.get("Points")) else 0.0,
+                        "points": _classification_points(row, sprint=(session_code == "S")),
                         "classifiedPosition": str(row.get("ClassifiedPosition", "")) or None,
                         "time": _timedelta_to_seconds(row.get("Time")),
                         "lapsCompleted": _safe_int(row.get("LapsCompleted")) or _safe_int(row.get("Laps")),
