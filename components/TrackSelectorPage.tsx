@@ -1,7 +1,6 @@
 'use client'
 
 import React, { useEffect, useMemo, useRef, useState } from 'react'
-import dynamic from 'next/dynamic'
 import Link from 'next/link'
 import AppShell from './AppShell'
 import CustomSelect from './CustomSelect'
@@ -10,11 +9,7 @@ import { getSupportedSeasonYears } from '../lib/teamData'
 import { getCountryFlagIcon } from '../lib/countryFlags'
 import { trackInfo } from '../lib/trackInfo'
 import LoadingIndicator from './LoadingIndicator'
-
-const LazyTrack3D = dynamic(() => import('./LazyTrack3D'), {
-  ssr: false,
-  loading: () => <div className="lazy-track-3d-placeholder" aria-hidden="true" />,
-})
+import CircuitTrackStage, { type CircuitTrackCorner } from './CircuitTrackStage'
 
 const PREFERENCES_STORAGE_KEY = 'f1ca:user-preferences:v1'
 
@@ -38,6 +33,7 @@ type TracksJson = {
       id: string
       name: string
       svgFile: string
+      corners?: CircuitTrackCorner[]
     }
   >
 }
@@ -153,6 +149,16 @@ export default function TrackSelectorPage() {
   const [indexError, setIndexError] = useState<string | null>(null)
   const [highlights, setHighlights] = useState<RaceHighlights | null>(null)
   const [highlightsLoading, setHighlightsLoading] = useState(false)
+  const [reducedMotion, setReducedMotion] = useState(false)
+
+  useEffect(() => {
+    if (typeof window === 'undefined') return
+    const mq = window.matchMedia('(prefers-reduced-motion: reduce)')
+    setReducedMotion(mq.matches)
+    const onChange = () => setReducedMotion(mq.matches)
+    mq.addEventListener('change', onChange)
+    return () => mq.removeEventListener('change', onChange)
+  }, [])
 
   const availableYears = useMemo(
     () =>
@@ -476,13 +482,12 @@ export default function TrackSelectorPage() {
                       <RedTrackSilhouette svgFile={selected.svgFile} className="is-lg is-muted" />
                     </div>
                   ) : (
-                    <LazyTrack3D
+                    <CircuitTrackStage
                       svgFile={selected.svgFile}
-                      variant="neon"
-                      autoRotate
-                      autoRotateSpeed={0.32}
-                      className="track-visualiser-3d"
-                      rootMargin="400px 0px"
+                      corners={trackData.tracks[selected.id]?.corners}
+                      autoSpin
+                      reducedMotion={reducedMotion}
+                      className="track-visualiser-extrude"
                     />
                   )
                 ) : (

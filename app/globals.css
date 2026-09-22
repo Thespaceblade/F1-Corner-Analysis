@@ -284,7 +284,7 @@ body{
 .home-hero-stage-hit {
   position: relative;
   z-index: 2;
-  pointer-events: none;
+  pointer-events: auto;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -292,8 +292,14 @@ body{
   height: 100%;
   text-decoration: none;
   color: inherit;
+  cursor: default;
   outline: none;
   border-radius: 0.5rem;
+}
+
+.home-hero-stage.is-hot .home-hero-stage-hit,
+.home-hero-stage-hit.is-hot-cursor {
+  cursor: pointer;
 }
 
 .home-hero-stage-hit:focus-visible {
@@ -308,16 +314,11 @@ body{
   transform-origin: center 62%;
   transform: perspective(1200px) rotateX(58deg) rotateZ(-12deg);
   transform-style: preserve-3d;
-  transition:
-    transform 0.5s cubic-bezier(0.22, 1, 0.36, 1),
-    filter 0.35s ease;
-  will-change: transform;
-  filter: brightness(1);
   pointer-events: none;
-}
-
-.home-hero-stage.is-hot .home-hero-stage-plane {
-  filter: brightness(1.12) saturate(1.08);
+  /* No filter/transform transitions — they repaint the extrusion stack and flicker */
+  transition: none;
+  will-change: transform;
+  filter: none;
 }
 
 .home-hero-stage-extrude {
@@ -341,27 +342,19 @@ body{
   width: 100%;
   height: 100%;
   overflow: visible;
-  pointer-events: none;
 }
 
 .home-hero-stage-deck {
   position: relative;
-  filter: drop-shadow(0 28px 30px rgba(0, 0, 0, 0.72));
+  pointer-events: none;
+  filter: drop-shadow(0 22px 26px rgba(0, 0, 0, 0.58));
 }
 
-.home-hero-stage-slab.is-lip .stage-asphalt-wall {
-  stroke: #3a3e48 !important;
-}
-
-.home-hero-stage-slab.is-lip .stage-asphalt-wall-edge {
-  stroke: rgba(242, 238, 230, 0.22) !important;
-}
-
-/* Invisible asphalt hit target — only the track ribbon itself */
-.stage-hit {
+/* Native stroke hit target — browser handles CSS 3D pick better than isPointInStroke */
+.stage-track-hit {
   fill: none;
   stroke: rgba(0, 0, 0, 0.001);
-  stroke-width: 34;
+  stroke-width: 38;
   stroke-linecap: round;
   stroke-linejoin: round;
   pointer-events: stroke;
@@ -370,20 +363,15 @@ body{
 
 .stage-asphalt-edge {
   fill: none;
-  stroke: rgba(242, 238, 230, 0.22);
+  stroke: rgba(242, 238, 230, 0.16);
   stroke-width: 30;
   stroke-linecap: round;
   stroke-linejoin: round;
-  transition: stroke 0.35s ease;
-}
-
-.home-hero-stage.is-hot .stage-asphalt-edge:not(.stage-asphalt-wall-edge) {
-  stroke: rgba(225, 6, 0, 0.34);
 }
 
 .stage-asphalt {
   fill: none;
-  stroke: #2a2e36;
+  stroke: #22252c;
   stroke-width: 22;
   stroke-linecap: round;
   stroke-linejoin: round;
@@ -391,11 +379,11 @@ body{
 
 /* Darker wall faces for the extruded ribbon body */
 .stage-asphalt-wall-edge {
-  stroke-width: 32;
+  stroke: rgba(8, 9, 11, 0.95);
 }
 
 .stage-asphalt-wall {
-  stroke-width: 24;
+  stroke: #0e1014;
 }
 
 .stage-line {
@@ -459,7 +447,7 @@ body{
   fill: rgba(255, 138, 61, 0.28);
 }
 
-/* Hover callout — follows the cursor while the pointer is on the asphalt */
+/* Hover callout — tracks the cursor while over the asphalt ribbon */
 .home-hero-stage-callout {
   position: absolute;
   z-index: 4;
@@ -478,18 +466,17 @@ body{
   color: var(--home-ink);
   text-decoration: none;
   opacity: 0;
-  transform: translate(18px, calc(-100% - 14px)) scale(0.96);
+  transform: translate(-50%, calc(-100% - 4px)) scale(0.96);
   pointer-events: none;
+  will-change: left, top, opacity, transform;
   transition:
     opacity 0.22s cubic-bezier(0.22, 1, 0.36, 1),
     transform 0.28s cubic-bezier(0.22, 1, 0.36, 1);
-  will-change: left, top, opacity, transform;
 }
 
-.home-hero-stage.is-hot .home-hero-stage-callout,
-.home-hero-stage-hit:focus-visible .home-hero-stage-callout {
+.home-hero-stage.is-hot .home-hero-stage-callout {
   opacity: 1;
-  transform: translate(18px, calc(-100% - 14px)) scale(1);
+  transform: translate(-50%, calc(-100% - 14px)) scale(1);
 }
 
 .home-hero-stage-callout-rule {
@@ -498,11 +485,10 @@ body{
   background: var(--home-signal);
   transform: scaleY(0);
   transform-origin: bottom center;
-  transition: transform 0.4s cubic-bezier(0.22, 1, 0.36, 1) 0.05s;
+  transition: transform 0.28s cubic-bezier(0.22, 1, 0.36, 1) 0.04s;
 }
 
-.home-hero-stage.is-hot .home-hero-stage-callout-rule,
-.home-hero-stage-hit:focus-visible .home-hero-stage-callout-rule {
+.home-hero-stage.is-hot .home-hero-stage-callout-rule {
   transform: scaleY(1);
 }
 
@@ -569,9 +555,20 @@ body{
   .stage-corner text {
     display: none;
   }
+  /* Touch: callout only while finger is on the ribbon */
   .home-hero-stage-callout {
-    min-width: 11.5rem;
-    max-width: min(15rem, 78%);
+    opacity: 0;
+    transform: translate(-50%, calc(-100% - 4px)) scale(0.96);
+  }
+  .home-hero-stage.is-hot .home-hero-stage-callout {
+    opacity: 1;
+    transform: translate(-50%, calc(-100% - 12px)) scale(1);
+  }
+  .home-hero-stage-callout-rule {
+    transform: scaleY(0);
+  }
+  .home-hero-stage.is-hot .home-hero-stage-callout-rule {
+    transform: scaleY(1);
   }
   .home-hero-wash {
     background: linear-gradient(
@@ -1327,12 +1324,109 @@ body{
 
 .track-visualiser-stage {
   position: relative;
-  min-height: 24rem;
+  min-height: 18rem;
   overflow: hidden;
   background:
-    radial-gradient(ellipse at 50% 58%, rgba(225, 6, 0, 0.16), transparent 62%),
-    radial-gradient(ellipse at 70% 20%, rgba(225, 6, 0, 0.05), transparent 45%),
+    radial-gradient(ellipse at 50% 62%, rgba(0, 0, 0, 0.35), transparent 55%),
+    radial-gradient(ellipse at 50% 48%, rgba(225, 6, 0, 0.08), transparent 58%),
     #050505;
+}
+
+.track-visualiser-extrude,
+.circuit-track-stage {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  pointer-events: none;
+}
+
+.circuit-track-stage-shadow {
+  position: absolute;
+  left: 50%;
+  top: 68%;
+  width: 52%;
+  height: 22%;
+  transform: translate(-50%, -50%);
+  background: radial-gradient(
+    ellipse at center,
+    rgba(0, 0, 0, 0.55) 0%,
+    rgba(0, 0, 0, 0.24) 48%,
+    transparent 72%
+  );
+  filter: blur(10px);
+}
+
+.circuit-track-stage-plane {
+  position: relative;
+  /* Leave margin so elongated circuits don't clip while spinning. */
+  width: min(72%, 26rem);
+  max-width: 86%;
+  max-height: 78%;
+  transform-origin: center center;
+  transform: perspective(1100px) rotateX(48deg) rotateZ(-12deg);
+  transform-style: preserve-3d;
+  will-change: transform;
+}
+
+.circuit-track-stage-extrude {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  transform-style: preserve-3d;
+}
+
+.circuit-track-stage-slab,
+.circuit-track-stage-deck {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+  pointer-events: none;
+}
+
+.circuit-track-stage-deck {
+  position: relative;
+  filter: drop-shadow(0 14px 18px rgba(0, 0, 0, 0.5));
+}
+
+/* --home-signal only exists under .home-root; pin red here for circuits. */
+.circuit-track-stage .stage-line {
+  stroke: #e10600;
+  stroke-width: 3;
+  stroke-dasharray: 6 12;
+}
+
+.circuit-track-stage .stage-asphalt-edge {
+  stroke-width: 26;
+}
+
+.circuit-track-stage .stage-asphalt {
+  stroke-width: 18;
+}
+
+.circuit-track-stage.is-spin .circuit-track-stage-plane {
+  animation: circuit-track-spin 42s linear infinite;
+}
+
+@keyframes circuit-track-spin {
+  from {
+    transform: perspective(1100px) rotateX(48deg) rotateZ(0deg);
+  }
+  to {
+    transform: perspective(1100px) rotateX(48deg) rotateZ(360deg);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .circuit-track-stage.is-spin .circuit-track-stage-plane {
+    animation: none;
+    transform: perspective(1100px) rotateX(48deg) rotateZ(-12deg);
+  }
 }
 
 .track-visualiser-3d,
@@ -1702,7 +1796,7 @@ body{
   }
 
   .track-visualiser-stage {
-    min-height: 16rem;
+    min-height: 15rem;
   }
 }
 

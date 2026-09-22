@@ -114,28 +114,10 @@ function useScrollReveal<T extends HTMLElement>() {
 export default function HomePage() {
   const reducedMotion = usePrefersReducedMotion()
   const heroRef = useRef<HTMLElement | null>(null)
-  const [pointer, setPointer] = useState({ x: 0.72, y: 0.42 })
   const latest = useScrollReveal<HTMLElement>()
   const paths = useScrollReveal<HTMLElement>()
   const instruments = useScrollReveal<HTMLElement>()
   const circuits = useScrollReveal<HTMLElement>()
-
-  useEffect(() => {
-    if (reducedMotion) return
-    const el = heroRef.current
-    if (!el) return
-
-    const onMove = (event: PointerEvent) => {
-      const rect = el.getBoundingClientRect()
-      setPointer({
-        x: Math.min(1, Math.max(0, (event.clientX - rect.left) / rect.width)),
-        y: Math.min(1, Math.max(0, (event.clientY - rect.top) / rect.height)),
-      })
-    }
-
-    el.addEventListener('pointermove', onMove)
-    return () => el.removeEventListener('pointermove', onMove)
-  }, [reducedMotion])
 
   const marqueeTracks = [...TRACK_PREVIEWS, ...TRACK_PREVIEWS]
 
@@ -156,7 +138,6 @@ export default function HomePage() {
           href={LATEST.sessions[0].href}
           ctaLabel="Explore Hungarian GP"
           ariaLabel="Open Hungarian Grand Prix race analysis"
-          pointer={pointer}
           reducedMotion={reducedMotion}
         />
 

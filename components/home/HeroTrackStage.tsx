@@ -1,6 +1,6 @@
 'use client'
 
-import { useEffect, useMemo, useRef, useState, type CSSProperties, type PointerEvent as ReactPointerEvent } from 'react'
+import { useEffect, useMemo, useRef, useState } from 'react'
 import Link from 'next/link'
 import { loadTrackSvg } from '../../lib/trackSvgLoader'
 
@@ -17,7 +17,6 @@ type HeroTrackStageProps = {
   href: string
   ctaLabel: string
   ariaLabel: string
-  pointer: { x: number; y: number }
   reducedMotion: boolean
 }
 
@@ -27,8 +26,6 @@ type LapGeometry = {
   start: { x: number; y: number } | null
 }
 
-// Three phase-offset cars looping the centerline. Slightly different lap
-// durations let them spread out and re-form instead of moving in lockstep.
 type CarConfig = {
   color: string
   duration: number
@@ -42,15 +39,9 @@ const CARS: CarConfig[] = [
   { color: '#5bd1ff', duration: 11.2, phase: 0.72 },
 ]
 
-// Stacked asphalt slabs give the ribbon real vertical thickness under the
-// perspective tilt. Top deck carries cars / corners; lower slabs are walls.
-const EXTRUSION_STEPS = 36
-const EXTRUSION_STEP_PX = 4
+const EXTRUSION_STEPS = 42
+const EXTRUSION_STEP_PX = 3.4
 
-/**
- * Pull the thick asphalt segments (stroke #374151) out of a track SVG and
- * concatenate them into one continuous lap path we can sample for animation.
- */
 function parseLapGeometry(raw: string): LapGeometry {
   const viewBox = raw.match(/viewBox="([^"]+)"/)?.[1] ?? '0 0 620 700'
   const pathTags = raw.match(/<path\b[^>]*>/g) ?? []
@@ -73,22 +64,43 @@ function parseLapGeometry(raw: string): LapGeometry {
   return { viewBox, lapD, start }
 }
 
+function planeTransformFor(nx: number, ny: number, reducedMotion: boolean) {
+  if (reducedMotion) {
+    return 'perspective(1200px) rotateX(58deg) rotateZ(-12deg)'
+  }
+  return `perspective(1200px) rotateX(${58 - (ny - 0.5) * 5}deg) rotateZ(${
+    -12 + (nx - 0.5) * 6
+  }deg) translate3d(${(nx - 0.5) * 18}px, ${(ny - 0.5) * 10}px, 0)`
+}
+
 export default function HeroTrackStage({
   svgFile,
   corners,
   href,
   ctaLabel,
   ariaLabel,
-  pointer,
   reducedMotion,
 }: HeroTrackStageProps) {
   const [geometry, setGeometry] = useState<LapGeometry | null>(null)
-  const [hot, setHot] = useState(false)
-  const [calloutPos, setCalloutPos] = useState({ x: 0, y: 0 })
-  const stageRef = useRef<HTMLDivElement | null>(null)
   const pathRef = useRef<SVGPathElement | null>(null)
+  const hitRef = useRef<HTMLAnchorElement | null>(null)
+  const planeRef = useRef<HTMLDivElement | null>(null)
+  const calloutRef = useRef<HTMLSpanElement | null>(null)
+  const stageRef = useRef<HTMLDivElement | null>(null)
+  const hotRef = useRef(false)
+  const leaveTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null)
   const carRefs = useRef<(SVGGElement | null)[]>([])
-  const trackHoverDepth = useRef(0)
+  // #region agent log
+  const renderCountRef = useRef(0)
+  const moveCountRef = useRef(0)
+  const hotToggleRef = useRef(0)
+  const rafTickRef = useRef(0)
+  const lastPointerLogRef = useRef(0)
+  renderCountRef.current += 1
+  if (renderCountRef.current <= 5 || renderCountRef.current % 30 === 0) {
+    fetch('http://127.0.0.1:7575/ingest/4fe3a13a-965f-4e19-a81b-b5d06141cbd9',{method:'POST',headers:{'Content-Type':'application/json','X-Debug-Session-Id':'d00f57'},body:JSON.stringify({sessionId:'d00f57',runId:'post-fix-2',hypothesisId:'F',location:'HeroTrackStage.tsx:render',message:'HeroTrackStage render',data:{renderCount:renderCountRef.current,hotDom:hotRef.current,hasGeometry:!!geometry,extrusionSteps:EXTRUSION_STEPS},timestamp:Date.now()})}).catch(()=>{})
+  }
+  // #endregion
 
   useEffect(() => {
     let active = true
@@ -113,6 +125,37 @@ export default function HeroTrackStage({
     })
   }, [corners])
 
+  // Parallax via DOM only. Freeze while hot so transform doesn't yank the
+  // hit stroke out from under the cursor (which thrashed enter/leave).
+  useEffect(() => {
+    const stage = stageRef.current
+    const plane = planeRef.current
+    if (!stage || !plane) return
+
+    plane.style.transform = planeTransformFor(0.72, 0.42, reducedMotion)
+    if (reducedMotion) return
+
+    const onMove = (event: PointerEvent) => {
+      if (hotRef.current) return
+      const rect = stage.getBoundingClientRect()
+      if (!rect.width || !rect.height) return
+      const nx = Math.min(1, Math.max(0, (event.clientX - rect.left) / rect.width))
+      const ny = Math.min(1, Math.max(0, (event.clientY - rect.top) / rect.height))
+      plane.style.transform = planeTransformFor(nx, ny, false)
+      // #region agent log
+      moveCountRef.current += 1
+      const now = Date.now()
+      if (now - lastPointerLogRef.current > 400) {
+        lastPointerLogRef.current = now
+        fetch('http://127.0.0.1:7575/ingest/4fe3a13a-965f-4e19-a81b-b5d06141cbd9',{method:'POST',headers:{'Content-Type':'application/json','X-Debug-Session-Id':'d00f57'},body:JSON.stringify({sessionId:'d00f57',runId:'post-fix-2',hypothesisId:'F',location:'HeroTrackStage.tsx:parallaxDom',message:'DOM parallax',data:{moveCount:moveCountRef.current,renderCount:renderCountRef.current,hot:hotRef.current,nx:Number(nx.toFixed(3)),ny:Number(ny.toFixed(3))},timestamp:now})}).catch(()=>{})
+      }
+      // #endregion
+    }
+
+    stage.addEventListener('pointermove', onMove)
+    return () => stage.removeEventListener('pointermove', onMove)
+  }, [reducedMotion, geometry])
+
   useEffect(() => {
     const path = pathRef.current
     if (!geometry || !path) return
@@ -133,7 +176,6 @@ export default function HeroTrackStage({
       car.setAttribute('transform', `translate(${point.x} ${point.y}) rotate(${angle})`)
     }
 
-    // Seed initial positions so cars never flash at the origin.
     CARS.forEach((car, i) => {
       const node = carRefs.current[i]
       if (node) place(node, car.phase)
@@ -144,6 +186,12 @@ export default function HeroTrackStage({
     let raf = 0
     const startTime = performance.now()
     const tick = (now: number) => {
+      rafTickRef.current += 1
+      // #region agent log
+      if (rafTickRef.current === 1 || rafTickRef.current % 180 === 0) {
+        fetch('http://127.0.0.1:7575/ingest/4fe3a13a-965f-4e19-a81b-b5d06141cbd9',{method:'POST',headers:{'Content-Type':'application/json','X-Debug-Session-Id':'d00f57'},body:JSON.stringify({sessionId:'d00f57',runId:'post-fix-2',hypothesisId:'F',location:'HeroTrackStage.tsx:carRaf',message:'Car RAF tick health',data:{tick:rafTickRef.current,pathAlive:!!pathRef.current?.isConnected,carsAlive:carRefs.current.filter((n)=>n&&n.isConnected).length,renderCount:renderCountRef.current,hotToggles:hotToggleRef.current},timestamp:Date.now()})}).catch(()=>{})
+      }
+      // #endregion
       const elapsed = (now - startTime) / 1000
       CARS.forEach((car, i) => {
         const node = carRefs.current[i]
@@ -155,84 +203,86 @@ export default function HeroTrackStage({
     return () => cancelAnimationFrame(raf)
   }, [geometry, reducedMotion])
 
-  const moveCalloutToPointer = (event: ReactPointerEvent) => {
-    const stage = stageRef.current
-    if (!stage) return
-    const rect = stage.getBoundingClientRect()
-    setCalloutPos({
-      x: event.clientX - rect.left,
-      y: event.clientY - rect.top,
-    })
+  useEffect(() => {
+    return () => {
+      if (leaveTimerRef.current) clearTimeout(leaveTimerRef.current)
+    }
+  }, [])
+
+  // Toggle hover via DOM class only — never React setState (avoids remounting 42 SVGs).
+  const setTrackHot = (next: boolean) => {
+    if (hotRef.current === next) return
+    hotRef.current = next
+    hotToggleRef.current += 1
+    stageRef.current?.classList.toggle('is-hot', next)
+    hitRef.current?.classList.toggle('is-hot-cursor', next)
+    // #region agent log
+    fetch('http://127.0.0.1:7575/ingest/4fe3a13a-965f-4e19-a81b-b5d06141cbd9',{method:'POST',headers:{'Content-Type':'application/json','X-Debug-Session-Id':'d00f57'},body:JSON.stringify({sessionId:'d00f57',runId:'post-fix-2',hypothesisId:'F',location:'HeroTrackStage.tsx:setTrackHot',message:'Hover hot toggled (DOM only)',data:{hot:next,hotToggles:hotToggleRef.current,renderCount:renderCountRef.current},timestamp:Date.now()})}).catch(()=>{})
+    // #endregion
   }
 
-  const onTrackEnter = (event: ReactPointerEvent) => {
-    trackHoverDepth.current += 1
-    moveCalloutToPointer(event)
-    setHot(true)
+  const placeCallout = (clientX: number, clientY: number) => {
+    const host = hitRef.current
+    const callout = calloutRef.current
+    if (!host || !callout) return
+    const rect = host.getBoundingClientRect()
+    callout.style.left = `${clientX - rect.left}px`
+    callout.style.top = `${clientY - rect.top}px`
   }
 
-  const onTrackMove = (event: ReactPointerEvent) => {
-    moveCalloutToPointer(event)
-    setHot(true)
+  const onTrackPointerEnter = (event: React.PointerEvent<SVGPathElement>) => {
+    if (leaveTimerRef.current) {
+      clearTimeout(leaveTimerRef.current)
+      leaveTimerRef.current = null
+    }
+    placeCallout(event.clientX, event.clientY)
+    setTrackHot(true)
   }
 
-  const onTrackLeave = () => {
-    trackHoverDepth.current = Math.max(0, trackHoverDepth.current - 1)
-    if (trackHoverDepth.current === 0) setHot(false)
+  const onTrackPointerMove = (event: React.PointerEvent<SVGPathElement>) => {
+    if (leaveTimerRef.current) {
+      clearTimeout(leaveTimerRef.current)
+      leaveTimerRef.current = null
+    }
+    placeCallout(event.clientX, event.clientY)
+    if (!hotRef.current) setTrackHot(true)
+  }
+
+  const onTrackPointerLeave = () => {
+    // Debounce leave — parallax/subpixel gaps briefly fire leave while still on ribbon.
+    if (leaveTimerRef.current) clearTimeout(leaveTimerRef.current)
+    leaveTimerRef.current = setTimeout(() => {
+      leaveTimerRef.current = null
+      setTrackHot(false)
+    }, 80)
   }
 
   const extrusionHeight = EXTRUSION_STEPS * EXTRUSION_STEP_PX
-  // Hit strips along the extruded wall so the vertical face also counts as "on track".
-  const wallHitLevels = [0, Math.floor(EXTRUSION_STEPS / 3), Math.floor((EXTRUSION_STEPS * 2) / 3)]
-
-  const planeTransform = reducedMotion
-    ? 'perspective(1200px) rotateX(58deg) rotateZ(-12deg)'
-    : `perspective(1200px) rotateX(${58 - (pointer.y - 0.5) * 5}deg) rotateZ(${
-        -12 + (pointer.x - 0.5) * 6
-      }deg) translate3d(${(pointer.x - 0.5) * 18}px, ${(pointer.y - 0.5) * 10}px, 0)`
-
-  const calloutStyle = {
-    left: calloutPos.x,
-    top: calloutPos.y,
-  } as CSSProperties
 
   return (
-    <div
-      ref={stageRef}
-      className={`home-hero-stage${hot ? ' is-hot' : ''}`}
-    >
+    <div ref={stageRef} className="home-hero-stage">
       <div className="home-hero-stage-shadow" aria-hidden="true" />
 
       <Link
+        ref={hitRef}
         href={href}
         className="home-hero-stage-hit"
         aria-label={ariaLabel}
-        onFocus={() => {
-          const stage = stageRef.current
-          if (!stage) return
-          setCalloutPos({ x: stage.clientWidth * 0.55, y: stage.clientHeight * 0.42 })
-          setHot(true)
+        onClick={(event) => {
+          if (!hotRef.current) event.preventDefault()
         }}
-        onBlur={() => {
-          trackHoverDepth.current = 0
-          setHot(false)
-        }}
+        onBlur={() => setTrackHot(false)}
       >
-        <div className="home-hero-stage-plane" style={{ transform: planeTransform }}>
+        <div ref={planeRef} className="home-hero-stage-plane" aria-hidden="true">
           {geometry && (
             <div className="home-hero-stage-extrude">
               {Array.from({ length: EXTRUSION_STEPS }, (_, i) => {
-                // Stronger bevel: dark footing → lit upper face so the wall catches light.
                 const lift = i / Math.max(1, EXTRUSION_STEPS - 1)
-                const eased = lift * lift // bias brightness toward the top lip
-                const wall = `rgb(${Math.round(6 + eased * 58)}, ${Math.round(7 + eased * 60)}, ${Math.round(10 + eased * 70)})`
-                const wallEdge = `rgba(${Math.round(28 + eased * 110)}, ${Math.round(30 + eased * 105)}, ${Math.round(36 + eased * 115)}, ${0.35 + eased * 0.5})`
-                const isHitLayer = wallHitLevels.includes(i)
-                const isLip = i >= EXTRUSION_STEPS - 2
+                const wall = `rgb(${Math.round(10 + lift * 22)}, ${Math.round(12 + lift * 24)}, ${Math.round(16 + lift * 28)})`
                 return (
                   <svg
                     key={i}
-                    className={`home-hero-stage-slab${isLip ? ' is-lip' : ''}`}
+                    className="home-hero-stage-slab"
                     viewBox={geometry.viewBox}
                     preserveAspectRatio="xMidYMid meet"
                     style={{ transform: `translateZ(${i * EXTRUSION_STEP_PX}px)` }}
@@ -240,22 +290,13 @@ export default function HeroTrackStage({
                     <path
                       className="stage-asphalt-edge stage-asphalt-wall-edge"
                       d={geometry.lapD}
-                      style={{ stroke: wallEdge }}
+                      style={{ stroke: `rgba(0, 0, 0, ${0.92 - lift * 0.25})` }}
                     />
                     <path
                       className="stage-asphalt stage-asphalt-wall"
                       d={geometry.lapD}
                       style={{ stroke: wall }}
                     />
-                    {isHitLayer && (
-                      <path
-                        className="stage-hit"
-                        d={geometry.lapD}
-                        onPointerEnter={onTrackEnter}
-                        onPointerMove={onTrackMove}
-                        onPointerLeave={onTrackLeave}
-                      />
-                    )}
                   </svg>
                 )
               })}
@@ -304,18 +345,18 @@ export default function HeroTrackStage({
                 ))}
 
                 <path
-                  className="stage-hit"
+                  className="stage-track-hit"
                   d={geometry.lapD}
-                  onPointerEnter={onTrackEnter}
-                  onPointerMove={onTrackMove}
-                  onPointerLeave={onTrackLeave}
+                  onPointerEnter={onTrackPointerEnter}
+                  onPointerMove={onTrackPointerMove}
+                  onPointerLeave={onTrackPointerLeave}
                 />
               </svg>
             </div>
           )}
         </div>
 
-        <span className="home-hero-stage-callout" style={calloutStyle}>
+        <span ref={calloutRef} className="home-hero-stage-callout">
           <span className="home-hero-stage-callout-rule" aria-hidden="true" />
           <span className="home-hero-stage-callout-body">
             <span className="home-hero-stage-callout-kicker">Hungaroring · R11</span>
